@@ -1,0 +1,35 @@
+# Secrets / local environment
+.env
+.env.*
+!.env.example
+**/.env
+**/.env.*
+!**/.env.example
+
+# Keys and credentials
+*.key
+*.pem
+*.p12
+*.pfx
+*.ovpn
+*.conf.private
+secrets.yaml
+credentials*
+
+# Backups / databases / runtime state
+*.db
+*.sqlite
+*.sqlite3
+*.bak
+*.tar
+*.tar.gz
+*.zip
+
+# OS/editor
+.DS_Store
+.vscode/
+.idea/
+
+# Generated local reports may contain host-specific data
+/generated/*
+!/generated/.gitkeep
