@@ -60,3 +60,21 @@ Seerr now points both Sonarr and Radarr requests to `HomePi 1080p` (ID 7). The p
 ### Cleanup configuration
 
 qBittorrent currently seeds for 30 minutes and then uses the **Stop torrent** share-limit action. Sonarr and Radarr both have `Remove Completed` enabled. The Radarr end-to-end test will validate that this results in automatic torrent/download cleanup after the hardlink import.
+
+
+## Anime handling
+
+Anime uses the same Sonarr instance but a separate quality profile: `HomePi Anime 1080p`.
+
+Seerr mapping:
+
+```text
+Normal series -> HomePi 1080p
+Anime         -> HomePi Anime 1080p
+```
+
+Both use `/data/media/tv`.
+
+The Anime profile follows the TRaSH-style Anime tier model. Image/release quality is dominant. Original audio is required; raws, dub-only releases, low-quality Anime groups and AV1 are rejected. Dual Audio is scored only as a small tie-breaker, so it cannot outrank a materially better Anime tier.
+
+The Anime naming template includes both `SxxExx` and absolute numbering. Normal-series naming remains unchanged.
