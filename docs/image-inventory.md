@@ -26,3 +26,9 @@ Known application versions from live APIs:
 - Sonarr: `4.0.19.2979`
 - Radarr: `6.3.0.10514`
 - Prowlarr: `2.5.2.5491`
+
+
+Additional live application versions:
+
+- Home Assistant: `2026.9.2`
+- Jellyfin: `12.0.0`
