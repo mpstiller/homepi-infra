@@ -11,10 +11,11 @@ A sanitized audit of the running Pi verified the reconstructed architecture agai
 - 78 GiB used / about 1.7 TiB available at the audit.
 - Pi temperature was 43.9 °C.
 - Docker Engine `29.8.0`; Docker Compose `v5.5.1`.
-- Live Compose files are now checked into this repo for Arcane, Homepage, Home Assistant, Jellyfin and the media stack.
-- Music Assistant runtime labels identify its Compose source as `/srv/appdata/compose.yaml`, Compose project `appdata`, with host networking and `/srv/appdata/music-assistant:/data`. The actual Compose file still needs to be imported into the repo.
+- Verified Compose definitions are checked into this repo for Arcane, Homepage, Home Assistant, Music Assistant, Jellyfin and the media stack.
+- Music Assistant was historically deployed from `/srv/appdata/compose.yaml` (Compose project `appdata`) and its verified live definition is normalized into `stacks/music-assistant/compose.yaml`.
+- Home Assistant live version: `2026.9.2`; Jellyfin live version: `12.0.0`.
 - qBittorrent live version is `v5.2.3`; paths and `tun0` + `0.0.0.0` binding are live-verified.
-- qBittorrent currently has a global 30-minute seeding-time limit enabled; exact share-limit action is pending the second live-config audit.
+- qBittorrent has a global 30-minute seeding-time limit enabled and the share-limit action is **Stop torrent**.
 - See `docs/live-system.md` for the normalized live snapshot.
 
 ## 1. Purpose
@@ -159,7 +160,7 @@ Existing Google Home voice behavior should remain intact for household usability
 ## 9. Music Assistant
 
 - Persistent data: `/srv/appdata/music-assistant`.
-- The container is live, but the expected `/opt/homelab/stacks/music-assistant` Compose source was not found in the first 2026-10-05 audit. Deployment source is **VERIFY ON PI** from Docker labels/mounts.
+- The historical deployment source is `/srv/appdata/compose.yaml` (Compose project `appdata`); its verified definition is now checked in as `stacks/music-assistant/compose.yaml`.
 - Uses host networking.
 - UI/port: `8095`.
 - Sonos Era 300 playback was tested successfully.
@@ -240,7 +241,8 @@ Radarr -> radarr
 Completed Download Handling:
 
 - Enabled.
-- Remove: off during setup/testing.
+- `Remove Completed`: enabled on both Sonarr and Radarr qBittorrent clients.
+- `Remove Failed`: enabled on both Sonarr and Radarr qBittorrent clients.
 - Hardlinks enabled.
 
 Hardlinks have been tested successfully in the real Sonarr workflow.
@@ -416,8 +418,8 @@ These were intentionally made more storage-conscious than unrestricted TRaSH val
 Radarr (MB/min):
 
 ```text
-WEBDL-1080p   min 12.5  preferred 100  max 140
-WEBRip-1080p  min 12.5  preferred 100  max 140
+WEBDL-1080p   min 12.5  preferred 99   max 140
+WEBRip-1080p  min 12.5  preferred 99   max 140
 Bluray-1080p  min 50    preferred 120  max 180
 ```
 
@@ -429,7 +431,7 @@ WEBRip-1080p  min 15  preferred 80   max 120
 Bluray-1080p  min 50  preferred 100  max 150
 ```
 
-VERIFY ON PI: confirm the UI still contains exactly these values after later edits.
+These values were read directly from the live APIs on 2026-10-05. See `docs/media-quality-naming.md`.
 
 ## 17. Naming settings
 
@@ -471,7 +473,7 @@ Standard Episode Format:
 - LinuxTracker was used as a successful legal/functionality test indexer.
 - Internet Archive indexer repeatedly timed out even though both host and Prowlarr container could reach `archive.org`; it was treated as an indexer-specific issue.
 - Indexers only sync to Sonarr/Radarr if their categories overlap the target app's configured categories. A TV-only indexer not appearing in Radarr was correctly diagnosed as category behavior, not a Prowlarr failure.
-- Exact current production indexer list: **VERIFY ON PI**.
+- Live indexer inventory on 2026-10-05: `BT.etree`, `EZTV`, and `YTS`, all currently tagged for the FlareSolverr proxy. Category sync results in EZTV in Sonarr and YTS in Radarr.
 
 ## 19. FlareSolverr
 
@@ -576,10 +578,10 @@ Software direction: Home Assistant as backend/data/action layer; UI should be ha
 
 Resume work in this order unless requirements change:
 
-1. Complete cleanup of the successful Sonarr end-to-end test.
+1. Change Seerr's Sonarr and Radarr service profile from `HD-1080p` (ID 4) to `HomePi 1080p` (ID 7).
 2. Perform a real **Radarr movie end-to-end test**.
-3. Define and implement a sensible **automatic seeding / cleanup policy** in qBittorrent/Sonarr/Radarr.
-4. Verify Jellyfin sees and plays the imported media as expected.
-5. Synchronize actual Pi configuration files into this repository and reconcile this reconstructed documentation against reality.
-6. Implement backup/restore strategy before expanding critical household usage.
-7. Later: remote access/domain, Matter/Nest Doorbell, monitoring, photo/file cloud, e-ink dashboard.
+3. Verify the Radarr import is a hardlink.
+4. Validate the already configured automatic cleanup chain: 30 minutes seeding -> qBittorrent Stop -> Radarr Remove Completed -> torrent-side data removed while media link remains.
+5. Verify Jellyfin sees and Direct Plays the imported movie.
+6. Decide which authorized production indexers are retained and optionally add media services to Homepage.
+7. Then move to the P1 backup workstream.
