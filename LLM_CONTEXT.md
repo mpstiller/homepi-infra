@@ -12,7 +12,7 @@ A sanitized audit of the running Pi verified the reconstructed architecture agai
 - Pi temperature was 43.9 °C.
 - Docker Engine `29.8.0`; Docker Compose `v5.5.1`.
 - Live Compose files are now checked into this repo for Arcane, Homepage, Home Assistant, Jellyfin and the media stack.
-- Music Assistant is running but its expected Compose source was not captured and is **VERIFY ON PI** via Docker runtime labels.
+- Music Assistant runtime labels identify its Compose source as `/srv/appdata/compose.yaml`, Compose project `appdata`, with host networking and `/srv/appdata/music-assistant:/data`. The actual Compose file still needs to be imported into the repo.
 - qBittorrent live version is `v5.2.3`; paths and `tun0` + `0.0.0.0` binding are live-verified.
 - qBittorrent currently has a global 30-minute seeding-time limit enabled; exact share-limit action is pending the second live-config audit.
 - See `docs/live-system.md` for the normalized live snapshot.
@@ -207,6 +207,13 @@ Seerr
 ```
 
 ### Seerr
+
+#### Live Seerr profile mismatch — must fix before next request
+
+The 2026-10-05 live audit found that Seerr still selects the built-in `HD-1080p` profile (ID 4) for **both** Sonarr and Radarr. The intended `HomePi 1080p` profile exists as ID 7 in both applications and has the correct German/DL scores.
+
+Change both Seerr service configurations to `HomePi 1080p` before the next real request.
+
 
 - UI: `5055`.
 - Connected to Jellyfin.
@@ -507,7 +514,7 @@ Manual cleanup has been used so far:
 - Remove torrent **and downloaded torrent-side files** from qBittorrent when seeding is no longer desired.
 - The `/data/media/...` hardlink remains and becomes `links=1`.
 
-Automatic cleanup is **not yet finalized**. Live qBittorrent currently has a 30-minute global seeding-time limit enabled and ratio limiting disabled; the resulting share-limit action (pause/remove/etc.) is still being captured before the policy is finalized.
+Live qBittorrent has a 30-minute global seeding-time limit enabled, ratio limiting disabled, and share-limit action `0`, which is **Stop torrent**. Sonarr and Radarr both have per-client `Remove Completed` enabled. The intended automatic cleanup chain is therefore configured and now needs one end-to-end validation: after import and 30 minutes of seeding, qBittorrent stops the torrent and *arr should remove the torrent plus torrent-side data while the library hardlink remains.
 
 Private trackers may impose ratio/seeding requirements and must be handled according to their rules.
 
