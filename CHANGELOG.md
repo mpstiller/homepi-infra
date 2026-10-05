@@ -1,5 +1,17 @@
 # Changelog
 
+## 2026-10-05
+
+- Audited the running Pi with a sanitized export bundle.
+- Verified Debian 13.7, kernel 6.18.39+rpt-rpi-2712, NVMe root, Docker 29.8.0 and Compose v5.5.1.
+- Synchronized live Compose files for Arcane, Homepage, Home Assistant, Jellyfin and the media stack.
+- Added safe stack-specific `.env.example` files.
+- Verified qBittorrent v5.2.3 live paths, `tun0` + All IPv4 binding, and current global 30-minute seeding-time limit.
+- Added live-system documentation and a restore runbook.
+- Identified that Music Assistant is running but its expected Compose file was not present in the first stack export; scheduled runtime-label inspection.
+- Added a second sanitized live-configuration audit script for application settings, exact image metadata and deployment-source reconciliation.
+
+
 ## 2026-10-03
 
 - Created first portable `homepi-infra` documentation baseline from setup history.
