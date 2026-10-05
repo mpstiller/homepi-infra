@@ -41,7 +41,7 @@ Running containers at capture:
 | seerr | `ghcr.io/seerr-team/seerr:latest` | up |
 | flaresolverr | `ghcr.io/flaresolverr/flaresolverr:latest` | up |
 
-Exact image digests and application versions are captured in the second live-config audit before P0 is considered complete.
+Exact running image digests are documented in `docs/image-inventory.md`. Live application versions include Home Assistant `2026.9.2`, Jellyfin `12.0.0`, qBittorrent `5.2.3`, Sonarr `4.0.19.2979`, Radarr `6.3.0.10514`, and Prowlarr `2.5.2.5491`.
 
 ## Storage usage
 
@@ -82,6 +82,7 @@ torrent_content_layout       Original
 max_ratio_enabled            false
 max_seeding_time             30
 max_seeding_time_enabled     true
+share-limit action            Stop torrent
 autorun_enabled              false
 ```
 
@@ -115,4 +116,4 @@ Live Compose files were found and synchronized for:
 - Jellyfin
 - Media stack
 
-The Music Assistant container is running, but no corresponding Compose file was captured under the expected `/opt/homelab/stacks` path. Its Docker labels/mounts must be inspected in the second audit before the deployment source is documented.
+Music Assistant was deployed from `/srv/appdata/compose.yaml` (Compose project `appdata`). That live Compose definition has now been imported into this repository as `stacks/music-assistant/compose.yaml`.
