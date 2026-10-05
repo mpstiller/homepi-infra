@@ -2,6 +2,21 @@
 
 This file is the primary handoff for a new LLM/session. Read it before proposing changes.
 
+## Live verification baseline — 2026-10-05
+
+A sanitized audit of the running Pi verified the reconstructed architecture against the live host.
+
+- Debian GNU/Linux 13.7 (trixie), kernel `6.18.39+rpt-rpi-2712`.
+- Root is the Samsung 990 EVO Plus 2 TB NVMe (`/dev/nvme0n1p2`, ext4).
+- 78 GiB used / about 1.7 TiB available at the audit.
+- Pi temperature was 43.9 °C.
+- Docker Engine `29.8.0`; Docker Compose `v5.5.1`.
+- Live Compose files are now checked into this repo for Arcane, Homepage, Home Assistant, Jellyfin and the media stack.
+- Music Assistant is running but its expected Compose source was not captured and is **VERIFY ON PI** via Docker runtime labels.
+- qBittorrent live version is `v5.2.3`; paths and `tun0` + `0.0.0.0` binding are live-verified.
+- qBittorrent currently has a global 30-minute seeding-time limit enabled; exact share-limit action is pending the second live-config audit.
+- See `docs/live-system.md` for the normalized live snapshot.
+
 ## 1. Purpose
 
 `homepi` is a Raspberry Pi 5 homelab intended to become a stable household server. Current priorities are smart home, music, media, and learning how the Pi is actually used before buying more storage or adding heavy services.
@@ -143,8 +158,8 @@ Existing Google Home voice behavior should remain intact for household usability
 
 ## 9. Music Assistant
 
-- Stack: `/opt/homelab/stacks/music-assistant`.
 - Persistent data: `/srv/appdata/music-assistant`.
+- The container is live, but the expected `/opt/homelab/stacks/music-assistant` Compose source was not found in the first 2026-10-05 audit. Deployment source is **VERIFY ON PI** from Docker labels/mounts.
 - Uses host networking.
 - UI/port: `8095`.
 - Sonos Era 300 playback was tested successfully.
@@ -492,7 +507,7 @@ Manual cleanup has been used so far:
 - Remove torrent **and downloaded torrent-side files** from qBittorrent when seeding is no longer desired.
 - The `/data/media/...` hardlink remains and becomes `links=1`.
 
-Automatic seeding/cleanup policy is **not yet finalized**. This is an explicit next task.
+Automatic cleanup is **not yet finalized**. Live qBittorrent currently has a 30-minute global seeding-time limit enabled and ratio limiting disabled; the resulting share-limit action (pause/remove/etc.) is still being captured before the policy is finalized.
 
 Private trackers may impose ratio/seeding requirements and must be handled according to their rules.
 
