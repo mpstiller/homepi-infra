@@ -1,21 +1,25 @@
 # Runtime stacks
 
-The actual Compose files running on the Pi have **not yet been synchronized** into this repository.
+This directory is being converted from reconstructed documentation into the checked-in runtime configuration source.
 
-When Pi access is available, copy and review the files from:
+## Verified from the live Pi on 2026-10-05
 
-```text
-/opt/homelab/stacks/arcane
-/opt/homelab/stacks/homepage
-/opt/homelab/stacks/homeassistant
-/opt/homelab/stacks/music-assistant
-/opt/homelab/stacks/jellyfin
-/opt/homelab/stacks/media
-```
+Live Compose files have been synchronized for:
 
-Before committing:
+- `arcane/`
+- `homepage/`
+- `homeassistant/`
+- `jellyfin/`
+- `media/`
 
-- remove/redact secrets;
-- replace local secret values with `${VARIABLE}` references where necessary;
-- create matching `.env.example` files with variable names only;
-- compare live config with `LLM_CONTEXT.md` and resolve discrepancies in favor of the live, verified system.
+The checked-in files were exported from `/opt/homelab/stacks` and reviewed so secret values remain external.
+
+## Still to resolve
+
+The running `music-assistant` container did not have a Compose file captured from the expected `/opt/homelab/stacks` tree in the first audit. Do not reconstruct it from memory. The second runtime audit will inspect Docker Compose labels, mounts and image metadata to determine its actual deployment source.
+
+## Secrets
+
+Real `.env` files stay on the Pi. Only `.env.example` files belong in Git.
+
+If live files and prose documentation disagree, verify the live system and update the documentation rather than silently changing a known-good runtime file.
