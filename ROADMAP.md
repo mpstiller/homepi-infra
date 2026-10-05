@@ -1,28 +1,20 @@
 # Roadmap
 
-## P0 — Make the current system reproducible
+## P0 — Make the current system reproducible ✅
 
-- [ ] Sync actual Compose files from `/opt/homelab/stacks` into this repo.
+- [x] Sync all verified Compose definitions into this repo.
   - [x] Arcane
   - [x] Homepage
   - [x] Home Assistant
+  - [x] Music Assistant
   - [x] Jellyfin
   - [x] Media stack
-  - [ ] Music Assistant — resolve live deployment source first
-- [ ] Add `.env.example` files with names only, never secret values.
-  - [x] Arcane
-  - [x] Homepage
-  - [x] Media stack
-  - [ ] Verify whether Music Assistant has an external env/config requirement
-- [ ] Capture current container/image versions.
-  - [x] Docker Engine / Compose / image tags captured
-  - [x] Exact running image digests + Sonarr/Radarr/Prowlarr/qBittorrent application versions
-- [ ] Reconcile reconstructed docs against live Pi.
-  - [x] Host/storage/Docker/qBittorrent/Compose baseline reconciled
-  - [x] *arr/Prowlarr/Seerr/HA live settings audit
-  - [x] Music Assistant deployment source identified as `/srv/appdata/compose.yaml`
-  - [ ] Safely import actual Music Assistant Compose file
-- [x] Add a restore/runbook.
+- [x] Add safe `.env.example` files where external environment files are used.
+- [x] Capture host, Docker, application versions and exact running image digests.
+- [x] Reconcile reconstructed documentation against the live Pi.
+- [x] Capture live *arr/Prowlarr/Seerr/Home Assistant settings.
+- [x] Capture live naming and quality definitions.
+- [x] Add restore/runbook documentation.
 
 ## P1 — Finish media stack V1
 
