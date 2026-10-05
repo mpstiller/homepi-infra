@@ -14,6 +14,11 @@
 - Detected a live Seerr profile mismatch: both Sonarr and Radarr requests still use `HD-1080p` instead of `HomePi 1080p`.
 - Confirmed qBittorrent's 30-minute seed limit uses the Stop action and both *arr clients have Remove Completed enabled.
 - Identified Music Assistant's deployment source as `/srv/appdata/compose.yaml` via Docker Compose labels.
+- Imported the actual Music Assistant Compose definition and normalized it under `stacks/music-assistant/`.
+- Verified Home Assistant `2026.9.2` and Jellyfin `12.0.0`.
+- Captured exact live Sonarr/Radarr naming templates and quality definitions.
+- Corrected the documented Radarr WEB-1080p preferred size from reconstructed 100 MB/min to the live value of 99 MB/min.
+- Closed P0 reproducibility baseline; repository is now the documented source of truth for the current HomePi deployment.
 
 
 ## 2026-10-03
