@@ -12,7 +12,7 @@
 - Docker Engine `29.8.0`, Docker Compose `v5.5.1`.
 - Arcane, Homepage, Home Assistant, Music Assistant, Jellyfin and the complete media stack are running.
 - Live Compose files are now checked into this repository for Arcane, Homepage, Home Assistant, Jellyfin and the media stack.
-- The running Music Assistant deployment source still needs to be resolved from Docker runtime metadata; no Compose file was captured from the expected stack directory.
+- Music Assistant runtime metadata identifies its Compose source as `/srv/appdata/compose.yaml` (Compose project `appdata`), using host networking and `/srv/appdata/music-assistant:/data`. The actual Compose file still needs to be safely imported.
 - Sony TV Jellyfin Direct Play was previously tested successfully.
 - Home Assistant has Google Cast, Sony TV, Sonos, and Music Assistant integrations.
 - SoundCloud works in Music Assistant.
@@ -72,16 +72,26 @@ Completed:
 
 Still required before P0 is closed:
 
-1. capture exact Docker image digests and application versions;
-2. resolve Music Assistant's actual deployment/Compose source;
-3. query the running *arr/Prowlarr/Seerr/Home Assistant configuration through sanitized local APIs/files;
-4. reconcile those results against `LLM_CONTEXT.md`.
+1. safely import the actual Music Assistant Compose file from `/srv/appdata/compose.yaml`;
+2. capture final naming/quality-definition settings that were not exposed by the first API audit;
+3. reconcile those last details against `LLM_CONTEXT.md`.
 
 ## Immediate resume point
 
-Run `scripts/export-live-config-audit.sh` on the Pi and import its sanitized bundle. Once P0 is closed, continue directly with:
+Second live-config audit imported. Before P0 is closed, import the Music Assistant Compose source and the remaining naming/quality-definition details. Then continue directly with:
 
 1. Radarr movie end-to-end test;
 2. Radarr hardlink verification;
 3. finalize qBittorrent seeding/cleanup behavior;
 4. Jellyfin library/Direct Play verification.
+
+
+## Important live issue discovered
+
+Seerr currently selects `HD-1080p` (profile ID 4) for **both** Sonarr and Radarr requests. The intended profile `HomePi 1080p` is live and correct as profile ID 7 in both applications.
+
+Before the Radarr end-to-end test, change both Seerr service profiles to `HomePi 1080p`.
+
+## Automatic cleanup live state
+
+qBittorrent global share limits currently seed for 30 minutes and then **Stop** the torrent. Both Sonarr and Radarr have per-client `Remove Completed` enabled. According to the supported *arr/qBittorrent workflow, this should allow *arr to remove a successfully imported torrent and its torrent-side data after qBittorrent reaches the seed goal and stops it. The upcoming Radarr test will validate this end to end.
