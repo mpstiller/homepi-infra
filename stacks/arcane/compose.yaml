@@ -1,0 +1,26 @@
+services:
+  arcane:
+    image: ghcr.io/getarcaneapp/manager:latest
+    container_name: arcane
+    restart: unless-stopped
+
+    ports:
+      - "3552:3552"
+
+    environment:
+      APP_URL: http://homepi.local:3552
+      PUID: ${PUID}
+      PGID: ${PGID}
+      ENCRYPTION_KEY: ${ENCRYPTION_KEY}
+
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /srv/appdata/arcane:/app/data
+      - /opt/homelab/stacks:/opt/homelab/stacks
+
+    healthcheck:
+      test: ["CMD", "./arcane", "health", "--timeout", "2s"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+      start_period: 15s
