@@ -53,9 +53,9 @@ The 1080p group contains WEB-DL, WEBRip and Bluray 1080p only.
 
 Exact live naming and size definitions are in `docs/media-quality-naming.md`.
 
-### Seerr mismatch to fix
+### Seerr profile alignment
 
-Seerr still points both Sonarr and Radarr requests to the old `HD-1080p` profile (ID 4). Change both services to `HomePi 1080p` (ID 7) before the next request.
+Seerr now points both Sonarr and Radarr requests to `HomePi 1080p` (ID 7). The previous `HD-1080p` mismatch is resolved.
 
 ### Cleanup configuration
 
