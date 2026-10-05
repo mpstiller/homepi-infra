@@ -10,6 +10,10 @@
 - Added live-system documentation and a restore runbook.
 - Identified that Music Assistant is running but its expected Compose file was not present in the first stack export; scheduled runtime-label inspection.
 - Added a second sanitized live-configuration audit script for application settings, exact image metadata and deployment-source reconciliation.
+- Imported the second live audit with exact running image digests and Sonarr/Radarr/Prowlarr settings.
+- Detected a live Seerr profile mismatch: both Sonarr and Radarr requests still use `HD-1080p` instead of `HomePi 1080p`.
+- Confirmed qBittorrent's 30-minute seed limit uses the Stop action and both *arr clients have Remove Completed enabled.
+- Identified Music Assistant's deployment source as `/srv/appdata/compose.yaml` via Docker Compose labels.
 
 
 ## 2026-10-03
