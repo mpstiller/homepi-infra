@@ -2,6 +2,10 @@
 
 ## 2026-10-05
 
+- Added `HomePi Anime 1080p` in Sonarr with Anime-specific tier scoring, original-audio requirement, raw/dub-only/LQ exclusions, and low-weight Dual Audio preference.
+- Added Anime-specific episode naming with absolute numbering.
+- Configured Seerr to use `HomePi Anime 1080p` for Anime while keeping `HomePi 1080p` for normal series.
+
 - Updated Seerr so both Sonarr and Radarr requests use `HomePi 1080p` (profile ID 7); resolved the old `HD-1080p` mismatch.
 
 - Audited the running Pi with a sanitized export bundle.
