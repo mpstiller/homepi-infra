@@ -195,3 +195,25 @@ Live config entries include:
 - standard system/onboarding integrations
 
 Matter is not yet configured as a Home Assistant integration, consistent with the documented plan.
+
+
+## Final P0 verification
+
+### Home Assistant
+
+- Version: `2026.9.2`
+
+### Jellyfin
+
+- Version: `12.0.0`
+- Server name: `HomePi`
+- Startup wizard completed
+
+### Live naming and quality definitions
+
+The exact live naming templates and 1080p quality-definition limits are documented in `docs/media-quality-naming.md`.
+
+Important correction from the earlier reconstructed notes:
+
+- Radarr WEBDL-1080p preferred size is **99 MB/min**, not 100.
+- Radarr WEBRip-1080p preferred size is **99 MB/min**, not 100.
