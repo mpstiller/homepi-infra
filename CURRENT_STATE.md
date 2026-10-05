@@ -92,3 +92,23 @@ Seerr has now been updated so **both Sonarr and Radarr use `HomePi 1080p` (profi
 ## Automatic cleanup live state
 
 qBittorrent global share limits currently seed for 30 minutes and then **Stop** the torrent. Both Sonarr and Radarr have per-client `Remove Completed` enabled. According to the supported *arr/qBittorrent workflow, this should allow *arr to remove a successfully imported torrent and its torrent-side data after qBittorrent reaches the seed goal and stops it. The upcoming Radarr test will validate this end to end.
+
+
+## Anime profile
+
+Anime is handled in the existing Sonarr instance with a dedicated profile:
+
+- Profile: `HomePi Anime 1080p`
+- Normal series in Seerr: `HomePi 1080p`
+- Anime in Seerr: `HomePi Anime 1080p`
+- Normal and Anime root folder: `/data/media/tv`
+
+Priority logic:
+
+1. best Anime release-tier / image quality;
+2. original audio required;
+3. no raws, dub-only, LQ groups, or AV1;
+4. dual audio is only a small tie-breaker;
+5. German-specific CFs remain neutral in the Anime profile.
+
+Anime episode naming uses both season/episode and absolute numbering.
