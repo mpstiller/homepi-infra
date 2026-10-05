@@ -16,11 +16,12 @@
   - [ ] Verify whether Music Assistant has an external env/config requirement
 - [ ] Capture current container/image versions.
   - [x] Docker Engine / Compose / image tags captured
-  - [ ] Exact image digests + application versions
+  - [x] Exact running image digests + Sonarr/Radarr/Prowlarr/qBittorrent application versions
 - [ ] Reconcile reconstructed docs against live Pi.
   - [x] Host/storage/Docker/qBittorrent/Compose baseline reconciled
-  - [ ] *arr/Prowlarr/Seerr/HA live settings audit
-  - [ ] Music Assistant deployment source
+  - [x] *arr/Prowlarr/Seerr/HA live settings audit
+  - [x] Music Assistant deployment source identified as `/srv/appdata/compose.yaml`
+  - [ ] Safely import actual Music Assistant Compose file
 - [x] Add a restore/runbook.
 
 ## P1 — Finish media stack V1
