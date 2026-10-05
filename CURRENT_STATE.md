@@ -79,17 +79,15 @@ The repository now contains:
 
 P1 Media Stack V1 starts now:
 
-1. change Seerr's Sonarr and Radarr profile from `HD-1080p` to `HomePi 1080p`;
-2. run a Radarr movie end-to-end test;
+1. run a Radarr movie end-to-end test;
+2. verify Radarr hardlinks;
 3. verify Radarr hardlinks;
 4. verify automatic 30-minute seed -> stop -> *arr cleanup;
 5. verify Jellyfin library import and Direct Play.
 
-## Important live issue discovered
+## Seerr profile alignment
 
-Seerr currently selects `HD-1080p` (profile ID 4) for **both** Sonarr and Radarr requests. The intended profile `HomePi 1080p` is live and correct as profile ID 7 in both applications.
-
-Before the Radarr end-to-end test, change both Seerr service profiles to `HomePi 1080p`.
+Seerr has now been updated so **both Sonarr and Radarr use `HomePi 1080p` (profile ID 7)** for new requests. The previous `HD-1080p` mismatch is resolved.
 
 ## Automatic cleanup live state
 
