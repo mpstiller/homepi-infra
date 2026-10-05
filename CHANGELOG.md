@@ -2,6 +2,8 @@
 
 ## 2026-10-05
 
+- Updated Seerr so both Sonarr and Radarr requests use `HomePi 1080p` (profile ID 7); resolved the old `HD-1080p` mismatch.
+
 - Audited the running Pi with a sanitized export bundle.
 - Verified Debian 13.7, kernel 6.18.39+rpt-rpi-2712, NVMe root, Docker 29.8.0 and Compose v5.5.1.
 - Synchronized live Compose files for Arcane, Homepage, Home Assistant, Jellyfin and the media stack.
