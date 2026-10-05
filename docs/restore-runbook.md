@@ -41,7 +41,7 @@ Restore correct ownership using the live PUID/PGID values before starting contai
 
 ## 3. Restore repository configuration
 
-Clone `mpstiller/homepi-infra` and copy/symlink the verified stack directories into `/opt/homelab/stacks`.
+Clone `mpstiller/homepi-infra` and use the verified Compose definitions under `stacks/` as the rebuild source. The historical live Music Assistant file was located at `/srv/appdata/compose.yaml`, but its verified definition is now normalized into `stacks/music-assistant/compose.yaml` in this repository.
 
 Do not deploy placeholder documentation as runtime configuration. Only stack directories containing verified `compose.yaml` files are deployment-ready.
 
@@ -85,8 +85,6 @@ Suggested order:
 3. Music Assistant
 4. Jellyfin
 5. Media stack
-
-Music Assistant deployment source is currently marked **VERIFY ON PI** and must be resolved before this runbook is considered sufficient for a total rebuild.
 
 ## 7. Media-stack validation
 
