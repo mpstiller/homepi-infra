@@ -11,8 +11,8 @@
 - Bootloader is current as of 2026-05-26; `BOOT_ORDER=0xf461`.
 - Docker Engine `29.8.0`, Docker Compose `v5.5.1`.
 - Arcane, Homepage, Home Assistant, Music Assistant, Jellyfin and the complete media stack are running.
-- Live Compose files are now checked into this repository for Arcane, Homepage, Home Assistant, Jellyfin and the media stack.
-- Music Assistant runtime metadata identifies its Compose source as `/srv/appdata/compose.yaml` (Compose project `appdata`), using host networking and `/srv/appdata/music-assistant:/data`. The actual Compose file still needs to be safely imported.
+- Verified Compose definitions are now checked into this repository for Arcane, Homepage, Home Assistant, Music Assistant, Jellyfin and the media stack.
+- Music Assistant was historically deployed from `/srv/appdata/compose.yaml` (Compose project `appdata`); its verified definition is normalized into `stacks/music-assistant/compose.yaml`.
 - Sony TV Jellyfin Direct Play was previously tested successfully.
 - Home Assistant has Google Cast, Sony TV, Sonos, and Music Assistant integrations.
 - SoundCloud works in Music Assistant.
@@ -55,7 +55,7 @@ max_seeding_time         30
 max_seeding_time_enabled true
 ```
 
-The exact global share-limit action (pause/remove/etc.) still needs to be captured before automatic cleanup is finalized.
+The global share-limit action is **Stop torrent**. Sonarr and Radarr both have `Remove Completed` enabled; the upcoming Radarr test will validate the full automatic cleanup chain.
 
 ### Quality profile
 
@@ -63,28 +63,27 @@ The exact global share-limit action (pause/remove/etc.) still needs to be captur
 
 ## P0 documentation status
 
-Completed:
+**P0 is complete.**
 
-- live Compose synced for Arcane, Homepage, Home Assistant, Jellyfin and media;
-- safe environment templates checked in for stacks that currently use `.env`;
-- live OS/storage/Docker snapshot documented;
-- restore runbook added.
+The repository now contains:
 
-Still required before P0 is closed:
-
-1. safely import the actual Music Assistant Compose file from `/srv/appdata/compose.yaml`;
-2. capture final naming/quality-definition settings that were not exposed by the first API audit;
-3. reconcile those last details against `LLM_CONTEXT.md`.
+- all verified Compose definitions;
+- safe environment templates where required;
+- exact host, Docker and image inventory;
+- live Sonarr/Radarr/Prowlarr/Seerr/Home Assistant configuration snapshots;
+- live naming and quality-definition values;
+- a restore runbook;
+- explicit architecture decisions and LLM handoff context.
 
 ## Immediate resume point
 
-Second live-config audit imported. Before P0 is closed, import the Music Assistant Compose source and the remaining naming/quality-definition details. Then continue directly with:
+P1 Media Stack V1 starts now:
 
-1. Radarr movie end-to-end test;
-2. Radarr hardlink verification;
-3. finalize qBittorrent seeding/cleanup behavior;
-4. Jellyfin library/Direct Play verification.
-
+1. change Seerr's Sonarr and Radarr profile from `HD-1080p` to `HomePi 1080p`;
+2. run a Radarr movie end-to-end test;
+3. verify Radarr hardlinks;
+4. verify automatic 30-minute seed -> stop -> *arr cleanup;
+5. verify Jellyfin library import and Direct Play.
 
 ## Important live issue discovered
 
