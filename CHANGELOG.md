@@ -2,6 +2,9 @@
 
 ## 2026-10-06
 
+- Confirmed Jellyfin automatically detected the Radarr-imported movie.
+- Confirmed Direct Play on the Sony TV with no transcoding, validating the movie playback path end to end.
+
 - Validated a real Radarr end-to-end movie request through Seerr/Prowlarr/qBittorrent.
 - Confirmed qBittorrent used the `radarr` category and movie download path.
 - Confirmed the 30-minute seed -> Stop -> Radarr Remove Completed cleanup chain removes the torrent and torrent-side data while preserving the imported media file.
