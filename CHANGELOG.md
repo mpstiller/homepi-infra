@@ -2,6 +2,10 @@
 
 ## 2026-10-06
 
+- Validated a real Radarr end-to-end movie request through Seerr/Prowlarr/qBittorrent.
+- Confirmed qBittorrent used the `radarr` category and movie download path.
+- Confirmed the 30-minute seed -> Stop -> Radarr Remove Completed cleanup chain removes the torrent and torrent-side data while preserving the imported media file.
+
 - Hardened the Tailnet: Device Approval enabled, default allow-all removed, owner-only HomePi access, explicit port allowlist, server key expiry disabled, and Tailscale auto-update enabled.
 
 - Installed and joined Tailscale on HomePi.
