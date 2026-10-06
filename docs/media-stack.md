@@ -78,3 +78,23 @@ Both use `/data/media/tv`.
 The Anime profile follows the TRaSH-style Anime tier model. Image/release quality is dominant. Original audio is required; raws, dub-only releases, low-quality Anime groups and AV1 are rejected. Dual Audio is scored only as a small tie-breaker, so it cannot outrank a materially better Anime tier.
 
 The Anime naming template includes both `SxxExx` and absolute numbering. Normal-series naming remains unchanged.
+
+
+### Radarr cleanup validation
+
+A real Radarr movie request completed successfully.
+
+Observed sequence:
+
+```text
+download to /data/torrents/movies
+-> successful Radarr import
+-> 30-minute qBittorrent seed limit reached
+-> torrent stopped
+-> Radarr Remove Completed removed torrent + torrent-side file
+-> media file remained under /data/media/movies
+```
+
+The final media file had link count `1` after cleanup and no corresponding file remained in `/srv/data/torrents/movies`.
+
+This validates the automatic cleanup behavior. A final Radarr log check is retained only to prove whether that specific import used a hardlink before cleanup.
