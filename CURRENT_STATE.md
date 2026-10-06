@@ -112,3 +112,19 @@ Priority logic:
 5. German-specific CFs remain neutral in the Anime profile.
 
 Anime episode naming uses both season/episode and absolute numbering.
+
+
+## Remote access
+
+Tailscale is installed and active on the HomePi host.
+
+```text
+Tailscale hostname: homepi
+Tailscale IPv4:    100.72.110.114
+```
+
+Remote access from an iPhone over cellular has been verified to Homepage on port 3000 using both the Tailscale IPv4 address and MagicDNS short hostname in Safari.
+
+Arc on iOS may interpret the single-label hostname `homepi` as a search term; use the Tailscale IPv4 or full MagicDNS FQDN in clients where this occurs.
+
+Homepage host validation was updated to allow `homepi.local:3000`, `homepi:3000`, and `100.72.110.114:3000`.
