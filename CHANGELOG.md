@@ -2,6 +2,8 @@
 
 ## 2026-10-06
 
+- Hardened the Tailnet: Device Approval enabled, default allow-all removed, owner-only HomePi access, explicit port allowlist, server key expiry disabled, and Tailscale auto-update enabled.
+
 - Installed and joined Tailscale on HomePi.
 - Verified remote access from iPhone over cellular.
 - HomePi Tailscale IPv4 is `100.72.110.114`; MagicDNS hostname is `homepi`.
