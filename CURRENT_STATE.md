@@ -140,3 +140,24 @@ Remote access from an iPhone over cellular has been verified to Homepage on port
 Arc on iOS may interpret the single-label hostname `homepi` as a search term; use the Tailscale IPv4 or full MagicDNS FQDN in clients where this occurs.
 
 Homepage host validation was updated to allow `homepi.local:3000`, `homepi:3000`, and `100.72.110.114:3000`.
+
+
+## Radarr end-to-end result
+
+A real movie request completed successfully through:
+
+```text
+Seerr -> Radarr -> Prowlarr -> qBittorrent/Gluetun -> Radarr import
+```
+
+Verified:
+
+- qBittorrent category: `radarr`
+- download path: `/data/torrents/movies`
+- Radarr History reports a successful download/import
+- after the configured seed period the torrent disappeared from qBittorrent
+- `/srv/data/torrents/movies` no longer contains the downloaded file
+- the imported movie remains under `/srv/data/media/movies`
+- the remaining media file has link count `1`
+
+This confirms the automatic cleanup chain (seed -> stop -> Radarr Remove Completed -> torrent-side data removal). The import method itself still needs one final log check because the torrent-side hardlink had already been removed before inode/link-count comparison.
