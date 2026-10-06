@@ -2,6 +2,10 @@
 
 ## 2026-10-06
 
+- Isolated a Sony Jellyfin Android TV playback issue with HEVC Main 10 + TrueHD media.
+- Confirmed the same file plays cleanly on macOS and on the Sony via Kodi + JellyCon.
+- Decided to keep Sonarr/Radarr quality-first and use Kodi/JellyCon as a compatibility fallback instead of hard-excluding TrueHD.
+
 - Confirmed Jellyfin automatically detected the Radarr-imported movie.
 - Confirmed Direct Play on the Sony TV with no transcoding, validating the movie playback path end to end.
 
