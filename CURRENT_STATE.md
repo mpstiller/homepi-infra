@@ -161,3 +161,17 @@ Verified:
 - the remaining media file has link count `1`
 
 This confirms the automatic cleanup chain (seed -> stop -> Radarr Remove Completed -> torrent-side data removal). The import method itself still needs one final log check because the torrent-side hardlink had already been removed before inode/link-count comparison.
+
+
+## Jellyfin movie playback validation
+
+The imported Radarr movie was detected automatically by Jellyfin and played successfully on the Sony TV using **Direct Play** with no transcoding.
+
+Verified movie path:
+
+```text
+Seerr -> Radarr -> Prowlarr -> qBittorrent/Gluetun -> Radarr import
+     -> automatic seed/cleanup -> Jellyfin -> Sony TV Direct Play
+```
+
+This confirms the movie playback path is working end to end without Pi-side video transcoding.
