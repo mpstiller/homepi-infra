@@ -59,3 +59,35 @@ Do not replace this with a wildcard unless there is a deliberate reason.
 - qBittorrent Internet traffic remains isolated through Gluetun + Proton VPN.
 - Installing Tailscale on the host does not replace or bypass the Gluetun network namespace used by qBittorrent.
 - Public application access, if added later, should be designed separately with a controlled tunnel/reverse proxy.
+
+
+## Hardening
+
+The Tailnet has been hardened beyond the default unrestricted policy:
+
+- Device Approval is enabled.
+- The default allow-all grant has been removed.
+- Only the tailnet owner may access HomePi over Tailscale.
+- Access is restricted to the explicitly required HomePi ports plus ICMP.
+- Tailscale SSH is not used; normal OpenSSH on TCP 22 remains the SSH authentication layer.
+- Key expiry is disabled for the headless `homepi` node to avoid losing unattended remote access.
+- The identity provider is a Google account protected with a passkey.
+- Tailscale auto-update is enabled on HomePi.
+
+Allowed Tailscale ports:
+
+```text
+22    SSH
+3000  Homepage
+3552  Arcane
+5055  Seerr
+7878  Radarr
+8080  qBittorrent WebUI
+8095  Music Assistant
+8096  Jellyfin
+8123  Home Assistant
+8989  Sonarr
+9696  Prowlarr
+```
+
+The Tailnet policy is deny-by-default for all other HomePi ports.
