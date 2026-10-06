@@ -98,3 +98,10 @@ download to /data/torrents/movies
 The final media file had link count `1` after cleanup and no corresponding file remained in `/srv/data/torrents/movies`.
 
 This validates the automatic cleanup behavior. A final Radarr log check is retained only to prove whether that specific import used a hardlink before cleanup.
+
+
+### Jellyfin movie validation
+
+The Radarr-imported movie appeared automatically in Jellyfin and was played on the Sony TV using **Direct Play**. No transcoding was required.
+
+This validates the intended design principle for the Raspberry Pi 5: media should normally be served as Direct Play rather than relying on heavy server-side video transcoding.
