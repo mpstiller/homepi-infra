@@ -22,7 +22,7 @@ services:
     ports:
       - "3000:3000"
     environment:
-      HOMEPAGE_ALLOWED_HOSTS: homepi.local:3000
+      HOMEPAGE_ALLOWED_HOSTS: homepi.local:3000,homepi:3000,100.72.110.114:3000
       PUID: ${PUID}
       PGID: ${PGID}
     volumes:
