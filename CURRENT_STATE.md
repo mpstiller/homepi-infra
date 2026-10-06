@@ -116,6 +116,18 @@ Anime episode naming uses both season/episode and absolute numbering.
 
 ## Remote access
 
+Tailscale hardening is complete:
+
+- Device Approval is enabled.
+- Default allow-all access has been removed.
+- Only the tailnet owner can access HomePi.
+- Access is limited to required application/admin ports.
+- Tailscale SSH remains disabled; normal OpenSSH is used.
+- Key expiry is disabled for the headless HomePi node.
+- Tailscale auto-update is enabled.
+- Login is through a Google account protected with a passkey.
+
+
 Tailscale is installed and active on the HomePi host.
 
 ```text
