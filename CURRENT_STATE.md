@@ -175,3 +175,20 @@ Seerr -> Radarr -> Prowlarr -> qBittorrent/Gluetun -> Radarr import
 ```
 
 This confirms the movie playback path is working end to end without Pi-side video transcoding.
+
+
+## Sony playback compatibility finding
+
+A 1080p HEVC Main 10 release with TrueHD audio showed severe stutter in the native Jellyfin Android TV client on the Sony KD-65AF9.
+
+Observed behavior:
+
+- Jellyfin Android TV + English TrueHD 5.1: some stutter
+- Jellyfin Android TV + Japanese TrueHD 2.0: unusable
+- forcing audio downmix caused Direct Stream and made playback worse
+- the same file played cleanly on macOS
+- the same file played cleanly on the Sony TV through Kodi + JellyCon
+
+Conclusion: this is a client/playback-path compatibility issue in the Jellyfin Android TV app on the Sony, not a bad file, insufficient network throughput, or Pi-side server limitation.
+
+Current policy: do not downgrade Sonarr/Radarr release quality just to optimize for the native Sony Jellyfin app. Keep quality-first selection; use Kodi/JellyCon as the compatibility fallback for problematic releases.
