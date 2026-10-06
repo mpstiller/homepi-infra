@@ -1,5 +1,14 @@
 # Changelog
 
+## 2026-10-06
+
+- Installed and joined Tailscale on HomePi.
+- Verified remote access from iPhone over cellular.
+- HomePi Tailscale IPv4 is `100.72.110.114`; MagicDNS hostname is `homepi`.
+- Updated Homepage host validation for LAN and Tailscale access.
+- Kept qBittorrent Internet traffic isolated through Gluetun + Proton VPN.
+
+
 ## 2026-10-05
 
 - Added `HomePi Anime 1080p` in Sonarr with Anime-specific tier scoring, original-audio requirement, raw/dub-only/LQ exclusions, and low-weight Dual Audio preference.
