@@ -21,7 +21,7 @@
 - [x] Run Radarr end-to-end movie test.
 - [ ] Verify Radarr hardlinks in the same way Sonarr was verified.
 - [x] Validate automatic 30-minute seed -> stop -> Radarr cleanup behavior.
-- [ ] Confirm Jellyfin scans and Direct Play for imported material.
+- [x] Confirm Jellyfin scans and Direct Play for imported material.
 - [ ] Decide which authorized production indexers are retained.
 - [ ] Add media-stack services to Homepage if desired.
 
