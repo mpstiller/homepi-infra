@@ -105,3 +105,23 @@ This validates the automatic cleanup behavior. A final Radarr log check is retai
 The Radarr-imported movie appeared automatically in Jellyfin and was played on the Sony TV using **Direct Play**. No transcoding was required.
 
 This validates the intended design principle for the Raspberry Pi 5: media should normally be served as Direct Play rather than relying on heavy server-side video transcoding.
+
+
+### Sony TV playback compatibility
+
+A real-world compatibility issue was isolated with a 1080p HEVC Main 10 release containing TrueHD audio.
+
+The native Jellyfin Android TV client on the Sony KD-65AF9 stuttered, especially on the Japanese TrueHD 2.0 track. Forcing audio downmix triggered Direct Stream but worsened playback.
+
+The exact same file:
+
+- played cleanly on macOS
+- played cleanly on the Sony TV using Kodi + JellyCon
+
+Therefore the problem is attributed to the native Jellyfin Android TV playback path on the Sony rather than the media file, server, or network.
+
+Operational guidance:
+
+- keep Sonarr/Radarr quality-first
+- do not hard-exclude TrueHD solely for Sony compatibility
+- prefer Kodi + JellyCon for releases that stutter in the native Jellyfin TV client
