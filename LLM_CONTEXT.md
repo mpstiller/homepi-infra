@@ -586,12 +586,18 @@ Software direction: Home Assistant as backend/data/action layer; UI should be ha
 
 Resume work in this order unless requirements change:
 
-1. Finish the Homepage widget rollout while preserving the already implemented layout. Sonarr is the confirmed working reference widget.
-2. Add and validate the remaining useful native widgets one by one, keeping API keys/secrets only in the local Homepage `.env`.
-3. After the Homepage configuration is stable, synchronize the sanitized non-secret config structure into this repository so future sessions can recover it.
-4. Investigate the separate Jellyfin-over-Tailscale server-connection issue.
-5. Verify the Radarr import method/hardlink via logs on a future suitable import if desired.
-6. Decide which authorized production indexers are retained.
-7. Then move to the P1 backup workstream.
+1. **Close Homepage V1 reproducibility**, not by adding more widgets indiscriminately:
+   - capture the exact live Homepage Compose and sync the live `env_file` + `host.docker.internal:host-gateway` structure;
+   - capture sanitized `services.yaml`, `settings.yaml`, `widgets.yaml`, and `docker.yaml`;
+   - keep the local Homepage `.env` secret and out of Git;
+   - decide whether Arcane needs a native widget; Music Assistant/Tailscale may remain link-only;
+   - run a final LAN/Tailscale smoke test.
+2. Keep the Jellyfin Homepage widget deferred until the separate Jellyfin-over-Tailscale/admin-access issue is resolved or local admin access is available.
+3. Finish the current container-update maintenance window and refresh version/image inventory after the chosen updates are complete.
+4. Move to the **P1 backup workstream**: independent backup target, automated backup of `/srv/appdata` + `/opt/homelab/stacks`, and a tested restore path.
+5. Investigate the Jellyfin-over-Tailscale connection issue.
+6. Verify the Radarr import method/hardlink on a future suitable import rather than manufacturing a special test.
+7. Decide which authorized production indexers are retained.
+8. Then choose the next capability expansion (smart-home/Matter, photo/file cloud, or e-ink dashboard) based on current priorities and resource budget.
 
 See `docs/homepage.md` for the dashboard-specific handoff.
