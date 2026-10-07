@@ -81,7 +81,7 @@ The repository now contains:
 The current active workstream is the Homepage dashboard.
 
 - The proposed service-group layout is already implemented.
-- The Sonarr, Radarr, Prowlarr, and qBittorrent native widgets are confirmed working.
+- The Sonarr, Radarr, Prowlarr, qBittorrent, and Seerr native widgets are confirmed working.
 - The Sonarr API key is stored in the local Homepage `.env`, not in Git.
 - Continue with the remaining widgets one at a time and validate each before moving on.
 - The live Homepage config files under `/srv/appdata/homepage` are not yet checked into this repository; preserve/synchronize a sanitized version once the dashboard is stable.
