@@ -46,12 +46,12 @@ Sonarr            Radarr
 Prowlarr          qBittorrent
 
 SYSTEM
-Arcane            Tailscale
+Arcane            Gluetun
 ```
 
 ## Confirmed native widget state
 
-Confirmed working:
+Confirmed working/configured:
 
 - Sonarr
 - Radarr
@@ -59,15 +59,16 @@ Confirmed working:
 - qBittorrent
 - Seerr
 - Home Assistant
+- Arcane
 
 The qBittorrent widget reaches the WebUI through the host port published by Gluetun; do not point Homepage at a normal `qbittorrent:8080` container address because qBittorrent shares Gluetun's network namespace.
 
 Still open / intentionally deferred:
 
 - **Jellyfin:** deferred while the known Jellyfin-over-Tailscale issue prevents convenient remote admin/API-key setup. The widget backend and the browser-link problem are separate concerns.
-- **Arcane:** the service card exists, but native-widget success has not yet been explicitly recorded. Validate it if the extra container/update summary is useful; otherwise a plain service card is sufficient.
 - **Music Assistant:** keep as a normal service card unless a genuinely useful supported widget is identified. A widget is not required for Homepage V1.
-- **Tailscale:** keep as a normal service/status link rather than forcing a custom widget. Tailscale administration remains outside Homepage.
+- **Gluetun:** intentionally shown as a Docker-status card without a service link/widget; this exposes container health without adding another administration surface.
+- **Tailscale:** intentionally not present as a Homepage service card. Tailscale is a host-level private-access layer, not a Docker workload managed through this dashboard.
 
 ## Secret handling
 
@@ -118,15 +119,14 @@ docker.yaml
 .env
 ```
 
-The non-secret YAML files are **not yet synchronized into Git**. Until they are captured, the live Pi is authoritative for the dashboard configuration.
+The non-secret YAML files were captured on 2026-10-07 and are mirrored under `stacks/homepage/config/`.
 
-There is also a known Compose drift that must be closed before Homepage is considered reproducible:
+The exact live Compose structure was also synchronized, including:
 
-- the live Compose file contains `env_file` so Homepage receives the local `HOMEPAGE_VAR_...` values;
-- the live Compose file contains `extra_hosts: host.docker.internal:host-gateway`;
-- the checked-in `stacks/homepage/compose.yaml` does not yet contain those live changes.
+- `env_file: .env` for local `HOMEPAGE_VAR_...` values;
+- `extra_hosts: host.docker.internal:host-gateway` for widget-to-host connectivity.
 
-Do not guess the exact live Compose structure. Capture the live file from the Pi and then replace the repository version with the sanitized exact configuration.
+The repository is now the reproducible reference for Homepage structure. The live Pi remains authoritative for secrets and for any changes made after the latest sync.
 
 ## Docker visibility
 
@@ -144,13 +144,11 @@ Keep the proxy read-only in spirit. Do not grant Homepage Docker write access me
 
 Required before marking Homepage V1 complete:
 
-1. Capture the exact live `/opt/homelab/stacks/homepage/compose.yaml` and synchronize its non-secret structure into Git.
-2. Capture and commit sanitized copies of `services.yaml`, `settings.yaml`, `widgets.yaml`, and `docker.yaml`.
-3. Never commit `/srv/appdata/homepage/.env`; provide only safe variable names/examples if needed.
-4. Validate all current browser links from LAN/Tailscale, with the existing Jellyfin exception documented separately.
-5. Decide whether the Arcane native widget adds value and either validate it or explicitly keep Arcane link-only.
-6. Add the Jellyfin widget after Jellyfin admin access is convenient again / the Tailscale issue is resolved.
-7. Run one final dashboard smoke test after the repository sync.
+1. [x] Capture the exact live `/opt/homelab/stacks/homepage/compose.yaml` and synchronize its non-secret structure into Git.
+2. [x] Capture and commit sanitized copies of `services.yaml`, `settings.yaml`, `widgets.yaml`, and `docker.yaml`.
+3. [x] Keep `/srv/appdata/homepage/.env` out of Git and document only safe variable names in `.env.example`.
+4. [ ] Run one final dashboard smoke test: current widgets render and current browser links work over the active access path, with the Jellyfin exception documented separately.
+5. [ ] Add the Jellyfin widget after Jellyfin admin access is convenient again / the Tailscale issue is resolved.
 
 Optional polish, not required for V1:
 
