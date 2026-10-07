@@ -48,6 +48,7 @@ Arcane            Tailscale
 - Sonarr native widget: working.
 - Radarr native widget: working.
 - Prowlarr native widget: working.
+- qBittorrent native widget: working.
 - Sonarr API key: stored in the local Homepage `.env` as a `HOMEPAGE_VAR_...` variable.
 - Homepage resolves widget backends through `host.docker.internal`.
 - The live Homepage container has an `extra_hosts` mapping for `host.docker.internal:host-gateway`.
