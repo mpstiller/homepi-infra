@@ -91,3 +91,10 @@ Allowed Tailscale ports:
 ```
 
 The Tailnet policy is deny-by-default for all other HomePi ports.
+
+
+### Known issue: Jellyfin remote connection
+
+A remote MacBook on the Tailnet can open the Jellyfin web client at `http://homepi:8096`, but the client currently cannot connect to the HomePi Jellyfin server. Automatic discovery is not expected to work across the Tailscale overlay, and manually adding `http://homepi:8096` also fails.
+
+This is an unresolved Jellyfin-specific remote-access issue. Other HomePi services remain reachable through Tailscale/MagicDNS, so it should be debugged independently from Homepage.
