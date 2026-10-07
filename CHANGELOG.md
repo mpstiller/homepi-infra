@@ -6,6 +6,7 @@
 - Confirmed the Radarr native Homepage widget is also working.
 - Confirmed the Prowlarr native Homepage widget is working.
 - Confirmed the qBittorrent native Homepage widget is working through the Gluetun-published host port.
+- Confirmed the Seerr native Homepage widget is working.
 - Documented that Homepage API keys remain in the local `.env` and are not committed.
 - Added `docs/homepage.md` as the dashboard-specific handoff and documented that the live Homepage YAML files are not yet synchronized into Git.
 - Removed stale handoff instructions that still treated the Seerr profile mismatch, Radarr validation, and private overlay selection as unfinished.
