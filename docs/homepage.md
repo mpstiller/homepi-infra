@@ -46,10 +46,33 @@ Arcane            Tailscale
 ## Confirmed widget state
 
 - Sonarr native widget: working.
-- Sonarr API key: stored in the local Homepage `.env`.
+- Sonarr API key: stored in the local Homepage `.env` as a `HOMEPAGE_VAR_...` variable.
+- Homepage resolves widget backends through `host.docker.internal`.
+- The live Homepage container has an `extra_hosts` mapping for `host.docker.internal:host-gateway`.
 - Secrets must never be committed.
 
-The remaining widgets should be added and validated incrementally, using Sonarr as the known-good reference pattern where applicable.
+Sanitized Sonarr reference block:
+
+```yaml
+- Sonarr:
+    icon: sonarr.png
+    href: http://homepi:8989
+    description: Serienverwaltung
+    server: homepi
+    container: sonarr
+    showStats: true
+    widget:
+      type: sonarr
+      url: http://host.docker.internal:8989
+      key: "{{HOMEPAGE_VAR_SONARR_KEY}}"
+      enableQueue: true
+      fields:
+        - wanted
+        - queued
+        - series
+```
+
+The remaining widgets should be added and validated incrementally, using this as the known-good reference pattern where applicable.
 
 ## Runtime files
 
