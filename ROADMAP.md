@@ -26,7 +26,8 @@
 - [ ] Complete Homepage widgets for the current service layout.
   - [x] Sonarr widget working.
   - [x] Radarr widget working.
-  - [ ] Validate remaining desired native widgets (Prowlarr, qBittorrent, Seerr, Jellyfin, Home Assistant, Arcane where useful).
+  - [x] Prowlarr widget working.
+  - [ ] Validate remaining desired native widgets (qBittorrent, Seerr, Jellyfin, Home Assistant, Arcane where useful).
   - [ ] Synchronize sanitized Homepage config structure into the repo after the dashboard is stable.
 
 ## P1 — Backups
