@@ -23,7 +23,7 @@
 - [x] Validate automatic 30-minute seed -> stop -> Radarr cleanup behavior.
 - [x] Confirm Jellyfin scans and Direct Play for imported material.
 - [ ] Decide which authorized production indexers are retained.
-- [ ] Close Homepage V1 and make it reproducible.
+- [x] Close Homepage V1 and make it reproducible.
   - [x] Final service-group layout implemented.
   - [x] Sonarr widget working.
   - [x] Radarr widget working.
@@ -36,7 +36,7 @@
   - [ ] Jellyfin widget deferred until local/admin access is available or the Tailscale issue is resolved.
   - [x] Capture the exact live Homepage Compose file and sync the live `env_file` + `host.docker.internal:host-gateway` structure into Git.
   - [x] Commit sanitized `services.yaml`, `settings.yaml`, `widgets.yaml`, and `docker.yaml`; never commit the local Homepage `.env`.
-  - [ ] Run one final Homepage smoke test, including current service links over the active LAN/Tailscale access path; keep the known Jellyfin exception separate.
+  - [x] Run one final Homepage smoke test, including current service links over the active LAN/Tailscale access path; keep the known Jellyfin exception separate.
   - [ ] Optional: visual/global-widget polish only where it adds useful signal.
 
 ## P1 — Backups
