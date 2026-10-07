@@ -149,6 +149,8 @@ Homepage host validation was updated to allow `homepi.local:3000`, `homepi:3000`
 
 ## Radarr end-to-end result
 
+Radarr updated to `6.4.4.10685` on 2026-10-07; startup and DB checks completed cleanly.
+
 A real movie request completed successfully through:
 
 ```text
