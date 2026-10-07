@@ -1,6 +1,7 @@
 # Current State
 
-**Live verified:** 2026-10-05
+**Live baseline verified:** 2026-10-05  
+**State updated:** 2026-10-07
 
 ## Stable / confirmed from the running Pi
 
@@ -55,7 +56,7 @@ max_seeding_time         30
 max_seeding_time_enabled true
 ```
 
-The global share-limit action is **Stop torrent**. Sonarr and Radarr both have `Remove Completed` enabled; the upcoming Radarr test will validate the full automatic cleanup chain.
+The global share-limit action is **Stop torrent**. Sonarr and Radarr both have `Remove Completed` enabled. The Radarr end-to-end test has validated the full automatic cleanup chain.
 
 ### Quality profile
 
@@ -77,13 +78,15 @@ The repository now contains:
 
 ## Immediate resume point
 
-P1 Media Stack V1 starts now:
+The current active workstream is the Homepage dashboard.
 
-1. run a Radarr movie end-to-end test;
-2. verify Radarr hardlinks;
-3. verify Radarr hardlinks;
-4. verify automatic 30-minute seed -> stop -> *arr cleanup;
-5. verify Jellyfin library import and Direct Play.
+- The proposed service-group layout is already implemented.
+- The Sonarr native widget is confirmed working.
+- The Sonarr API key is stored in the local Homepage `.env`, not in Git.
+- Continue with the remaining widgets one at a time and validate each before moving on.
+- The live Homepage config files under `/srv/appdata/homepage` are not yet checked into this repository; preserve/synchronize a sanitized version once the dashboard is stable.
+
+See `docs/homepage.md`.
 
 ## Seerr profile alignment
 
@@ -91,7 +94,7 @@ Seerr has now been updated so **both Sonarr and Radarr use `HomePi 1080p` (profi
 
 ## Automatic cleanup live state
 
-qBittorrent global share limits currently seed for 30 minutes and then **Stop** the torrent. Both Sonarr and Radarr have per-client `Remove Completed` enabled. According to the supported *arr/qBittorrent workflow, this should allow *arr to remove a successfully imported torrent and its torrent-side data after qBittorrent reaches the seed goal and stops it. The upcoming Radarr test will validate this end to end.
+qBittorrent global share limits seed for 30 minutes and then **Stop** the torrent. Both Sonarr and Radarr have per-client `Remove Completed` enabled. A real Radarr request validated that the torrent and torrent-side data are removed after the seed goal while the imported media file remains.
 
 
 ## Anime profile
