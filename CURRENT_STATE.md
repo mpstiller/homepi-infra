@@ -21,6 +21,7 @@
 - Proton WireGuard, kill switch, public-IP separation and dynamic port forwarding were tested successfully.
 - Live qBittorrent v5.2.3 is bound to `tun0` and `0.0.0.0` (All IPv4 addresses).
 - Prowlarr -> Sonarr/Radarr Full Sync works.
+- Prowlarr updated to `2.6.5.5623` on 2026-10-07; startup and DB checks completed cleanly.
 - Seerr Automatic Search is enabled.
 - Sonarr end-to-end workflow and hardlink import have succeeded in real use.
 
