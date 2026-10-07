@@ -23,7 +23,10 @@
 - [x] Validate automatic 30-minute seed -> stop -> Radarr cleanup behavior.
 - [x] Confirm Jellyfin scans and Direct Play for imported material.
 - [ ] Decide which authorized production indexers are retained.
-- [ ] Add media-stack services to Homepage if desired.
+- [ ] Complete Homepage widgets for the current service layout.
+  - [x] Sonarr widget working.
+  - [ ] Validate remaining desired native widgets (Radarr, Prowlarr, qBittorrent, Seerr, Jellyfin, Home Assistant, Arcane where useful).
+  - [ ] Synchronize sanitized Homepage config structure into the repo after the dashboard is stable.
 
 ## P1 — Backups
 
@@ -34,7 +37,7 @@
 
 ## P2 — Network / remote access
 
-- [ ] Choose private overlay network for admin access.
+- [x] Implement and harden Tailscale as the private overlay network for admin access.
 - [ ] Buy/configure own domain.
 - [ ] Decide public-app tunnel/reverse-proxy architecture.
 - [ ] Keep admin UIs private.
