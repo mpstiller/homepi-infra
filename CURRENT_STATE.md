@@ -90,7 +90,7 @@ The active Homepage dashboard build is functionally near V1 completion.
 - Arcane is configured with its native widget; Music Assistant remains link-only; Gluetun is shown as a Docker-status card; Tailscale is intentionally not a dashboard service.
 - Homepage reproducibility is now closed: the exact live Compose structure is synchronized, including `env_file` and `host.docker.internal:host-gateway`.
 - Sanitized live copies of `services.yaml`, `settings.yaml`, `widgets.yaml`, and `docker.yaml` are checked in under `stacks/homepage/config/`.
-- Only a final dashboard smoke test remains before Homepage V1 can be considered complete; the Jellyfin widget remains separately deferred.
+- Homepage V1 is complete: layout, widgets, Docker stats, service links, live Compose/config capture, and the final smoke test are all validated. The Jellyfin widget remains separately deferred because of the known remote/admin-access issue.
 
 See `docs/homepage.md`.
 
