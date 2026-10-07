@@ -81,13 +81,16 @@ The repository now contains:
 
 ## Immediate resume point
 
-The current active workstream is the Homepage dashboard.
+The active Homepage dashboard build is functionally near V1 completion.
 
-- The proposed service-group layout is already implemented.
-- The Sonarr, Radarr, Prowlarr, qBittorrent, Seerr, and Home Assistant native widgets are confirmed working.
-- The Sonarr API key is stored in the local Homepage `.env`, not in Git.
-- Continue with the remaining widgets one at a time and validate each before moving on.
-- The live Homepage config files under `/srv/appdata/homepage` are not yet checked into this repository; preserve/synchronize a sanitized version once the dashboard is stable.
+- The service-group layout is implemented.
+- Sonarr, Radarr, Prowlarr, qBittorrent, Seerr, and Home Assistant native widgets are confirmed working.
+- Homepage API keys/tokens are stored only in the local `/srv/appdata/homepage/.env`.
+- Jellyfin widget work is deferred because of the separate Jellyfin-over-Tailscale/admin-access issue.
+- Arcane native-widget value/success still needs an explicit decision; Music Assistant and Tailscale do not need widgets for V1.
+- **Reproducibility is not yet closed:** the live Homepage Compose contains `env_file` and `extra_hosts: host.docker.internal:host-gateway`, while the checked-in Compose has not yet been synchronized.
+- The live non-secret Homepage config files (`services.yaml`, `settings.yaml`, `widgets.yaml`, `docker.yaml`) are not yet checked into the repository.
+- Homepage V1 should be closed by capturing those exact live files, sanitizing secrets, committing the structure, and running one final smoke test.
 
 See `docs/homepage.md`.
 
