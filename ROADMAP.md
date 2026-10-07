@@ -23,16 +23,22 @@
 - [x] Validate automatic 30-minute seed -> stop -> Radarr cleanup behavior.
 - [x] Confirm Jellyfin scans and Direct Play for imported material.
 - [ ] Decide which authorized production indexers are retained.
-- [ ] Complete Homepage widgets for the current service layout.
+- [ ] Close Homepage V1 and make it reproducible.
+  - [x] Final service-group layout implemented.
   - [x] Sonarr widget working.
   - [x] Radarr widget working.
   - [x] Prowlarr widget working.
   - [x] qBittorrent widget working.
   - [x] Seerr widget working.
-  - [ ] Jellyfin widget deferred until local/admin access is available or the Tailscale issue is resolved.
   - [x] Home Assistant widget working.
-  - [ ] Validate Arcane widget if useful.
-  - [ ] Synchronize sanitized Homepage config structure into the repo after the dashboard is stable.
+  - [ ] Decide whether the Arcane native widget adds value; validate it or explicitly keep Arcane link-only.
+  - [ ] Keep Music Assistant and Tailscale link-only unless a useful supported widget is identified.
+  - [ ] Jellyfin widget deferred until local/admin access is available or the Tailscale issue is resolved.
+  - [ ] Capture the exact live Homepage Compose file and sync the live `env_file` + `host.docker.internal:host-gateway` structure into Git.
+  - [ ] Commit sanitized `services.yaml`, `settings.yaml`, `widgets.yaml`, and `docker.yaml`; never commit the local Homepage `.env`.
+  - [ ] Validate current service links from LAN/Tailscale, keeping the known Jellyfin exception separate.
+  - [ ] Run one final Homepage smoke test after repository synchronization.
+  - [ ] Optional: visual/global-widget polish only where it adds useful signal.
 
 ## P1 — Backups
 
