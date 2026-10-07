@@ -29,7 +29,8 @@
   - [x] Prowlarr widget working.
   - [x] qBittorrent widget working.
   - [x] Seerr widget working.
-  - [ ] Validate remaining desired native widgets (Jellyfin, Home Assistant, Arcane where useful).
+  - [ ] Jellyfin widget deferred until local/admin access is available or the Tailscale issue is resolved.
+  - [ ] Validate remaining desired native widgets (Home Assistant, Arcane where useful).
   - [ ] Synchronize sanitized Homepage config structure into the repo after the dashboard is stable.
 
 ## P1 — Backups
