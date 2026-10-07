@@ -223,6 +223,7 @@ The earlier profile mismatch is resolved: normal Sonarr and Radarr requests use 
 - Jellyfin libraries Movies + TV selected/synced.
 - Connected to Radarr and Sonarr.
 - `Automatic Search` is now enabled for the live end-to-end workflow.
+- Current Seerr version `3.5.0` (updated 2026-10-07); startup and Jellyfin sync validated after update.
 
 ### Sonarr / Radarr -> qBittorrent
 
