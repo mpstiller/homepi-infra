@@ -23,6 +23,7 @@
 - Prowlarr -> Sonarr/Radarr Full Sync works.
 - Prowlarr updated to `2.6.5.5623` on 2026-10-07; startup and DB checks completed cleanly.
 - Seerr Automatic Search is enabled.
+- Seerr updated to `3.5.0` on 2026-10-07; startup completed cleanly and the post-start Jellyfin Recently Added scan completed successfully for Movies and Series.
 - Sonarr end-to-end workflow and hardlink import have succeeded in real use.
 - Sonarr updated to `4.0.20.3014` on 2026-10-07; startup and DB checks completed cleanly.
 
