@@ -1,0 +1,24 @@
+title: HomePi
+language: de
+statusStyle: dot
+disableIndexing: true
+target: _blank
+headerStyle: clean
+useEqualHeights: true
+
+layout:
+  Medien:
+    style: row
+    columns: 2
+
+  Smart Home & Audio:
+    style: row
+    columns: 2
+
+  Medienverwaltung:
+    style: row
+    columns: 4
+
+  System:
+    style: row
+    columns: 2
