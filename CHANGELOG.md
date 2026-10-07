@@ -2,6 +2,7 @@
 
 ## 2026-10-07
 
+- Updated Radarr from `6.3.0.10514` to `6.4.4.10685`; startup, SQLite checks, and service binding completed without errors.
 - Updated Sonarr from `4.0.19.2979` to `4.0.20.3014`; startup, SQLite checks, and service binding completed without errors.
 - Updated Prowlarr from `2.5.2.5491` to `2.6.5.5623`; startup, SQLite checks, and service binding completed without errors.
 - Recorded the implemented Homepage service-group layout and confirmed the Sonarr native widget is working.
