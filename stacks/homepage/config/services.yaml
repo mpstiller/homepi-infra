@@ -1,0 +1,147 @@
+- Medien:
+    - Jellyfin:
+        icon: jellyfin.png
+        href: http://homepi:8096
+        description: Filme & Serien
+        server: homepi
+        container: jellyfin
+        showStats: true
+
+    - Seerr:
+        icon: seerr.png
+        href: http://homepi:5055
+        description: Filme & Serien anfragen
+        server: homepi
+        container: seerr
+        showStats: true
+        widget:
+          type: seerr
+          url: http://host.docker.internal:5055
+          key: "{{HOMEPAGE_VAR_SEERR_KEY}}"
+          fields:
+            - pending
+            - processing
+            - available
+            - issues
+
+- Smart Home & Audio:
+    - Home Assistant:
+        icon: home-assistant.png
+        href: http://homepi:8123
+        description: Smart-Home-Zentrale
+        server: homepi
+        container: homeassistant
+        showStats: true
+        widget:
+          type: homeassistant
+          url: http://host.docker.internal:8123
+          key: "{{HOMEPAGE_VAR_HOMEASSISTANT_KEY}}"
+          fields:
+            - lights_on
+            - switches_on
+            - people_home
+
+    - Music Assistant:
+        icon: music-assistant.png
+        href: http://homepi:8095
+        description: Musikserver & Multiroom
+        server: homepi
+        container: music-assistant
+        showStats: true
+
+- Medienverwaltung:
+    - Sonarr:
+        icon: sonarr.png
+        href: http://homepi:8989
+        description: Serienverwaltung
+        server: homepi
+        container: sonarr
+        showStats: true
+        widget:
+          type: sonarr
+          url: http://host.docker.internal:8989
+          key: "{{HOMEPAGE_VAR_SONARR_KEY}}"
+          enableQueue: true
+          fields:
+            - wanted
+            - queued
+            - series
+
+    - Radarr:
+        icon: radarr.png
+        href: http://homepi:7878
+        description: Filmverwaltung
+        server: homepi
+        container: radarr
+        showStats: true
+        widget:
+          type: radarr
+          url: http://host.docker.internal:7878
+          key: "{{HOMEPAGE_VAR_RADARR_KEY}}"
+          enableQueue: true
+          fields:
+            - wanted
+            - queued
+            - movies
+
+    - Prowlarr:
+        icon: prowlarr.png
+        href: http://homepi:9696
+        description: Indexer-Verwaltung
+        server: homepi
+        container: prowlarr
+        showStats: true
+        widget:
+          type: prowlarr
+          url: http://host.docker.internal:9696
+          key: "{{HOMEPAGE_VAR_PROWLARR_KEY}}"
+          fields:
+            - numberOfQueries
+            - numberOfGrabs
+            - numberOfFailQueries
+            - numberOfFailGrabs
+
+    - qBittorrent:
+        icon: qbittorrent.png
+        href: http://homepi:8080
+        description: Downloads über Proton VPN
+        server: homepi
+        container: qbittorrent
+        showStats: true
+        widget:
+          type: qbittorrent
+          url: http://host.docker.internal:8080
+          key: "{{HOMEPAGE_VAR_QBITTORRENT_KEY}}"
+          enableLeechProgress: true
+          enableLeechSize: true
+          fields:
+            - leech
+            - download
+            - seed
+            - upload
+
+- System:
+    - Arcane:
+        icon: arcane.png
+        href: http://homepi:3552
+        description: Docker & Stack-Verwaltung
+        server: homepi
+        container: arcane
+        showStats: true
+        widget:
+          type: arcane
+          url: http://host.docker.internal:3552
+          env: 0
+          key: "{{HOMEPAGE_VAR_ARCANE_KEY}}"
+          fields:
+            - running
+            - stopped
+            - total
+            - image_updates
+
+    - Gluetun:
+        icon: gluetun.png
+        description: Proton VPN & Kill-Switch
+        server: homepi
+        container: gluetun
+        showStats: true
