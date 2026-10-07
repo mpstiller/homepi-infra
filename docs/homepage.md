@@ -50,6 +50,7 @@ Arcane            Tailscale
 - Prowlarr native widget: working.
 - qBittorrent native widget: working.
 - Seerr native widget: working.
+- Home Assistant native widget: working.
 - Jellyfin widget: deferred while the known Jellyfin-over-Tailscale issue prevents remote admin access/API-key creation.
 - Sonarr API key: stored in the local Homepage `.env` as a `HOMEPAGE_VAR_...` variable.
 - Homepage resolves widget backends through `host.docker.internal`.
