@@ -1,5 +1,14 @@
 # Changelog
 
+## 2026-10-07
+
+- Recorded the implemented Homepage service-group layout and confirmed the Sonarr native widget is working.
+- Documented that Homepage API keys remain in the local `.env` and are not committed.
+- Added `docs/homepage.md` as the dashboard-specific handoff and documented that the live Homepage YAML files are not yet synchronized into Git.
+- Removed stale handoff instructions that still treated the Seerr profile mismatch, Radarr validation, and private overlay selection as unfinished.
+- Aligned the roadmap and LLM context with the implemented/hardened Tailscale setup and the current Homepage widget workstream.
+- Kept the Jellyfin-over-Tailscale connection problem documented as a separate unresolved issue.
+
 ## 2026-10-06
 
 - Isolated a Sony Jellyfin Android TV playback issue with HEVC Main 10 + TrueHD media.
