@@ -24,6 +24,7 @@
 - Prowlarr updated to `2.6.5.5623` on 2026-10-07; startup and DB checks completed cleanly.
 - Seerr Automatic Search is enabled.
 - Sonarr end-to-end workflow and hardlink import have succeeded in real use.
+- Sonarr updated to `4.0.20.3014` on 2026-10-07; startup and DB checks completed cleanly.
 
 ## Current media configuration
 
