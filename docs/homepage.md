@@ -22,11 +22,17 @@ homepi:3000
 100.72.110.114:3000
 ```
 
-Widget backend connectivity is a separate concern from browser navigation. Do not assume an `href` that works from a Tailscale client is automatically the correct `widget.url` from inside the Homepage container.
+Widget backend connectivity is separate from browser navigation. Working widgets use the HomePi host from inside the Homepage container via:
+
+```text
+http://host.docker.internal:<service-port>
+```
+
+The live Homepage Compose file includes an `extra_hosts` mapping for `host.docker.internal:host-gateway`.
 
 ## Current layout
 
-The dashboard layout is already implemented as:
+The implemented dashboard layout is:
 
 ```text
 MEDIA
@@ -43,21 +49,37 @@ SYSTEM
 Arcane            Tailscale
 ```
 
-## Confirmed widget state
+## Confirmed native widget state
 
-- Sonarr native widget: working.
-- Radarr native widget: working.
-- Prowlarr native widget: working.
-- qBittorrent native widget: working.
-- Seerr native widget: working.
-- Home Assistant native widget: working.
-- Jellyfin widget: deferred while the known Jellyfin-over-Tailscale issue prevents remote admin access/API-key creation.
-- Sonarr API key: stored in the local Homepage `.env` as a `HOMEPAGE_VAR_...` variable.
-- Homepage resolves widget backends through `host.docker.internal`.
-- The live Homepage container has an `extra_hosts` mapping for `host.docker.internal:host-gateway`.
-- Secrets must never be committed.
+Confirmed working:
 
-Sanitized Sonarr reference block:
+- Sonarr
+- Radarr
+- Prowlarr
+- qBittorrent
+- Seerr
+- Home Assistant
+
+The qBittorrent widget reaches the WebUI through the host port published by Gluetun; do not point Homepage at a normal `qbittorrent:8080` container address because qBittorrent shares Gluetun's network namespace.
+
+Still open / intentionally deferred:
+
+- **Jellyfin:** deferred while the known Jellyfin-over-Tailscale issue prevents convenient remote admin/API-key setup. The widget backend and the browser-link problem are separate concerns.
+- **Arcane:** the service card exists, but native-widget success has not yet been explicitly recorded. Validate it if the extra container/update summary is useful; otherwise a plain service card is sufficient.
+- **Music Assistant:** keep as a normal service card unless a genuinely useful supported widget is identified. A widget is not required for Homepage V1.
+- **Tailscale:** keep as a normal service/status link rather than forcing a custom widget. Tailscale administration remains outside Homepage.
+
+## Secret handling
+
+Homepage service API keys/tokens are kept only in:
+
+```text
+/srv/appdata/homepage/.env
+```
+
+using `HOMEPAGE_VAR_...` variables. Secrets must never be committed.
+
+Known-good widget pattern:
 
 ```yaml
 - Sonarr:
@@ -78,9 +100,7 @@ Sanitized Sonarr reference block:
         - series
 ```
 
-The remaining widgets should be added and validated incrementally, using this as the known-good reference pattern where applicable.
-
-## Runtime files
+## Runtime files and source-of-truth gap
 
 The live dashboard configuration is under:
 
@@ -95,9 +115,18 @@ services.yaml
 settings.yaml
 widgets.yaml
 docker.yaml
+.env
 ```
 
-These files are not yet synchronized into Git as of 2026-10-07. Until they are captured, the live Pi is authoritative for dashboard YAML.
+The non-secret YAML files are **not yet synchronized into Git**. Until they are captured, the live Pi is authoritative for the dashboard configuration.
+
+There is also a known Compose drift that must be closed before Homepage is considered reproducible:
+
+- the live Compose file contains `env_file` so Homepage receives the local `HOMEPAGE_VAR_...` values;
+- the live Compose file contains `extra_hosts: host.docker.internal:host-gateway`;
+- the checked-in `stacks/homepage/compose.yaml` does not yet contain those live changes.
+
+Do not guess the exact live Compose structure. Capture the live file from the Pi and then replace the repository version with the sanitized exact configuration.
 
 ## Docker visibility
 
@@ -109,15 +138,25 @@ INFO=1
 POST=0
 ```
 
-This should remain read-only in spirit. Do not give Homepage write access to Docker merely to support dashboard widgets.
+Keep the proxy read-only in spirit. Do not grant Homepage Docker write access merely to enrich the dashboard.
 
-## Next work
+## Homepage V1 closure checklist
 
-1. Continue from the working Sonarr widget.
-2. Add the remaining desired widgets one at a time.
-3. Validate displayed data and browser links separately.
-4. Keep all API keys/tokens in the local `.env`.
-5. Once stable, commit only sanitized configuration/structure so a future session can reconstruct the dashboard accurately.
+Required before marking Homepage V1 complete:
+
+1. Capture the exact live `/opt/homelab/stacks/homepage/compose.yaml` and synchronize its non-secret structure into Git.
+2. Capture and commit sanitized copies of `services.yaml`, `settings.yaml`, `widgets.yaml`, and `docker.yaml`.
+3. Never commit `/srv/appdata/homepage/.env`; provide only safe variable names/examples if needed.
+4. Validate all current browser links from LAN/Tailscale, with the existing Jellyfin exception documented separately.
+5. Decide whether the Arcane native widget adds value and either validate it or explicitly keep Arcane link-only.
+6. Add the Jellyfin widget after Jellyfin admin access is convenient again / the Tailscale issue is resolved.
+7. Run one final dashboard smoke test after the repository sync.
+
+Optional polish, not required for V1:
+
+- refine descriptions/icons/order if desired;
+- add only global/system widgets that provide clear signal rather than visual clutter;
+- revisit Music Assistant/Tailscale only if supported widgets provide useful information.
 
 ## Related known issue
 
