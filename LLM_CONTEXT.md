@@ -49,7 +49,7 @@ The owner can code but prefers infrastructure changes to be explained and applie
 - Final intended server placement: cellar near router via Ethernet.
 - During setup the Pi was also used over Wi-Fi; `homepi.local` resolves on the LAN.
 - Do not design remote access around exposing random router ports or UPnP.
-- Future remote-access direction: private overlay/VPN for admin access; controlled tunnel/reverse proxy for selected public apps; own domain later.
+- Tailscale is the implemented private remote-access layer for admin/device access. Public-app access, if added later, should use a separate controlled tunnel/reverse-proxy design; own domain remains future work.
 
 ## 4. Host directory conventions
 
@@ -132,7 +132,14 @@ VERIFY ON PI: exact image digests/tags and current container versions should be 
 - Persistent data: `/srv/appdata/homepage`.
 - UI: `http://homepi.local:3000`.
 - Uses a restricted Docker socket proxy with read-only-style permissions (`CONTAINERS=1`, `INFO=1`, `POST=0`).
-- Dashboard currently includes Arcane, Home Assistant, Music Assistant, and Jellyfin; media-stack services can be added later.
+- Dashboard layout is already organized as:
+  - Media: Jellyfin, Seerr
+  - Smart Home & Audio: Home Assistant, Music Assistant
+  - Media Management: Sonarr, Radarr, Prowlarr, qBittorrent
+  - System: Arcane, Tailscale
+- The Sonarr native service widget is confirmed working.
+- The Sonarr API key is stored only in the local Homepage `.env`; never commit it.
+- The live Homepage config files under `/srv/appdata/homepage` (`services.yaml`, `settings.yaml`, `widgets.yaml`, `docker.yaml`) are not yet synchronized into this repository.
 
 ## 8. Home Assistant
 
@@ -209,12 +216,7 @@ Seerr
 
 ### Seerr
 
-#### Live Seerr profile mismatch — must fix before next request
-
-The 2026-10-05 live audit found that Seerr still selects the built-in `HD-1080p` profile (ID 4) for **both** Sonarr and Radarr. The intended `HomePi 1080p` profile exists as ID 7 in both applications and has the correct German/DL scores.
-
-Change both Seerr service configurations to `HomePi 1080p` before the next real request.
-
+The earlier profile mismatch is resolved: normal Sonarr and Radarr requests use `HomePi 1080p` (profile ID 7), while Anime requests use the dedicated Sonarr Anime profile.
 
 - UI: `5055`.
 - Connected to Jellyfin.
@@ -516,7 +518,7 @@ Manual cleanup has been used so far:
 - Remove torrent **and downloaded torrent-side files** from qBittorrent when seeding is no longer desired.
 - The `/data/media/...` hardlink remains and becomes `links=1`.
 
-Live qBittorrent has a 30-minute global seeding-time limit enabled, ratio limiting disabled, and share-limit action `0`, which is **Stop torrent**. Sonarr and Radarr both have per-client `Remove Completed` enabled. The intended automatic cleanup chain is therefore configured and now needs one end-to-end validation: after import and 30 minutes of seeding, qBittorrent stops the torrent and *arr should remove the torrent plus torrent-side data while the library hardlink remains.
+Live qBittorrent has a 30-minute global seeding-time limit enabled, ratio limiting disabled, and share-limit action `0`, which is **Stop torrent**. Sonarr and Radarr both have per-client `Remove Completed` enabled. The Radarr end-to-end test validated the automatic cleanup chain: after the seed period qBittorrent stops the torrent, Radarr removes the completed torrent and torrent-side data, and the imported media file remains.
 
 Private trackers may impose ratio/seeding requirements and must be handled according to their rules.
 
@@ -530,15 +532,20 @@ This was an intentional decision to avoid unnecessary cost, noise, power use, an
 
 ## 23. Remote access / domain
 
-Not implemented yet.
+Tailscale is implemented and is the private remote-access layer.
 
-Constraints:
+Current HomePi identity:
 
-- DS-Lite means no conventional public IPv4 inbound setup.
-- User wants own domain eventually.
-- Private admin access should use a secure overlay approach (e.g. Tailscale/Headscale/NetBird/WireGuard-style solution).
-- Public apps, if any, should use a controlled tunnel/reverse proxy design.
-- Arcane, Home Assistant admin interfaces, Docker administration, etc. should not be directly public.
+```text
+Hostname: homepi
+Tailscale IPv4: 100.72.110.114
+```
+
+Hardening is complete: Device Approval is enabled, the default allow-all policy was removed, only the tailnet owner may access HomePi, access is restricted to required ports, Tailscale SSH is disabled in favor of normal OpenSSH, key expiry is disabled for the headless HomePi node, and Tailscale auto-update is enabled.
+
+DS-Lite remains a constraint for conventional inbound IPv4. Own-domain/public-app access is still future work and should use a separate controlled tunnel/reverse-proxy design. Admin UIs must remain private.
+
+Known exception: the Jellyfin web client opens over Tailscale at `http://homepi:8096`, but server connection currently fails even when added manually. This is a Jellyfin-specific issue, not a general Tailscale or Homepage failure.
 
 ## 24. Future storage/cloud services
 
@@ -578,10 +585,12 @@ Software direction: Home Assistant as backend/data/action layer; UI should be ha
 
 Resume work in this order unless requirements change:
 
-1. Change Seerr's Sonarr and Radarr service profile from `HD-1080p` (ID 4) to `HomePi 1080p` (ID 7).
-2. Perform a real **Radarr movie end-to-end test**.
-3. Verify the Radarr import is a hardlink.
-4. Validate the already configured automatic cleanup chain: 30 minutes seeding -> qBittorrent Stop -> Radarr Remove Completed -> torrent-side data removed while media link remains.
-5. Verify Jellyfin sees and Direct Plays the imported movie.
-6. Decide which authorized production indexers are retained and optionally add media services to Homepage.
+1. Finish the Homepage widget rollout while preserving the already implemented layout. Sonarr is the confirmed working reference widget.
+2. Add and validate the remaining useful native widgets one by one, keeping API keys/secrets only in the local Homepage `.env`.
+3. After the Homepage configuration is stable, synchronize the sanitized non-secret config structure into this repository so future sessions can recover it.
+4. Investigate the separate Jellyfin-over-Tailscale server-connection issue.
+5. Verify the Radarr import method/hardlink via logs on a future suitable import if desired.
+6. Decide which authorized production indexers are retained.
 7. Then move to the P1 backup workstream.
+
+See `docs/homepage.md` for the dashboard-specific handoff.
