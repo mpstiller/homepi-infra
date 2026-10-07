@@ -31,13 +31,12 @@
   - [x] qBittorrent widget working.
   - [x] Seerr widget working.
   - [x] Home Assistant widget working.
-  - [ ] Decide whether the Arcane native widget adds value; validate it or explicitly keep Arcane link-only.
-  - [ ] Keep Music Assistant and Tailscale link-only unless a useful supported widget is identified.
+  - [x] Arcane native widget configured and retained.
+  - [x] Music Assistant remains link-only; Gluetun is a Docker-status card; Tailscale is intentionally not a dashboard service.
   - [ ] Jellyfin widget deferred until local/admin access is available or the Tailscale issue is resolved.
-  - [ ] Capture the exact live Homepage Compose file and sync the live `env_file` + `host.docker.internal:host-gateway` structure into Git.
-  - [ ] Commit sanitized `services.yaml`, `settings.yaml`, `widgets.yaml`, and `docker.yaml`; never commit the local Homepage `.env`.
-  - [ ] Validate current service links from LAN/Tailscale, keeping the known Jellyfin exception separate.
-  - [ ] Run one final Homepage smoke test after repository synchronization.
+  - [x] Capture the exact live Homepage Compose file and sync the live `env_file` + `host.docker.internal:host-gateway` structure into Git.
+  - [x] Commit sanitized `services.yaml`, `settings.yaml`, `widgets.yaml`, and `docker.yaml`; never commit the local Homepage `.env`.
+  - [ ] Run one final Homepage smoke test, including current service links over the active LAN/Tailscale access path; keep the known Jellyfin exception separate.
   - [ ] Optional: visual/global-widget polish only where it adds useful signal.
 
 ## P1 — Backups
