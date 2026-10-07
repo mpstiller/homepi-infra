@@ -192,3 +192,16 @@ Observed behavior:
 Conclusion: this is a client/playback-path compatibility issue in the Jellyfin Android TV app on the Sony, not a bad file, insufficient network throughput, or Pi-side server limitation.
 
 Current policy: do not downgrade Sonarr/Radarr release quality just to optimize for the native Sony Jellyfin app. Keep quality-first selection; use Kodi/JellyCon as the compatibility fallback for problematic releases.
+
+
+## Open issue: Jellyfin over Tailscale
+
+From a remote MacBook connected through Tailscale, the Jellyfin web UI at `http://homepi:8096` is reachable, but Jellyfin does not successfully connect to the HomePi server.
+
+Observed:
+- Homepage link to `http://homepi:8096` opens the Jellyfin client.
+- Automatic server discovery finds no server, which is expected across Tailscale because Jellyfin discovery is LAN/broadcast-oriented.
+- Manually adding `http://homepi:8096` also fails.
+- This is currently unresolved and should be investigated separately from the Homepage configuration.
+
+Do not treat the Homepage link itself as the cause; other HomePi services are reachable through the same Tailscale/MagicDNS path.
