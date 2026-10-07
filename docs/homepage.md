@@ -147,7 +147,7 @@ Required before marking Homepage V1 complete:
 1. [x] Capture the exact live `/opt/homelab/stacks/homepage/compose.yaml` and synchronize its non-secret structure into Git.
 2. [x] Capture and commit sanitized copies of `services.yaml`, `settings.yaml`, `widgets.yaml`, and `docker.yaml`.
 3. [x] Keep `/srv/appdata/homepage/.env` out of Git and document only safe variable names in `.env.example`.
-4. [ ] Run one final dashboard smoke test: current widgets render and current browser links work over the active access path, with the Jellyfin exception documented separately.
+4. [x] Final dashboard smoke test passed: current widgets render and service links work over the active access path, with the Jellyfin exception documented separately.
 5. [ ] Add the Jellyfin widget after Jellyfin admin access is convenient again / the Tailscale issue is resolved.
 
 Optional polish, not required for V1:
@@ -155,6 +155,20 @@ Optional polish, not required for V1:
 - refine descriptions/icons/order if desired;
 - add only global/system widgets that provide clear signal rather than visual clutter;
 - revisit Music Assistant/Tailscale only if supported widgets provide useful information.
+
+## V1 status
+
+**Homepage V1 is complete as of 2026-10-07.**
+
+Validated:
+- layout and service grouping;
+- Docker stats via restricted socket proxy;
+- native widgets for Sonarr, Radarr, Prowlarr, qBittorrent, Seerr, Home Assistant, and Arcane;
+- service links over the active access path;
+- reproducible Compose/config capture in Git;
+- final smoke test.
+
+The Jellyfin widget is intentionally deferred and does not block Homepage V1.
 
 ## Related known issue
 
