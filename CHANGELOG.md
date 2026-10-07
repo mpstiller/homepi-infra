@@ -2,6 +2,7 @@
 
 ## 2026-10-07
 
+- Updated Seerr to `3.5.0`; startup completed without errors, Jellyfin Movies/Series sync completed successfully, and Automatic Search is enabled for both Sonarr and Radarr.
 - Updated Radarr from `6.3.0.10514` to `6.4.4.10685`; startup, SQLite checks, and service binding completed without errors.
 - Updated Sonarr from `4.0.19.2979` to `4.0.20.3014`; startup, SQLite checks, and service binding completed without errors.
 - Updated Prowlarr from `2.5.2.5491` to `2.6.5.5623`; startup, SQLite checks, and service binding completed without errors.
