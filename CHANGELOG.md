@@ -2,6 +2,7 @@
 
 ## 2026-10-07
 
+- Completed Homepage V1: final smoke test passed, current widgets and service links validated, reproducible live configuration captured in Git; Jellyfin widget remains intentionally deferred.
 - Captured the exact live Homepage Compose and sanitized dashboard YAMLs into Git, added safe widget variable names to `.env.example`, reconciled the live System group (Arcane + Gluetun), and closed the Homepage reproducibility gap.
 - Reconciled Homepage V1 remaining work: documented the live Compose drift (`env_file` + `host.docker.internal:host-gateway`), pending sanitized runtime-config capture, Jellyfin deferral, Arcane decision, and final smoke-test criteria; expanded the roadmap accordingly.
 - Updated Seerr to `3.5.0`; startup completed without errors, Jellyfin Movies/Series sync completed successfully, and Automatic Search is enabled for both Sonarr and Radarr.
