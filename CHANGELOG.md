@@ -2,6 +2,7 @@
 
 ## 2026-10-07
 
+- Updated Prowlarr from `2.5.2.5491` to `2.6.5.5623`; startup, SQLite checks, and service binding completed without errors.
 - Recorded the implemented Homepage service-group layout and confirmed the Sonarr native widget is working.
 - Confirmed the Radarr native Homepage widget is also working.
 - Confirmed the Prowlarr native Homepage widget is working.
