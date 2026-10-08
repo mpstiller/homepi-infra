@@ -2,6 +2,7 @@
 
 ## 2026-10-08
 
+- Updated Home Assistant from `2026.9.2` to `2026.10.0`; Core startup succeeded. A separate FRITZ! SSDP discovery flow logged a hostname parsing error for `fritz.powerline`, to be monitored independently.
 - Closed the main container maintenance window: documented completed updates, intentional Gluetun/Home Assistant/Jellyfin deferrals, successful post-maintenance reboot, and the need to refresh exact image digests.
 - Updated qBittorrent to `5.2.4`; WebUI started cleanly and post-update checks confirmed `tun0`, All IPv4 (`0.0.0.0`), and the Proton forwarded listen port remained correct.
 - Updated Music Assistant to `2.10.5`; startup completed cleanly, web/stream servers came up, and SONOS/Chromecast/DLNA providers loaded successfully.
