@@ -29,6 +29,26 @@
 - Sonarr end-to-end workflow and hardlink import have succeeded in real use.
 - Sonarr updated to `4.0.20.3014` on 2026-10-07; startup and DB checks completed cleanly.
 
+## Container maintenance window 2026-10-08
+
+Completed and validated:
+- Homepage updated and healthy; Homepage V1 smoke test passed.
+- Homepage socket proxy updated successfully.
+- Prowlarr updated to `2.6.5.5623`.
+- Sonarr updated to `4.0.20.3014`.
+- Radarr updated to `6.4.4.10685`.
+- Seerr updated to `3.5.0`.
+- Arcane updated to `2.15.1`.
+- Music Assistant updated to `2.10.5`.
+- qBittorrent updated to `5.2.4`; `tun0`, All IPv4 (`0.0.0.0`), and the Proton forwarded listen port were revalidated.
+
+Intentionally deferred:
+- **Gluetun:** current VPN/kill-switch/port-forwarding path is working; do not blindly refresh `:latest`. Evaluate/pin a stable release separately.
+- **Home Assistant:** remain on the currently validated version until a suitable 2026.10 patch release is chosen.
+- **Jellyfin:** defer while the separate Jellyfin-over-Tailscale/admin-access issue remains unresolved.
+
+The Pi was shut down cleanly and restarted after the maintenance work.
+
 ## Current media configuration
 
 ### Paths
