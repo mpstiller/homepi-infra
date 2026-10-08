@@ -57,3 +57,7 @@ Intentionally not updated in this maintenance window:
 - Jellyfin
 
 A fresh exact image-digest capture is still required to replace the 2026-10-05 digest baseline with a new live snapshot.
+
+
+Maintenance decision:
+- Gluetun intentionally remains on the previously validated working image after the 2026-10-08 update window. Its `:latest` tag is not being refreshed blindly; stable pinning will be evaluated separately.
