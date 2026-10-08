@@ -17,6 +17,7 @@
 - Music Assistant was historically deployed from `/srv/appdata/compose.yaml` (Compose project `appdata`); its verified definition is normalized into `stacks/music-assistant/compose.yaml`.
 - Music Assistant updated to `2.10.5` on 2026-10-08; startup completed cleanly, web/stream servers came up, and SONOS/Chromecast/DLNA providers loaded.
 - Sony TV Jellyfin Direct Play was previously tested successfully.
+- Jellyfin updated to `12.2.0` on 2026-10-08; startup completed successfully, database migrations were applied, Kodi Sync Queue 16.0.0.0 loaded, library watchers started, and Core startup completed.
 - Home Assistant has Google Cast, Sony TV, Sonos, and Music Assistant integrations.
 - Home Assistant updated to `2026.10.0` on 2026-10-08; Core startup succeeded. A FRITZ! SSDP discovery flow logged a `fritz.powerline` hostname parsing error.
 - SoundCloud works in Music Assistant.
@@ -46,7 +47,7 @@ Completed and validated:
 Intentionally deferred:
 - **Gluetun:** current VPN/kill-switch/port-forwarding path is working; do not blindly refresh `:latest`. Evaluate/pin a stable release separately.
 - **Home Assistant:** updated to `2026.10.0` on 2026-10-08. Core startup succeeded; a separate FRITZ! SSDP discovery error for hostname `fritz.powerline` was observed and does not appear to block Home Assistant operation.
-- **Jellyfin:** defer while the separate Jellyfin-over-Tailscale/admin-access issue remains unresolved.
+- **Jellyfin:** updated to `12.2.0`; the separate Jellyfin-over-Tailscale/admin-access issue remains unresolved and should be investigated independently.
 
 The Pi was shut down cleanly and restarted after the maintenance work.
 
