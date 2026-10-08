@@ -45,7 +45,7 @@
 - [x] Revalidate qBittorrent VPN binding and Proton forwarded port after update.
 - [ ] Evaluate Gluetun separately and move away from an unpinned `:latest` update path if appropriate.
 - [ ] Refresh exact image digest inventory after 2026-10-08 update window.
-- [ ] Update Home Assistant after selecting a suitable 2026.10 patch release.
+- [x] Update Home Assistant to `2026.10.0` and validate normal operation; monitor the separate `fritz.powerline` SSDP discovery error.
 - [ ] Update Jellyfin when local/remote validation is practical again.
 
 ## P1 — Backups
