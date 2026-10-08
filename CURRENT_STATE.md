@@ -18,6 +18,7 @@
 - Music Assistant updated to `2.10.5` on 2026-10-08; startup completed cleanly, web/stream servers came up, and SONOS/Chromecast/DLNA providers loaded.
 - Sony TV Jellyfin Direct Play was previously tested successfully.
 - Home Assistant has Google Cast, Sony TV, Sonos, and Music Assistant integrations.
+- Home Assistant updated to `2026.10.0` on 2026-10-08; Core startup succeeded. A FRITZ! SSDP discovery flow logged a `fritz.powerline` hostname parsing error.
 - SoundCloud works in Music Assistant.
 - qBittorrent is isolated behind Proton VPN via Gluetun.
 - Proton WireGuard, kill switch, public-IP separation and dynamic port forwarding were tested successfully.
@@ -44,7 +45,7 @@ Completed and validated:
 
 Intentionally deferred:
 - **Gluetun:** current VPN/kill-switch/port-forwarding path is working; do not blindly refresh `:latest`. Evaluate/pin a stable release separately.
-- **Home Assistant:** remain on the currently validated version until a suitable 2026.10 patch release is chosen.
+- **Home Assistant:** updated to `2026.10.0` on 2026-10-08. Core startup succeeded; a separate FRITZ! SSDP discovery error for hostname `fritz.powerline` was observed and does not appear to block Home Assistant operation.
 - **Jellyfin:** defer while the separate Jellyfin-over-Tailscale/admin-access issue remains unresolved.
 
 The Pi was shut down cleanly and restarted after the maintenance work.
