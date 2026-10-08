@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-10-08
+
+- Updated Arcane to `2.15.1`; database migrations completed successfully and the post-start image scan checked 14 images with 0 errors, leaving 5 images with updates available.
+
 ## 2026-10-07
 
 - Completed Homepage V1: final smoke test passed, current widgets and service links validated, reproducible live configuration captured in Git; Jellyfin widget remains intentionally deferred.
