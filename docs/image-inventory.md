@@ -47,6 +47,8 @@ Known post-update application versions:
 - Arcane: `2.15.1`
 - Music Assistant: `2.10.5`
 - qBittorrent: `5.2.4`
+- Jellyfin: `12.2.0`
+- Home Assistant: `2026.10.0`
 
 Intentionally not updated in this maintenance window:
 
