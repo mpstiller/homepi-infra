@@ -21,7 +21,7 @@
 - SoundCloud works in Music Assistant.
 - qBittorrent is isolated behind Proton VPN via Gluetun.
 - Proton WireGuard, kill switch, public-IP separation and dynamic port forwarding were tested successfully.
-- Live qBittorrent v5.2.3 is bound to `tun0` and `0.0.0.0` (All IPv4 addresses).
+- qBittorrent updated to `5.2.4` on 2026-10-08; post-update validation confirmed `tun0`, `0.0.0.0` (All IPv4), and a valid Proton forwarded listen port.
 - Prowlarr -> Sonarr/Radarr Full Sync works.
 - Prowlarr updated to `2.6.5.5623` on 2026-10-07; startup and DB checks completed cleanly.
 - Seerr Automatic Search is enabled.
