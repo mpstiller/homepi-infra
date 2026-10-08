@@ -15,6 +15,7 @@
 - Arcane updated to `2.15.1` on 2026-10-08; database migrations completed successfully and the post-start image scan completed with 0 errors.
 - Verified Compose definitions are now checked into this repository for Arcane, Homepage, Home Assistant, Music Assistant, Jellyfin and the media stack.
 - Music Assistant was historically deployed from `/srv/appdata/compose.yaml` (Compose project `appdata`); its verified definition is normalized into `stacks/music-assistant/compose.yaml`.
+- Music Assistant updated to `2.10.5` on 2026-10-08; startup completed cleanly, web/stream servers came up, and SONOS/Chromecast/DLNA providers loaded.
 - Sony TV Jellyfin Direct Play was previously tested successfully.
 - Home Assistant has Google Cast, Sony TV, Sonos, and Music Assistant integrations.
 - SoundCloud works in Music Assistant.
