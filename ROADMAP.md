@@ -39,6 +39,15 @@
   - [x] Run one final Homepage smoke test, including current service links over the active LAN/Tailscale access path; keep the known Jellyfin exception separate.
   - [ ] Optional: visual/global-widget polish only where it adds useful signal.
 
+## P1 — Maintenance hygiene
+
+- [x] Complete the 2026-10-08 low/medium-risk container update window.
+- [x] Revalidate qBittorrent VPN binding and Proton forwarded port after update.
+- [ ] Evaluate Gluetun separately and move away from an unpinned `:latest` update path if appropriate.
+- [ ] Refresh exact image digest inventory after 2026-10-08 update window.
+- [ ] Update Home Assistant after selecting a suitable 2026.10 patch release.
+- [ ] Update Jellyfin when local/remote validation is practical again.
+
 ## P1 — Backups
 
 - [ ] Choose restic or Borg.
