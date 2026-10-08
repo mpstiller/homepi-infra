@@ -17,7 +17,7 @@
 - Music Assistant was historically deployed from `/srv/appdata/compose.yaml` (Compose project `appdata`); its verified definition is normalized into `stacks/music-assistant/compose.yaml`.
 - Music Assistant updated to `2.10.5` on 2026-10-08; startup completed cleanly, web/stream servers came up, and SONOS/Chromecast/DLNA providers loaded.
 - Sony TV Jellyfin Direct Play was previously tested successfully.
-- Jellyfin updated to `12.2.0` on 2026-10-08; startup completed successfully, database migrations were applied, Kodi Sync Queue 16.0.0.0 loaded, library watchers started, and Core startup completed.
+- Jellyfin updated to `12.2.0` on 2026-10-08; startup/migrations completed successfully, Kodi Sync Queue loaded, library watchers started, and local UI/libraries/Seerr integration/playback/Kodi-JellyCon were practically revalidated.
 - Home Assistant has Google Cast, Sony TV, Sonos, and Music Assistant integrations.
 - Home Assistant updated to `2026.10.0` on 2026-10-08; Core startup succeeded. A FRITZ! SSDP discovery flow logged a `fritz.powerline` hostname parsing error.
 - SoundCloud works in Music Assistant.
@@ -45,7 +45,7 @@ Completed and validated:
 - qBittorrent updated to `5.2.4`; `tun0`, All IPv4 (`0.0.0.0`), and the Proton forwarded listen port were revalidated.
 
 Intentionally deferred:
-- **Gluetun:** current VPN/kill-switch/port-forwarding path is working; do not blindly refresh `:latest`. Evaluate/pin a stable release separately.
+- **Gluetun:** intentionally left on the current working build after the 2026-10-08 maintenance window. VPN/kill-switch/port-forwarding are validated; do not blindly refresh `:latest`. Evaluate/pin a stable release separately.
 - **Home Assistant:** updated to `2026.10.0` on 2026-10-08. Core startup succeeded; a separate FRITZ! SSDP discovery error for hostname `fritz.powerline` was observed and does not appear to block Home Assistant operation.
 - **Jellyfin:** updated to `12.2.0`; the separate Jellyfin-over-Tailscale/admin-access issue remains unresolved and should be investigated independently.
 
