@@ -2,6 +2,7 @@
 
 ## 2026-10-08
 
+- Completed post-update Jellyfin validation on `12.2.0` (UI, libraries, Seerr integration, playback, Kodi/JellyCon) and intentionally deferred Gluetun while the current VPN/kill-switch/port-forwarding path remains healthy.
 - Updated Jellyfin from `12.0.0` to `12.2.0`; database migrations completed successfully, Kodi Sync Queue loaded, library watchers started, and Core startup completed cleanly.
 - Updated Home Assistant from `2026.9.2` to `2026.10.0`; Core startup succeeded. A separate FRITZ! SSDP discovery flow logged a hostname parsing error for `fritz.powerline`, to be monitored independently.
 - Closed the main container maintenance window: documented completed updates, intentional Gluetun/Home Assistant/Jellyfin deferrals, successful post-maintenance reboot, and the need to refresh exact image digests.
