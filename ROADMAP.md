@@ -46,7 +46,7 @@
 - [ ] Evaluate Gluetun separately and move away from an unpinned `:latest` update path if appropriate.
 - [ ] Refresh exact image digest inventory after 2026-10-08 update window.
 - [x] Update Home Assistant to `2026.10.0` and validate normal operation; monitor the separate `fritz.powerline` SSDP discovery error.
-- [x] Update Jellyfin to `12.2.0` and validate clean startup/migrations locally.
+- [x] Update Jellyfin to `12.2.0` and validate startup, libraries, Seerr integration, playback, and Kodi/JellyCon.
 
 ## P1 — Backups
 
