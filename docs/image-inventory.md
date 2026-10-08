@@ -32,3 +32,26 @@ Additional live application versions:
 
 - Home Assistant: `2026.9.2`
 - Jellyfin: `12.0.0`
+
+
+## Post-update status — 2026-10-08
+
+The exact digest table above remains the forensic baseline captured on 2026-10-05. Several images were updated during the 2026-10-07/08 maintenance window, so those exact digests are now historical rather than the current live digest set.
+
+Known post-update application versions:
+
+- Prowlarr: `2.6.5.5623`
+- Sonarr: `4.0.20.3014`
+- Radarr: `6.4.4.10685`
+- Seerr: `3.5.0`
+- Arcane: `2.15.1`
+- Music Assistant: `2.10.5`
+- qBittorrent: `5.2.4`
+
+Intentionally not updated in this maintenance window:
+
+- Gluetun
+- Home Assistant
+- Jellyfin
+
+A fresh exact image-digest capture is still required to replace the 2026-10-05 digest baseline with a new live snapshot.
