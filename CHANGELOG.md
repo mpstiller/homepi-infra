@@ -2,6 +2,7 @@
 
 ## 2026-10-08
 
+- Updated Music Assistant to `2.10.5`; startup completed cleanly, web/stream servers came up, and SONOS/Chromecast/DLNA providers loaded successfully.
 - Updated Arcane to `2.15.1`; database migrations completed successfully and the post-start image scan checked 14 images with 0 errors, leaving 5 images with updates available.
 
 ## 2026-10-07
