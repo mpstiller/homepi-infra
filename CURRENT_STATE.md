@@ -12,6 +12,7 @@
 - Bootloader is current as of 2026-05-26; `BOOT_ORDER=0xf461`.
 - Docker Engine `29.8.0`, Docker Compose `v5.5.1`.
 - Arcane, Homepage, Home Assistant, Music Assistant, Jellyfin and the complete media stack are running.
+- Arcane updated to `2.15.1` on 2026-10-08; database migrations completed successfully and the post-start image scan completed with 0 errors.
 - Verified Compose definitions are now checked into this repository for Arcane, Homepage, Home Assistant, Music Assistant, Jellyfin and the media stack.
 - Music Assistant was historically deployed from `/srv/appdata/compose.yaml` (Compose project `appdata`); its verified definition is normalized into `stacks/music-assistant/compose.yaml`.
 - Sony TV Jellyfin Direct Play was previously tested successfully.
