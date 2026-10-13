@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-10-13
+
+- Initialized an encrypted restic repository in Google Drive via rclone and completed the first manual backup of `/srv/appdata` and `/opt/homelab/stacks`; restore testing remains pending.
+
 ## 2026-10-08
 
 - Completed post-update Jellyfin validation on `12.2.0` (UI, libraries, Seerr integration, playback, Kodi/JellyCon) and intentionally deferred Gluetun while the current VPN/kill-switch/port-forwarding path remains healthy.
