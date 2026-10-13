@@ -50,10 +50,11 @@
 
 ## P1 — Backups
 
-- [ ] Choose restic or Borg.
-- [ ] Back up `/srv/appdata`, `/opt/homelab/stacks`, and critical configuration to an independent target.
+- [x] Choose restic.
+- [x] Initialize encrypted restic repository in Google Drive and complete first backup of `/srv/appdata` and `/opt/homelab/stacks`.
+- [ ] Automate recurring backups and retention.
 - [ ] Document recovery of Home Assistant and media-stack databases.
-- [ ] Test restore, not just backup creation.
+- [ ] Test restore, not just backup creation (deferred by choice after first successful snapshot).
 
 ## P2 — Network / remote access
 
