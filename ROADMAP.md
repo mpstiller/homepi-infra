@@ -53,6 +53,8 @@
 - [x] Choose restic.
 - [x] Initialize encrypted restic repository in Google Drive and complete first backup of `/srv/appdata` and `/opt/homelab/stacks`.
 - [ ] Automate recurring backups and retention.
+  - [x] Validate production-style staging backup with cache/log excludes (333.155 MiB snapshot).
+  - [ ] Install and enable systemd service/timer.
 - [ ] Document recovery of Home Assistant and media-stack databases.
 - [x] Test restore and run `restic check`; both completed successfully.
 
