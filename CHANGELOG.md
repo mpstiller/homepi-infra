@@ -2,6 +2,7 @@
 
 ## 2026-10-13
 
+- Validated the production-style restic staging backup with cache/log exclusions; the automatic snapshot size dropped to `333.155 MiB` and services were restarted before cloud upload.
 - Verified the first restic backup by restoring data to a temporary path and running `restic check`; both completed successfully.
 - Initialized an encrypted restic repository in Google Drive via rclone and completed the first manual backup of `/srv/appdata` and `/opt/homelab/stacks`; restore testing remains pending.
 
