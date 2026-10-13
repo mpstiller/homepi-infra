@@ -54,7 +54,7 @@
 - [x] Initialize encrypted restic repository in Google Drive and complete first backup of `/srv/appdata` and `/opt/homelab/stacks`.
 - [ ] Automate recurring backups and retention.
 - [ ] Document recovery of Home Assistant and media-stack databases.
-- [ ] Test restore, not just backup creation (deferred by choice after first successful snapshot).
+- [x] Test restore and run `restic check`; both completed successfully.
 
 ## P2 — Network / remote access
 
