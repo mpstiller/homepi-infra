@@ -51,6 +51,16 @@ Intentionally deferred:
 
 The Pi was shut down cleanly and restarted after the maintenance work.
 
+## Backup state
+
+- rclone `1.75.2` is configured for Google Drive using a dedicated OAuth client.
+- restic `0.18.0` is installed.
+- An encrypted restic repository has been initialized at `rclone:gdrive:HomePi-Backup`.
+- The repository password is stored locally under `/etc/restic/homepi-password` and should also be retained independently in the password manager.
+- A first manual backup of `/srv/appdata` and `/opt/homelab/stacks` completed successfully and the resulting snapshot is visible with `restic snapshots`.
+- Restore testing has not yet been performed and remains a follow-up item.
+- Media/download data under `/srv/data` is intentionally excluded from backup V1.
+
 ## Current media configuration
 
 ### Paths
