@@ -2,6 +2,7 @@
 
 ## 2026-10-13
 
+- Verified the first restic backup by restoring data to a temporary path and running `restic check`; both completed successfully.
 - Initialized an encrypted restic repository in Google Drive via rclone and completed the first manual backup of `/srv/appdata` and `/opt/homelab/stacks`; restore testing remains pending.
 
 ## 2026-10-08
