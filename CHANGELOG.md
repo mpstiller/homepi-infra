@@ -2,6 +2,7 @@
 
 ## 2026-10-13
 
+- Added and validated monthly restic maintenance via systemd: `prune` followed by `check`, scheduled for the 1st of each month at 05:30.
 - Added and validated the systemd-managed HomePi backup flow; configured a dedicated restic cache (`XDG_CACHE_HOME=/var/cache/homepi-backup`) so automated runs complete cleanly.
 - Validated the production-style restic staging backup with cache/log exclusions; the automatic snapshot size dropped to `333.155 MiB` and services were restarted before cloud upload.
 - Verified the first restic backup by restoring data to a temporary path and running `restic check`; both completed successfully.
