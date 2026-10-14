@@ -1,6 +1,6 @@
 # HomePi restore runbook
 
-This runbook describes how to reconstruct the host architecture. A full disaster-recovery procedure still depends on the backup system planned in the backup roadmap.
+This runbook describes how to reconstruct the host architecture. Backup V1 is operational and a targeted restore has been tested. Full host rebuild and Home Assistant/media-stack application recovery have not yet been demonstrated; see `backup-restore.md` for remaining verification.
 
 ## 1. Prerequisites
 
@@ -59,6 +59,8 @@ Application API keys and login credentials normally live in restored appdata and
 ## 5. Restore persistent application state
 
 Restore `/srv/appdata` from backup before starting the services if the intent is to recover the existing Home Assistant/Jellyfin/*arr state.
+
+Automatic snapshots contain staging paths, not the original live paths. Restore into a temporary directory first and map `srv/backups/restic-staging/srv/appdata` to `/srv/appdata` and `srv/backups/restic-staging/opt/homelab/stacks` to `/opt/homelab/stacks` within the restored tree. VERIFY ON PI: exact selected snapshot layout, ownership and installed recovery commands before copying. Do not copy blindly over running databases. Preserve existing appdata and stop affected services before a live recovery. `/srv/data` is excluded from Backup V1, so media files require separate recovery or recreation.
 
 Important state includes:
 

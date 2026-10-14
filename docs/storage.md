@@ -6,7 +6,7 @@
 /opt/homelab/stacks   Compose definitions
 /srv/appdata          persistent app state/config
 /srv/data             media/download data
-/srv/backups          future backups
+/srv/backups          local backup staging (encrypted repository in Google Drive)
 ```
 
 ## Media layout

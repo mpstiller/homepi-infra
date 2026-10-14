@@ -1,7 +1,7 @@
 # Current State
 
 **Live baseline verified:** 2026-10-05  
-**State updated:** 2026-10-07
+**State updated:** 2026-10-14 (documentation reconciliation; no new live audit)
 
 ## Stable / confirmed from the running Pi
 
@@ -44,7 +44,7 @@ Completed and validated:
 - Music Assistant updated to `2.10.5`.
 - qBittorrent updated to `5.2.4`; `tun0`, All IPv4 (`0.0.0.0`), and the Proton forwarded listen port were revalidated.
 
-Intentionally deferred:
+Remaining follow-up:
 - **Gluetun:** intentionally left on the current working build after the 2026-10-08 maintenance window. VPN/kill-switch/port-forwarding are validated; do not blindly refresh `:latest`. Evaluate/pin a stable release separately.
 - **Home Assistant:** updated to `2026.10.0` on 2026-10-08. Core startup succeeded; a separate FRITZ! SSDP discovery error for hostname `fritz.powerline` was observed and does not appear to block Home Assistant operation.
 - **Jellyfin:** updated to `12.2.0`; the separate Jellyfin-over-Tailscale/admin-access issue remains unresolved and should be investigated independently.
@@ -64,6 +64,9 @@ The Pi was shut down cleanly and restarted after the maintenance work.
 - The original manual bootstrap snapshot `bd21d171` (~657 MiB, no `automatic` tag) was removed after the automated backup line was validated; maintenance/prune was run afterwards.
 - Restore testing has been completed successfully: a targeted restore to a temporary path worked and `restic check` completed cleanly.
 - Media/download data under `/srv/data` is intentionally excluded from backup V1.
+- Reported retention from the backup setup chat: 7 daily / 4 weekly / 6 monthly automatic snapshots. VERIFY ON PI: exact installed retention command.
+- Backup scripts and systemd units are not yet checked into this repository; their exact contents, stop/restart failure handling and staging restore layout require a sanitized capture.
+- The completed test was a targeted restore to a temporary path, not a demonstrated Home Assistant/media-database service recovery or full host rebuild. Those validation steps remain open.
 
 ## Current media configuration
 
@@ -119,7 +122,9 @@ The repository now contains:
 
 ## Immediate resume point
 
-The active Homepage dashboard build is functionally near V1 completion.
+P0, Homepage V1, the main maintenance window, and operational Backup V1 are complete. The next workstream is to make the backup setup reproducible and finish the application recovery runbook, followed by the Jellyfin-over-Tailscale issue. See `ROADMAP.md` for ordered steps and completion criteria.
+
+Homepage closure evidence:
 
 - The service-group layout is implemented.
 - Sonarr, Radarr, Prowlarr, qBittorrent, Seerr, and Home Assistant native widgets are confirmed working.
