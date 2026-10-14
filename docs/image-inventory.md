@@ -53,8 +53,8 @@ Known post-update application versions:
 Intentionally not updated in this maintenance window:
 
 - Gluetun
-- Home Assistant
-- Jellyfin
+
+Home Assistant and Jellyfin were subsequently updated and validated on 2026-10-08, as reflected in the version list above.
 
 A fresh exact image-digest capture is still required to replace the 2026-10-05 digest baseline with a new live snapshot.
 

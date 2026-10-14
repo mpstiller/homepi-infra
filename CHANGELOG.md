@@ -2,6 +2,11 @@
 
 ## 2026-10-14
 
+- Reconciled roadmap/handoff against checked-in Compose/Homepage configuration and confirmed repository state; Homepage V1 and the main maintenance window remain complete.
+- Updated obsolete backup documentation for operational Backup V1; distinguished the tested targeted restore from pending application recovery and added backup-script/systemd capture as the next workstream.
+- Added supplementary chat findings with verification boundaries: reported retention/staging paths and the pending Jellyfin for Kodi native-library workflow.
+- Ordered remaining work: recovery reproducibility, Jellyfin remote access, inventory/Gluetun hygiene, lightweight backup visibility, then capability expansion. No runtime configuration was changed or new live audit performed.
+
 - Removed obsolete manual restic snapshot `bd21d171` after validating the automated backup chain, then ran repository maintenance to prune unreferenced data.
 
 ## 2026-10-13

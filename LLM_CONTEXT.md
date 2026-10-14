@@ -59,7 +59,7 @@ These conventions are intentional and should remain stable:
 /opt/homelab/stacks   Docker Compose stacks
 /srv/appdata          persistent application configuration/state
 /srv/data             downloads + media on the NVMe
-/srv/backups          future backups
+/srv/backups          local backup staging (cloud repository in Google Drive)
 ```
 
 Media containers are designed to see a common `/data` mount backed by `/srv/data` on the host. This is critical for hardlinks.
@@ -136,10 +136,11 @@ VERIFY ON PI: exact image digests/tags and current container versions should be 
   - Media: Jellyfin, Seerr
   - Smart Home & Audio: Home Assistant, Music Assistant
   - Media Management: Sonarr, Radarr, Prowlarr, qBittorrent
-  - System: Arcane, Tailscale
-- The Sonarr native service widget is confirmed working.
-- The Sonarr API key is stored only in the local Homepage `.env`; never commit it.
-- The live Homepage config files under `/srv/appdata/homepage` (`services.yaml`, `settings.yaml`, `widgets.yaml`, `docker.yaml`) are not yet synchronized into this repository.
+  - System: Arcane, Gluetun; Tailscale is intentionally not a service card.
+- Homepage V1 is complete as of 2026-10-07. Sonarr, Radarr, Prowlarr, qBittorrent, Seerr, Home Assistant and Arcane widgets are working/configured.
+- Keys/tokens are stored only in the local Homepage `.env`; never commit them.
+- Sanitized live YAMLs are checked in under `stacks/homepage/config/`; Compose includes `env_file` and the host-gateway mapping.
+- Jellyfin widget remains separately deferred; Music Assistant stays link-only.
 
 ## 8. Home Assistant
 
@@ -194,6 +195,8 @@ Device strategy:
 - Automatic UPnP/port mapping was disabled.
 - Sony TV Jellyfin client was successfully connected.
 - Big Buck Bunny was used as a test and Jellyfin explicitly reported **Direct Play**.
+- Jellyfin was updated to `12.2.0` on 2026-10-08; Kodi Sync Queue loaded successfully.
+- The Kodi chat proposed Jellyfin for Kodi for the native Movies/TV library. VERIFY ON PI/TV: client migration, initial sync and offline change catch-up; plugin loading alone does not confirm these.
 
 Design principle: prefer Direct Play. The Pi is not intended to be a heavy video-transcoding server.
 
@@ -512,7 +515,7 @@ This confirms the Sonarr pipeline is functionally working.
 
 ## 21. Seeding / cleanup state
 
-Manual cleanup has been used so far:
+Historical manual validation (superseded by the automatic cleanup below):
 
 - Wait until Sonarr successfully imports.
 - Confirm hardlink exists (`links=2`).
@@ -554,7 +557,6 @@ Planned but not yet implemented:
 
 - Shared + personal photo cloud.
 - File cloud.
-- Backups.
 - Custom web-app hosting.
 
 Immich was considered but deferred because the Pi has only 4 GB RAM and the system should first stabilize around current workloads.
@@ -582,16 +584,19 @@ Current hardware preference:
 
 Software direction: Home Assistant as backend/data/action layer; UI should be hardware-independent and can be prototyped in a browser first. Tesserae/ESPHome/custom frontend remain options.
 
-## 26. Current next steps
+## 26. Backup V1 and current next steps
 
-Resume work in this order unless requirements change:
+Backup V1 is operational: encrypted restic via rclone to Google Drive; `/srv/appdata` and `/opt/homelab/stacks` are copied to staging with brief service stops, services restart before upload, caches/logs are excluded, daily backup at 04:30, monthly prune/check on day 1 at 05:30. A targeted restore and `restic check` succeeded. The manual bootstrap snapshot was removed on 2026-10-14. Reported retention is 7 daily / 4 weekly / 6 monthly; VERIFY ON PI: installed command. `/srv/data` is excluded.
 
-1. **Homepage V1 is complete** and reproducible in Git. Keep the Jellyfin widget deferred until the separate Jellyfin-over-Tailscale/admin-access issue is resolved or local admin access is available.
-2. Finish the current container-update maintenance window and refresh version/image inventory after the chosen updates are complete.
-4. Move to the **P1 backup workstream**: independent backup target, automated backup of `/srv/appdata` + `/opt/homelab/stacks`, and a tested restore path.
-5. Investigate the Jellyfin-over-Tailscale connection issue.
-6. Verify the Radarr import method/hardlink on a future suitable import rather than manufacturing a special test.
-7. Decide which authorized production indexers are retained.
-8. Then choose the next capability expansion (smart-home/Matter, photo/file cloud, or e-ink dashboard) based on current priorities and resource budget.
+The repository does not yet contain the installed backup scripts/systemd units. A targeted file restore is not proof that Home Assistant or media databases can start from restored state.
 
-See `docs/homepage.md` for the dashboard-specific handoff.
+Resume in the order in `ROADMAP.md`:
+
+1. Capture sanitized backup scripts/units and recovery prerequisites; document staging-to-original-path mapping and validate application-state recovery safely.
+2. Resolve Jellyfin over Tailscale; then optionally add its Homepage widget.
+3. Refresh exact image inventory; evaluate Gluetun pinning separately with VPN regression validation.
+4. Add lightweight backup failure/staleness visibility after choosing the notification channel.
+5. Verify Radarr hardlinks during the next normal import, decide retained authorized indexers, and verify Jellyfin for Kodi client synchronization.
+6. Choose smart-home/Matter or a browser-first household dashboard next; measure resources before photo/file cloud and keep existing storage/cloud decisions.
+
+Evidence policy: checked-in verified runtime configuration takes precedence; repository state is primary, chat findings are supplementary. The 2026-10-14 reconciliation adds no new live audit or completed runtime work. See `docs/backup-restore.md`, `docs/homepage.md`, and `docs/media-stack.md`.

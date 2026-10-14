@@ -16,7 +16,7 @@ See `LLM_CONTEXT.md` sections 11–21 for the detailed current settings.
 
 ## Current operational status
 
-The Sonarr path has been tested end to end with actual downloads and hardlink imports. The next equivalent test should be Radarr.
+Sonarr end-to-end downloads and hardlinks are verified. Radarr end-to-end import, automatic cleanup and Jellyfin Direct Play are also verified. Only Radarr hardlink proof remains: observe the next normal import before cleanup or retain explicit import-log evidence.
 
 ## qBittorrent path rules
 
@@ -33,7 +33,7 @@ Default Torrent Management Mode must remain `Automatic` so category paths take e
 
 ## Cleanup
 
-Current cleanup is manual after successful import/hardlink verification. Automatic seeding limits/cleanup are the next design task.
+Cleanup is automatic: qBittorrent seeds for 30 minutes then stops; Sonarr/Radarr Remove Completed removes torrent-side data after import. The real Radarr test validated that imported media remains.
 
 
 ## Live HomePi profile verification
@@ -59,7 +59,7 @@ Seerr now points both Sonarr and Radarr requests to `HomePi 1080p` (ID 7). The p
 
 ### Cleanup configuration
 
-qBittorrent currently seeds for 30 minutes and then uses the **Stop torrent** share-limit action. Sonarr and Radarr both have `Remove Completed` enabled. The Radarr end-to-end test will validate that this results in automatic torrent/download cleanup after the hardlink import.
+qBittorrent currently seeds for 30 minutes and then uses the **Stop torrent** share-limit action. Sonarr and Radarr both have `Remove Completed` enabled. The Radarr end-to-end test validated automatic torrent/download cleanup; the import method still needs separate hardlink evidence.
 
 
 ## Anime handling
@@ -125,3 +125,10 @@ Operational guidance:
 - keep Sonarr/Radarr quality-first
 - do not hard-exclude TrueHD solely for Sony compatibility
 - prefer Kodi + JellyCon for releases that stutter in the native Jellyfin TV client
+
+
+## Kodi native-library follow-up
+
+The Kodi chat proposed Jellyfin for Kodi in Add-on Mode to make Jellyfin Movies/TV available in Kodi's native library on the Sony TV. Repository evidence confirms Kodi Sync Queue loaded on Jellyfin `12.2.0` on 2026-10-08 and Kodi/JellyCon playback passed. It does not confirm the client migration or native-library synchronization.
+
+VERIFY ON PI/TV: installed Kodi client, selected libraries, initial synchronization and Sync Queue settings. Validate one library change while Kodi is offline and catch-up on the next start, plus playback/watched-state synchronization. Preserve the working playback path while checking this; do not treat plugin installation/loading as completion of the client workflow.

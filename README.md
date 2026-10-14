@@ -1,8 +1,8 @@
 # HomePi Infrastructure
 
-Private documentation and configuration repository for the `homepi` Raspberry Pi 5 homelab.
+Documentation and configuration repository for the `homepi` Raspberry Pi 5 homelab.
 
-This repository is intended to be the **portable source of context** for humans and LLMs working on the system. It documents architecture, decisions, current state, known settings, troubleshooting history, and the roadmap. Actual runtime configuration files from the Pi will be synchronized into this repository later and will then become the technical source of truth.
+This repository is intended to be the **portable source of context** for humans and LLMs working on the system. It documents architecture, decisions, current state, known settings, troubleshooting history, and the roadmap. Verified Compose definitions and sanitized Homepage configuration are checked in and take precedence over prose. Live secrets remain on the Pi; changes after the last capture require verification.
 
 ## Start here
 
@@ -26,6 +26,6 @@ This repository is intended to be the **portable source of context** for humans 
 
 **No secrets belong in Git.** Never commit passwords, API keys, OAuth tokens, WireGuard private keys, cookies, or private credentials. Use local `.env` files and keep only `.env.example` in the repository.
 
-## Status of this initial version
+## Current documentation status
 
-This first version was reconstructed from the setup session and is intentionally explicit about what is **confirmed**, what is **planned**, and what still needs to be **verified against the live Pi**. Runtime `compose.yaml` files should be imported from the Pi before this repository is used for deployment.
+P0 reproducibility and Homepage V1 are complete. Backup V1 is operational, with a targeted restore and repository integrity check tested. Backup scripts/systemd units and application-level recovery validation remain open. Read `ROADMAP.md` for the ordered next steps and `CURRENT_STATE.md` for confirmed evidence. Historical audit dates do not imply a new live verification.
