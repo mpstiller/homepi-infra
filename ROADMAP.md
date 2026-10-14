@@ -4,7 +4,7 @@
 
 ## Recommended execution order
 
-1. **Backup reproducibility and application recovery.** Capture sanitized installed scripts/systemd units and document the staged restore mapping. Complete when Home Assistant/media-state recovery is documented and safely validated, with secrets available independently. The prior targeted restore/check stays complete.
+1. **Backup reproducibility and application recovery.** Installed scripts/units are captured. Correct masked restart failures and add a shared backup/maintenance lock, then validate the staged restore mapping. Complete when Home Assistant/media-state recovery is documented and safely validated, with secrets available independently. The prior targeted restore/check stays complete.
 2. **Jellyfin over Tailscale.** Compare LAN and remote server/API access, inspect current server/user access settings and relevant logs. Complete when manual connection, login and playback work from a remote client. Add the Homepage widget afterwards if useful; keep admin UIs private.
 3. **Maintenance evidence.** Refresh the post-update image/digest and resource inventory. Evaluate Gluetun pinning separately; preserve the validated VPN path and validate binding, port forwarding and kill switch after any actual change.
 4. **Lightweight backup visibility.** Choose a notification channel and detect failed or stale backups; optionally show last success in Homepage. Complete with a controlled notification test.
@@ -69,7 +69,8 @@
   - [x] Add and validate separate monthly restic prune/check maintenance job.
   - [x] Validate production-style staging backup with cache/log excludes (333.155 MiB snapshot).
   - [x] Install and enable systemd service/timer; manual systemd execution validated successfully.
-- [ ] Capture sanitized installed backup/maintenance scripts and systemd service/timer units in Git, including retention/excludes, stop/restart failure handling and overlap behavior.
+- [x] Capture installed backup/maintenance scripts and all four systemd units in Git; review retention/excludes, restart failure handling and overlap behavior.
+- [ ] Correct masked container restart failures and add/validate a shared backup/maintenance lock; the captured live baseline is not yet hardened.
 - [ ] Verify independent recovery access to the restic password, rclone OAuth configuration and application secrets.
 - [ ] Document staging-to-original-path recovery of Home Assistant and media-stack databases and safely validate application startup/configuration.
 - [ ] Add lightweight backup failure/staleness notifications after selecting a channel; optionally expose last successful backup in Homepage.

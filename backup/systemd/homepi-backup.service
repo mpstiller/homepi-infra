@@ -1,0 +1,18 @@
+[Unit]
+Description=HomePi encrypted restic backup to Google Drive
+Wants=network-online.target
+After=network-online.target docker.service
+
+[Service]
+Type=oneshot
+Environment=HOME=/root
+Environment=XDG_CACHE_HOME=/var/cache/homepi-backup
+ExecStart=/usr/local/sbin/homepi-backup
+
+# Backups may legitimately take a long time.
+TimeoutStartSec=0
+
+# Keep the backup from competing too aggressively with normal workloads.
+Nice=10
+IOSchedulingClass=best-effort
+IOSchedulingPriority=7

@@ -1,0 +1,10 @@
+[Unit]
+Description=Run HomePi restic maintenance monthly
+
+[Timer]
+OnCalendar=*-*-01 05:30:00
+Persistent=true
+Unit=homepi-restic-maintenance.service
+
+[Install]
+WantedBy=timers.target

@@ -11,7 +11,8 @@ The encrypted restic backup is operational. Evidence is recorded in `CURRENT_STA
 - Staged snapshot paths observed in the setup chat: `/srv/backups/restic-staging/srv/appdata` and `/srv/backups/restic-staging/opt/homelab/stacks`.
 - Daily `homepi-backup.service`/timer at 04:30, `Persistent=true`.
 - Monthly `homepi-restic-maintenance.service`/timer on day 1 at 05:30: `restic prune`, then `restic check`; systemd execution tested.
-- Reported retention: 7 daily / 4 weekly / 6 monthly for automatic snapshots. VERIFY ON PI: exact installed command and grouping/filter options.
+- Installed retention confirmed on 2026-10-14: `forget --tag automatic --keep-daily 7 --keep-weekly 4 --keep-monthly 6`; no explicit group override.
+- Owner-supplied scripts/units are captured under `backup/`; four units have no drop-ins. Review and remediation plan are in `backup/README.md`.
 - Targeted restore to a temporary path and `restic check` succeeded.
 - Old manual bootstrap snapshot `bd21d171` was removed and prune run afterwards.
 
@@ -25,8 +26,8 @@ The systemd setup uses `HOME=/root` and `XDG_CACHE_HOME=/var/cache/homepi-backup
 
 ## Next: reproducibility and application recovery
 
-1. Capture sanitized installed backup/maintenance scripts and service/timer units into Git; record exact exclusions, retention, staging layout and container restart handling on failure.
-2. Verify how scheduled backup and maintenance avoid overlapping repository operations.
+1. Installed scripts/units, exclusions and retention are captured. Correct masked `docker start` failures; validate success/failure cleanup before deployment.
+2. Add a shared exclusive lock to both scripts and validate contention. Existing `After=` ordering is not a universal mutual-exclusion mechanism.
 3. Extend `restore-runbook.md` with the exact staged-path mapping, source ownership and recovery of Home Assistant and media-stack databases/configuration.
 4. Restore to a temporary directory first. Before replacing any live appdata, stop affected services and preserve their existing state. Prefer an isolated recovery environment where practical; avoid duplicate Home Assistant automations/device control.
 5. Validate database integrity and application startup/configuration; record the chosen snapshot, test scope and outcome. VPN isolation must pass before a recovered media stack can download.

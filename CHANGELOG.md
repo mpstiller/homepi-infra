@@ -2,6 +2,10 @@
 
 ## 2026-10-14
 
+- Captured owner-supplied installed backup/maintenance scripts and four systemd units under `backup/`; confirmed retention, exclusions and absence of unit drop-ins.
+- Reviewed masked container restart failures and missing shared script locking; documented the correction/validation plan without changing the live Pi.
+- Added temporary snapshot restore and staged database-validation guidance; application recovery remains unverified.
+
 - Reconciled roadmap/handoff against checked-in Compose/Homepage configuration and confirmed repository state; Homepage V1 and the main maintenance window remain complete.
 - Updated obsolete backup documentation for operational Backup V1; distinguished the tested targeted restore from pending application recovery and added backup-script/systemd capture as the next workstream.
 - Added supplementary chat findings with verification boundaries: reported retention/staging paths and the pending Jellyfin for Kodi native-library workflow.
