@@ -60,12 +60,12 @@ Confirmed working/configured:
 - Seerr
 - Home Assistant
 - Arcane
+- Jellyfin (owner-verified 2026-10-14)
 
 The qBittorrent widget reaches the WebUI through the host port published by Gluetun; do not point Homepage at a normal `qbittorrent:8080` container address because qBittorrent shares Gluetun's network namespace.
 
 Still open / intentionally deferred:
 
-- **Jellyfin:** still unconfigured, but the Tailscale server-connection/admin-login blocker was resolved on 2026-10-14. API-key setup and a widget can now proceed; backend connectivity remains separate from browser navigation.
 - **Music Assistant:** keep as a normal service card unless a genuinely useful supported widget is identified. A widget is not required for Homepage V1.
 - **Gluetun:** intentionally shown as a Docker-status card without a service link/widget; this exposes container health without adding another administration surface.
 - **Tailscale:** intentionally not present as a Homepage service card. Tailscale is a host-level private-access layer, not a Docker workload managed through this dashboard.
@@ -75,7 +75,7 @@ Still open / intentionally deferred:
 Homepage service API keys/tokens are kept only in:
 
 ```text
-/srv/appdata/homepage/.env
+/opt/homelab/stacks/homepage/.env
 ```
 
 using `HOMEPAGE_VAR_...` variables. Secrets must never be committed.
@@ -116,10 +116,9 @@ services.yaml
 settings.yaml
 widgets.yaml
 docker.yaml
-.env
 ```
 
-The non-secret YAML files were captured on 2026-10-07 and are mirrored under `stacks/homepage/config/`.
+The non-secret YAML files were captured on 2026-10-07 and are mirrored under `stacks/homepage/config/`. The Jellyfin widget was added and owner-verified on 2026-10-14. The actual secret env_file is `/opt/homelab/stacks/homepage/.env`, outside the appdata YAML directory.
 
 The exact live Compose structure was also synchronized, including:
 
@@ -146,9 +145,9 @@ Required before marking Homepage V1 complete:
 
 1. [x] Capture the exact live `/opt/homelab/stacks/homepage/compose.yaml` and synchronize its non-secret structure into Git.
 2. [x] Capture and commit sanitized copies of `services.yaml`, `settings.yaml`, `widgets.yaml`, and `docker.yaml`.
-3. [x] Keep `/srv/appdata/homepage/.env` out of Git and document only safe variable names in `.env.example`.
+3. [x] Keep `/opt/homelab/stacks/homepage/.env` out of Git and document only safe variable names in `.env.example`.
 4. [x] Final dashboard smoke test passed: current widgets render and service links work over the active access path, with the Jellyfin exception documented separately.
-5. [ ] Add the Jellyfin widget after Jellyfin admin access is convenient again / the Tailscale issue is resolved.
+5. [x] Add and verify the Jellyfin widget (2026-10-14, subsequent to V1 closure).
 
 Optional polish, not required for V1:
 
@@ -168,8 +167,34 @@ Validated:
 - reproducible Compose/config capture in Git;
 - final smoke test.
 
-The Jellyfin widget remains optional/unconfigured and does not block Homepage V1. Its remote-login blocker was resolved on 2026-10-14.
+The Jellyfin widget was added and owner-verified on 2026-10-14 after its remote-login blocker was resolved. Homepage V1 remained complete throughout this follow-up.
 
 ## Related known issue
 
-Jellyfin remote server connection was resolved on 2026-10-14 by enabling its app-level remote flag. Both MagicDNS/IP public server-info calls return 200 and browser login works. No Homepage link change was needed; see `remote-access.md`. Remote playback and the Jellyfin widget remain untested/unconfigured respectively.
+Jellyfin remote server connection was resolved on 2026-10-14 by enabling its app-level remote flag. Both MagicDNS/IP public server-info calls return 200 and browser login works. No Homepage link change was needed; see `remote-access.md`. Remote playback remains untested; the Jellyfin widget is now configured and renders successfully.
+
+## Jellyfin widget — confirmed 2026-10-14
+
+Owner created a Jellyfin key named Homepage locally and added it to the verified Compose env_file `/opt/homelab/stacks/homepage/.env` as `HOMEPAGE_VAR_JELLYFIN_KEY`. The value was never shared in chat or Git; `.env.example` contains only the blank variable name. The former appdata env-file path in prose was corrected after owner readlink verification.
+
+The existing Jellyfin card now uses:
+
+```yaml
+widget:
+  type: jellyfin
+  url: http://host.docker.internal:8096
+  key: "{{HOMEPAGE_VAR_JELLYFIN_KEY}}"
+  version: 2
+  enableBlocks: true
+  enableNowPlaying: true
+  enableUser: false
+  enableMediaControl: false
+  fields:
+    - movies
+    - series
+    - episodes
+```
+
+This follows the [official Jellyfin widget documentation](https://gethomepage.dev/widgets/services/jellyfin/) for installed Jellyfin 12.2.0. Homepage was recreated alone with `docker compose up -d --no-deps --pull never --force-recreate homepage` so it loaded the new env_file value. The owner confirmed configuration/rendering worked. No new API key is present in the checked-in configuration, and no other service was recreated by that command.
+
+Widgets use container-to-host connectivity; browser navigation stays on `http://homepi:8096`. The socket proxy remains restricted. Keep the key in the actual env_file for future updates; a simple container restart does not reload changed environment values.

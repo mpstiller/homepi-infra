@@ -121,18 +121,18 @@ The repository now contains:
 
 ## Immediate resume point
 
-P0, Homepage V1, the main maintenance window and Backup V1 are complete within their recorded scope. Jellyfin-over-Tailscale connection is now resolved and login verified. Next: optionally add its Homepage widget, refresh image inventory and choose lightweight backup visibility. Optional broader recovery tests and independent-secret checks remain separate follow-ups in `ROADMAP.md`.
+P0, Homepage V1, the main maintenance window and Backup V1 are complete within their recorded scope. Jellyfin-over-Tailscale connection is now resolved and login verified. The Jellyfin Homepage widget is now confirmed. Next: refresh image inventory and choose lightweight backup visibility. Optional broader recovery tests and independent-secret checks remain separate follow-ups in `ROADMAP.md`.
 
 Homepage closure evidence:
 
 - The service-group layout is implemented.
 - Sonarr, Radarr, Prowlarr, qBittorrent, Seerr, and Home Assistant native widgets are confirmed working.
-- Homepage API keys/tokens are stored only in the local `/srv/appdata/homepage/.env`.
-- Jellyfin widget remains unconfigured; the Tailscale/admin-access blocker is resolved as of 2026-10-14.
+- Homepage API keys/tokens are stored only in the local `/opt/homelab/stacks/homepage/.env`.
+- Jellyfin widget is configured and owner-verified as of 2026-10-14; the Tailscale/admin-access blocker is resolved.
 - Arcane is configured with its native widget; Music Assistant remains link-only; Gluetun is shown as a Docker-status card; Tailscale is intentionally not a dashboard service.
 - Homepage reproducibility is now closed: the exact live Compose structure is synchronized, including `env_file` and `host.docker.internal:host-gateway`.
 - Sanitized live copies of `services.yaml`, `settings.yaml`, `widgets.yaml`, and `docker.yaml` are checked in under `stacks/homepage/config/`.
-- Homepage V1 is complete: layout, widgets, Docker stats, service links, live Compose/config capture, and the final smoke test are all validated. The Jellyfin widget remains optional/unconfigured; its remote/admin-access blocker is now resolved.
+- Homepage V1 is complete: layout, widgets, Docker stats, service links, live Compose/config capture, and the final smoke test are all validated. The Jellyfin widget was subsequently added and owner-verified on 2026-10-14.
 
 See `docs/homepage.md`.
 
@@ -251,6 +251,8 @@ Current policy: do not downgrade Sonarr/Radarr release quality just to optimize 
 
 Owner confirmed local `/System/Info/Public` HTTP 200 and Tailscale hostname/IP HTTP 503. `EnableRemoteAccess=false` was found in network.xml; the guarded script changed only that flag to true and restarted Jellyfin. The backup lock and private rollback copy protected the change.
 
-Afterwards both Mac requests returned HTTP 200 and browser login succeeded. Tailscale/router policy and other XML settings were unchanged. The server-connection failure is resolved; remote playback remains untested and the Homepage widget remains optional/deferred until configured.
+Afterwards both Mac requests returned HTTP 200 and browser login succeeded. Tailscale/router policy and other XML settings were unchanged. The server-connection failure is resolved; remote playback remains untested; the Homepage widget is configured and owner-verified.
 
-Rollback file: `/root/homepi-jellyfin-network-rollback.4_6mobfk/network.xml` (retained). Next workstream: optional Jellyfin Homepage widget, then inventory/maintenance and backup visibility per `ROADMAP.md`.
+Rollback file: `/root/homepi-jellyfin-network-rollback.4_6mobfk/network.xml` (retained). Next workstream: inventory/maintenance and backup visibility per `ROADMAP.md`.
+
+Jellyfin Homepage widget is configured and renders successfully (owner confirmation). It uses version 2, movie/series/episode count blocks and Now Playing; user names/media controls are disabled. `HOMEPAGE_VAR_JELLYFIN_KEY` is local only in the owner-verified `/opt/homelab/stacks/homepage/.env`. Homepage alone was recreated without pulling an image.

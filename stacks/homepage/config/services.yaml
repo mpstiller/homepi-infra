@@ -6,6 +6,19 @@
         server: homepi
         container: jellyfin
         showStats: true
+        widget:
+          type: jellyfin
+          url: http://host.docker.internal:8096
+          key: "{{HOMEPAGE_VAR_JELLYFIN_KEY}}"
+          version: 2
+          enableBlocks: true
+          enableNowPlaying: true
+          enableUser: false
+          enableMediaControl: false
+          fields:
+            - movies
+            - series
+            - episodes
 
     - Seerr:
         icon: seerr.png

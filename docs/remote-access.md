@@ -108,6 +108,6 @@ Owner-verified result:
 - Mac via Tailscale IPv4: HTTP 200.
 - Jellyfin browser login works over the Tailscale path.
 
-The original server-connection issue is resolved. Remote playback has not been tested; local playback/Direct Play was previously validated. The deferred Homepage Jellyfin widget can now proceed when desired.
+The original server-connection issue is resolved. Remote playback has not been tested; local playback/Direct Play was previously validated. Homepage Jellyfin widget was subsequently added and owner-verified on 2026-10-14.
 
 Rollback original is retained at `/root/homepi-jellyfin-network-rollback.4_6mobfk/network.xml`. Restore only with Jellyfin stopped and preserve the backup/maintenance lock; reverting the flag will disable remote client access again. No cleanup has been performed.

@@ -140,7 +140,7 @@ VERIFY ON PI: exact image digests/tags and current container versions should be 
 - Homepage V1 is complete as of 2026-10-07. Sonarr, Radarr, Prowlarr, qBittorrent, Seerr, Home Assistant and Arcane widgets are working/configured.
 - Keys/tokens are stored only in the local Homepage `.env`; never commit them.
 - Sanitized live YAMLs are checked in under `stacks/homepage/config/`; Compose includes `env_file` and the host-gateway mapping.
-- Jellyfin widget remains unconfigured (the remote-login blocker is now resolved); Music Assistant stays link-only.
+- Jellyfin widget version 2 is configured and owner-verified (2026-10-14); Music Assistant stays link-only.
 
 ## 8. Home Assistant
 
@@ -596,10 +596,11 @@ Home Assistant/Jellyfin startup, LiteDB integrity, YAML/PEM semantics, UI login,
 
 Resume in this order:
 
-1. Optionally add the Jellyfin Homepage widget now that private remote login works; the original server-connection issue is resolved.
-2. Refresh post-update image/digest inventory; consider Gluetun pinning separately with VPN regression checks.
-3. Add lightweight backup failure/staleness visibility after choosing a channel; verify independently stored recovery secrets.
-4. During normal use verify Radarr hardlinks, retained authorized indexers and Kodi client synchronization.
-5. Choose Matter/smart-home or a browser-first household dashboard; measure resources before photo/file cloud and preserve existing storage/cloud decisions.
+1. Jellyfin remote login and Homepage widget are complete; refresh post-update image/digest inventory; consider Gluetun pinning separately with VPN regression checks.
+2. Add lightweight backup failure/staleness visibility after choosing a channel; verify independently stored recovery secrets.
+3. During normal use verify Radarr hardlinks, retained authorized indexers and Kodi client synchronization.
+4. Choose Matter/smart-home or a browser-first household dashboard; measure resources before photo/file cloud and preserve existing storage/cloud decisions.
 
 Repository verified config and owner-supplied execution outputs are primary evidence. Refer to `CURRENT_STATE.md`, `ROADMAP.md`, `docs/backup-restore.md` and `docs/restore-runbook.md`.
+
+Homepage Jellyfin widget is now owner-verified: version 2, backend host.docker.internal:8096, count blocks/Now Playing, no user names/media controls. Key exists only in /opt/homelab/stacks/homepage/.env (readlink-verified), not chat/Git. services.yaml and blank .env.example key match the applied instructions. No widget work remains.

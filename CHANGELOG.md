@@ -2,6 +2,7 @@
 
 ## 2026-10-14
 
+- Added and owner-verified Jellyfin Homepage widget version 2 (movie/series/episode counts and Now Playing, user/media controls disabled). Key remains local in verified stack env_file; only blank template variable is checked in. Corrected prior env-file path prose and recreated Homepage alone without pulling an image.
 - Resolved Jellyfin-over-Tailscale server-connection failure: owner confirmed EnableRemoteAccess=false, applied a one-field guarded change to true with private rollback and restart, then verified both hostname/IP API HTTP 200 and browser login. Router/Tailscale/IP-filter policy unchanged; remote playback remains untested. Three local XML-edit tests passed.
 - Updated roadmap/handoff/Homepage docs to remove the remote-login blocker; Jellyfin widget remains optional/unconfigured.
 - Captured installed backup/maintenance scripts and four units, then installed shared flock and explicit restart-failure/EXIT cleanup handling. Eight local simulated tests passed; owner verified native lock, timers and successful real backup/maintenance runs.
