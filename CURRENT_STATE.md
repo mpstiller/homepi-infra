@@ -121,7 +121,7 @@ The repository now contains:
 
 ## Immediate resume point
 
-P0, Homepage V1, the main maintenance window and Backup V1 are complete within their recorded scope. Jellyfin-over-Tailscale connection is now resolved and login verified. The Jellyfin Homepage widget is now confirmed. Next: refresh image inventory and choose lightweight backup visibility. Optional broader recovery tests and independent-secret checks remain separate follow-ups in `ROADMAP.md`.
+P0, Homepage V1, the main maintenance window and Backup V1 are complete within their recorded scope. Jellyfin-over-Tailscale connection is now resolved and login verified. The Jellyfin Homepage widget is now confirmed. The image inventory is now refreshed. Next: inspect missing Docker memory/swap-limit support read-only, evaluate Gluetun pinning separately and choose lightweight backup visibility. Optional broader recovery tests and independent-secret checks remain separate follow-ups in `ROADMAP.md`.
 
 Homepage closure evidence:
 
@@ -256,3 +256,11 @@ Afterwards both Mac requests returned HTTP 200 and browser login succeeded. Tail
 Rollback file: `/root/homepi-jellyfin-network-rollback.4_6mobfk/network.xml` (retained). Next workstream: inventory/maintenance and backup visibility per `ROADMAP.md`.
 
 Jellyfin Homepage widget is configured and renders successfully (owner confirmation). It uses version 2, movie/series/episode count blocks and Now Playing; user names/media controls are disabled. `HOMEPAGE_VAR_JELLYFIN_KEY` is local only in the owner-verified `/opt/homelab/stacks/homepage/.env`. Homepage alone was recreated without pulling an image.
+
+## Refreshed deployment inventory — 2026-10-14 15:42 CEST
+
+Owner provided selected-field inventory: 13 containers running, all local references match their running image IDs, four configured healthchecks healthy, restartCount 0 and no capture errors. All images Linux/arm64. Docker 29.8.0, Compose 5.5.1, kernel unchanged. Six application versions were queried directly; other versions are image-label evidence.
+
+11 image digests differ from the 2026-10-05 baseline; Gluetun and FlareSolverr digests are unchanged. Current exact references and raw snapshot are in `docs/image-inventory.md` and `docs/audits/image-inventory-2026-10-14.json`. No registry-version/update check or runtime modification was performed.
+
+Docker reports memory/swap limit support false. Available host RAM was about 1.56 GiB, swap used about 275 MiB. Cause is unverified; next read-only maintenance step is cgroup/kernel/boot inspection, alongside separate Gluetun pinning evaluation. Do not assume Docker memory caps are enforceable.

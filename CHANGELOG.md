@@ -2,6 +2,10 @@
 
 ## 2026-10-14
 
+- Recorded owner read-only image inventory at 15:42 CEST: 13 running containers, all local references match running IDs, no capture errors. Archived Oct 5 baseline and added selected-field JSON snapshot; distinguish six directly queried app versions from image labels.
+- Confirmed 11 digest changes vs Oct 5 while Gluetun/FlareSolverr remain unchanged. Recorded missing Docker memory/swap-limit support as a separate diagnostic follow-up; no pull/update/restart/configuration change performed.
+
+
 - Added and owner-verified Jellyfin Homepage widget version 2 (movie/series/episode counts and Now Playing, user/media controls disabled). Key remains local in verified stack env_file; only blank template variable is checked in. Corrected prior env-file path prose and recreated Homepage alone without pulling an image.
 - Resolved Jellyfin-over-Tailscale server-connection failure: owner confirmed EnableRemoteAccess=false, applied a one-field guarded change to true with private rollback and restart, then verified both hostname/IP API HTTP 200 and browser login. Router/Tailscale/IP-filter policy unchanged; remote playback remains untested. Three local XML-edit tests passed.
 - Updated roadmap/handoff/Homepage docs to remove the remote-login blocker; Jellyfin widget remains optional/unconfigured.
