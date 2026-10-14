@@ -592,11 +592,11 @@ Revised scripts under `backup/bin/` are installed: shared flock, explicit restar
 
 The corrected copied-state checker passed 41 checks (13 SQLite databases, three XML configs, 23 Home Assistant JSON files, YAML and LiteDB presence). Kodi Sync Queue uses LiteDB, not SQLite; full integrity is not proven by presence. Sonarr restored startup/API succeeded, version 4.0.20.3014, with four matching series IDs. Owner explicitly chose one representative application-start test and deferred further starts. Do not re-propose testing every application as a V1 prerequisite.
 
-Home Assistant/Jellyfin startup, LiteDB integrity, YAML/PEM semantics, UI login, media/download integrations and full-host disaster recovery remain untested. Independently recoverable password/OAuth secrets still need verification; do not mark this done or expose secret contents. Test restore and rollback files remain local. Docker memory stats reported 0B/0B and memory-limit support was unavailable; do not assume enforceable container memory caps.
+Home Assistant/Jellyfin startup, LiteDB integrity, YAML/PEM semantics, UI login, media/download integrations and full-host disaster recovery remain untested. Independently recoverable password/OAuth secrets still need verification; do not mark this done or expose secret contents. Test restore and rollback files remain local. Earlier Docker memory stats reported 0B/0B while memory-limit support was unavailable. Support is now verified after the boot fix; individual caps and enforcement under pressure remain untested.
 
 Resume in this order:
 
-1. Jellyfin remote login and Homepage widget are complete; image/digest inventory is refreshed (2026-10-14). Investigate missing Docker memory/swap-limit support read-only and consider Gluetun pinning separately with VPN regression checks.
+1. Jellyfin remote login and Homepage widget are complete; image/digest inventory is refreshed (2026-10-14). Docker RAM/swap-limit support is enabled and verified after reboot. Consider Gluetun pinning separately with VPN regression checks.
 2. Add lightweight backup failure/staleness visibility after choosing a channel; verify independently stored recovery secrets.
 3. During normal use verify Radarr hardlinks, retained authorized indexers and Kodi client synchronization.
 4. Choose Matter/smart-home or a browser-first household dashboard; measure resources before photo/file cloud and preserve existing storage/cloud decisions.
@@ -606,3 +606,11 @@ Repository verified config and owner-supplied execution outputs are primary evid
 Homepage Jellyfin widget is now owner-verified: version 2, backend host.docker.internal:8096, count blocks/Now Playing, no user names/media controls. Key exists only in /opt/homelab/stacks/homepage/.env (readlink-verified), not chat/Git. services.yaml and blank .env.example key match the applied instructions. No widget work remains.
 
 Inventory completed: 13 running containers, all local tags match running IDs, no errors; Gluetun/FlareSolverr unchanged versus Oct 5. Docker memoryLimit/swapLimit=false; about 1.56 GiB host RAM available. No update/pull/restart occurred and remote-registry freshness was not checked. Preserve API-vs-label evidence in docs.
+
+Memory-controller support is resolved: the guarded `scripts/enable-memory-cgroup.py` appended only `cgroup_enable=memory` to the verified NVMe boot command line, with rollback retained. Five local boot-line tests passed. Owner rebooted and verified root controllers `cpuset cpu io memory pids`, Docker RAM/swap limits=true, all 13 containers running and all four configured healthchecks healthy. See `docs/resource-limits.md`. No per-service caps or memory-pressure enforcement test was performed. The earlier inventory JSON intentionally preserves pre-fix flags. Do not require memory in legacy `/proc/cgroups` for this cgroup-v2 kernel or repeat the completed boot change. Do not manually stop containers before normal reboot under `unless-stopped`.
+
+## 27. End-of-session handoff — 2026-10-14
+
+Owner explicitly stopped work. PRs #1–#6 are merged; PR #7 (https://github.com/mpstiller/homepi-infra/pull/7) was open at handoff and carries the already applied/verified memory-controller fix. Re-check PR status and read latest main plus PR #7 if still open. Local checkout contains earlier published changes; inspect before resetting or overwriting it. No new Pi action is scheduled and no Gluetun pin/update or per-service memory cap has been applied.
+
+Resume with the concrete Gluetun pinning evaluation in ROADMAP.md, using checked-in Compose/decisions and the verified digest as the starting point. Confirm live evidence before applying changes; preserve and validate VPN isolation/binding/forwarded port/kill switch. Backup visibility and private independent-secret recovery follow next. Do not reopen all-app restore tests: owner accepted one representative Sonarr start for Backup V1. Historical inventory support=false remains an accurate pre-fix capture; current controller/Docker support is true.

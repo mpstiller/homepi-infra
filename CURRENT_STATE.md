@@ -121,7 +121,9 @@ The repository now contains:
 
 ## Immediate resume point
 
-P0, Homepage V1, the main maintenance window and Backup V1 are complete within their recorded scope. Jellyfin-over-Tailscale connection is now resolved and login verified. The Jellyfin Homepage widget is now confirmed. The image inventory is now refreshed. Next: inspect missing Docker memory/swap-limit support read-only, evaluate Gluetun pinning separately and choose lightweight backup visibility. Optional broader recovery tests and independent-secret checks remain separate follow-ups in `ROADMAP.md`.
+Session stopped by owner on 2026-10-14. PRs #1–#6 are merged; [PR #7](https://github.com/mpstiller/homepi-infra/pull/7) was open at handoff. Check its current status before treating the memory-controller documentation as part of main. The fix is already applied and verified on the Pi. The concrete next task and scope are in `ROADMAP.md` under Session handoff. No further Pi action is scheduled.
+
+P0, Homepage V1, the main maintenance window and Backup V1 are complete within their recorded scope. Jellyfin-over-Tailscale connection is now resolved and login verified. The Jellyfin Homepage widget is now confirmed. The image inventory is now refreshed. Docker RAM/swap-limit support is now enabled and verified after reboot. Next: evaluate Gluetun pinning separately and choose lightweight backup visibility. Optional broader recovery tests and independent-secret checks remain separate follow-ups in `ROADMAP.md`.
 
 Homepage closure evidence:
 
@@ -263,4 +265,10 @@ Owner provided selected-field inventory: 13 containers running, all local refere
 
 11 image digests differ from the 2026-10-05 baseline; Gluetun and FlareSolverr digests are unchanged. Current exact references and raw snapshot are in `docs/image-inventory.md` and `docs/audits/image-inventory-2026-10-14.json`. No registry-version/update check or runtime modification was performed.
 
-Docker reports memory/swap limit support false. Available host RAM was about 1.56 GiB, swap used about 275 MiB. Cause is unverified; next read-only maintenance step is cgroup/kernel/boot inspection, alongside separate Gluetun pinning evaluation. Do not assume Docker memory caps are enforceable.
+At inventory capture, Docker reported memory/swap-limit support false; available RAM was about 1.56 GiB and swap used about 275 MiB. The immutable capture retains these historical values.
+
+## Docker memory-controller support — resolved 2026-10-14
+
+Owner diagnosed cgroup v2/systemd with no memory controller and active `cgroup_disable=memory`. The guarded helper appended `cgroup_enable=memory` to `/boot/firmware/cmdline.txt`, preserving the original arguments and retaining a rollback copy. After a normal reboot the owner verified `cpuset cpu io memory pids`, Docker RAM-Limits=true and Swap-Limits=true.
+
+All 13 containers were running again; the four configured healthchecks (Homepage, Jellyfin, Arcane and Gluetun) were healthy. Per-service memory caps were not assigned and enforcement under memory pressure was not tested. See `docs/resource-limits.md` for the applied change, validation and rollback.
