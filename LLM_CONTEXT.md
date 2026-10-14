@@ -113,7 +113,7 @@ Known services and LAN ports:
 | Seerr | request UI | `5055` |
 | FlareSolverr | headless-browser proxy for authorized Cloudflare-protected sources | host loopback `127.0.0.1:8191`, Docker-internal `flaresolverr:8191` |
 
-VERIFY ON PI: exact image digests/tags and current container versions should be captured from the live system.
+Exact current running image IDs/RepoDigests and available version evidence were captured read-only on 2026-10-14; see `docs/image-inventory.md`. Six app versions are direct queries; other versions are image-label evidence.
 
 ## 7. Arcane and Homepage
 
@@ -596,7 +596,7 @@ Home Assistant/Jellyfin startup, LiteDB integrity, YAML/PEM semantics, UI login,
 
 Resume in this order:
 
-1. Jellyfin remote login and Homepage widget are complete; refresh post-update image/digest inventory; consider Gluetun pinning separately with VPN regression checks.
+1. Jellyfin remote login and Homepage widget are complete; image/digest inventory is refreshed (2026-10-14). Investigate missing Docker memory/swap-limit support read-only and consider Gluetun pinning separately with VPN regression checks.
 2. Add lightweight backup failure/staleness visibility after choosing a channel; verify independently stored recovery secrets.
 3. During normal use verify Radarr hardlinks, retained authorized indexers and Kodi client synchronization.
 4. Choose Matter/smart-home or a browser-first household dashboard; measure resources before photo/file cloud and preserve existing storage/cloud decisions.
@@ -604,3 +604,5 @@ Resume in this order:
 Repository verified config and owner-supplied execution outputs are primary evidence. Refer to `CURRENT_STATE.md`, `ROADMAP.md`, `docs/backup-restore.md` and `docs/restore-runbook.md`.
 
 Homepage Jellyfin widget is now owner-verified: version 2, backend host.docker.internal:8096, count blocks/Now Playing, no user names/media controls. Key exists only in /opt/homelab/stacks/homepage/.env (readlink-verified), not chat/Git. services.yaml and blank .env.example key match the applied instructions. No widget work remains.
+
+Inventory completed: 13 running containers, all local tags match running IDs, no errors; Gluetun/FlareSolverr unchanged versus Oct 5. Docker memoryLimit/swapLimit=false; about 1.56 GiB host RAM available. No update/pull/restart occurred and remote-registry freshness was not checked. Preserve API-vs-label evidence in docs.
