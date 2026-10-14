@@ -2,6 +2,8 @@
 
 ## 2026-10-14
 
+- Resolved missing Docker memory/swap-limit support: diagnosed the disabled memory controller, applied a guarded `cgroup_enable=memory` boot override with rollback, then owner verified the memory controller and both Docker support flags after reboot. All 13 containers running; four configured healthchecks healthy. Five local boot-line tests passed. Per-service caps were not assigned; enforcement under memory pressure remains untested.
+
 - Recorded owner read-only image inventory at 15:42 CEST: 13 running containers, all local references match running IDs, no capture errors. Archived Oct 5 baseline and added selected-field JSON snapshot; distinguish six directly queried app versions from image labels.
 - Confirmed 11 digest changes vs Oct 5 while Gluetun/FlareSolverr remain unchanged. Recorded missing Docker memory/swap-limit support as a separate diagnostic follow-up; no pull/update/restart/configuration change performed.
 

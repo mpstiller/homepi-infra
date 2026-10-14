@@ -55,9 +55,9 @@ RepoDigests are recorded repository references, suitable for identifying the cap
 
 ## Resource support and follow-ups
 
-Docker explicitly reports memoryLimit=false and swapLimit=false. Host available RAM was about 1.56 GiB and swap usage about 275 MiB at capture. Earlier 0B/0B Docker stats and unsupported-limit warnings are consistent with this finding; the cause has not been diagnosed.
+At the 15:42 CEST capture Docker reported memoryLimit=false and swapLimit=false. Host available RAM was about 1.56 GiB and swap usage about 275 MiB at capture. Earlier 0B/0B Docker stats and unsupported-limit warnings are consistent with this finding; the later diagnosis found a disabled memory controller.
 
-- Investigate cgroup/kernel/boot configuration in a separate read-only step before relying on Docker memory/swap limits or adding heavy workloads. No boot/runtime change is made here.
+- Subsequent boot fix and normal reboot on 2026-10-14 enabled the memory controller; owner verified Docker RAM/swap-limit support=true and all 13 containers running. See [resource-limit validation](resource-limits.md). The raw inventory remains the original pre-fix capture; no per-service caps were assigned.
 - Gluetun intentionally remains on the previously validated working digest. Evaluate pinning that known image separately; do not blindly refresh latest. Preserve qBittorrent isolation, interface binding, forwarded port and kill switch.
 - Refresh inventory after future intentional updates, keeping date/source and API-vs-label evidence clear. This capture does not establish that software is the newest available or vulnerability-free.
 

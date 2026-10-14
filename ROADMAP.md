@@ -4,7 +4,7 @@
 
 ## Recommended execution order
 
-1. **Maintenance follow-ups.** Image/digest/resource inventory is refreshed. Investigate missing Docker memory/swap-limit support read-only, and evaluate Gluetun pinning separately while preserving binding, forwarded port and kill switch.
+1. **Maintenance follow-ups.** Image/digest/resource inventory is refreshed. Docker memory/swap-limit support is enabled and verified after reboot. Evaluate Gluetun pinning separately while preserving binding, forwarded port and kill switch.
 2. **Backup follow-ups.** Verify independent recovery secrets and add lightweight failure/staleness visibility after choosing a channel. Backup V1 is closed; additional app-start/full-host recovery tests are optional/deferred by owner decision.
 3. **Normal-use media checks.** Capture Radarr hardlink evidence before cleanup, decide retained authorized indexers and verify Kodi client synchronization. Remote Jellyfin playback can be validated during normal use; login and Homepage widget are complete.
 4. **Next household capability.** Matter/smart-home integration or a browser-first e-ink prototype; photo/file cloud requires measured resources. Preserve the decisions to defer Immich, HDD purchase and production-app migration.
@@ -56,7 +56,7 @@
 - [x] Revalidate qBittorrent VPN binding and Proton forwarded port after update.
 - [ ] Evaluate Gluetun separately and move away from an unpinned `:latest` update path if appropriate.
 - [x] Refresh exact image digest/version evidence after the update window (owner capture 2026-10-14, 13 containers, no errors).
-- [ ] Diagnose Docker memory/swap-limit support=false before relying on limits or adding heavy workloads; no boot/runtime change applied by this inventory.
+- [x] Diagnose and enable Docker memory/swap-limit support: guarded boot override applied; controller and Docker flags verified after reboot, with all 13 containers running. Individual service budgets/caps remain a separate measured decision.
 - [x] Update Home Assistant to `2026.10.0` and validate normal operation; monitor the separate `fritz.powerline` SSDP discovery error.
 - [x] Update Jellyfin to `12.2.0` and validate startup, libraries, Seerr integration, playback, and Kodi/JellyCon.
 
