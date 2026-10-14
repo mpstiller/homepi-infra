@@ -4,12 +4,11 @@
 
 ## Recommended execution order
 
-1. **Backup reproducibility and application recovery.** Installed scripts/units are captured. Correct masked restart failures and add a shared backup/maintenance lock, then validate the staged restore mapping. Complete when Home Assistant/media-state recovery is documented and safely validated, with secrets available independently. The prior targeted restore/check stays complete.
-2. **Jellyfin over Tailscale.** Compare LAN and remote server/API access, inspect current server/user access settings and relevant logs. Complete when manual connection, login and playback work from a remote client. Add the Homepage widget afterwards if useful; keep admin UIs private.
-3. **Maintenance evidence.** Refresh the post-update image/digest and resource inventory. Evaluate Gluetun pinning separately; preserve the validated VPN path and validate binding, port forwarding and kill switch after any actual change.
-4. **Lightweight backup visibility.** Choose a notification channel and detect failed or stale backups; optionally show last success in Homepage. Complete with a controlled notification test.
-5. **Close remaining media checks during normal use.** Capture Radarr hardlink evidence before cleanup, decide retained authorized indexers, and verify the Kodi native-library/client synchronization workflow. These need not block unrelated work.
-6. **Choose the next household capability.** Matter/smart-home integration or a browser-first e-ink UI prototype can follow stabilization. Photo/file cloud requires measured RAM/storage headroom; preserve the existing decisions to defer Immich, HDD purchase and production-app migration.
+1. **Jellyfin over Tailscale.** Compare LAN/remote server API access, current network/user settings and relevant logs. Complete when manual connection, login and playback work remotely. Add the Homepage widget afterwards if useful; keep admin UIs private.
+2. **Maintenance evidence.** Refresh post-update image/digest and resource inventory. Evaluate Gluetun pinning separately, preserving binding, forwarded port and kill switch.
+3. **Backup follow-ups.** Verify independent recovery secrets and add lightweight failure/staleness visibility after choosing a channel. Backup V1 is closed; additional app-start/full-host recovery tests are optional/deferred by owner decision.
+4. **Normal-use media checks.** Capture Radarr hardlink evidence before cleanup, decide retained authorized indexers and verify Kodi client synchronization.
+5. **Next household capability.** Matter/smart-home integration or a browser-first e-ink prototype; photo/file cloud requires measured resources. Preserve the decisions to defer Immich, HDD purchase and production-app migration.
 
 
 ## P0 — Make the current system reproducible ✅
@@ -61,7 +60,7 @@
 - [x] Update Home Assistant to `2026.10.0` and validate normal operation; monitor the separate `fritz.powerline` SSDP discovery error.
 - [x] Update Jellyfin to `12.2.0` and validate startup, libraries, Seerr integration, playback, and Kodi/JellyCon.
 
-## P1 — Backups
+## P1 — Backups V1 ✅
 
 - [x] Choose restic.
 - [x] Initialize encrypted restic repository in Google Drive and complete first backup of `/srv/appdata` and `/opt/homelab/stacks`.
@@ -70,11 +69,23 @@
   - [x] Validate production-style staging backup with cache/log excludes (333.155 MiB snapshot).
   - [x] Install and enable systemd service/timer; manual systemd execution validated successfully.
 - [x] Capture installed backup/maintenance scripts and all four systemd units in Git; review retention/excludes, restart failure handling and overlap behavior.
-- [ ] Correct masked container restart failures and add/validate a shared backup/maintenance lock; the captured live baseline is not yet hardened.
-- [ ] Verify independent recovery access to the restic password, rclone OAuth configuration and application secrets.
-- [ ] Document staging-to-original-path recovery of Home Assistant and media-stack databases and safely validate application startup/configuration.
-- [ ] Add lightweight backup failure/staleness notifications after selecting a channel; optionally expose last successful backup in Homepage.
+- [x] Prepare restart failure detection/cleanup and a shared backup/maintenance lock; eight local simulated tests passed.
+- [x] Install revised scripts on the Pi (owner-reported successful installer output, 2026-10-14).
+- [x] Validate native flock contention/release and restored timer scheduling on the Pi (owner output, 2026-10-14).
+- [x] Validate real systemd backup execution with the revised script: snapshot `b37715a7`, successful retention and post-run container check (2026-10-14).
+- [x] Validate real systemd maintenance execution with the revised script: prune/check completed, no errors, exit 0 (2026-10-14).
+- [x] Document observed restore paths and validate restored SQLite/XML/Home Assistant JSON (41 checks, 0 failures, 2026-10-14).
+- [x] Validate isolated Sonarr startup/API and retained series IDs (four series, 2026-10-14).
 - [x] Test restore and run `restic check`; both completed successfully.
+
+Backup V1 closes with full temporary restore, copied-state checks and one representative restored application start, as explicitly agreed with the owner. This does not claim every service/full-host recovery has been tested.
+
+## Backup follow-ups (separate from V1 closure)
+
+- [ ] Verify independent recovery access to the restic password, rclone OAuth configuration and application secrets.
+- [ ] Add lightweight backup failure/staleness notifications; optionally show last successful backup in Homepage.
+- [ ] Optional/deferred: additional application-start tests, Kodi Sync Queue LiteDB integrity, YAML/PEM semantics and full-host disaster recovery.
+- [ ] Choose when to remove the retained root-only restore test directory/rollback copies; no cleanup has been performed.
 
 ## P1 — Jellyfin private remote access
 

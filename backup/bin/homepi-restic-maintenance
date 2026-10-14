@@ -1,6 +1,15 @@
 #!/usr/bin/env bash
 set -Eeuo pipefail
 
+export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+umask 077
+
+# Serialize staging, upload, retention and maintenance, including manual runs.
+command -v flock >/dev/null
+exec 9>/run/lock/homepi-restic.lock
+echo "Waiting for the HomePi backup/maintenance lock..."
+flock -x 9
+
 export HOME=/root
 export XDG_CACHE_HOME=/var/cache/homepi-backup
 

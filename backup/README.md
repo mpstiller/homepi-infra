@@ -1,25 +1,28 @@
-# Installed Backup V1 capture — 2026-10-14
+# Backup V1 — installed and validated
 
-These six files were supplied by the owner from the Pi on 2026-10-14. They represent the installed configuration, not a newly deployed hardened version. The user's combined script output starts with `homepi-backup` and then `homepi-restic-maintenance`; filenames are identified by the corresponding service ExecStart and script behavior.
+`bin/` maps to `/usr/local/sbin/` (root:root, 0700); `systemd/` maps to `/etc/systemd/system/` (0644). Four units have no drop-ins according to owner output. No passwords, OAuth values or API keys are included. Original installed capture is in commit `086255a08b66de824d27ccb6223daff536d13f4a`; revised scripts are installed and validated as of 2026-10-14.
 
-- `bin/` maps to `/usr/local/sbin/` (installed scripts should be root-owned, mode 0700).
-- `systemd/` maps to `/etc/systemd/system/` (root-owned units, mode 0644).
-- All four units have no drop-ins according to the owner's `systemctl show` output.
-- Password/rclone files are referenced by path only and are not included.
-- Preserve this capture while reviewing hardening; do not deploy it as an improvement merely because it is now in Git.
+## Runtime behavior
 
-## Confirmed behavior
+Both scripts wait for exclusive FD-9 flock on `/run/lock/homepi-restic.lock` for the entire operation. Backup stops only previously running candidates, stages appdata/stacks, then starts/checks candidates individually before upload. A failed start blocks upload; only failed containers are retained for EXIT retry. Cleanup preserves the original failure code. INT/TERM invoke cleanup; SIGKILL/power loss and long-term application health are outside that guarantee.
 
-Only previously running candidate containers are stopped. `rsync -aHAX` stages appdata and stacks with cache/log exclusions; services restart before cloud upload. Automatic snapshots use 7 daily / 4 weekly / 6 monthly retention. Retention uses restic's default grouping because no `--group-by` is specified.
+Scripts set root/cache environment and umask 077. Existing staging permissions are not changed automatically. Retention/exclusions, scheduling and VPN configuration are unchanged from the installed capture. `After=` remains ordering, while the shared lock supplies mutual exclusion ([systemd source](https://github.com/systemd/systemd/blob/main/man/systemd.unit.xml), [flock manual](https://man7.org/linux/man-pages/man1/flock.1.html)).
 
-## Review findings and next correction
+## Validation
 
-1. `docker start ... || true` masks restart errors. The explicit restart clears `RUNNING` and removes the EXIT trap even when restart failed. A snapshot can be uploaded and the service reported successful while an application remains stopped. Correct by tracking failed restarts individually, retaining them for EXIT cleanup and returning a failing status; verify that previously running containers are running before upload. The EXIT handler should preserve the original failure and report cleanup failure. Handle catchable termination explicitly; no shell trap can recover from SIGKILL or power loss.
-2. There is no shared backup/maintenance lock. `After=homepi-backup.service` supplies systemd ordering, not mutual exclusion for every scheduled/manual invocation. Correct by acquiring the same exclusive `flock` in both scripts before any work, e.g. FD 9 on `/run/lock/homepi-restic.lock`; retain it through staging/upload/retention or prune/check. Waiting is preferable to silently skipping a scheduled backup. Validate availability of `flock` on the Pi and exercise the contention path before deployment.
-3. Scripts, units, the restic password and rclone config live outside the protected source trees. The first two are now captured here; password and OAuth recovery still require independent secret storage. Do not add secret values to Git.
-4. `gluetun` is not a stopped candidate, although all of `/srv/appdata` is copied. VERIFY ON PI: whether its persisted files change during staging and whether they matter for recovery. Do not change the VPN boundary to resolve this without evidence.
-5. Staging uses the same NVMe and retains local plaintext appdata/.env copies. Google Drive is the independent encrypted repository. VERIFY ON PI: staging permissions and free-space headroom.
+- Eight local simulated backup/recovery/serialization tests pass (`tests/test_backup.py`). Python flock shim uses the host kernel lock; Docker/rsync/restic are simulated.
+- Native flock contention/release, restored timers and real backup/maintenance execution passed on the Pi.
+- Backup snapshot `b37715a7` restored in full; corrected copied-state checker passed 41 checks.
+- `validate-restored-state.py`: 13 SQLite databases, XML and Home Assistant JSON; YAML/LiteDB presence only. Uses a disposable copy, handles WAL and does not print secrets. Seven local tests pass.
+- `test-sonarr-restore.py`: exact owner-confirmed local image, copied config, network none, no published ports/media/socket mounts; compares series IDs via API. Four simulated lifecycle tests pass and native test passed on Sonarr 4.0.20.3014 with four matching IDs.
+- Owner chose one representative application-start test for V1. No further application starts are required for agreed closure. LiteDB integrity, other startup/UI/integration and full-host recovery remain untested.
 
-Review source for ordering: [systemd.unit](https://github.com/systemd/systemd/blob/main/man/systemd.unit.xml). Lock interface: [util-linux flock manual](https://man7.org/linux/man-pages/man1/flock.1.html).
+## Installation/rollback evidence
 
-Next: apply and validate the small locking/restart correction separately, then carry out the temporary restore procedure in `docs/restore-runbook.md`. Capturing these files does not mark hardening or application recovery complete.
+Owner confirmed successful installer execution with rollback copies at `/root/homepi-backup-rollback.xDZCejUc`. The checksum guard initially rejected a baseline copy containing one extra blank line; the owner diff confirmed this sole difference and the exact-live checksum was corrected before installation. Previously active timers were restored; the installer itself did not run backup/maintenance.
+
+For future script replacement, verify prerequisites, pause only active timers, wait for services to finish, save private originals, syntax-check and install both scripts as root:root 0700, then restore timer state and validate. Restore both saved scripts if needed; do not intentionally break production Docker/appdata to exercise failure paths. Units are unchanged for this script-only change.
+
+## Separate follow-ups
+
+Independent password/OAuth recovery remains to be verified. These files and installed scripts/units live outside protected source trees (scripts/units are now in Git). Gluetun persisted-state consistency, existing staging permissions and headroom need review when relevant. Test restore data remains at `/srv/backups/restore-validation.Nz6ggIgG`; no cleanup has been performed. See `docs/backup-restore.md` and `docs/restore-runbook.md`.

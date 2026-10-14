@@ -584,19 +584,22 @@ Current hardware preference:
 
 Software direction: Home Assistant as backend/data/action layer; UI should be hardware-independent and can be prototyped in a browser first. Tesserae/ESPHome/custom frontend remain options.
 
-## 26. Backup V1 and current next steps
+## 26. Backup V1 closure and next steps
 
-Backup V1 is operational: encrypted restic via rclone to Google Drive; `/srv/appdata` and `/opt/homelab/stacks` are copied to staging with brief service stops, services restart before upload, caches/logs are excluded, daily backup at 04:30, monthly prune/check on day 1 at 05:30. A targeted restore and `restic check` succeeded. The manual bootstrap snapshot was removed on 2026-10-14. Installed-command retention is 7 daily / 4 weekly / 6 monthly for automatic snapshots (default restic grouping). `/srv/data` is excluded.
+Backup V1 is complete within the owner's agreed scope as of 2026-10-14. Restic/rclone protects appdata and stacks in Google Drive with consistent staging, daily 04:30 backups, 7 daily / 4 weekly / 6 monthly automatic retention, and monthly prune/check at 05:30 on day 1. `/srv/data` is excluded.
 
-Owner-supplied installed scripts/units are now captured under `backup/` (2026-10-14; no unit drop-ins). Review found ignored container restart errors and no shared script lock; corrections and live validation are pending. Password/rclone files are outside the protected paths and need independent secret recovery. A targeted file restore is not proof that Home Assistant or media databases can start from restored state.
+Revised scripts under `backup/bin/` are installed: shared flock, explicit restart failures and EXIT retry. Native lock, timers and real backup/maintenance runs passed. Snapshot `b37715a7` restored fully to `/srv/backups/restore-validation.Nz6ggIgG` (3236 files/directories, 334.493 MiB); restored roots are directly `srv/appdata` and `opt/homelab/stacks`.
 
-Resume in the order in `ROADMAP.md`:
+The corrected copied-state checker passed 41 checks (13 SQLite databases, three XML configs, 23 Home Assistant JSON files, YAML and LiteDB presence). Kodi Sync Queue uses LiteDB, not SQLite; full integrity is not proven by presence. Sonarr restored startup/API succeeded, version 4.0.20.3014, with four matching series IDs. Owner explicitly chose one representative application-start test and deferred further starts. Do not re-propose testing every application as a V1 prerequisite.
 
-1. Harden and validate the captured backup scripts (restart failures/shared locking), verify independent secrets, then validate temporary restore/database integrity and application-state recovery safely.
-2. Resolve Jellyfin over Tailscale; then optionally add its Homepage widget.
-3. Refresh exact image inventory; evaluate Gluetun pinning separately with VPN regression validation.
-4. Add lightweight backup failure/staleness visibility after choosing the notification channel.
-5. Verify Radarr hardlinks during the next normal import, decide retained authorized indexers, and verify Jellyfin for Kodi client synchronization.
-6. Choose smart-home/Matter or a browser-first household dashboard next; measure resources before photo/file cloud and keep existing storage/cloud decisions.
+Home Assistant/Jellyfin startup, LiteDB integrity, YAML/PEM semantics, UI login, media/download integrations and full-host disaster recovery remain untested. Independently recoverable password/OAuth secrets still need verification; do not mark this done or expose secret contents. Test restore and rollback files remain local. Docker memory stats reported 0B/0B and memory-limit support was unavailable; do not assume enforceable container memory caps.
 
-Evidence policy: checked-in verified runtime configuration takes precedence; repository state is primary, chat findings are supplementary. The 2026-10-14 reconciliation adds no new live audit or completed runtime work. See `docs/backup-restore.md`, `docs/homepage.md`, and `docs/media-stack.md`.
+Resume in this order:
+
+1. Resolve Jellyfin over Tailscale; optionally add its Homepage widget afterwards.
+2. Refresh post-update image/digest inventory; consider Gluetun pinning separately with VPN regression checks.
+3. Add lightweight backup failure/staleness visibility after choosing a channel; verify independently stored recovery secrets.
+4. During normal use verify Radarr hardlinks, retained authorized indexers and Kodi client synchronization.
+5. Choose Matter/smart-home or a browser-first household dashboard; measure resources before photo/file cloud and preserve existing storage/cloud decisions.
+
+Repository verified config and owner-supplied execution outputs are primary evidence. Refer to `CURRENT_STATE.md`, `ROADMAP.md`, `docs/backup-restore.md` and `docs/restore-runbook.md`.
