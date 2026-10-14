@@ -1,0 +1,102 @@
+#!/usr/bin/env bash
+set -Eeuo pipefail
+
+export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
+RESTIC_REPOSITORY="rclone:gdrive:HomePi-Backup"
+RESTIC_PASSWORD_FILE="/etc/restic/homepi-password"
+RCLONE_CONFIG="/etc/rclone/homepi.conf"
+STAGE="/srv/backups/restic-staging"
+
+# Stateful containers whose persistent data lives below /srv/appdata.
+CANDIDATES=(
+  homeassistant
+  music-assistant
+  jellyfin
+  sonarr
+  radarr
+  prowlarr
+  seerr
+  qbittorrent
+  arcane
+  homepage
+)
+
+RUNNING=()
+
+restart_containers() {
+  if ((${#RUNNING[@]})); then
+    echo "Restarting containers..."
+    docker start "${RUNNING[@]}" >/dev/null || true
+  fi
+}
+
+trap restart_containers EXIT
+
+echo "=== HomePi backup started: $(date --iso-8601=seconds) ==="
+
+# Only stop containers that were actually running before the backup.
+for container in "${CANDIDATES[@]}"; do
+  if docker inspect "$container" >/dev/null 2>&1; then
+    if [[ "$(docker inspect -f '{{.State.Running}}' "$container")" == "true" ]]; then
+      RUNNING+=("$container")
+    fi
+  fi
+done
+
+if ((${#RUNNING[@]})); then
+  echo "Stopping stateful containers..."
+  docker stop --time 60 "${RUNNING[@]}" >/dev/null
+fi
+
+echo "Creating consistent local staging copy..."
+
+mkdir -p \
+  "$STAGE/srv/appdata" \
+  "$STAGE/opt/homelab/stacks"
+
+rsync -aHAX \
+  --delete \
+  --delete-excluded \
+  --exclude='jellyfin/cache/' \
+  --exclude='music-assistant/.cache/' \
+  --exclude='*/logs/' \
+  /srv/appdata/ \
+  "$STAGE/srv/appdata/"
+
+rsync -aHAX --delete \
+  /opt/homelab/stacks/ \
+  "$STAGE/opt/homelab/stacks/"
+
+# Restart immediately; cloud upload happens afterwards.
+restart_containers
+RUNNING=()
+trap - EXIT
+
+echo "Uploading snapshot to Google Drive..."
+
+cd "$STAGE"
+
+restic \
+  -o rclone.args="serve restic --stdio --config=${RCLONE_CONFIG}" \
+  -r "$RESTIC_REPOSITORY" \
+  --password-file "$RESTIC_PASSWORD_FILE" \
+  backup \
+  srv/appdata \
+  opt/homelab/stacks \
+  --tag automatic
+
+echo "Applying retention policy..."
+
+restic \
+  -o rclone.args="serve restic --stdio --config=${RCLONE_CONFIG}" \
+  -r "$RESTIC_REPOSITORY" \
+  --password-file "$RESTIC_PASSWORD_FILE" \
+  forget \
+  --tag automatic \
+  --keep-daily 7 \
+  --keep-weekly 4 \
+  --keep-monthly 6
+
+
+echo "=== HomePi backup completed: $(date --iso-8601=seconds) ==="

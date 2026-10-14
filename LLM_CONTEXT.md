@@ -586,13 +586,13 @@ Software direction: Home Assistant as backend/data/action layer; UI should be ha
 
 ## 26. Backup V1 and current next steps
 
-Backup V1 is operational: encrypted restic via rclone to Google Drive; `/srv/appdata` and `/opt/homelab/stacks` are copied to staging with brief service stops, services restart before upload, caches/logs are excluded, daily backup at 04:30, monthly prune/check on day 1 at 05:30. A targeted restore and `restic check` succeeded. The manual bootstrap snapshot was removed on 2026-10-14. Reported retention is 7 daily / 4 weekly / 6 monthly; VERIFY ON PI: installed command. `/srv/data` is excluded.
+Backup V1 is operational: encrypted restic via rclone to Google Drive; `/srv/appdata` and `/opt/homelab/stacks` are copied to staging with brief service stops, services restart before upload, caches/logs are excluded, daily backup at 04:30, monthly prune/check on day 1 at 05:30. A targeted restore and `restic check` succeeded. The manual bootstrap snapshot was removed on 2026-10-14. Installed-command retention is 7 daily / 4 weekly / 6 monthly for automatic snapshots (default restic grouping). `/srv/data` is excluded.
 
-The repository does not yet contain the installed backup scripts/systemd units. A targeted file restore is not proof that Home Assistant or media databases can start from restored state.
+Owner-supplied installed scripts/units are now captured under `backup/` (2026-10-14; no unit drop-ins). Review found ignored container restart errors and no shared script lock; corrections and live validation are pending. Password/rclone files are outside the protected paths and need independent secret recovery. A targeted file restore is not proof that Home Assistant or media databases can start from restored state.
 
 Resume in the order in `ROADMAP.md`:
 
-1. Capture sanitized backup scripts/units and recovery prerequisites; document staging-to-original-path mapping and validate application-state recovery safely.
+1. Harden and validate the captured backup scripts (restart failures/shared locking), verify independent secrets, then validate temporary restore/database integrity and application-state recovery safely.
 2. Resolve Jellyfin over Tailscale; then optionally add its Homepage widget.
 3. Refresh exact image inventory; evaluate Gluetun pinning separately with VPN regression validation.
 4. Add lightweight backup failure/staleness visibility after choosing the notification channel.

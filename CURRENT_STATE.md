@@ -64,8 +64,10 @@ The Pi was shut down cleanly and restarted after the maintenance work.
 - The original manual bootstrap snapshot `bd21d171` (~657 MiB, no `automatic` tag) was removed after the automated backup line was validated; maintenance/prune was run afterwards.
 - Restore testing has been completed successfully: a targeted restore to a temporary path worked and `restic check` completed cleanly.
 - Media/download data under `/srv/data` is intentionally excluded from backup V1.
-- Reported retention from the backup setup chat: 7 daily / 4 weekly / 6 monthly automatic snapshots. VERIFY ON PI: exact installed retention command.
-- Backup scripts and systemd units are not yet checked into this repository; their exact contents, stop/restart failure handling and staging restore layout require a sanitized capture.
+- Owner-supplied installed backup/maintenance scripts and all four units were captured on 2026-10-14 under `backup/`; no unit drop-ins were reported.
+- Retention is now confirmed from the installed command: automatic snapshots, 7 daily / 4 weekly / 6 monthly, with default restic grouping.
+- Review found masked container restart failures and no shared script lock. Hardening/deployment remains pending; see `backup/README.md`.
+- Backup scripts/systemd units and password/rclone files are outside the protected source paths. Script/unit capture is now in Git; independent secret recovery remains to be verified.
 - The completed test was a targeted restore to a temporary path, not a demonstrated Home Assistant/media-database service recovery or full host rebuild. Those validation steps remain open.
 
 ## Current media configuration
@@ -122,7 +124,7 @@ The repository now contains:
 
 ## Immediate resume point
 
-P0, Homepage V1, the main maintenance window, and operational Backup V1 are complete. The next workstream is to make the backup setup reproducible and finish the application recovery runbook, followed by the Jellyfin-over-Tailscale issue. See `ROADMAP.md` for ordered steps and completion criteria.
+P0, Homepage V1, the main maintenance window, and operational Backup V1 are complete. The installed backup setup is captured. Next, correct and validate restart error handling and shared locking, then safely validate application recovery; Jellyfin-over-Tailscale follows. See `ROADMAP.md` for ordered steps and completion criteria.
 
 Homepage closure evidence:
 

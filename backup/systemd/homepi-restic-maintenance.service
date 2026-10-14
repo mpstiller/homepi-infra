@@ -1,0 +1,14 @@
+[Unit]
+Description=HomePi restic repository maintenance
+Wants=network-online.target
+After=network-online.target homepi-backup.service
+
+[Service]
+Type=oneshot
+Environment=HOME=/root
+Environment=XDG_CACHE_HOME=/var/cache/homepi-backup
+ExecStart=/usr/local/sbin/homepi-restic-maintenance
+TimeoutStartSec=0
+Nice=10
+IOSchedulingClass=best-effort
+IOSchedulingPriority=7

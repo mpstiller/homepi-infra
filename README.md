@@ -28,4 +28,4 @@ This repository is intended to be the **portable source of context** for humans 
 
 ## Current documentation status
 
-P0 reproducibility and Homepage V1 are complete. Backup V1 is operational, with a targeted restore and repository integrity check tested. Backup scripts/systemd units and application-level recovery validation remain open. Read `ROADMAP.md` for the ordered next steps and `CURRENT_STATE.md` for confirmed evidence. Historical audit dates do not imply a new live verification.
+P0 reproducibility and Homepage V1 are complete. Backup V1 is operational, with a targeted restore and repository integrity check tested. Installed backup scripts/systemd units are captured; restart/locking hardening and application-level recovery validation remain open. Read `ROADMAP.md` for the ordered next steps and `CURRENT_STATE.md` for confirmed evidence. Historical audit dates do not imply a new live verification.
