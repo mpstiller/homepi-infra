@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-10-14
+
+- Removed obsolete manual restic snapshot `bd21d171` after validating the automated backup chain, then ran repository maintenance to prune unreferenced data.
+
 ## 2026-10-13
 
 - Added and validated monthly restic maintenance via systemd: `prune` followed by `check`, scheduled for the 1st of each month at 05:30.
