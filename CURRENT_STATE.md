@@ -121,6 +121,8 @@ The repository now contains:
 
 ## Immediate resume point
 
+Session stopped by owner on 2026-10-14. PRs #1–#6 are merged; [PR #7](https://github.com/mpstiller/homepi-infra/pull/7) was open at handoff. Check its current status before treating the memory-controller documentation as part of main. The fix is already applied and verified on the Pi. The concrete next task and scope are in `ROADMAP.md` under Session handoff. No further Pi action is scheduled.
+
 P0, Homepage V1, the main maintenance window and Backup V1 are complete within their recorded scope. Jellyfin-over-Tailscale connection is now resolved and login verified. The Jellyfin Homepage widget is now confirmed. The image inventory is now refreshed. Docker RAM/swap-limit support is now enabled and verified after reboot. Next: evaluate Gluetun pinning separately and choose lightweight backup visibility. Optional broader recovery tests and independent-secret checks remain separate follow-ups in `ROADMAP.md`.
 
 Homepage closure evidence:

@@ -2,6 +2,14 @@
 
 **Reconciled:** 2026-10-14, using repository state and checked-in runtime configuration as primary evidence. Chat findings supplement that evidence; no new live audit was performed. P0, Homepage V1, the main update window and operational Backup V1 are complete. Unticked items below remain unverified or planned.
 
+## Session handoff — 2026-10-14
+
+Owner stopped here; no further Pi changes are scheduled. PRs #1–#6 are merged. [PR #7](https://github.com/mpstiller/homepi-infra/pull/7) was open at handoff and contains the completed memory-controller fix, tests and documentation. Start a new session by checking its current merge status and reading the latest main plus this PR if still open; do not assume main already contains this last workstream.
+
+Next concrete task: evaluate pinning Gluetun to the already validated running digest in `docs/image-inventory.md`, without combining that decision with an image update. Review `stacks/media/compose.yaml` and `docs/decisions.md`; re-check live image/config evidence before any application. Preserve qBittorrent's Gluetun namespace, interface binding, forwarded port and kill switch, and plan explicit VPN regression checks. No Gluetun pin, pull or update has been applied in this session.
+
+Then choose lightweight backup failure/staleness visibility and verify independent recovery secrets privately. Backup V1, Jellyfin remote login, Homepage widget and memory-controller activation are complete; do not repeat them as prerequisites. Per-service memory caps remain unset. See `CURRENT_STATE.md`, `LLM_CONTEXT.md` and `docs/resource-limits.md` for evidence and limitations.
+
 ## Recommended execution order
 
 1. **Maintenance follow-ups.** Image/digest/resource inventory is refreshed. Docker memory/swap-limit support is enabled and verified after reboot. Evaluate Gluetun pinning separately while preserving binding, forwarded port and kill switch.
