@@ -1,0 +1,281 @@
+{
+  "capturedAt": "2026-10-14T15:42:40.135535+02:00",
+  "kernel": "6.18.39+rpt-rpi-2712",
+  "hostArchitecture": "aarch64",
+  "readOnly": true,
+  "containers": [
+    {
+      "name": "arcane",
+      "imageReference": "ghcr.io/getarcaneapp/manager:latest",
+      "imageId": "sha256:540c01198ca3e58dfd398d25c57c8dc241fa7e7f3d1d8d646c8268f19525b1a8",
+      "status": "running",
+      "health": "healthy",
+      "startedAt": "2026-10-14T11:25:57.684519989Z",
+      "restartCount": 0,
+      "repoDigests": [
+        "ghcr.io/getarcaneapp/manager@sha256:540c01198ca3e58dfd398d25c57c8dc241fa7e7f3d1d8d646c8268f19525b1a8"
+      ],
+      "imageArchitecture": "arm64",
+      "imageOs": "linux",
+      "imageCreated": "2026-10-07T01:46:00.562791276Z",
+      "imageVersionLabel": "v2.15.1",
+      "imageBuildVersionLabel": null,
+      "localReferenceMatchesRunningImage": true,
+      "appVersion": null,
+      "appVersionSource": "not queried; image metadata only"
+    },
+    {
+      "name": "flaresolverr",
+      "imageReference": "ghcr.io/flaresolverr/flaresolverr:latest",
+      "imageId": "sha256:c80ae007ce2ccdcd217a12426e4f039ef763ff90738c808d38810c3e59323767",
+      "status": "running",
+      "health": null,
+      "startedAt": "2026-10-08T16:25:07.202383104Z",
+      "restartCount": 0,
+      "repoDigests": [
+        "ghcr.io/flaresolverr/flaresolverr@sha256:c80ae007ce2ccdcd217a12426e4f039ef763ff90738c808d38810c3e59323767"
+      ],
+      "imageArchitecture": "arm64",
+      "imageOs": "linux",
+      "imageCreated": "2026-09-12T01:28:48.871521329Z",
+      "imageVersionLabel": "v3.5.2",
+      "imageBuildVersionLabel": null,
+      "localReferenceMatchesRunningImage": true,
+      "appVersion": null,
+      "appVersionSource": "not queried; image metadata only"
+    },
+    {
+      "name": "gluetun",
+      "imageReference": "qmcgaw/gluetun:latest",
+      "imageId": "sha256:12df8b20528d4cd5e9b6e827d40f2886cf78e53e7e9afc750050648c31183793",
+      "status": "running",
+      "health": "healthy",
+      "startedAt": "2026-10-08T16:25:07.159582049Z",
+      "restartCount": 0,
+      "repoDigests": [
+        "qmcgaw/gluetun@sha256:12df8b20528d4cd5e9b6e827d40f2886cf78e53e7e9afc750050648c31183793"
+      ],
+      "imageArchitecture": "arm64",
+      "imageOs": "linux",
+      "imageCreated": "2026-09-15T12:33:58.211283792Z",
+      "imageVersionLabel": "latest",
+      "imageBuildVersionLabel": null,
+      "localReferenceMatchesRunningImage": true,
+      "appVersion": null,
+      "appVersionSource": "not queried; image metadata only"
+    },
+    {
+      "name": "homeassistant",
+      "imageReference": "ghcr.io/home-assistant/home-assistant:stable",
+      "imageId": "sha256:1b64d38f38d922bf9d59336451fd6453e1d614f934456af4ee3d2a51061be3a4",
+      "status": "running",
+      "health": null,
+      "startedAt": "2026-10-14T11:25:54.902025425Z",
+      "restartCount": 0,
+      "repoDigests": [
+        "ghcr.io/home-assistant/home-assistant@sha256:1b64d38f38d922bf9d59336451fd6453e1d614f934456af4ee3d2a51061be3a4"
+      ],
+      "imageArchitecture": "arm64",
+      "imageOs": "linux",
+      "imageCreated": "2026-10-07T17:28:58.180238659Z",
+      "imageVersionLabel": "2026.10.0",
+      "imageBuildVersionLabel": null,
+      "localReferenceMatchesRunningImage": true,
+      "appVersion": "2026.10.0",
+      "appVersionSource": "installed Python version constant"
+    },
+    {
+      "name": "homepage",
+      "imageReference": "ghcr.io/gethomepage/homepage:latest",
+      "imageId": "sha256:643bd0be730d40f69d58028a55d1a896739333e8815786df42bc97f109ecbe61",
+      "status": "running",
+      "health": "healthy",
+      "startedAt": "2026-10-14T13:18:40.41608798Z",
+      "restartCount": 0,
+      "repoDigests": [
+        "ghcr.io/gethomepage/homepage@sha256:643bd0be730d40f69d58028a55d1a896739333e8815786df42bc97f109ecbe61"
+      ],
+      "imageArchitecture": "arm64",
+      "imageOs": "linux",
+      "imageCreated": "2026-09-17T07:19:16.573734007Z",
+      "imageVersionLabel": "v2.4.0",
+      "imageBuildVersionLabel": null,
+      "localReferenceMatchesRunningImage": true,
+      "appVersion": null,
+      "appVersionSource": "not queried; image metadata only"
+    },
+    {
+      "name": "homepage-socket-proxy",
+      "imageReference": "lscr.io/linuxserver/socket-proxy:latest",
+      "imageId": "sha256:362cadf55b3c7920189347d0f4d60b389e2f80e929581bf10793f2371aab41e5",
+      "status": "running",
+      "health": null,
+      "startedAt": "2026-10-08T16:25:07.157745438Z",
+      "restartCount": 0,
+      "repoDigests": [
+        "lscr.io/linuxserver/socket-proxy@sha256:362cadf55b3c7920189347d0f4d60b389e2f80e929581bf10793f2371aab41e5"
+      ],
+      "imageArchitecture": "arm64",
+      "imageOs": "linux",
+      "imageCreated": "2026-10-06T01:33:14.269901181Z",
+      "imageVersionLabel": "3.4.6-r0-ls101",
+      "imageBuildVersionLabel": "Linuxserver.io version:- 3.4.6-r0-ls101 Build-date:- 2026-10-06T01:31:16+00:00",
+      "localReferenceMatchesRunningImage": true,
+      "appVersion": null,
+      "appVersionSource": "not queried; image metadata only"
+    },
+    {
+      "name": "jellyfin",
+      "imageReference": "jellyfin/jellyfin:latest",
+      "imageId": "sha256:357724bf0ae27a672c7cbaa899db2d9abeb13dbd8657ccce750258a4c059d037",
+      "status": "running",
+      "health": "healthy",
+      "startedAt": "2026-10-14T12:38:19.851875143Z",
+      "restartCount": 0,
+      "repoDigests": [
+        "jellyfin/jellyfin@sha256:357724bf0ae27a672c7cbaa899db2d9abeb13dbd8657ccce750258a4c059d037"
+      ],
+      "imageArchitecture": "arm64",
+      "imageOs": "linux",
+      "imageCreated": "2026-10-05T23:04:11.606730672Z",
+      "imageVersionLabel": "12.2",
+      "imageBuildVersionLabel": null,
+      "localReferenceMatchesRunningImage": true,
+      "appVersion": "12.2.0",
+      "appVersionSource": "local public server-info API"
+    },
+    {
+      "name": "music-assistant",
+      "imageReference": "ghcr.io/music-assistant/server:latest",
+      "imageId": "sha256:28023f8c0d96ca2496391f3218a6d70d7ef3ba84db846b3a3f3cd9ce7ef8aedc",
+      "status": "running",
+      "health": null,
+      "startedAt": "2026-10-14T11:25:55.041569055Z",
+      "restartCount": 0,
+      "repoDigests": [
+        "ghcr.io/music-assistant/server@sha256:28023f8c0d96ca2496391f3218a6d70d7ef3ba84db846b3a3f3cd9ce7ef8aedc"
+      ],
+      "imageArchitecture": "arm64",
+      "imageOs": "linux",
+      "imageCreated": "2026-10-02T11:46:16.961042859Z",
+      "imageVersionLabel": "2.10.5",
+      "imageBuildVersionLabel": null,
+      "localReferenceMatchesRunningImage": true,
+      "appVersion": null,
+      "appVersionSource": "not queried; image metadata only"
+    },
+    {
+      "name": "prowlarr",
+      "imageReference": "lscr.io/linuxserver/prowlarr:latest",
+      "imageId": "sha256:f9151e5bc1025c6d0a630d503210cdcb6bb55a7cc098562609d96a408d838902",
+      "status": "running",
+      "health": null,
+      "startedAt": "2026-10-14T11:25:56.163347362Z",
+      "restartCount": 0,
+      "repoDigests": [
+        "lscr.io/linuxserver/prowlarr@sha256:f9151e5bc1025c6d0a630d503210cdcb6bb55a7cc098562609d96a408d838902"
+      ],
+      "imageArchitecture": "arm64",
+      "imageOs": "linux",
+      "imageCreated": "2026-10-07T10:43:29.693720892Z",
+      "imageVersionLabel": "2.6.5.5623-ls163",
+      "imageBuildVersionLabel": "Linuxserver.io version:- 2.6.5.5623-ls163 Build-date:- 2026-10-07T10:41:33+00:00",
+      "localReferenceMatchesRunningImage": true,
+      "appVersion": "2.6.5.5623",
+      "appVersionSource": "local status API"
+    },
+    {
+      "name": "qbittorrent",
+      "imageReference": "lscr.io/linuxserver/qbittorrent:latest",
+      "imageId": "sha256:b522f9f4b769f8f36d49d22d5eb6a92e9aa18904c6a1830b1439df511ec21983",
+      "status": "running",
+      "health": null,
+      "startedAt": "2026-10-14T11:25:57.152379587Z",
+      "restartCount": 0,
+      "repoDigests": [
+        "lscr.io/linuxserver/qbittorrent@sha256:b522f9f4b769f8f36d49d22d5eb6a92e9aa18904c6a1830b1439df511ec21983"
+      ],
+      "imageArchitecture": "arm64",
+      "imageOs": "linux",
+      "imageCreated": "2026-09-29T07:32:16.136361634Z",
+      "imageVersionLabel": "5.2.4_v2.0.15-ls479",
+      "imageBuildVersionLabel": "Linuxserver.io version:- 5.2.4_v2.0.15-ls479 Build-date:- 2026-09-29T07:29:58+00:00",
+      "localReferenceMatchesRunningImage": true,
+      "appVersion": "v5.2.4",
+      "appVersionSource": "local qBittorrent version API via Gluetun"
+    },
+    {
+      "name": "radarr",
+      "imageReference": "lscr.io/linuxserver/radarr:latest",
+      "imageId": "sha256:7dfd049e79c00b16fbc29c3f5d96a9e7b9e73a23930b4c5b3c4541d60b366814",
+      "status": "running",
+      "health": null,
+      "startedAt": "2026-10-14T11:25:55.802180521Z",
+      "restartCount": 0,
+      "repoDigests": [
+        "lscr.io/linuxserver/radarr@sha256:7dfd049e79c00b16fbc29c3f5d96a9e7b9e73a23930b4c5b3c4541d60b366814"
+      ],
+      "imageArchitecture": "arm64",
+      "imageOs": "linux",
+      "imageCreated": "2026-10-04T19:56:21.698949519Z",
+      "imageVersionLabel": "6.4.4.10685-ls319",
+      "imageBuildVersionLabel": "Linuxserver.io version:- 6.4.4.10685-ls319 Build-date:- 2026-10-04T19:54:00+00:00",
+      "localReferenceMatchesRunningImage": true,
+      "appVersion": "6.4.4.10685",
+      "appVersionSource": "local status API"
+    },
+    {
+      "name": "seerr",
+      "imageReference": "ghcr.io/seerr-team/seerr:latest",
+      "imageId": "sha256:27602401178d54f1964442287b9f23f67a3fa2252645ee8065839ea1c3f69e45",
+      "status": "running",
+      "health": null,
+      "startedAt": "2026-10-14T11:25:56.760483298Z",
+      "restartCount": 0,
+      "repoDigests": [
+        "ghcr.io/seerr-team/seerr@sha256:27602401178d54f1964442287b9f23f67a3fa2252645ee8065839ea1c3f69e45"
+      ],
+      "imageArchitecture": "arm64",
+      "imageOs": "linux",
+      "imageCreated": "2026-09-28T00:06:55Z",
+      "imageVersionLabel": "v3.5.0",
+      "imageBuildVersionLabel": null,
+      "localReferenceMatchesRunningImage": true,
+      "appVersion": null,
+      "appVersionSource": "not queried; image metadata only"
+    },
+    {
+      "name": "sonarr",
+      "imageReference": "lscr.io/linuxserver/sonarr:latest",
+      "imageId": "sha256:f247545d23ba8b233d6604575347e48a623fe6ad75dda02348bf81917f3b5c06",
+      "status": "running",
+      "health": null,
+      "startedAt": "2026-10-14T11:25:55.485719437Z",
+      "restartCount": 0,
+      "repoDigests": [
+        "lscr.io/linuxserver/sonarr@sha256:f247545d23ba8b233d6604575347e48a623fe6ad75dda02348bf81917f3b5c06"
+      ],
+      "imageArchitecture": "arm64",
+      "imageOs": "linux",
+      "imageCreated": "2026-09-26T01:47:06.083815906Z",
+      "imageVersionLabel": "4.0.20.3014-ls326",
+      "imageBuildVersionLabel": "Linuxserver.io version:- 4.0.20.3014-ls326 Build-date:- 2026-09-26T01:45:08+00:00",
+      "localReferenceMatchesRunningImage": true,
+      "appVersion": "4.0.20.3014",
+      "appVersionSource": "local status API"
+    }
+  ],
+  "errors": [],
+  "dockerVersion": "29.8.0",
+  "composeVersion": "5.5.1",
+  "dockerResourceSupport": {
+    "memoryLimit": false,
+    "swapLimit": false
+  },
+  "hostMemory": {
+    "MemTotalKiB": 4146368,
+    "MemAvailableKiB": 1637248,
+    "SwapTotalKiB": 2097136,
+    "SwapFreeKiB": 1815344
+  }
+}

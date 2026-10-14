@@ -1,63 +1,68 @@
 # Container image inventory
 
-**Captured:** 2026-10-05
+**Captured:** 2026-10-14 15:42:40 CEST (owner-supplied read-only collector output).
 
-The Compose files intentionally use rolling tags such as `:latest` and `:stable`. These are the exact image digests that were running at the capture point and provide a reproducible forensic baseline.
+The running deployment is now documented after the October update window. The raw selected-field snapshot is in `audits/image-inventory-2026-10-14.json`; the former exact baseline is archived in `audits/image-inventory-2026-10-05.md`. No pull, update, restart or configuration change was performed by the inventory.
 
-| Image | Running digest |
-|---|---|
-| `ghcr.io/home-assistant/home-assistant:stable` | `sha256:a1bc133af84ee6505fe2c266d9805b7c75b780dfdc188edfee3b11e8f3cd8efe` |
-| `lscr.io/linuxserver/socket-proxy:latest` | `sha256:ba211325155c463a1a6e6a038c928f21447a8e60ce02ecf41302047974097e84` |
-| `ghcr.io/seerr-team/seerr:latest` | `sha256:f4768de5f616248d723e05891f3345a1402123775d03bf0890dbfedc0831bda1` |
-| `jellyfin/jellyfin:latest` | `sha256:baba630419915985442f315f08b0cf46d9f4c8a0cc4bd38e94a6d35751dd5ef5` |
-| `ghcr.io/flaresolverr/flaresolverr:latest` | `sha256:c80ae007ce2ccdcd217a12426e4f039ef763ff90738c808d38810c3e59323767` |
-| `ghcr.io/gethomepage/homepage:latest` | `sha256:f820276654539cdc2cf0169f28188d135919a7984fad76d83d8d5ff1383f3705` |
-| `ghcr.io/getarcaneapp/manager:latest` | `sha256:a7005e4be1740ae7f3c0aa694ef825552271cb320b3906a98a5e8a642faa163a` |
-| `qmcgaw/gluetun:latest` | `sha256:12df8b20528d4cd5e9b6e827d40f2886cf78e53e7e9afc750050648c31183793` |
-| `lscr.io/linuxserver/qbittorrent:latest` | `sha256:2be038f3421f60f62e8e4bf201f66f385b68e4fbc9ed3ab79051069ea22e2650` |
-| `ghcr.io/music-assistant/server:latest` | `sha256:885872224fa541c0faefc936625c939ba705a00e89c180f89e877f58448ea5d5` |
-| `lscr.io/linuxserver/prowlarr:latest` | `sha256:c7502a75b021d964481c129c84590b9cbc40f83aadd4e553f173871bc0deaa3c` |
-| `lscr.io/linuxserver/radarr:latest` | `sha256:fe051413dfd91b383ba04910552e83fb0306895fefee275c48dafe7bb90807dc` |
-| `lscr.io/linuxserver/sonarr:latest` | `sha256:82172b363f9eddc02aca544f880a044f2ceb9aaf190bc87e4454e2f705eb91d0` |
+## Results
 
-Known application versions from live APIs:
+- 13 containers running; no collection errors.
+- All configured local image references match their running container image IDs. This does not check whether remote registry tags have moved or whether newer releases exist.
+- All four declared healthchecks report healthy (Arcane, Gluetun, Homepage, Jellyfin). Other containers have no health result in this snapshot; running alone is not a full application-health test.
+- RestartCount is 0 for all containers at capture; this is not a lifetime/manual-restart history.
+- All images are Linux/arm64. Docker 29.8.0; Compose 5.5.1; kernel 6.18.39+rpt-rpi-2712; host aarch64.
+- 11 recorded digests changed versus the 2026-10-05 baseline. Gluetun and FlareSolverr remain on the same captured digest. Changed digests need not imply a new app-version change on the inventory date.
 
-- qBittorrent: `5.2.3`
-- Sonarr: `4.0.19.2979`
-- Radarr: `6.3.0.10514`
-- Prowlarr: `2.5.2.5491`
+## Version evidence
 
+Live/API or installed-version evidence is distinguished from image labels. A version label is image metadata, not an independent running-app API query.
 
-Additional live application versions:
+| Container | Version / label | Evidence | Status |
+|---|---|---|---|
+| arcane | `v2.15.1` | image version label only | running / healthy |
+| flaresolverr | `v3.5.2` | image version label only | running / no health result |
+| gluetun | `latest (semantic version unknown)` | image version label only | running / healthy |
+| homeassistant | `2026.10.0` | installed Python version constant | running / no health result |
+| homepage | `v2.4.0` | image version label only | running / healthy |
+| homepage-socket-proxy | `3.4.6-r0-ls101` | image version label only | running / no health result |
+| jellyfin | `12.2.0` | local public server-info API | running / healthy |
+| music-assistant | `2.10.5` | image version label only | running / no health result |
+| prowlarr | `2.6.5.5623` | local status API | running / no health result |
+| qbittorrent | `v5.2.4` | local qBittorrent version API via Gluetun | running / no health result |
+| radarr | `6.4.4.10685` | local status API | running / no health result |
+| seerr | `v3.5.0` | image version label only | running / no health result |
+| sonarr | `4.0.20.3014` | local status API | running / no health result |
 
-- Home Assistant: `2026.9.2`
-- Jellyfin: `12.0.0`
+## Exact recorded image references
 
+RepoDigests are recorded repository references, suitable for identifying the captured image. Running image IDs are separately retained in the JSON; do not assume the two kinds of identifier are interchangeable. Rolling `latest`/`stable` tags remain unchanged in Compose and are not pinned by this documentation update.
 
-## Post-update status — 2026-10-08
+| Container | Configured reference | Captured RepoDigest |
+|---|---|---|
+| arcane | `ghcr.io/getarcaneapp/manager:latest` | `ghcr.io/getarcaneapp/manager@sha256:540c01198ca3e58dfd398d25c57c8dc241fa7e7f3d1d8d646c8268f19525b1a8` |
+| flaresolverr | `ghcr.io/flaresolverr/flaresolverr:latest` | `ghcr.io/flaresolverr/flaresolverr@sha256:c80ae007ce2ccdcd217a12426e4f039ef763ff90738c808d38810c3e59323767` |
+| gluetun | `qmcgaw/gluetun:latest` | `qmcgaw/gluetun@sha256:12df8b20528d4cd5e9b6e827d40f2886cf78e53e7e9afc750050648c31183793` |
+| homeassistant | `ghcr.io/home-assistant/home-assistant:stable` | `ghcr.io/home-assistant/home-assistant@sha256:1b64d38f38d922bf9d59336451fd6453e1d614f934456af4ee3d2a51061be3a4` |
+| homepage | `ghcr.io/gethomepage/homepage:latest` | `ghcr.io/gethomepage/homepage@sha256:643bd0be730d40f69d58028a55d1a896739333e8815786df42bc97f109ecbe61` |
+| homepage-socket-proxy | `lscr.io/linuxserver/socket-proxy:latest` | `lscr.io/linuxserver/socket-proxy@sha256:362cadf55b3c7920189347d0f4d60b389e2f80e929581bf10793f2371aab41e5` |
+| jellyfin | `jellyfin/jellyfin:latest` | `jellyfin/jellyfin@sha256:357724bf0ae27a672c7cbaa899db2d9abeb13dbd8657ccce750258a4c059d037` |
+| music-assistant | `ghcr.io/music-assistant/server:latest` | `ghcr.io/music-assistant/server@sha256:28023f8c0d96ca2496391f3218a6d70d7ef3ba84db846b3a3f3cd9ce7ef8aedc` |
+| prowlarr | `lscr.io/linuxserver/prowlarr:latest` | `lscr.io/linuxserver/prowlarr@sha256:f9151e5bc1025c6d0a630d503210cdcb6bb55a7cc098562609d96a408d838902` |
+| qbittorrent | `lscr.io/linuxserver/qbittorrent:latest` | `lscr.io/linuxserver/qbittorrent@sha256:b522f9f4b769f8f36d49d22d5eb6a92e9aa18904c6a1830b1439df511ec21983` |
+| radarr | `lscr.io/linuxserver/radarr:latest` | `lscr.io/linuxserver/radarr@sha256:7dfd049e79c00b16fbc29c3f5d96a9e7b9e73a23930b4c5b3c4541d60b366814` |
+| seerr | `ghcr.io/seerr-team/seerr:latest` | `ghcr.io/seerr-team/seerr@sha256:27602401178d54f1964442287b9f23f67a3fa2252645ee8065839ea1c3f69e45` |
+| sonarr | `lscr.io/linuxserver/sonarr:latest` | `lscr.io/linuxserver/sonarr@sha256:f247545d23ba8b233d6604575347e48a623fe6ad75dda02348bf81917f3b5c06` |
 
-The exact digest table above remains the forensic baseline captured on 2026-10-05. Several images were updated during the 2026-10-07/08 maintenance window, so those exact digests are now historical rather than the current live digest set.
+## Resource support and follow-ups
 
-Known post-update application versions:
+Docker explicitly reports memoryLimit=false and swapLimit=false. Host available RAM was about 1.56 GiB and swap usage about 275 MiB at capture. Earlier 0B/0B Docker stats and unsupported-limit warnings are consistent with this finding; the cause has not been diagnosed.
 
-- Prowlarr: `2.6.5.5623`
-- Sonarr: `4.0.20.3014`
-- Radarr: `6.4.4.10685`
-- Seerr: `3.5.0`
-- Arcane: `2.15.1`
-- Music Assistant: `2.10.5`
-- qBittorrent: `5.2.4`
-- Jellyfin: `12.2.0`
-- Home Assistant: `2026.10.0`
+- Investigate cgroup/kernel/boot configuration in a separate read-only step before relying on Docker memory/swap limits or adding heavy workloads. No boot/runtime change is made here.
+- Gluetun intentionally remains on the previously validated working digest. Evaluate pinning that known image separately; do not blindly refresh latest. Preserve qBittorrent isolation, interface binding, forwarded port and kill switch.
+- Refresh inventory after future intentional updates, keeping date/source and API-vs-label evidence clear. This capture does not establish that software is the newest available or vulnerability-free.
 
-Intentionally not updated in this maintenance window:
+## Collector
 
-- Gluetun
+Run `scripts/capture-image-inventory.py` on the Pi as root. It reads selected container/image templates and local versions without exporting container environments, arbitrary labels, ports/mount contents or logs. API keys used for local *arr authentication are never printed; only the version field is retained. Error output excludes request headers/config bodies. Other services retain image labels without claiming live API verification.
 
-Home Assistant and Jellyfin were subsequently updated and validated on 2026-10-08, as reflected in the version list above.
-
-A fresh exact image-digest capture is still required to replace the 2026-10-05 digest baseline with a new live snapshot.
-
-
-Maintenance decision:
-- Gluetun intentionally remains on the previously validated working image after the 2026-10-08 update window. Its `:latest` tag is not being refreshed blindly; stable pinning will be evaluated separately.
+[Docker inspect reference](https://docs.docker.com/reference/cli/docker/inspect/), [image inspect reference](https://docs.docker.com/reference/cli/docker/image/inspect/).
