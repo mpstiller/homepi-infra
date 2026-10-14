@@ -51,24 +51,21 @@ Remaining follow-up:
 
 The Pi was shut down cleanly and restarted after the maintenance work.
 
-## Backup state
+## Backup state — V1 complete within agreed scope (2026-10-14)
 
-- rclone `1.75.2` is configured for Google Drive using a dedicated OAuth client.
-- restic `0.18.0` is installed.
-- An encrypted restic repository has been initialized at `rclone:gdrive:HomePi-Backup`.
-- The repository password is stored locally under `/etc/restic/homepi-password` and should also be retained independently in the password manager.
-- A first manual backup of `/srv/appdata` and `/opt/homelab/stacks` completed successfully and the resulting snapshot is visible with `restic snapshots`.
-- The production-style staging backup was tested successfully on 2026-10-13: caches/logs were excluded, the resulting automatic snapshot was `333.155 MiB`, and containers were restarted before the cloud upload phase.
-- A systemd-managed backup service is configured and has completed successfully after defining `HOME=/root` and `XDG_CACHE_HOME=/var/cache/homepi-backup` for restic. The daily timer is configured for 04:30 with `Persistent=true`.
-- A monthly restic maintenance timer is configured for the 1st of each month at 05:30. It runs `restic prune` followed by `restic check`; the systemd execution has been tested successfully.
-- The original manual bootstrap snapshot `bd21d171` (~657 MiB, no `automatic` tag) was removed after the automated backup line was validated; maintenance/prune was run afterwards.
-- Restore testing has been completed successfully: a targeted restore to a temporary path worked and `restic check` completed cleanly.
-- Media/download data under `/srv/data` is intentionally excluded from backup V1.
-- Owner-supplied installed backup/maintenance scripts and all four units were captured on 2026-10-14 under `backup/`; no unit drop-ins were reported.
-- Retention is now confirmed from the installed command: automatic snapshots, 7 daily / 4 weekly / 6 monthly, with default restic grouping.
-- Review found masked container restart failures and no shared script lock. Hardening/deployment remains pending; see `backup/README.md`.
-- Backup scripts/systemd units and password/rclone files are outside the protected source paths. Script/unit capture is now in Git; independent secret recovery remains to be verified.
-- The completed test was a targeted restore to a temporary path, not a demonstrated Home Assistant/media-database service recovery or full host rebuild. Those validation steps remain open.
+- Encrypted restic `0.18.0` via rclone `1.75.2` to `rclone:gdrive:HomePi-Backup` protects `/srv/appdata` and `/opt/homelab/stacks`; `/srv/data` is excluded.
+- Consistent staging with brief stops of previously running candidate containers; caches/logs excluded; restart occurs before cloud upload.
+- Daily systemd backup at 04:30, Persistent=true; retention is 7 daily / 4 weekly / 6 monthly automatic snapshots (default grouping).
+- Monthly maintenance on day 1 at 05:30 runs prune/check. Both timers were restored and scheduling verified.
+- Installed scripts/units are under `backup/`. Revised scripts are installed and use a shared flock; failed restarts abort upload and are retried in EXIT cleanup. Catchable termination preserves failure status.
+- Native flock contention/release and successful real backup/maintenance execution were owner-verified. Backup ran 13:25:47–13:26:38 CEST; maintenance ran 13:34:36–13:35:21 with no errors.
+- Snapshot `b37715a7` (334.493 MiB) saved; full temporary restore recovered 3236 files/directories to `/srv/backups/restore-validation.Nz6ggIgG`.
+- Verified restore roots are directly `<target>/srv/appdata` and `<target>/opt/homelab/stacks`, without a staging prefix.
+- Corrected checker passed 41 checks: 13 SQLite integrity checks, three XML configs, 23 Home Assistant JSON files, YAML presence and Kodi Sync Queue LiteDB presence. LiteDB is not SQLite; no full LiteDB integrity scan was performed.
+- Isolated Sonarr restored startup passed on version 4.0.20.3014; all four series IDs matched. Test container/copy removed; live/source data unchanged.
+- Owner chose this representative application-start test as sufficient for Backup V1 and deferred further app-start tests. Home Assistant/Jellyfin startup, LiteDB integrity, UI login and full-host disaster recovery are not demonstrated; these do not reopen agreed V1 scope.
+- Rollback originals remain at `/root/homepi-backup-rollback.xDZCejUc`; the root-only restore test directory is still retained.
+- Local staging/restore contains plaintext secrets. Password/rclone OAuth files live outside protected source trees; independent recovery access remains VERIFY ON PI and is a separate follow-up. Never commit secret contents.
 
 ## Current media configuration
 
@@ -124,7 +121,7 @@ The repository now contains:
 
 ## Immediate resume point
 
-P0, Homepage V1, the main maintenance window, and operational Backup V1 are complete. The installed backup setup is captured. Next, correct and validate restart error handling and shared locking, then safely validate application recovery; Jellyfin-over-Tailscale follows. See `ROADMAP.md` for ordered steps and completion criteria.
+P0, Homepage V1, the main maintenance window and Backup V1 are complete within their recorded scope. Next: investigate Jellyfin over Tailscale; add its Homepage widget once admin access is available. Then refresh image inventory and choose lightweight backup visibility. Optional broader recovery tests and independent-secret checks remain separate follow-ups in `ROADMAP.md`.
 
 Homepage closure evidence:
 

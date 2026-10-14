@@ -2,6 +2,16 @@
 set -Eeuo pipefail
 
 export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+export HOME=/root
+export XDG_CACHE_HOME=/var/cache/homepi-backup
+umask 077
+
+# Serialize staging, upload, retention and maintenance, including manual runs.
+command -v flock >/dev/null
+exec 9>/run/lock/homepi-restic.lock
+echo "Waiting for the HomePi backup/maintenance lock..."
+flock -x 9
+
 
 RESTIC_REPOSITORY="rclone:gdrive:HomePi-Backup"
 RESTIC_PASSWORD_FILE="/etc/restic/homepi-password"
@@ -25,15 +35,49 @@ CANDIDATES=(
 RUNNING=()
 
 restart_containers() {
-  if ((${#RUNNING[@]})); then
-    echo "Restarting containers..."
-    docker start "${RUNNING[@]}" >/dev/null || true
+  local container
+  local failed=()
+  if ((${#RUNNING[@]} == 0)); then return 0; fi
+  for container in "${RUNNING[@]}"; do
+    echo "Restarting $container..."
+    if ! docker start "$container" >/dev/null; then
+      echo "ERROR: could not restart $container" >&2
+      failed+=("$container")
+      continue
+    fi
+    if [[ "$(docker inspect -f '{{.State.Running}}' "$container")" != "true" ]]; then
+      echo "ERROR: $container is not running after restart" >&2
+      failed+=("$container")
+    fi
+  done
+  if ((${#failed[@]})); then
+    RUNNING=("${failed[@]}")
+    return 1
   fi
+  RUNNING=()
+  return 0
 }
 
-trap restart_containers EXIT
+cleanup() {
+  local status=$?
+  trap - EXIT
+  # Finish recovery even if another catchable termination signal arrives.
+  trap '' INT TERM
+  if ! restart_containers; then
+    echo "ERROR: containers still require recovery: ${RUNNING[*]}" >&2
+    if ((status == 0)); then status=1; fi
+  fi
+  exit "$status"
+}
+
+trap cleanup EXIT
+trap 'exit 130' INT
+trap 'exit 143' TERM
 
 echo "=== HomePi backup started: $(date --iso-8601=seconds) ==="
+
+# Fail before staging if the Docker daemon is unavailable.
+docker info >/dev/null
 
 # Only stop containers that were actually running before the backup.
 for container in "${CANDIDATES[@]}"; do
@@ -69,9 +113,10 @@ rsync -aHAX --delete \
   "$STAGE/opt/homelab/stacks/"
 
 # Restart immediately; cloud upload happens afterwards.
-restart_containers
-RUNNING=()
-trap - EXIT
+if ! restart_containers; then
+  echo "ERROR: aborting upload after a container restart failure" >&2
+  exit 1
+fi
 
 echo "Uploading snapshot to Google Drive..."
 

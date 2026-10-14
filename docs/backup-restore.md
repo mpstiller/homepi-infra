@@ -1,39 +1,42 @@
 # Backup and restore
 
-## Operational Backup V1 — reconciled 2026-10-14
+## Backup V1 complete — 2026-10-14
 
-The encrypted restic backup is operational. Evidence is recorded in `CURRENT_STATE.md` and the 2026-10-13/14 changelog. The backup chat confirms closure; this reconciliation does not constitute a new live audit.
+The owner accepted full temporary restore, copied-state integrity/configuration checks and one representative application-start test as sufficient for V1. Further app-start tests are deferred. This is the agreed operational scope, not proof of a full-host disaster recovery.
 
-- restic `0.18.0`, rclone `1.75.2`, dedicated Google Drive OAuth client.
-- Repository: `rclone:gdrive:HomePi-Backup`, independent of the NVMe.
-- Protected sources: `/srv/appdata` and `/opt/homelab/stacks`.
-- Brief container stops create a staging copy; containers restart before cloud upload. Cache/log exclusions reduced the tested snapshot to about 333 MiB.
-- Staged snapshot paths observed in the setup chat: `/srv/backups/restic-staging/srv/appdata` and `/srv/backups/restic-staging/opt/homelab/stacks`.
-- Daily `homepi-backup.service`/timer at 04:30, `Persistent=true`.
-- Monthly `homepi-restic-maintenance.service`/timer on day 1 at 05:30: `restic prune`, then `restic check`; systemd execution tested.
-- Installed retention confirmed on 2026-10-14: `forget --tag automatic --keep-daily 7 --keep-weekly 4 --keep-monthly 6`; no explicit group override.
-- Owner-supplied scripts/units are captured under `backup/`; four units have no drop-ins. Review and remediation plan are in `backup/README.md`.
-- Targeted restore to a temporary path and `restic check` succeeded.
-- Old manual bootstrap snapshot `bd21d171` was removed and prune run afterwards.
+## Implementation
 
-`/srv/data` media/downloads are intentionally excluded. A rebuild will not recover those files from Backup V1. The old microSD is a stale recovery copy, not a current backup. Any future irreplaceable photo/file data requires an explicit backup-scope extension.
+- restic 0.18.0, rclone 1.75.2 with dedicated Google Drive OAuth client.
+- Encrypted independent repository: `rclone:gdrive:HomePi-Backup`.
+- Protected sources: `/srv/appdata`, `/opt/homelab/stacks`. `/srv/data` media/downloads are excluded.
+- Previously running candidate containers stop briefly for `rsync -aHAX` staging under `/srv/backups/restic-staging`; Jellyfin cache, Music Assistant .cache and */logs directories excluded. Containers restart before upload.
+- Daily systemd backup at 04:30, Persistent=true; automatic retention 7 daily / 4 weekly / 6 monthly with default grouping.
+- Monthly maintenance at 05:30 on day 1: prune then check.
+- Scripts/units in `backup/`; local password and OAuth config remain excluded from Git. Original capture is preserved in commit `086255a08b66de824d27ccb6223daff536d13f4a`.
+- Installed hardening uses a shared exclusive flock over each entire operation, per-container start/running-state checks, failed-container EXIT retry and original failure-status preservation. INT/TERM invoke cleanup; SIGKILL/power loss cannot be recovered by a shell trap.
 
-## Recovery prerequisites and secrets
+## Verified evidence
 
-The password is local at `/etc/restic/homepi-password`; keep an independent copy in the password manager. Google Drive access uses `/etc/rclone/homepi.conf`. VERIFY ON PI: independent recovery availability of the restic password, rclone OAuth configuration, and application secrets. Never commit their contents.
+- Native flock blocked concurrent acquisition and allowed it after release; both timers scheduled correctly.
+- Revised backup succeeded 13:25:47–13:26:38 CEST. All candidates restarted before upload; snapshot `b37715a7` (334.493 MiB) saved; retention completed; exit 0 and post-run containers running.
+- Revised maintenance succeeded 13:34:36–13:35:21 CEST: prune completed, three snapshots checked, no errors, exit 0.
+- Full restore of `b37715a7` recovered 3236 files/directories in 1:01 at `/srv/backups/restore-validation.Nz6ggIgG`. Actual roots are directly `srv/appdata` and `opt/homelab/stacks`.
+- Corrected checker passed 41 checks: 13 SQLite integrity checks, three *arr XML configs, 23 Home Assistant JSON state files, YAML presence and nonempty LiteDB presence.
+- Kodi Sync Queue uses LiteDB, not SQLite; the initial SQLite header failure was a checker classification error. Full LiteDB integrity remains untested.
+- Offline Sonarr restored startup/API passed on 4.0.20.3014, with all four series IDs matching the copied database. Test container/copy removed; live/source state unchanged.
 
-The systemd setup uses `HOME=/root` and `XDG_CACHE_HOME=/var/cache/homepi-backup`. Capture these settings with the scripts rather than reconstructing them from memory.
+## Recovery and scope limits
 
-## Next: reproducibility and application recovery
+Follow `restore-runbook.md`: restore to a new private directory, inspect actual paths, validate on a disposable copy, preserve ownership and secrets before any controlled live recovery. Never overwrite running databases or launch duplicate Compose projects with the production mounts/ports.
 
-1. Installed scripts/units, exclusions and retention are captured. Correct masked `docker start` failures; validate success/failure cleanup before deployment.
-2. Add a shared exclusive lock to both scripts and validate contention. Existing `After=` ordering is not a universal mutual-exclusion mechanism.
-3. Extend `restore-runbook.md` with the exact staged-path mapping, source ownership and recovery of Home Assistant and media-stack databases/configuration.
-4. Restore to a temporary directory first. Before replacing any live appdata, stop affected services and preserve their existing state. Prefer an isolated recovery environment where practical; avoid duplicate Home Assistant automations/device control.
-5. Validate database integrity and application startup/configuration; record the chosen snapshot, test scope and outcome. VPN isolation must pass before a recovered media stack can download.
+Untested: other restored application starts, LiteDB integrity, YAML/PEM semantics, UI login, playback/download integrations and full-host recovery. Additional starts are optional/deferred by owner decision and do not reopen V1.
 
-The completed targeted restore proves file retrieval, not application recovery or a full host rebuild. Those checks remain open in the roadmap.
+The restic password (`/etc/restic/homepi-password`) and rclone config (`/etc/rclone/homepi.conf`) are outside protected source trees. Verify independent recovery access in the password manager/offline secret storage separately. Existing microSD is a stale copy, not a current backup. Future irreplaceable household data needs an explicit scope extension.
 
-## Lightweight operational visibility (planned)
+Local staging/restore retains plaintext secrets under a private parent directory. Restore test data and rollback originals (`/root/homepi-backup-rollback.xDZCejUc`) remain retained; no cleanup is claimed.
 
-After recovery documentation, add failure and stale-backup notification with a chosen channel. Record the last successful snapshot/maintenance run; a running container alone is not backup success. No new monitoring service or notification integration has been deployed by this documentation update.
+## Follow-ups
+
+- Independent secret-recovery verification.
+- Lightweight failed/stale-backup notifications with a chosen channel; optional Homepage last-success signal.
+- Optional broader recovery drills and resource/staging-permission checks. Gluetun remains outside the stopped candidate set; review whether its persisted state changes during staging without altering the VPN boundary casually.

@@ -1,6 +1,6 @@
 # HomePi restore runbook
 
-This runbook describes how to reconstruct the host architecture. Backup V1 is operational and a targeted restore has been tested. Full host rebuild and Home Assistant/media-stack application recovery have not yet been demonstrated; see `backup-restore.md` for remaining verification.
+This runbook describes how to reconstruct the host architecture. Backup V1 is operational and a targeted restore has been tested. Full temporary restore, copied-state checks and an isolated Sonarr start have passed. The owner accepted this representative test as sufficient for Backup V1; other app-start/full-host drills are optional/deferred. See `backup-restore.md` for scope limits.
 
 ## 1. Prerequisites
 
@@ -60,7 +60,7 @@ Application API keys and login credentials normally live in restored appdata and
 
 Restore `/srv/appdata` from backup before starting the services if the intent is to recover the existing Home Assistant/Jellyfin/*arr state.
 
-Automatic snapshots contain staging paths, not the original live paths. Restore into a temporary directory first and map `srv/backups/restic-staging/srv/appdata` to `/srv/appdata` and `srv/backups/restic-staging/opt/homelab/stacks` to `/opt/homelab/stacks` within the restored tree. VERIFY ON PI: exact selected snapshot layout, ownership and installed recovery commands before copying. Do not copy blindly over running databases. Preserve existing appdata and stop affected services before a live recovery. `/srv/data` is excluded from Backup V1, so media files require separate recovery or recreation.
+Automatic snapshot metadata records staging source paths. The owner verified a full restore of snapshot `b37715a7` on 2026-10-14: the restored tree directly contains `srv/appdata` and `opt/homelab/stacks`, without the staging prefix. For this restore, map `<target>/srv/appdata` to `/srv/appdata` and `<target>/opt/homelab/stacks` to `/opt/homelab/stacks`. Inspect the actual selected snapshot/restore layout rather than inferring it from source metadata; verify ownership and recovery commands before copying. Do not copy blindly over running databases. Preserve existing appdata and stop affected services before a live recovery. `/srv/data` is excluded from Backup V1, so media files require separate recovery or recreation.
 
 Important state includes:
 
@@ -110,7 +110,7 @@ Confirm the actual restored layout before setting the appdata path. Preserve SQL
 
 Home Assistant: check YAML and `.storage` presence/parseability, and the recorder database if SQLite is used (VERIFY ON PI: recorder backend). Sonarr/Radarr/Prowlarr: verify `config.xml` and each restored database. Seerr/Jellyfin/Music Assistant: VERIFY ON PI: actual database locations/formats before choosing checks. qBittorrent: verify settings/torrent-state presence without starting restored downloads. Do not expose credentials in test output.
 
-Database integrity and configuration parse checks are intermediate evidence. Application startup/login and retained entities/library/request state still need a separate controlled test. On an isolated recovery host, use recovered state plus the same tested application versions; keep Home Assistant device/automation access isolated and qBittorrent downloads disabled until VPN validation. On the production Pi, schedule a short service-specific window, preserve a rollback copy and stop the affected service before changing its state. Do not launch duplicate Compose projects with the checked-in host mounts/ports/container names.
+Database integrity and configuration parse checks are intermediate evidence. Sonarr startup/retained series state is verified below; other startup/login/integration tests are optional follow-ups under the agreed V1 scope. On an isolated recovery host, use recovered state plus the same tested application versions; keep Home Assistant device/automation access isolated and qBittorrent downloads disabled until VPN validation. On the production Pi, schedule a short service-specific window, preserve a rollback copy and stop the affected service before changing its state. Do not launch duplicate Compose projects with the checked-in host mounts/ports/container names.
 
 Record snapshot ID/time, test scope, database results, service startup/state validation and rollback outcome in `CURRENT_STATE.md`/`CHANGELOG.md` only after completion. Full-host recovery stays open until tested. Restored directories contain secrets and should remain root-accessible only; choose cleanup after reviewing results.
 
@@ -155,3 +155,23 @@ sudo poweroff
 ```
 
 Do not manually stop all containers first.
+
+## Completed V1 validation — 2026-10-14
+
+- Snapshot `b37715a7` restored to `/srv/backups/restore-validation.Nz6ggIgG`: 3236 files/directories, 334.493 MiB in 1:01. Restore roots are directly `srv/appdata` and `opt/homelab/stacks`.
+- `backup/validate-restored-state.py` passed 41 checks on a disposable appdata copy: 13 SQLite integrity checks, three XML configs, 23 Home Assistant JSON state files, YAML presence and nonempty Kodi Sync Queue LiteDB presence. It preserves source databases/WAL, rejects symlinks and withholds secret contents. Seven local tests pass.
+- Kodi Sync Queue [opens LiteDB](https://github.com/jellyfin/jellyfin-plugin-kodisyncqueue/blob/master/Jellyfin.Plugin.KodiSyncQueue/Data/DbRepo.cs), not SQLite. The initial header failure was corrected; presence is not LiteDB integrity proof.
+- `backup/test-sonarr-restore.py` passed native startup/API on 4.0.20.3014 with four matching restored series IDs. It used the exact owner-confirmed image ID, a disposable config copy, network none, no published ports/media/socket mounts and removed its test container/copy. Four local simulated lifecycle tests pass.
+
+To repeat these completed tests from a reviewed checkout:
+
+```bash
+sudo python3 backup/validate-restored-state.py /srv/backups/restore-validation.Nz6ggIgG
+sudo python3 backup/test-sonarr-restore.py /srv/backups/restore-validation.Nz6ggIgG
+```
+
+Owner explicitly selected one representative application-start test as sufficient for V1 and deferred further app-start tests. Untested: Home Assistant/Jellyfin startup, LiteDB integrity, YAML/PEM semantics, UI login, real media/download integrations and a full-host rebuild. These are scope limits, not failed V1 checks.
+
+Current host had 1.7 GiB available RAM, but Docker reported 0B/0B and unsupported memory limits. The Sonarr test starts only one app and checks MemAvailable (at least 1 GiB before start; stop if below 384 MiB during startup), rather than claiming an enforced memory ceiling. Optional future tests should keep household/device access isolated.
+
+Restore test and rollback copies remain private/local; no cleanup has been performed. Current next workstream is Jellyfin-over-Tailscale, not more restore tests.

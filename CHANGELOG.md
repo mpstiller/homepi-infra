@@ -2,16 +2,13 @@
 
 ## 2026-10-14
 
-- Captured owner-supplied installed backup/maintenance scripts and four systemd units under `backup/`; confirmed retention, exclusions and absence of unit drop-ins.
-- Reviewed masked container restart failures and missing shared script locking; documented the correction/validation plan without changing the live Pi.
-- Added temporary snapshot restore and staged database-validation guidance; application recovery remains unverified.
-
-- Reconciled roadmap/handoff against checked-in Compose/Homepage configuration and confirmed repository state; Homepage V1 and the main maintenance window remain complete.
-- Updated obsolete backup documentation for operational Backup V1; distinguished the tested targeted restore from pending application recovery and added backup-script/systemd capture as the next workstream.
-- Added supplementary chat findings with verification boundaries: reported retention/staging paths and the pending Jellyfin for Kodi native-library workflow.
-- Ordered remaining work: recovery reproducibility, Jellyfin remote access, inventory/Gluetun hygiene, lightweight backup visibility, then capability expansion. No runtime configuration was changed or new live audit performed.
-
-- Removed obsolete manual restic snapshot `bd21d171` after validating the automated backup chain, then ran repository maintenance to prune unreferenced data.
+- Captured installed backup/maintenance scripts and four units, then installed shared flock and explicit restart-failure/EXIT cleanup handling. Eight local simulated tests passed; owner verified native lock, timers and successful real backup/maintenance runs.
+- Saved snapshot `b37715a7` (334.493 MiB); owner restored all 3236 files/directories to a private test directory and confirmed direct `srv/appdata` / `opt/homelab/stacks` restore roots. Corrected the earlier inferred staging-prefix mapping.
+- Owner passed 41 copied-state checks (13 SQLite, three XML, 23 JSON, YAML/LiteDB presence). Corrected Kodi Sync Queue's mistaken SQLite classification; LiteDB integrity remains untested. Seven local checker tests passed.
+- Owner validated isolated Sonarr restored startup on 4.0.20.3014 with four matching series IDs; test container/copy removed. Four local simulated lifecycle tests passed.
+- Closed Backup V1 with the owner's agreed representative-start-test scope; additional app starts/full-host recovery remain optional/deferred. Independent recovery secrets, backup visibility and retained restore-data cleanup remain separate follow-ups.
+- Updated roadmap/handoff to resume Jellyfin-over-Tailscale next. No claim is made that the prepared Jellyfin test was executed; it was omitted from the final V1 scope.
+- Removed obsolete manual restic snapshot `bd21d171` after automated-backup validation, then pruned unreferenced data.
 
 ## 2026-10-13
 
