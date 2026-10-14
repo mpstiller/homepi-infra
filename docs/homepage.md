@@ -65,7 +65,7 @@ The qBittorrent widget reaches the WebUI through the host port published by Glue
 
 Still open / intentionally deferred:
 
-- **Jellyfin:** deferred while the known Jellyfin-over-Tailscale issue prevents convenient remote admin/API-key setup. The widget backend and the browser-link problem are separate concerns.
+- **Jellyfin:** still unconfigured, but the Tailscale server-connection/admin-login blocker was resolved on 2026-10-14. API-key setup and a widget can now proceed; backend connectivity remains separate from browser navigation.
 - **Music Assistant:** keep as a normal service card unless a genuinely useful supported widget is identified. A widget is not required for Homepage V1.
 - **Gluetun:** intentionally shown as a Docker-status card without a service link/widget; this exposes container health without adding another administration surface.
 - **Tailscale:** intentionally not present as a Homepage service card. Tailscale is a host-level private-access layer, not a Docker workload managed through this dashboard.
@@ -168,8 +168,8 @@ Validated:
 - reproducible Compose/config capture in Git;
 - final smoke test.
 
-The Jellyfin widget is intentionally deferred and does not block Homepage V1.
+The Jellyfin widget remains optional/unconfigured and does not block Homepage V1. Its remote-login blocker was resolved on 2026-10-14.
 
 ## Related known issue
 
-Jellyfin over Tailscale has a separate unresolved connection problem: the web client opens at `http://homepi:8096`, but does not connect to the server even when the server URL is entered manually. Do not diagnose that as a Homepage-link failure.
+Jellyfin remote server connection was resolved on 2026-10-14 by enabling its app-level remote flag. Both MagicDNS/IP public server-info calls return 200 and browser login works. No Homepage link change was needed; see `remote-access.md`. Remote playback and the Jellyfin widget remain untested/unconfigured respectively.

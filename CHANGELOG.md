@@ -2,6 +2,8 @@
 
 ## 2026-10-14
 
+- Resolved Jellyfin-over-Tailscale server-connection failure: owner confirmed EnableRemoteAccess=false, applied a one-field guarded change to true with private rollback and restart, then verified both hostname/IP API HTTP 200 and browser login. Router/Tailscale/IP-filter policy unchanged; remote playback remains untested. Three local XML-edit tests passed.
+- Updated roadmap/handoff/Homepage docs to remove the remote-login blocker; Jellyfin widget remains optional/unconfigured.
 - Captured installed backup/maintenance scripts and four units, then installed shared flock and explicit restart-failure/EXIT cleanup handling. Eight local simulated tests passed; owner verified native lock, timers and successful real backup/maintenance runs.
 - Saved snapshot `b37715a7` (334.493 MiB); owner restored all 3236 files/directories to a private test directory and confirmed direct `srv/appdata` / `opt/homelab/stacks` restore roots. Corrected the earlier inferred staging-prefix mapping.
 - Owner passed 41 copied-state checks (13 SQLite, three XML, 23 JSON, YAML/LiteDB presence). Corrected Kodi Sync Queue's mistaken SQLite classification; LiteDB integrity remains untested. Seven local checker tests passed.

@@ -140,7 +140,7 @@ VERIFY ON PI: exact image digests/tags and current container versions should be 
 - Homepage V1 is complete as of 2026-10-07. Sonarr, Radarr, Prowlarr, qBittorrent, Seerr, Home Assistant and Arcane widgets are working/configured.
 - Keys/tokens are stored only in the local Homepage `.env`; never commit them.
 - Sanitized live YAMLs are checked in under `stacks/homepage/config/`; Compose includes `env_file` and the host-gateway mapping.
-- Jellyfin widget remains separately deferred; Music Assistant stays link-only.
+- Jellyfin widget remains unconfigured (the remote-login blocker is now resolved); Music Assistant stays link-only.
 
 ## 8. Home Assistant
 
@@ -191,7 +191,7 @@ Device strategy:
   - Movies -> `/media/movies`
   - TV -> `/media/tv`
 - Host media mount was changed from the early test directory to `/srv/data/media:/media:ro`.
-- Remote access was disabled during setup.
+- Remote access was disabled during setup, then enabled on 2026-10-14 to allow private Tailscale clients; hostname/IP API HTTP 200 and browser login are owner-verified. Router/UPnP policy was unchanged.
 - Automatic UPnP/port mapping was disabled.
 - Sony TV Jellyfin client was successfully connected.
 - Big Buck Bunny was used as a test and Jellyfin explicitly reported **Direct Play**.
@@ -549,7 +549,7 @@ Hardening is complete: Device Approval is enabled, the default allow-all policy 
 
 DS-Lite remains a constraint for conventional inbound IPv4. Own-domain/public-app access is still future work and should use a separate controlled tunnel/reverse-proxy design. Admin UIs must remain private.
 
-Known exception: the Jellyfin web client opens over Tailscale at `http://homepi:8096`, but server connection currently fails even when added manually. This is a Jellyfin-specific issue, not a general Tailscale or Homepage failure.
+Resolved 2026-10-14: app-level EnableRemoteAccess=false caused the separate Jellyfin server-connection failure (local API 200, remote 503). Changing only that flag to true restored hostname/IP API HTTP 200 and browser login; remote playback remains untested. Rollback retained at /root/homepi-jellyfin-network-rollback.4_6mobfk/network.xml.
 
 ## 24. Future storage/cloud services
 
@@ -596,7 +596,7 @@ Home Assistant/Jellyfin startup, LiteDB integrity, YAML/PEM semantics, UI login,
 
 Resume in this order:
 
-1. Resolve Jellyfin over Tailscale; optionally add its Homepage widget afterwards.
+1. Optionally add the Jellyfin Homepage widget now that private remote login works; the original server-connection issue is resolved.
 2. Refresh post-update image/digest inventory; consider Gluetun pinning separately with VPN regression checks.
 3. Add lightweight backup failure/staleness visibility after choosing a channel; verify independently stored recovery secrets.
 4. During normal use verify Radarr hardlinks, retained authorized indexers and Kodi client synchronization.

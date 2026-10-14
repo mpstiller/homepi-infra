@@ -47,7 +47,7 @@ Completed and validated:
 Remaining follow-up:
 - **Gluetun:** intentionally left on the current working build after the 2026-10-08 maintenance window. VPN/kill-switch/port-forwarding are validated; do not blindly refresh `:latest`. Evaluate/pin a stable release separately.
 - **Home Assistant:** updated to `2026.10.0` on 2026-10-08. Core startup succeeded; a separate FRITZ! SSDP discovery error for hostname `fritz.powerline` was observed and does not appear to block Home Assistant operation.
-- **Jellyfin:** updated to `12.2.0`; the separate Jellyfin-over-Tailscale/admin-access issue remains unresolved and should be investigated independently.
+- **Jellyfin:** updated to `12.2.0`; the Jellyfin-over-Tailscale server-connection issue was subsequently resolved on 2026-10-14; remote login works, playback is not yet tested.
 
 The Pi was shut down cleanly and restarted after the maintenance work.
 
@@ -121,18 +121,18 @@ The repository now contains:
 
 ## Immediate resume point
 
-P0, Homepage V1, the main maintenance window and Backup V1 are complete within their recorded scope. Next: investigate Jellyfin over Tailscale; add its Homepage widget once admin access is available. Then refresh image inventory and choose lightweight backup visibility. Optional broader recovery tests and independent-secret checks remain separate follow-ups in `ROADMAP.md`.
+P0, Homepage V1, the main maintenance window and Backup V1 are complete within their recorded scope. Jellyfin-over-Tailscale connection is now resolved and login verified. Next: optionally add its Homepage widget, refresh image inventory and choose lightweight backup visibility. Optional broader recovery tests and independent-secret checks remain separate follow-ups in `ROADMAP.md`.
 
 Homepage closure evidence:
 
 - The service-group layout is implemented.
 - Sonarr, Radarr, Prowlarr, qBittorrent, Seerr, and Home Assistant native widgets are confirmed working.
 - Homepage API keys/tokens are stored only in the local `/srv/appdata/homepage/.env`.
-- Jellyfin widget work is deferred because of the separate Jellyfin-over-Tailscale/admin-access issue.
+- Jellyfin widget remains unconfigured; the Tailscale/admin-access blocker is resolved as of 2026-10-14.
 - Arcane is configured with its native widget; Music Assistant remains link-only; Gluetun is shown as a Docker-status card; Tailscale is intentionally not a dashboard service.
 - Homepage reproducibility is now closed: the exact live Compose structure is synchronized, including `env_file` and `host.docker.internal:host-gateway`.
 - Sanitized live copies of `services.yaml`, `settings.yaml`, `widgets.yaml`, and `docker.yaml` are checked in under `stacks/homepage/config/`.
-- Homepage V1 is complete: layout, widgets, Docker stats, service links, live Compose/config capture, and the final smoke test are all validated. The Jellyfin widget remains separately deferred because of the known remote/admin-access issue.
+- Homepage V1 is complete: layout, widgets, Docker stats, service links, live Compose/config capture, and the final smoke test are all validated. The Jellyfin widget remains optional/unconfigured; its remote/admin-access blocker is now resolved.
 
 See `docs/homepage.md`.
 
@@ -247,14 +247,10 @@ Conclusion: this is a client/playback-path compatibility issue in the Jellyfin A
 Current policy: do not downgrade Sonarr/Radarr release quality just to optimize for the native Sony Jellyfin app. Keep quality-first selection; use Kodi/JellyCon as the compatibility fallback for problematic releases.
 
 
-## Open issue: Jellyfin over Tailscale
+## Jellyfin over Tailscale — resolved 2026-10-14
 
-From a remote MacBook connected through Tailscale, the Jellyfin web UI at `http://homepi:8096` is reachable, but Jellyfin does not successfully connect to the HomePi server.
+Owner confirmed local `/System/Info/Public` HTTP 200 and Tailscale hostname/IP HTTP 503. `EnableRemoteAccess=false` was found in network.xml; the guarded script changed only that flag to true and restarted Jellyfin. The backup lock and private rollback copy protected the change.
 
-Observed:
-- Homepage link to `http://homepi:8096` opens the Jellyfin client.
-- Automatic server discovery finds no server, which is expected across Tailscale because Jellyfin discovery is LAN/broadcast-oriented.
-- Manually adding `http://homepi:8096` also fails.
-- This is currently unresolved and should be investigated separately from the Homepage configuration.
+Afterwards both Mac requests returned HTTP 200 and browser login succeeded. Tailscale/router policy and other XML settings were unchanged. The server-connection failure is resolved; remote playback remains untested and the Homepage widget remains optional/deferred until configured.
 
-Do not treat the Homepage link itself as the cause; other HomePi services are reachable through the same Tailscale/MagicDNS path.
+Rollback file: `/root/homepi-jellyfin-network-rollback.4_6mobfk/network.xml` (retained). Next workstream: optional Jellyfin Homepage widget, then inventory/maintenance and backup visibility per `ROADMAP.md`.

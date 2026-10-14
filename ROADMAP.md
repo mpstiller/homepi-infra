@@ -4,7 +4,7 @@
 
 ## Recommended execution order
 
-1. **Jellyfin over Tailscale.** Compare LAN/remote server API access, current network/user settings and relevant logs. Complete when manual connection, login and playback work remotely. Add the Homepage widget afterwards if useful; keep admin UIs private.
+1. **Optional Jellyfin Homepage widget.** The remote server-connection issue is resolved and login works. Add a private local API key/widget if useful; separately validate remote playback in normal use.
 2. **Maintenance evidence.** Refresh post-update image/digest and resource inventory. Evaluate Gluetun pinning separately, preserving binding, forwarded port and kill switch.
 3. **Backup follow-ups.** Verify independent recovery secrets and add lightweight failure/staleness visibility after choosing a channel. Backup V1 is closed; additional app-start/full-host recovery tests are optional/deferred by owner decision.
 4. **Normal-use media checks.** Capture Radarr hardlink evidence before cleanup, decide retained authorized indexers and verify Kodi client synchronization.
@@ -45,7 +45,7 @@
   - [x] Home Assistant widget working.
   - [x] Arcane native widget configured and retained.
   - [x] Music Assistant remains link-only; Gluetun is a Docker-status card; Tailscale is intentionally not a dashboard service.
-  - [ ] Jellyfin widget deferred until local/admin access is available or the Tailscale issue is resolved.
+  - [ ] Optional Jellyfin widget; remote/admin-login blocker resolved on 2026-10-14.
   - [x] Capture the exact live Homepage Compose file and sync the live `env_file` + `host.docker.internal:host-gateway` structure into Git.
   - [x] Commit sanitized `services.yaml`, `settings.yaml`, `widgets.yaml`, and `docker.yaml`; never commit the local Homepage `.env`.
   - [x] Run one final Homepage smoke test, including current service links over the active LAN/Tailscale access path; keep the known Jellyfin exception separate.
@@ -89,7 +89,8 @@ Backup V1 closes with full temporary restore, copied-state checks and one repres
 
 ## P1 — Jellyfin private remote access
 
-- [ ] Resolve the documented server-connection failure over Tailscale; validate remote login and playback.
+- [x] Resolve the documented server-connection failure over Tailscale; both API routes HTTP 200 and browser login verified (2026-10-14).
+- [ ] Validate remote playback during normal use; no remote playback result is claimed.
 - [ ] Add the deferred Homepage Jellyfin widget once admin/API-key setup is available; this does not reopen Homepage V1.
 
 ## P2 — Network / remote access
