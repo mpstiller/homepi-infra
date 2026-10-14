@@ -93,8 +93,21 @@ Allowed Tailscale ports:
 The Tailnet policy is deny-by-default for all other HomePi ports.
 
 
-### Known issue: Jellyfin remote connection
+### Resolved: Jellyfin remote server connection — 2026-10-14
 
-A remote MacBook on the Tailnet can open the Jellyfin web client at `http://homepi:8096`, but the client currently cannot connect to the HomePi Jellyfin server. Automatic discovery is not expected to work across the Tailscale overlay, and manually adding `http://homepi:8096` also fails.
+The web client opened through Tailscale but could not connect to its server. The local `/System/Info/Public` endpoint returned HTTP 200 while the Mac got HTTP 503 via both `homepi:8096` and `100.72.110.114:8096`, with proxies bypassed.
 
-This is an unresolved Jellyfin-specific remote-access issue. Other HomePi services remain reachable through Tailscale/MagicDNS, so it should be debugged independently from Homepage.
+Owner confirmed `EnableRemoteAccess=false` in `/srv/appdata/jellyfin/config/config/network.xml`. BaseUrl, LocalNetworkSubnets, KnownProxies and RemoteIPFilter were empty; IsRemoteIPFilterBlacklist=false. App-level remote access was disabled, independently of the functioning Tailscale TCP path.
+
+`scripts/enable-jellyfin-private-remote-access.py` changed only the remote flag to true, under the shared backup/maintenance lock with a private rollback file and Jellyfin-only restart. It checked local startup before completion. Three local XML-edit tests passed. Router exposure, IP filters, UPnP and Tailscale policy were not altered by this change.
+
+Owner-verified result:
+
+- Local server-info API HTTP 200 after restart.
+- Mac via MagicDNS: HTTP 200.
+- Mac via Tailscale IPv4: HTTP 200.
+- Jellyfin browser login works over the Tailscale path.
+
+The original server-connection issue is resolved. Remote playback has not been tested; local playback/Direct Play was previously validated. The deferred Homepage Jellyfin widget can now proceed when desired.
+
+Rollback original is retained at `/root/homepi-jellyfin-network-rollback.4_6mobfk/network.xml`. Restore only with Jellyfin stopped and preserve the backup/maintenance lock; reverting the flag will disable remote client access again. No cleanup has been performed.
