@@ -2,7 +2,7 @@
 
 **Captured:** 2026-10-14 15:42:40 CEST (owner-supplied read-only collector output).
 
-The running deployment is now documented after the October update window. The raw selected-field snapshot is in `audits/image-inventory-2026-10-14.json`; the former exact baseline is archived in `audits/image-inventory-2026-10-05.md`. No pull, update, restart or configuration change was performed by the inventory.
+The running deployment is now documented after the October update window. The raw selected-field snapshot is in `audits/image-inventory-2026-10-14.json`; the former exact baseline is archived in `audits/image-inventory-2026-10-05.md`. No pull, update, restart or configuration change was performed by the inventory. The tables below retain that capture. On 2026-10-15 the owner pinned Gluetun's configured reference to the recorded digest and recreated Gluetun/qBittorrent without pulling images; see [maintenance evidence](gluetun-maintenance.md). This follow-up does not refresh the whole inventory.
 
 ## Results
 
@@ -35,7 +35,7 @@ Live/API or installed-version evidence is distinguished from image labels. A ver
 
 ## Exact recorded image references
 
-RepoDigests are recorded repository references, suitable for identifying the captured image. Running image IDs are separately retained in the JSON; do not assume the two kinds of identifier are interchangeable. Rolling `latest`/`stable` tags remain unchanged in Compose and are not pinned by this documentation update.
+RepoDigests are recorded repository references, suitable for identifying the captured image. Running image IDs are separately retained in the JSON; do not assume the two kinds of identifier are interchangeable. Configured references below are historical as of October 14. Gluetun's current Compose reference is now pinned to its captured RepoDigest; other rolling `latest`/`stable` references are unchanged.
 
 | Container | Configured reference | Captured RepoDigest |
 |---|---|---|
@@ -58,7 +58,7 @@ RepoDigests are recorded repository references, suitable for identifying the cap
 At the 15:42 CEST capture Docker reported memoryLimit=false and swapLimit=false. Host available RAM was about 1.56 GiB and swap usage about 275 MiB at capture. Earlier 0B/0B Docker stats and unsupported-limit warnings are consistent with this finding; the later diagnosis found a disabled memory controller.
 
 - Subsequent boot fix and normal reboot on 2026-10-14 enabled the memory controller; owner verified Docker RAM/swap-limit support=true and all 13 containers running. See [resource-limit validation](resource-limits.md). The raw inventory remains the original pre-fix capture; no per-service caps were assigned.
-- Gluetun intentionally remains on the previously validated working digest. Evaluate pinning that known image separately; do not blindly refresh latest. Preserve qBittorrent isolation, interface binding, forwarded port and kill switch.
+- Gluetun's previously validated working digest was pinned and revalidated on 2026-10-15. No version update was performed. Preserve qBittorrent isolation, binding, dynamic port and firewall; follow `gluetun-maintenance.md` for joint recreation and verification.
 - Refresh inventory after future intentional updates, keeping date/source and API-vs-label evidence clear. This capture does not establish that software is the newest available or vulnerability-free.
 
 ## Collector
