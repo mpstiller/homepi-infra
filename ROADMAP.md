@@ -4,7 +4,7 @@
 
 ## Current handoff — 2026-10-15
 
-PRs #1–#7 are merged, including the completed memory-controller fix. The owner executed all Pi commands. Gluetun now uses the already validated running digest; the local Compose change and documentation are prepared for owner review/commit/publication. The local working tree contains previously published changes against an older HEAD; preserve them when preparing publication.
+PRs #1–#7 are merged, including the completed memory-controller fix. The owner executed all Pi commands and published Gluetun pinning/documentation in [PR #8](https://github.com/mpstiller/homepi-infra/pull/8) from a separate worktree based on origin/main. Check the PR merge status before assuming main contains this change. The original checkout retains existing changes against an older HEAD; preserve that checkout.
 
 Pinning and targeted IPv4 isolation, tunnel-down blocking and final recovery checks are complete. Manual tunnel-up left qBittorrent on `lo` / port `0`; a Gluetun-only Docker restart did not restore its API path. Joint recreation restored the API, `tun0` / `0.0.0.0`, matching forwarded/listen port and outbound connectivity. Do not infer automatic recovery from Gluetun health alone. See `docs/gluetun-maintenance.md` for evidence, limitations and the validated maintenance procedure.
 

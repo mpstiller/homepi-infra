@@ -121,7 +121,7 @@ The repository now contains:
 
 ## Immediate resume point
 
-PRs #1–#7 are merged (GitHub checked on 2026-10-15). Gluetun pinning is now applied on the Pi and mirrored locally. The local Git HEAD still predates PRs #4–#7; their content already exists in the working tree. Preserve existing files when preparing a later commit; no commit or publication was performed in this session.
+PRs #1–#7 are merged (GitHub checked on 2026-10-15). Gluetun pinning is applied on the Pi and published in [PR #8](https://github.com/mpstiller/homepi-infra/pull/8); check its merge status before assuming main contains it. The owner created commit `c20e80f` in a separate worktree based on current origin/main and pushed the branch. The original checkout still has an older HEAD and existing local changes; preserve it and do not reset or blindly stage its files.
 
 P0, Homepage V1, the main maintenance window, Backup V1 and Gluetun pinning are complete within their recorded scope. Jellyfin remote login/widget and Docker RAM/swap-limit support are complete. Next: verify independent recovery secrets privately and choose lightweight backup failure/staleness visibility. Optional broader recovery tests remain separate follow-ups in `ROADMAP.md`.
 

@@ -2,7 +2,7 @@
 
 This file is the primary handoff for a new LLM/session. Read it before proposing changes.
 
-Latest handoff: section 28 (2026-10-15). Gluetun pinning and targeted VPN checks are complete; next work is independent recovery secrets and backup visibility. The owner executes terminal commands; explain each step and wait for results. No commit/publication was performed in the October 15 session.
+Latest handoff: section 28 (2026-10-15). Gluetun pinning and targeted VPN checks are complete; next work is independent recovery secrets and backup visibility. The owner executes terminal commands; explain each step and wait for results. The owner published the change in PR #8; check its current merge status.
 
 ## Live verification baseline — 2026-10-05
 
@@ -627,6 +627,6 @@ Joint recreation initially confirmed the pinned image, matching namespace IDs, `
 
 Recovery interruption: raising `tun0` left qBittorrent on `lo` / port `0`, consistent with the configured forwarding-down hook. A Gluetun-only Docker restart was healthy but its request to the qBittorrent API returned no parseable JSON; the forwarded-port command produced no value in the supplied output. A stale namespace is a possible explanation, not a proven diagnosis. Recreating both services restored API `v5.2.4`, binding and matching dynamic port `33266`, followed by a successful outbound IP request. Do not hardcode this port or infer automatic recovery from a healthy VPN container. Follow `docs/gluetun-maintenance.md` for planned joint recreation and postchecks; ordinary automatic reconnection/full-stack reboot behavior was not established by this test. No hook, firewall, backup or restart policy was changed.
 
-Local Compose/docs are prepared for owner review, commit and publication; none has been committed or published in this session. The local HEAD still predates PRs #4–#7 but their content was verified against GitHub main before editing. Preserve existing changes and unrelated local deliverables; do not blindly stage everything or reset the checkout. The raw October 14 inventory is unchanged and retains its historical flags/references.
+The owner created commit `c20e80f` on branch `maintenance/gluetun-pin-2026-10-15` in a separate worktree based on origin/main and published [PR #8](https://github.com/mpstiller/homepi-infra/pull/8). Check its merge status before treating pinning as part of main. The original checkout retains an older HEAD and existing local changes, including unrelated deliverables; do not blindly stage or reset it. The original local HTTPS push failed because Git used marc-perelyn; the owner added mpstiller through gh auth login and successfully pushed using that active account. The raw October 14 inventory remains unchanged with its historical flags/references.
 
 Next: privately verify independent recovery access to restic/rclone/application secrets and choose lightweight failure/staleness notifications. Keep Backup V1 closed within the accepted representative Sonarr-start scope. Radarr hardlinks, Kodi native-library sync and remote Jellyfin playback remain normal-use checks; per-service memory caps remain unset. No further Pi changes are scheduled without the owner's next instruction.
