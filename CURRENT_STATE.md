@@ -1,7 +1,7 @@
 # Current State
 
 **Live baseline verified:** 2026-10-05  
-**State updated:** 2026-10-14 (documentation reconciliation; no new live audit)
+**State updated:** 2026-10-15 (owner-executed Gluetun pinning and targeted VPN checks; no full live audit)
 
 ## Stable / confirmed from the running Pi
 
@@ -45,7 +45,7 @@ Completed and validated:
 - qBittorrent updated to `5.2.4`; `tun0`, All IPv4 (`0.0.0.0`), and the Proton forwarded listen port were revalidated.
 
 Remaining follow-up:
-- **Gluetun:** intentionally left on the current working build after the 2026-10-08 maintenance window. VPN/kill-switch/port-forwarding are validated; do not blindly refresh `:latest`. Evaluate/pin a stable release separately.
+- **Gluetun:** the existing working build was pinned by digest on 2026-10-15, without an image update. Targeted VPN checks and recovery passed; see `docs/gluetun-maintenance.md`. A future version update remains a separate decision.
 - **Home Assistant:** updated to `2026.10.0` on 2026-10-08. Core startup succeeded; a separate FRITZ! SSDP discovery error for hostname `fritz.powerline` was observed and does not appear to block Home Assistant operation.
 - **Jellyfin:** updated to `12.2.0`; the Jellyfin-over-Tailscale server-connection issue was subsequently resolved on 2026-10-14; remote login works, playback is not yet tested.
 
@@ -121,9 +121,9 @@ The repository now contains:
 
 ## Immediate resume point
 
-Session stopped by owner on 2026-10-14. PRs #1–#6 are merged; [PR #7](https://github.com/mpstiller/homepi-infra/pull/7) was open at handoff. Check its current status before treating the memory-controller documentation as part of main. The fix is already applied and verified on the Pi. The concrete next task and scope are in `ROADMAP.md` under Session handoff. No further Pi action is scheduled.
+PRs #1–#7 are merged (GitHub checked on 2026-10-15). Gluetun pinning is applied on the Pi and published in [PR #8](https://github.com/mpstiller/homepi-infra/pull/8); check its merge status before assuming main contains it. The owner created commit `c20e80f` in a separate worktree based on current origin/main and pushed the branch. The original checkout still has an older HEAD and existing local changes; preserve it and do not reset or blindly stage its files.
 
-P0, Homepage V1, the main maintenance window and Backup V1 are complete within their recorded scope. Jellyfin-over-Tailscale connection is now resolved and login verified. The Jellyfin Homepage widget is now confirmed. The image inventory is now refreshed. Docker RAM/swap-limit support is now enabled and verified after reboot. Next: evaluate Gluetun pinning separately and choose lightweight backup visibility. Optional broader recovery tests and independent-secret checks remain separate follow-ups in `ROADMAP.md`.
+P0, Homepage V1, the main maintenance window, Backup V1 and Gluetun pinning are complete within their recorded scope. Jellyfin remote login/widget and Docker RAM/swap-limit support are complete. Next: verify independent recovery secrets privately and choose lightweight backup failure/staleness visibility. Optional broader recovery tests remain separate follow-ups in `ROADMAP.md`.
 
 Homepage closure evidence:
 

@@ -2,6 +2,8 @@
 
 This file is the primary handoff for a new LLM/session. Read it before proposing changes.
 
+Latest handoff: section 28 (2026-10-15). Gluetun pinning and targeted VPN checks are complete; next work is independent recovery secrets and backup visibility. The owner executes terminal commands; explain each step and wait for results. The owner published the change in PR #8; check its current merge status.
+
 ## Live verification baseline — 2026-10-05
 
 A sanitized audit of the running Pi verified the reconstructed architecture against the live host.
@@ -596,7 +598,7 @@ Home Assistant/Jellyfin startup, LiteDB integrity, YAML/PEM semantics, UI login,
 
 Resume in this order:
 
-1. Jellyfin remote login and Homepage widget are complete; image/digest inventory is refreshed (2026-10-14). Docker RAM/swap-limit support is enabled and verified after reboot. Consider Gluetun pinning separately with VPN regression checks.
+1. Jellyfin remote login/widget, Docker RAM/swap-limit support and Gluetun pinning are complete. The full image/digest inventory remains the historical 2026-10-14 capture; targeted Gluetun checks and recovery were owner-verified on 2026-10-15. See section 28 and `docs/gluetun-maintenance.md`.
 2. Add lightweight backup failure/staleness visibility after choosing a channel; verify independently stored recovery secrets.
 3. During normal use verify Radarr hardlinks, retained authorized indexers and Kodi client synchronization.
 4. Choose Matter/smart-home or a browser-first household dashboard; measure resources before photo/file cloud and preserve existing storage/cloud decisions.
@@ -611,6 +613,20 @@ Memory-controller support is resolved: the guarded `scripts/enable-memory-cgroup
 
 ## 27. End-of-session handoff — 2026-10-14
 
+Historical handoff; superseded by section 28 below. PR #7 was subsequently confirmed merged.
+
 Owner explicitly stopped work. PRs #1–#6 are merged; PR #7 (https://github.com/mpstiller/homepi-infra/pull/7) was open at handoff and carries the already applied/verified memory-controller fix. Re-check PR status and read latest main plus PR #7 if still open. Local checkout contains earlier published changes; inspect before resetting or overwriting it. No new Pi action is scheduled and no Gluetun pin/update or per-service memory cap has been applied.
 
 Resume with the concrete Gluetun pinning evaluation in ROADMAP.md, using checked-in Compose/decisions and the verified digest as the starting point. Confirm live evidence before applying changes; preserve and validate VPN isolation/binding/forwarded port/kill switch. Backup visibility and private independent-secret recovery follow next. Do not reopen all-app restore tests: owner accepted one representative Sonarr start for Backup V1. Historical inventory support=false remains an accurate pre-fix capture; current controller/Docker support is true.
+
+## 28. Gluetun pinning and current handoff — 2026-10-15
+
+PRs #1–#7 are merged (GitHub main `f659b8d`). The owner applied the one-line media Compose pin to `qmcgaw/gluetun@sha256:12df8b20528d4cd5e9b6e827d40f2886cf78e53e7e9afc750050648c31183793`; local Compose now mirrors it. This preserves the previously validated image, not a new release. No image pull/update occurred. Backup/maintenance were inactive before the initial operation; Compose validation passed. The owner executes all terminal commands and wants incremental explanations.
+
+Joint recreation initially confirmed the pinned image, matching namespace IDs, `tun0` / `0.0.0.0`, matching Proton/qBittorrent port and different host/VPN public IPv4 addresses. A previously reachable fixed-IP HTTP target failed with `tun0` DOWN both before and after the request. This is targeted IPv4 blocking evidence only; no IPv6/DNS leak audit or exhaustive failure test is claimed.
+
+Recovery interruption: raising `tun0` left qBittorrent on `lo` / port `0`, consistent with the configured forwarding-down hook. A Gluetun-only Docker restart was healthy but its request to the qBittorrent API returned no parseable JSON; the forwarded-port command produced no value in the supplied output. A stale namespace is a possible explanation, not a proven diagnosis. Recreating both services restored API `v5.2.4`, binding and matching dynamic port `33266`, followed by a successful outbound IP request. Do not hardcode this port or infer automatic recovery from a healthy VPN container. Follow `docs/gluetun-maintenance.md` for planned joint recreation and postchecks; ordinary automatic reconnection/full-stack reboot behavior was not established by this test. No hook, firewall, backup or restart policy was changed.
+
+The owner created commit `c20e80f` on branch `maintenance/gluetun-pin-2026-10-15` in a separate worktree based on origin/main and published [PR #8](https://github.com/mpstiller/homepi-infra/pull/8). Check its merge status before treating pinning as part of main. The original checkout retains an older HEAD and existing local changes, including unrelated deliverables; do not blindly stage or reset it. The original local HTTPS push failed because Git used marc-perelyn; the owner added mpstiller through gh auth login and successfully pushed using that active account. The raw October 14 inventory remains unchanged with its historical flags/references.
+
+Next: privately verify independent recovery access to restic/rclone/application secrets and choose lightweight failure/staleness notifications. Keep Backup V1 closed within the accepted representative Sonarr-start scope. Radarr hardlinks, Kodi native-library sync and remote Jellyfin playback remain normal-use checks; per-service memory caps remain unset. No further Pi changes are scheduled without the owner's next instruction.

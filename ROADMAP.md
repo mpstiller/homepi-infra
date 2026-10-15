@@ -1,19 +1,19 @@
 # Roadmap
 
-**Reconciled:** 2026-10-14, using repository state and checked-in runtime configuration as primary evidence. Chat findings supplement that evidence; no new live audit was performed. P0, Homepage V1, the main update window and operational Backup V1 are complete. Unticked items below remain unverified or planned.
+**Reconciled:** 2026-10-15, using repository state and owner-executed targeted Gluetun checks. No new full live audit was performed. P0, Homepage V1, the main update window, operational Backup V1 and Gluetun pinning are complete. Unticked items below remain unverified or planned.
 
-## Session handoff — 2026-10-14
+## Current handoff — 2026-10-15
 
-Owner stopped here; no further Pi changes are scheduled. PRs #1–#6 are merged. [PR #7](https://github.com/mpstiller/homepi-infra/pull/7) was open at handoff and contains the completed memory-controller fix, tests and documentation. Start a new session by checking its current merge status and reading the latest main plus this PR if still open; do not assume main already contains this last workstream.
+PRs #1–#7 are merged, including the completed memory-controller fix. The owner executed all Pi commands and published Gluetun pinning/documentation in [PR #8](https://github.com/mpstiller/homepi-infra/pull/8) from a separate worktree based on origin/main. Check the PR merge status before assuming main contains this change. The original checkout retains existing changes against an older HEAD; preserve that checkout.
 
-Next concrete task: evaluate pinning Gluetun to the already validated running digest in `docs/image-inventory.md`, without combining that decision with an image update. Review `stacks/media/compose.yaml` and `docs/decisions.md`; re-check live image/config evidence before any application. Preserve qBittorrent's Gluetun namespace, interface binding, forwarded port and kill switch, and plan explicit VPN regression checks. No Gluetun pin, pull or update has been applied in this session.
+Pinning and targeted IPv4 isolation, tunnel-down blocking and final recovery checks are complete. Manual tunnel-up left qBittorrent on `lo` / port `0`; a Gluetun-only Docker restart did not restore its API path. Joint recreation restored the API, `tun0` / `0.0.0.0`, matching forwarded/listen port and outbound connectivity. Do not infer automatic recovery from Gluetun health alone. See `docs/gluetun-maintenance.md` for evidence, limitations and the validated maintenance procedure.
 
-Then choose lightweight backup failure/staleness visibility and verify independent recovery secrets privately. Backup V1, Jellyfin remote login, Homepage widget and memory-controller activation are complete; do not repeat them as prerequisites. Per-service memory caps remain unset. See `CURRENT_STATE.md`, `LLM_CONTEXT.md` and `docs/resource-limits.md` for evidence and limitations.
+Next: verify independent recovery secrets privately and choose lightweight backup failure/staleness visibility. Backup V1, Jellyfin remote login, Homepage widget and memory-controller activation are complete; do not repeat them as prerequisites. Per-service memory caps remain unset. No further Pi changes are scheduled without the owner's next instruction.
 
 ## Recommended execution order
 
-1. **Maintenance follow-ups.** Image/digest/resource inventory is refreshed. Docker memory/swap-limit support is enabled and verified after reboot. Evaluate Gluetun pinning separately while preserving binding, forwarded port and kill switch.
-2. **Backup follow-ups.** Verify independent recovery secrets and add lightweight failure/staleness visibility after choosing a channel. Backup V1 is closed; additional app-start/full-host recovery tests are optional/deferred by owner decision.
+1. **Backup follow-ups.** Verify independent recovery secrets and add lightweight failure/staleness visibility after choosing a channel. Backup V1 is closed; additional app-start/full-host recovery tests are optional/deferred by owner decision.
+2. **Maintenance follow-ups.** Image/digest/resource inventory, Docker memory/swap support and Gluetun pinning are complete. Use the documented joint-recreation procedure for planned VPN-container maintenance. Automatic VPN-failure recovery is not established by the manual recovery test; investigate separately if needed, preserving the fail-closed behavior.
 3. **Normal-use media checks.** Capture Radarr hardlink evidence before cleanup, decide retained authorized indexers and verify Kodi client synchronization. Remote Jellyfin playback can be validated during normal use; login and Homepage widget are complete.
 4. **Next household capability.** Matter/smart-home integration or a browser-first e-ink prototype; photo/file cloud requires measured resources. Preserve the decisions to defer Immich, HDD purchase and production-app migration.
 
@@ -62,7 +62,7 @@ Then choose lightweight backup failure/staleness visibility and verify independe
 
 - [x] Complete the 2026-10-08 low/medium-risk container update window.
 - [x] Revalidate qBittorrent VPN binding and Proton forwarded port after update.
-- [ ] Evaluate Gluetun separately and move away from an unpinned `:latest` update path if appropriate.
+- [x] Pin Gluetun to the already validated running digest, without an image update; owner verified targeted IPv4 blocking and successful joint recovery on 2026-10-15. See `docs/gluetun-maintenance.md` for test limits and the observed recovery interruption.
 - [x] Refresh exact image digest/version evidence after the update window (owner capture 2026-10-14, 13 containers, no errors).
 - [x] Diagnose and enable Docker memory/swap-limit support: guarded boot override applied; controller and Docker flags verified after reboot, with all 13 containers running. Individual service budgets/caps remain a separate measured decision.
 - [x] Update Home Assistant to `2026.10.0` and validate normal operation; monitor the separate `fritz.powerline` SSDP discovery error.

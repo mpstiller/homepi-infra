@@ -134,6 +134,8 @@ Suggested order:
 
 ## 7. Media-stack validation
 
+Use the Gluetun digest from the checked-in Compose file. For planned Gluetun/qBittorrent recreation and post-start checks, follow [VPN maintenance](gluetun-maintenance.md); a Gluetun-only Docker restart did not restore the qBittorrent API path during the 2026-10-15 tunnel-down test. Validate qBittorrent as well as Gluetun health.
+
 After media stack startup, verify:
 
 1. Gluetun is healthy.
@@ -174,4 +176,4 @@ Owner explicitly selected one representative application-start test as sufficien
 
 Current host had 1.7 GiB available RAM, but Docker reported 0B/0B and unsupported memory limits. The Sonarr test starts only one app and checks MemAvailable (at least 1 GiB before start; stop if below 384 MiB during startup), rather than claiming an enforced memory ceiling. Optional future tests should keep household/device access isolated.
 
-Restore test and rollback copies remain private/local; no cleanup has been performed. Current next workstream is Jellyfin-over-Tailscale, not more restore tests.
+Restore test and rollback copies remain private/local; no cleanup has been performed. Jellyfin-over-Tailscale login and Gluetun pinning are now complete. Next work is independent recovery secrets and backup visibility; additional restored application starts remain optional/deferred.

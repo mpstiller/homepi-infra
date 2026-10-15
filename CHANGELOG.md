@@ -1,5 +1,12 @@
 # Changelog
 
+## 2026-10-15
+
+- Owner pinned Gluetun to the previously validated digest `qmcgaw/gluetun@sha256:12df8b20528d4cd5e9b6e827d40f2886cf78e53e7e9afc750050648c31183793` in the actual media Compose file; mirrored the one-line change locally. No image pull/update was performed; Gluetun and qBittorrent were recreated together.
+- Owner confirmed matching Gluetun/qBittorrent namespace IDs, `tun0` / `0.0.0.0`, matching forwarded/listen ports and different host/VPN public IPv4 addresses. A fixed-IP HTTP target was reachable before the tunnel-down test and failed with `tun0` DOWN before/after the request; this is a targeted IPv4 check, not exhaustive leak testing.
+- Recorded the recovery interruption: manually raising the tunnel left qBittorrent on `lo` / port `0`; a Gluetun-only Docker restart left the qBittorrent API unreachable from Gluetun. Recreating both restored API `v5.2.4`, binding, matching dynamic port `33266` and outbound connectivity. Namespace mismatch is a possible explanation, not a proven diagnosis. Added maintenance/recovery guidance and scope limits.
+- Confirmed PR #7 is merged and moved the current roadmap/handoff to independent recovery secrets and backup visibility. The owner committed and published the change as [PR #8](https://github.com/mpstiller/homepi-infra/pull/8); merge status must be checked before treating it as part of main. Historical inventory JSON is unchanged.
+
 ## 2026-10-14
 
 - Recorded owner-requested session handoff: PR #7 open at handoff, completed/untested boundaries, no scheduled Pi actions, and concrete next Gluetun pinning evaluation followed by backup visibility/recovery-secret follow-ups.

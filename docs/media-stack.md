@@ -16,6 +16,8 @@ See `LLM_CONTEXT.md` sections 11–21 for the detailed current settings.
 
 ## Current operational status
 
+Gluetun is pinned to the previously validated digest as of 2026-10-15. Targeted VPN checks passed; the tunnel-down test required joint Gluetun/qBittorrent recreation to restore operation. See [VPN maintenance and recovery](gluetun-maintenance.md) before planned container restarts/recreation; Gluetun health alone does not establish qBittorrent recovery.
+
 Sonarr end-to-end downloads and hardlinks are verified. Radarr end-to-end import, automatic cleanup and Jellyfin Direct Play are also verified. Only Radarr hardlink proof remains: observe the next normal import before cleanup or retain explicit import-log evidence.
 
 ## qBittorrent path rules
