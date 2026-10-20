@@ -2,7 +2,11 @@
 
 Prepared static pages: `docs/index.html` and `docs/privacy.html`. No analytics, scripts, remote fonts, secrets or public login are included.
 
-## Deployment (owner action pending)
+## Recovery result — 2026-10-20
+
+PR #9 merged. Owner reported GitHub Pages/Branding setup ready, then confirmed OAuth publishing status In production. Pages public reachability was not independently verified by the assistant. Reconnected existing gdrive using /etc/rclone/homepi.conf and Mac browser authorization, selecting no Shared Drive. Repository 475950f8 opened and expected snapshots were listed. Real maintenance completed 17:05:40 CEST with Result=success, exit 0; prune and standard check of eight snapshots found no errors. Renewed recovery configuration replaced the password-manager attachment. Monthly monitoring green state and temporary-copy cleanup remain unconfirmed. No future token-expiry guarantee or independent-host recovery is claimed.
+
+## Deployment reference
 
 After merging the PR, select repository Settings → Pages → Deploy from a branch → main → /docs and Save. The existing sanitized docs folder is the published source; `.nojekyll` disables Jekyll processing. Check GitHub's actual deployed URL and confirm both pages return successfully before entering them in Google.
 
