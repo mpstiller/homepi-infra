@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Datenschutz – HomePi Backup</title>
+<style>:root{color-scheme:light dark;font-family:system-ui,sans-serif;line-height:1.65}body{max-width:760px;margin:64px auto;padding:0 24px}header{border-bottom:1px solid #8886;padding-bottom:24px}h1{line-height:1.15;font-size:2.6rem}h2{margin-top:2rem}a{color:light-dark(#155e75,#67e8f9)}.label{font-size:.85rem;letter-spacing:.12em;text-transform:uppercase;color:light-dark(#52636b,#acbdc6)}footer{margin-top:48px;border-top:1px solid #8886;padding-top:20px;font-size:.9rem}</style>
+</head>
+<body>
+<header><p class="label">HomePi Backup</p><h1>Datenschutzerklärung</h1><p>Stand: 20. Oktober 2026</p></header>
+<main>
+<h2>Betreiber und Geltungsbereich</h2>
+<p>HomePi Backup wird vom Betreiber des <a href="https://github.com/mpstiller/homepi-infra">GitHub-Projekts mpstiller/homepi-infra</a> ausschließlich für den eigenen privaten Heimserver und das eigene Google-Konto verwendet. Kontakt ist über das verlinkte GitHub-Profil möglich. Diese Erklärung beschreibt die private Backup-Anwendung und diese Informationsseiten.</p>
+<h2>Zugriff auf Google Drive</h2>
+<p>rclone erhält nach ausdrücklicher Autorisierung OAuth-Zugangsdaten für das Google-Konto des Betreibers. Die Verbindung dient dazu, das verschlüsselte Backup-Repository in Google Drive zu lesen, Sicherungen zu speichern, den Sicherungsbestand aufzulisten, nicht mehr benötigte Sicherungsdaten nach den Aufbewahrungsregeln zu entfernen und Daten wiederherzustellen. Der tatsächliche technische Zugriff richtet sich nach den bei Google gewährten Berechtigungen.</p>
+<h2>Speicherung und Verwendung</h2>
+<p>restic verschlüsselt Sicherungsinhalte auf dem Heimserver vor der Übertragung an Google Drive. Die OAuth-Konfiguration wird lokal auf dem Heimserver gespeichert; eine private Wiederherstellungskopie wird separat gesichert. Das restic-Passwort wird separat aufbewahrt. Zugangsdaten und Sicherungsinhalte werden nicht auf dieser Website oder im öffentlichen Quellcode veröffentlicht.</p>
+<p>Die Anwendung verkauft Google-Nutzerdaten nicht, verwendet sie nicht für Werbung und nicht zum Training von KI-Modellen. Die verschlüsselten Sicherungen werden zum Speicherzweck an Google Drive übertragen. Die separat eingerichtete Backup-Überwachung über Healthchecks.io erhält Statussignale, keine Backup-Inhalte oder OAuth-Zugangsdaten.</p>
+<h2>Widerruf und Löschung</h2>
+<p>Der Betreiber kann den Zugriff jederzeit in den <a href="https://myaccount.google.com/connections">Google-Kontoeinstellungen für Drittanbieterverbindungen</a> widerrufen und die lokale OAuth-Konfiguration sowie deren Wiederherstellungskopien löschen. Bereits gespeicherte Sicherungen werden durch den Widerruf nicht automatisch gelöscht; sie können separat in Google Drive entfernt werden. Die Löschung des Repositories oder der Verlust des restic-Passworts verhindert die Wiederherstellung daraus.</p>
+<h2>Diese Website</h2>
+<p>Diese statischen Seiten enthalten keine eigenen Analysewerkzeuge, Werbetracker, Formulare oder Anmeldefunktionen und setzen keine eigenen Cookies. Sie werden über GitHub Pages ausgeliefert. GitHub kann beim Aufruf technische Zugriffsdaten verarbeiten; siehe die <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement">GitHub-Datenschutzerklärung</a>. Beim Aufruf externer Links gelten die Bedingungen des jeweiligen Anbieters.</p>
+</main>
+<footer><a href="./">Zurück zu HomePi Backup</a></footer>
+</body>
+</html>
