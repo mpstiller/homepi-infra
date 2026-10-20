@@ -4,7 +4,7 @@ Prepared static pages: `docs/index.html` and `docs/privacy.html`. No analytics, 
 
 ## Recovery result — 2026-10-20
 
-PR #9 merged. Owner reported GitHub Pages/Branding setup ready, then confirmed OAuth publishing status In production. Pages public reachability was not independently verified by the assistant. Reconnected existing gdrive using /etc/rclone/homepi.conf and Mac browser authorization, selecting no Shared Drive. Repository 475950f8 opened and expected snapshots were listed. Real maintenance completed 17:05:40 CEST with Result=success, exit 0; prune and standard check of eight snapshots found no errors. Renewed recovery configuration replaced the password-manager attachment. Monthly monitoring green state and temporary-copy cleanup remain unconfirmed. No future token-expiry guarantee or independent-host recovery is claimed.
+PR #9 merged. Owner reported GitHub Pages/Branding setup ready, then confirmed OAuth publishing status In production. Pages public reachability was not independently verified by the assistant. Reconnected existing gdrive using /etc/rclone/homepi.conf and Mac browser authorization, selecting no Shared Drive. Repository 475950f8 opened and expected snapshots were listed. Real maintenance completed 17:05:40 CEST with Result=success, exit 0; prune and standard check of eight snapshots found no errors. Renewed recovery configuration replaced the password-manager attachment. Monthly monitoring green state and final timer scheduling were subsequently owner-confirmed. Temporary-copy deletion remains unconfirmed. Installed monitoring helpers/drop-ins are captured in backup/; see backup/monitoring.md. No future token-expiry guarantee or independent-host recovery is claimed.
 
 ## Deployment reference
 

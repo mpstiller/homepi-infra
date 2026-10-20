@@ -1,17 +1,27 @@
 # Roadmap
 
+## Monitoring closure — 2026-10-20
+
+- Owner supplied exact installed notification helpers and both systemd drop-ins; captured under `backup/bin/*-notify` and `backup/systemd/*.service.d/monitoring.conf`. URL contents are never included.
+- Owner confirmed both Healthchecks checks returned to green after successful real backup/maintenance, failure emails arrived in controlled tests, and final timer scheduling is correct. Final timer confirmation is owner-reported; the raw list-timers output was not supplied.
+- Local checks on the captured helper sources: both parse; 12 mocked cases cover start/success/failure routing, skip of failure after success, rejected URLs and network-timeout handling without disclosing secrets or failing the backup. No live requests were sent by these checks. The maintenance helper differs only by the URL-file path and whitespace.
+- A missed-run alarm is configured by the daily/monthly cron schedules and grace times; a deliberately missed schedule/offline-Pi test was not performed. Helpers are best effort and errors do not fail backups. Maintenance standard restic check passed; no full data-read scrub/full-host recovery is claimed.
+- Backup visibility is complete within the tested scope. Next roadmap work: normal-use media checks (Radarr hardlinks before cleanup, Kodi native-library synchronization, remote Jellyfin playback, retained authorized indexers), then choose Matter/smart-home or browser-first household dashboard. Independent-host recovery and full application-secret coverage remain optional/separate follow-ups.
+- Cleanup of temporary transfer copies was instructed, but deletion was not explicitly confirmed. Do not delete retained restore/rollback directories without a separate choice.
+
+
 ## Backup monitoring and OAuth recovery — 2026-10-20
 
 This section supersedes older resume instructions below. PRs #8 and #9 are merged; #9 merge commit is `b96a376`.
 
 - Owner confirmed the restic password is in a password manager. After OAuth reconnection, the owner replaced the saved `/etc/rclone/homepi.conf` recovery attachment with the renewed configuration. Independent-host recovery is untested and application-secret recovery is not fully verified. Deletion of temporary transfer copies remains unconfirmed.
-- Healthchecks.io monitoring is installed using root-only URL files under `/etc/homepi-monitoring/`, Python notification helpers in `/usr/local/sbin/` and systemd `monitoring.conf` drop-ins. Ping URLs are secrets. Capture of the installed helper/drop-in source into Git remains pending.
+- Healthchecks.io monitoring is installed using root-only URL files under `/etc/homepi-monitoring/`, Python notification helpers in `/usr/local/sbin/` and systemd `monitoring.conf` drop-ins. Ping URLs are secrets. Installed helper/drop-in source was subsequently captured and locally checked; see Monitoring closure above.
 - Daily check: cron `30 4 * * *`, Europe/Berlin, one-hour grace. Simulated failure/email and real backup/return to green were confirmed. At 08:19:20 CEST the backup completed with Result=success, ExecMainStatus=0; snapshot `c0280e8b` (345.933 MiB) and retention succeeded. Scheduled snapshots from Oct 15–20 are evidenced by owner output.
 - Monthly check: cron `30 5 1 * *`, Europe/Berlin, six-hour grace. Simulated failure/email worked. The real 16:27 CEST run failed before opening the repository with rclone `invalid_grant`.
 - Owner confirmed OAuth Testing status, completed GitHub Pages/Branding setup following PR #9 and confirmed In production. Seven-day Testing-token expiry is consistent with the incident timing. The headless reconnect used the explicit `/etc/rclone/homepi.conf`, browser authorization on the Mac and no Shared Drive. No tokens/client secrets were posted or committed.
 - A read-only restic snapshot listing reopened existing repository `475950f8` and showed the expected snapshots. The subsequent real maintenance completed at 17:05:40 CEST with Result=success and ExecMainStatus=0: prune finished and standard restic check examined eight snapshots with no errors. This is not a claim of a full data-read scrub or new full-host restore.
-- The renewed rclone recovery copy is now owner-confirmed saved in the password manager. The monthly Healthchecks return to green remains VERIFY WITH OWNER; successful notification helper exit alone does not prove delivery because monitoring errors intentionally do not fail backups.
-- Next: confirm monthly check green, remove temporary transfer copies after confirming the saved attachment, capture sanitized monitoring helper/drop-ins into Git and verify timer scheduling. Do not repeat the completed OAuth reconnect or reopen Backup V1. Independent-host secret recovery and application-secret completeness remain separate follow-ups. Preserve incremental short terminal steps; the Mac shell is fish.
+- The renewed rclone recovery copy is now owner-confirmed saved in the password manager. Owner subsequently confirmed the monthly Healthchecks check returned to green. Successful helper exit alone would not prove delivery because monitoring errors intentionally do not fail backups.
+- Monthly green state, timer schedule and monitoring source capture are now confirmed; see Monitoring closure above. Do not repeat OAuth reconnect or reopen Backup V1. Independent-host secret recovery and application-secret completeness remain separate follow-ups. Preserve incremental short terminal steps; the Mac shell is fish.
 
 
 **Reconciled:** 2026-10-15, using repository state and owner-executed targeted Gluetun checks. No new full live audit was performed. P0, Homepage V1, the main update window, operational Backup V1 and Gluetun pinning are complete. Unticked items below remain unverified or planned.
@@ -105,7 +115,7 @@ Backup V1 closes with full temporary restore, copied-state checks and one repres
 ## Backup follow-ups (separate from V1 closure)
 
 - [ ] Verify independent recovery access to the restic password, rclone OAuth configuration and application secrets.
-- [ ] Add lightweight backup failure/staleness notifications; optionally show last successful backup in Homepage.
+- [x] Add lightweight backup failure/staleness notifications via external Healthchecks email monitoring; real failure/recovery paths and timer scheduling confirmed on 2026-10-20. Deliberately missed-run test not performed. Optional Homepage last-success display remains deferred.
 - [ ] Optional/deferred: additional application-start tests, Kodi Sync Queue LiteDB integrity, YAML/PEM semantics and full-host disaster recovery.
 - [ ] Choose when to remove the retained root-only restore test directory/rollback copies; no cleanup has been performed.
 

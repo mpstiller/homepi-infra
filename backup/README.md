@@ -1,6 +1,6 @@
 # Backup V1 — installed and validated
 
-`bin/` maps to `/usr/local/sbin/` (root:root, 0700); `systemd/` maps to `/etc/systemd/system/` (0644). Four units have no drop-ins according to owner output. No passwords, OAuth values or API keys are included. Original installed capture is in commit `086255a08b66de824d27ccb6223daff536d13f4a`; revised scripts are installed and validated as of 2026-10-14.
+`bin/` maps to `/usr/local/sbin/` (root:root; backup/maintenance scripts 0700, notification helpers 0755); `systemd/` maps to `/etc/systemd/system/` (0644). Both services now have captured monitoring drop-ins; the earlier no-drop-in capture is historical. No passwords, OAuth values or API keys are included. Original installed capture is in commit `086255a08b66de824d27ccb6223daff536d13f4a`; revised scripts are installed and validated as of 2026-10-14.
 
 ## Runtime behavior
 
@@ -26,3 +26,7 @@ For future script replacement, verify prerequisites, pause only active timers, w
 ## Separate follow-ups
 
 Independent password/OAuth recovery remains to be verified. These files and installed scripts/units live outside protected source trees (scripts/units are now in Git). Gluetun persisted-state consistency, existing staging permissions and headroom need review when relevant. Test restore data remains at `/srv/backups/restore-validation.Nz6ggIgG`; no cleanup has been performed. See `docs/backup-restore.md` and `docs/restore-runbook.md`.
+
+## Healthchecks monitoring — 2026-10-20
+
+See [monitoring.md](monitoring.md) for captured helper/drop-in installation paths, private URL storage, schedules, tests and rollback. Owner-confirmed notification recovery and timer scheduling complete this follow-up. Independent-host recovery is not demonstrated.

@@ -33,3 +33,7 @@ credentials*
 # Generated local reports may contain host-specific data
 /generated/*
 !/generated/.gitkeep
+
+# Local monitoring ping URLs are credentials
+backup.url
+maintenance.url
