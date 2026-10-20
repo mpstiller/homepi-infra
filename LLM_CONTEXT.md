@@ -1,5 +1,18 @@
 # HomePi — LLM Context
 
+## Backup monitoring and OAuth recovery — 2026-10-20
+
+This section supersedes older resume instructions below. PR #8 is confirmed merged into main (merge commit `9f81ada`).
+
+- Owner confirmed the restic password is in a password manager and saved a copy of `/etc/rclone/homepi.conf` there. Independent-host recovery was not tested; application-secret recovery is not fully verified. Temporary-copy deletion was instructed but not confirmed.
+- Healthchecks.io email monitoring was installed by the owner using local root-only URL files under `/etc/homepi-monitoring/`, Python notification helpers in `/usr/local/sbin/` and systemd `monitoring.conf` drop-ins. Ping URLs are secrets and must never be committed. Runtime helper/drop-in capture into Git remains pending.
+- Daily check: cron `30 4 * * *`, Europe/Berlin, one-hour grace. Simulated failure/email delivery and real successful run/return to green were owner-confirmed. At 08:19:20 CEST the backup finished with Result=success, ExecMainStatus=0; snapshot `c0280e8b` (345.933 MiB) was saved and retention succeeded. Earlier daily snapshots establish Oct 15–20 scheduled runs.
+- Monthly check: cron `30 5 1 * *`, Europe/Berlin, six-hour grace. Simulated failure/email worked. The real 16:27 CEST run failed before opening the repository: rclone `invalid_grant` while refreshing Google OAuth. No successful prune/check or monitoring recovery is claimed for this run.
+- Owner confirmed the OAuth app is in Testing. Google documents seven-day refresh-token expiry in that state; timing is consistent with the Oct 13 setup. Publishing is blocked by empty homepage/privacy fields in Branding.
+- Static homepage and privacy pages are prepared in `docs/index.html` and `docs/privacy.html`. Pages enablement/public reachability, OAuth publishing, reauthorization, recovery-copy replacement and successful maintenance rerun remain pending. Do not treat a prepared page or PR as a deployed site.
+- Next: publish the prepared pages through GitHub Pages, fill Google Branding and authorized domain, publish the OAuth app, reconnect `gdrive:` using the explicit `/etc/rclone/homepi.conf`, privately update the password-manager copy, verify repository access and run maintenance. Keep Backup V1 closed; this is a current authentication failure, not a reason to repeat every restore test.
+
+
 This file is the primary handoff for a new LLM/session. Read it before proposing changes.
 
 Latest handoff: section 28 (2026-10-15). Gluetun pinning and targeted VPN checks are complete; next work is independent recovery secrets and backup visibility. The owner executes terminal commands; explain each step and wait for results. The owner published the change in PR #8; check its current merge status.

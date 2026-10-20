@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-10-20
+
+- Recorded owner-confirmed independent restic/rclone secret storage (no independent-host restore claim), daily backup email alarm/recovery tests and successful snapshot c0280e8b.
+- Recorded monthly monitoring test and actual maintenance failure due to Google OAuth invalid_grant; Testing status confirmed, reauthorization and maintenance recovery pending.
+- Prepared static HomePi Backup homepage/privacy pages for GitHub Pages and documented the deployment/Branding/reconnect sequence. Nothing is claimed published or repaired yet; runtime monitoring source capture remains pending.
+
 ## 2026-10-15
 
 - Owner pinned Gluetun to the previously validated digest `qmcgaw/gluetun@sha256:12df8b20528d4cd5e9b6e827d40f2886cf78e53e7e9afc750050648c31183793` in the actual media Compose file; mirrored the one-line change locally. No image pull/update was performed; Gluetun and qBittorrent were recreated together.
