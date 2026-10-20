@@ -1,0 +1,36 @@
+#!/usr/bin/python3
+import os
+import re
+import sys
+import urllib.request
+
+
+class NoRedirect(urllib.request.HTTPRedirectHandler):
+    def redirect_request(self, req, fp, code, msg, headers, newurl):
+        return None
+
+def main():
+    mode = sys.argv[1]
+    if mode == "failure" and os.environ.get("SERVICE_RESULT") == "success":
+        return
+
+    suffix = {"start": "/start", "success": "", "failure": "/fail"}[mode]
+    with open("/etc/homepi-monitoring/maintenance.url", encoding="utf-8") as f:
+        url = f.read().strip()
+
+    pattern = r"https://hc-ping\.com/[0-9a-fA-F]{8}(?:-[0-9a-fA-F]{4}){3}-[0-9a-fA-F]{12}"
+    if not re.fullmatch(pattern, url):
+        raise ValueError("Invalid URL")
+
+    request = urllib.request.Request(url + suffix, data=b"", method="POST")
+    opener = urllib.request.build_opener(NoRedirect)
+    with opener.open(request, timeout=5) as response:
+        if not 200 <= response.status < 300:
+            raise ValueError("HTTP failure")
+
+if __name__ == "__main__":
+    try:
+        main()
+    except Exception:
+        print("HomePi monitoring: status signal could not be sent.", file=sys.stderr)
+        sys.exit(0)

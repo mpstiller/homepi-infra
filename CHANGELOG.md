@@ -2,6 +2,11 @@
 
 ## 2026-10-20
 
+- Closed monitoring follow-up: owner confirmed both checks returned to green and timer scheduling is correct; captured exact supplied notification helpers/drop-ins, documented installation/rollback and kept URL credentials excluded. Both Python helpers parsed and 12 mocked routing/failure checks passed. No deliberately missed-run or full-host recovery test is claimed. This supersedes earlier pending monitoring notes in today's log.
+
+- Follow-up recovery: owner published OAuth app to In production, reconnected the existing gdrive remote using the explicit production config, reopened repository 475950f8 and completed real maintenance at 17:05:40 CEST (Result=success, exit 0; prune and standard check of eight snapshots, no errors).
+- Owner replaced the password-manager rclone recovery attachment with the renewed configuration. Monthly Healthchecks green state, temporary-copy deletion and installed monitoring source capture remain unconfirmed/pending. This supersedes the earlier incident-in-progress notes below.
+
 - Recorded owner-confirmed independent restic/rclone secret storage (no independent-host restore claim), daily backup email alarm/recovery tests and successful snapshot c0280e8b.
 - Recorded monthly monitoring test and actual maintenance failure due to Google OAuth invalid_grant; Testing status confirmed, reauthorization and maintenance recovery pending.
 - Prepared static HomePi Backup homepage/privacy pages for GitHub Pages and documented the deployment/Branding/reconnect sequence. Nothing is claimed published or repaired yet; runtime monitoring source capture remains pending.

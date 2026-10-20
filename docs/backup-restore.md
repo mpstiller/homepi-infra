@@ -1,16 +1,27 @@
 # Backup and restore
 
+## Monitoring closure — 2026-10-20
+
+- Owner supplied exact installed notification helpers and both systemd drop-ins; captured under `backup/bin/*-notify` and `backup/systemd/*.service.d/monitoring.conf`. URL contents are never included.
+- Owner confirmed both Healthchecks checks returned to green after successful real backup/maintenance, failure emails arrived in controlled tests, and final timer scheduling is correct. Final timer confirmation is owner-reported; the raw list-timers output was not supplied.
+- Local checks on the captured helper sources: both parse; 12 mocked cases cover start/success/failure routing, skip of failure after success, rejected URLs and network-timeout handling without disclosing secrets or failing the backup. No live requests were sent by these checks. The maintenance helper differs only by the URL-file path and whitespace.
+- A missed-run alarm is configured by the daily/monthly cron schedules and grace times; a deliberately missed schedule/offline-Pi test was not performed. Helpers are best effort and errors do not fail backups. Maintenance standard restic check passed; no full data-read scrub/full-host recovery is claimed.
+- Backup visibility is complete within the tested scope. Next roadmap work: normal-use media checks (Radarr hardlinks before cleanup, Kodi native-library synchronization, remote Jellyfin playback, retained authorized indexers), then choose Matter/smart-home or browser-first household dashboard. Independent-host recovery and full application-secret coverage remain optional/separate follow-ups.
+- Cleanup of temporary transfer copies was instructed, but deletion was not explicitly confirmed. Do not delete retained restore/rollback directories without a separate choice.
+
+
 ## Backup monitoring and OAuth recovery — 2026-10-20
 
-This section supersedes older resume instructions below. PR #8 is confirmed merged into main (merge commit `9f81ada`).
+This section supersedes older resume instructions below. PRs #8 and #9 are merged; #9 merge commit is `b96a376`.
 
-- Owner confirmed the restic password is in a password manager and saved a copy of `/etc/rclone/homepi.conf` there. Independent-host recovery was not tested; application-secret recovery is not fully verified. Temporary-copy deletion was instructed but not confirmed.
-- Healthchecks.io email monitoring was installed by the owner using local root-only URL files under `/etc/homepi-monitoring/`, Python notification helpers in `/usr/local/sbin/` and systemd `monitoring.conf` drop-ins. Ping URLs are secrets and must never be committed. Runtime helper/drop-in capture into Git remains pending.
-- Daily check: cron `30 4 * * *`, Europe/Berlin, one-hour grace. Simulated failure/email delivery and real successful run/return to green were owner-confirmed. At 08:19:20 CEST the backup finished with Result=success, ExecMainStatus=0; snapshot `c0280e8b` (345.933 MiB) was saved and retention succeeded. Earlier daily snapshots establish Oct 15–20 scheduled runs.
-- Monthly check: cron `30 5 1 * *`, Europe/Berlin, six-hour grace. Simulated failure/email worked. The real 16:27 CEST run failed before opening the repository: rclone `invalid_grant` while refreshing Google OAuth. No successful prune/check or monitoring recovery is claimed for this run.
-- Owner confirmed the OAuth app is in Testing. Google documents seven-day refresh-token expiry in that state; timing is consistent with the Oct 13 setup. Publishing is blocked by empty homepage/privacy fields in Branding.
-- Static homepage and privacy pages are prepared in `docs/index.html` and `docs/privacy.html`. Pages enablement/public reachability, OAuth publishing, reauthorization, recovery-copy replacement and successful maintenance rerun remain pending. Do not treat a prepared page or PR as a deployed site.
-- Next: publish the prepared pages through GitHub Pages, fill Google Branding and authorized domain, publish the OAuth app, reconnect `gdrive:` using the explicit `/etc/rclone/homepi.conf`, privately update the password-manager copy, verify repository access and run maintenance. Keep Backup V1 closed; this is a current authentication failure, not a reason to repeat every restore test.
+- Owner confirmed the restic password is in a password manager. After OAuth reconnection, the owner replaced the saved `/etc/rclone/homepi.conf` recovery attachment with the renewed configuration. Independent-host recovery is untested and application-secret recovery is not fully verified. Deletion of temporary transfer copies remains unconfirmed.
+- Healthchecks.io monitoring is installed using root-only URL files under `/etc/homepi-monitoring/`, Python notification helpers in `/usr/local/sbin/` and systemd `monitoring.conf` drop-ins. Ping URLs are secrets. Installed helper/drop-in source was subsequently captured and locally checked; see Monitoring closure above.
+- Daily check: cron `30 4 * * *`, Europe/Berlin, one-hour grace. Simulated failure/email and real backup/return to green were confirmed. At 08:19:20 CEST the backup completed with Result=success, ExecMainStatus=0; snapshot `c0280e8b` (345.933 MiB) and retention succeeded. Scheduled snapshots from Oct 15–20 are evidenced by owner output.
+- Monthly check: cron `30 5 1 * *`, Europe/Berlin, six-hour grace. Simulated failure/email worked. The real 16:27 CEST run failed before opening the repository with rclone `invalid_grant`.
+- Owner confirmed OAuth Testing status, completed GitHub Pages/Branding setup following PR #9 and confirmed In production. Seven-day Testing-token expiry is consistent with the incident timing. The headless reconnect used the explicit `/etc/rclone/homepi.conf`, browser authorization on the Mac and no Shared Drive. No tokens/client secrets were posted or committed.
+- A read-only restic snapshot listing reopened existing repository `475950f8` and showed the expected snapshots. The subsequent real maintenance completed at 17:05:40 CEST with Result=success and ExecMainStatus=0: prune finished and standard restic check examined eight snapshots with no errors. This is not a claim of a full data-read scrub or new full-host restore.
+- The renewed rclone recovery copy is now owner-confirmed saved in the password manager. Owner subsequently confirmed the monthly Healthchecks check returned to green. Successful helper exit alone would not prove delivery because monitoring errors intentionally do not fail backups.
+- Monthly green state, timer schedule and monitoring source capture are now confirmed; see Monitoring closure above. Do not repeat OAuth reconnect or reopen Backup V1. Independent-host secret recovery and application-secret completeness remain separate follow-ups. Preserve incremental short terminal steps; the Mac shell is fish.
 
 
 ## Backup V1 complete — 2026-10-14
