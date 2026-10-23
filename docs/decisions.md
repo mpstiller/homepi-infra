@@ -57,3 +57,11 @@
 **Decision:** do not move current production `planner` / `quoernchenkueche` apps to the Pi merely for the sake of self-hosting.
 
 **Reason:** current cloud deployment is appropriate; Pi may later host staging/new small apps.
+
+## ADR-011 — Prepare derived Sony-compatible audio files (pilot pending)
+
+**Decision:** prepare an opt-in workflow replacing TrueHD tracks with AC3 in a derived MKV, preserving the full original in a separate unscanned local archive. Keep video/release quality selection unchanged. Activation follows a single-file Pi/Sony pilot.
+
+**New evidence:** owner found retained TrueHD+added-AC3 still stuttered and aborted in Direct Play. A remux removing TrueHD, retaining both AC3 tracks and subtitles, passed Sony playback/switching/seeking. Kodi is deferred by owner. This changes the current fallback from Kodi to a prepared audio derivative; it does not downgrade video or establish all codecs/titles are affected.
+
+**Limits:** original archives require storage and are outside the current restic scope. Local tests do not prove native Pi/API behavior; verify the actual worker output, archive, metadata and session/race behavior before enabling automatic processing. See audio/README.md.
