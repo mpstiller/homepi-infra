@@ -75,7 +75,7 @@ class Tests(unittest.TestCase):
             audio.os.link(source, torrent)
             expected = audio.fingerprint(source)
             result.write_bytes(b'converted')
-            entry = audio.archive_and_replace(source, result, expected, root/'archive')
+            entry = audio.archive_and_replace(source, result, expected, root/'archive', keep_original=True)
             self.assertEqual(source.read_bytes(), b'converted')
             self.assertEqual(torrent.read_bytes(), b'original')
             self.assertEqual((entry/'original.mkv').read_bytes(), b'original')
@@ -93,6 +93,43 @@ class Tests(unittest.TestCase):
             with self.assertRaises(ValueError):
                 audio.archive_and_replace(source, result, expected, root/'archive')
             self.assertEqual(source.read_bytes(), b'new content')
+
+    def test_default_replacement_creates_no_archive_and_preserves_torrent(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            source, result, torrent = root/'source.mkv', root/'result.mkv', root/'torrent.mkv'
+            source.write_bytes(b'original')
+            audio.os.link(source, torrent)
+            result.write_bytes(b'converted')
+            entry = audio.archive_and_replace(source, result, audio.fingerprint(source), root/'archive')
+            self.assertIsNone(entry)
+            self.assertFalse((root/'archive').exists())
+            self.assertEqual(source.read_bytes(), b'converted')
+            self.assertEqual(torrent.read_bytes(), b'original')
+            self.assertNotEqual(source.stat().st_ino, torrent.stat().st_ino)
+            self.assertEqual(torrent.stat().st_nlink, 1)
+
+    def test_default_replacement_without_other_links_leaves_only_result(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            source, result = root/'source.mkv', root/'result.mkv'
+            source.write_bytes(b'original')
+            result.write_bytes(b'converted')
+            audio.archive_and_replace(source, result, audio.fingerprint(source), root/'archive')
+            self.assertEqual(sorted(p.name for p in root.iterdir()), ['source.mkv'])
+            self.assertEqual(source.read_bytes(), b'converted')
+
+    def test_failed_publish_preserves_original_without_archive(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            source, result = root/'source.mkv', root/'result.mkv'
+            source.write_bytes(b'original')
+            result.write_bytes(b'converted')
+            with patch.object(audio.os, 'replace', side_effect=OSError('simulated rename failure')):
+                with self.assertRaises(OSError):
+                    audio.archive_and_replace(source, result, audio.fingerprint(source), root/'archive')
+            self.assertEqual(source.read_bytes(), b'original')
+            self.assertFalse((root/'archive').exists())
 
     def test_symlink_or_outside_input_rejected(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -154,7 +191,7 @@ class Tests(unittest.TestCase):
             result.write_bytes(b'new')
             with patch.object(audio.os, 'link', side_effect=OSError('simulated disk error')):
                 with self.assertRaises(OSError):
-                    audio.archive_and_replace(source, result, audio.fingerprint(source), root/'archive')
+                    audio.archive_and_replace(source, result, audio.fingerprint(source), root/'archive', keep_original=True)
             self.assertEqual(source.read_bytes(), b'old')
 
 

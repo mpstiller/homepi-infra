@@ -58,10 +58,12 @@
 
 **Reason:** current cloud deployment is appropriate; Pi may later host staging/new small apps.
 
-## ADR-011 — Prepare derived Sony-compatible audio files (pilot pending)
+## ADR-011 — Prepare Sony-compatible audio without permanent duplicate storage (pilot pending)
 
-**Decision:** prepare an opt-in workflow replacing TrueHD tracks with AC3 in a derived MKV, preserving the full original in a separate unscanned local archive. Keep video/release quality selection unchanged. Activation follows a single-file Pi/Sony pilot.
+**Decision:** prepare an opt-in workflow replacing TrueHD with AC3 in a derived MKV. Per owner decision, normal automatic operation atomically replaces the verified library file and retains no permanent original archive. Only an explicit single-file pilot may pass `--keep-original` for temporary rollback; the flag is refused in scan mode and absent from the automatic service. Do not change video/release quality selection or delete pre-existing archives.
 
-**New evidence:** owner found retained TrueHD+added-AC3 still stuttered and aborted in Direct Play. A remux removing TrueHD, retaining both AC3 tracks and subtitles, passed Sony playback/switching/seeking. Kodi is deferred by owner. This changes the current fallback from Kodi to a prepared audio derivative; it does not downgrade video or establish all codecs/titles are affected.
+**New evidence:** retained TrueHD+added-AC3 still stuttered and aborted in Direct Play. A remux removing TrueHD, retaining both AC3 tracks and subtitles, passed owner Sony playback/switching/seeking. Kodi is deferred. This supports the compatibility pilot, not a universal codec diagnosis.
 
-**Limits:** original archives require storage and are outside the current restic scope. Local tests do not prove native Pi/API behavior; verify the actual worker output, archive, metadata and session/race behavior before enabling automatic processing. See audio/README.md.
+**Storage/quality trade-off:** temporary output space is required until verification/atomic replacement. Existing torrent hardlinks retain original bytes until established cleanup. Without a retained original, the lossless TrueHD audio cannot be reconstructed from lossy AC3. No archive is automatically created in normal operation; the pilot archive remains outside restic scope and its later removal must target the reviewed pilot entry.
+
+**Limits:** local tests do not prove native Pi/API behavior. Validate the actual single-file worker output, temporary pilot archive, metadata and session/race behavior before enabling unattended processing. See audio/README.md.

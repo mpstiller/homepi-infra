@@ -2,9 +2,11 @@
 
 ## 2026-10-24
 
+- Owner chose no permanent original archive for audio conversion. Automatic apply now replaces only after verification, while --keep-original is available solely for an explicit one-file pilot. No old archives/test copies are deleted. Fifteen local tests pass, including no-archive replacement, preserved torrent bytes and failed-publication preservation. Pi installation remains pending.
+
 - Recorded owner Sony tests: retaining TrueHD plus AC3 still stuttered/aborted; removing TrueHD while keeping both AC3 tracks/subtitles passed playback, switching and seeking. Kodi work is deferred.
-- Prepared opt-in MKV TrueHD-to-AC3 worker with separately archived original, atomic replacement preserving torrent hardlinks, encoded-video hash checks, playback/API guards, shared backup lock, resource-limited local-image Docker jobs and gated timer. No worker installation or automatic Pi conversion is claimed.
-- Twelve local tests, a native synthetic FFmpeg conversion (subtitle/chapter/font retained, video hash identical) and adjusted-path systemd unit verification pass. Single-file native Pi/Sony worker pilot remains next.
+- Prepared opt-in MKV TrueHD-to-AC3 worker with optional single-file pilot archive (automatic mode retains none), atomic replacement preserving torrent hardlinks, encoded-video hash checks, playback/API guards, shared backup lock, resource-limited local-image Docker jobs and gated timer. No worker installation or automatic Pi conversion is claimed.
+- Fifteen local tests, a native synthetic FFmpeg conversion (subtitle/chapter/font retained, video hash identical) and adjusted-path systemd unit verification pass. Single-file native Pi/Sony worker pilot remains next.
 
 ## 2026-10-20
 
