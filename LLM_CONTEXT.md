@@ -1,5 +1,27 @@
 # HomePi — LLM Context
 
+## Original retention policy — owner decision 2026-10-24
+
+Owner rejected permanent duplicate storage for audio compatibility. Automatic processing now creates a checked temporary derivative and atomically replaces the library file without an original archive. The first explicit single-file pilot uses `--keep-original` for temporary rollback only; this flag is refused with `--scan` and is absent from the automatic service. No existing archives/test files are deleted by this preparation.
+
+Temporary output space is still needed. Existing torrent hardlinks keep original bytes until normal qBittorrent/arr cleanup; they are not changed or deleted by the worker. Without a separately retained original, lossless TrueHD cannot be recovered from the lossy AC3 derivative. Video remains stream-copied/hash-checked.
+
+Fifteen local tests now pass, including default no-archive replacement, release of the old unlinked file, torrent-hardlink preservation and failed-publication preservation. Conversion arguments and unit scheduling are unchanged. Nothing is installed/enabled on Pi. Next: read-only one-file pilot plan with `--keep-original`, then deliberate one-file apply with the same flag; native Pi/API/Sony validation still precedes unattended activation.
+
+
+## Sony TrueHD compatibility — 2026-10-24 (automation pilot pending)
+
+Owner explicitly deferred Kodi: it did not provide a satisfactory final solution. Earlier Kodi/JellyCon success remains historical evidence, not the current chosen workaround.
+
+- Real AOT S01E01 probe: English TrueHD 5.1(side), Japanese TrueHD stereo; original video is HEVC Main 10. Owner host output: 1.4 TiB free, 1.7 GiB available RAM, about 399 MiB swap used.
+- A resource-limited separate Docker test reused the local Jellyfin image, added AC3 English 5.1 (640k) and Japanese stereo (192k), retained TrueHD/video/subtitles and wrote a separate test MKV in `/srv/data/media/audio-tests`. It completed in 2:15.57. All four audio tracks were probed successfully. Native Jellyfin Android TV playback was Direct Play but still stuttered/aborted; turning off subtitles did not fix it.
+- A minimal video+Japanese-AC3 copy played smoothly but once aborted on seeking. Do not label that abort a proven network problem.
+- A further remux keeping both AC3 tracks, subtitles/chapters and other streams while removing both TrueHD tracks was owner-tested successfully with subtitles, audio switching and seeking. This supports a derived file without TrueHD; one title does not prove a universal codec diagnosis.
+- Prepared `audio/bin/homepi-audio`, service/timer and tests. Worker replaces TrueHD with AC3 in the TV derivative, retains an original only for an explicit --keep-original single-file pilot; normal automatic operation creates no original archive, maps other streams, verifies video payload hashes and uses read-only source mounts/one CPU/512 MiB. Shared backup lock, source fingerprints, playback-idle checks and a disabled-by-default enable marker limit unintended overlap. See `audio/README.md` for storage/race/rollback limits.
+- Local evidence: 15 unit/transaction tests pass; native synthetic FFmpeg fixture with TrueHD 5.1/stereo, subtitle, chapter and font converted successfully with identical encoded video hash; systemd units verified locally with the executable path adjusted to the local checkout. These do not establish Pi worker/Docker/API behavior.
+- NOT installed or enabled on Pi. Next: merge/review this preparation, install worker only from a clean pinned checkout, create a private dedicated Jellyfin API key, run read-only `--file --keep-original` pilot plan for AOT S01E01, then one-file apply with the same retention flag and metadata/Sony validation. Review whole-library dry-run before enabling the timer; no bulk conversion is claimed. Keep backup closure intact.
+
+
 ## Monitoring closure — 2026-10-20
 
 - Owner supplied exact installed notification helpers and both systemd drop-ins; captured under `backup/bin/*-notify` and `backup/systemd/*.service.d/monitoring.conf`. URL contents are never included.
