@@ -194,6 +194,32 @@ class Tests(unittest.TestCase):
                     audio.archive_and_replace(source, result, audio.fingerprint(source), root/'archive', keep_original=True)
             self.assertEqual(source.read_bytes(), b'old')
 
+    def test_jellyfin12_authorization_header_on_get_and_post(self):
+        client = audio.Jellyfin.__new__(audio.Jellyfin)
+        client.key = 'synthetic-token'
+        client.opener = Mock()
+        client.opener.open.return_value.__enter__ = Mock(return_value=Mock(read=Mock(return_value=b'[]')))
+        client.opener.open.return_value.__exit__ = Mock(return_value=False)
+        for method, path in [('GET', '/Sessions'), ('POST', '/Library/Refresh')]:
+            self.assertEqual(client.request(path, method), b'[]')
+            request = client.opener.open.call_args.args[0]
+            self.assertEqual(request.get_header('Authorization'), 'MediaBrowser Token="synthetic-token"')
+            self.assertIsNone(request.get_header('X-emby-token'))
+            self.assertEqual(request.full_url, 'http://127.0.0.1:8096' + path)
+            self.assertNotIn(client.key, request.full_url)
+            self.assertEqual(request.get_method(), method)
+
+    def test_jellyfin_http_failure_reports_status_without_secret(self):
+        client = audio.Jellyfin.__new__(audio.Jellyfin)
+        client.key = 'synthetic-private-token'
+        client.opener = Mock()
+        client.opener.open.side_effect = audio.urllib.error.HTTPError(
+            'http://example/' + client.key, 401, client.key, {}, None)
+        with self.assertRaises(ValueError) as caught:
+            client.request('/Sessions')
+        self.assertEqual(str(caught.exception), 'Jellyfin API HTTP 401: GET /Sessions')
+        self.assertNotIn(client.key, str(caught.exception))
+
 
 if __name__ == '__main__':
     unittest.main()

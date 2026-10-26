@@ -1,5 +1,27 @@
 # HomePi — LLM Context
 
+## Sony audio automation operational — owner evidence 2026-10-26
+
+This is the latest resume point and supersedes earlier pilot-pending notes below.
+
+- Corrected worker installed from commit `7c7e630` (SHA256 `17a2c935df16cb8f5c3747d2733e1d238cabae06b4ce9d5f673b0ef1bfef7d2f`). Existing private API key works with MediaBrowser Authorization; owner diagnostic returned API access OK and idle=True. PR #12 still open at this documentation update; merge it so main matches the running fix.
+- Explicit AOT S01E01 --apply --keep-original succeeded. Source was replaced after checks; pilot original remains at `/srv/data/media-originals/20261026T120935-4bd7557179ec`. Owner confirmed the actual normal-library episode played flawlessly on Sony. This is worker output playback evidence, not just the earlier manual test.
+- Full-library dry-run listed 36 additional AOT episodes: S01E02–25 and S02E01–12, two or three TrueHD tracks each, original not archived. S01E01 was correctly absent. No other title was listed in the supplied output.
+- Owner installed/verified captured service+timer (systemd-analyze verify had no messages), created the enable marker and enabled/started the timer. Automatic S01E02 ran 14:07:43–14:09:45 CET, S01E03 14:14:52–14:17:27 CET. Both logged REPLACED with original archive disabled and Finished successfully. The second job handled three TrueHD tracks. A third invocation began at 14:22:48; no result for it or the full backlog is claimed.
+- Automatic mode creates no permanent original archive. Temporary staging still needs space; seeding hardlinks retain original bytes until normal existing cleanup. No in-place writes to shared download inodes occur. The observed invocations confirm the timer re-arms about five minutes after completion; NEXT='-' during an active invocation is not evidence of a stopped timer.
+- Remaining closure: merge PR #12, remove only reviewed pilot/test copies after confirmation (not yet claimed deleted), optionally verify Sonarr refreshed audio metadata/renaming and continue normal-use remote playback/Radarr hardlink checks or choose the next household capability. Actual pilot rollback, busy-playback deferral, future download arrival, every backlog title and cross-reboot resumption remain untested live; do not reopen completed conversion as a prerequisite.
+- Use short Pi terminal steps; Mac shell is fish. Do not re-create API keys, repeat the completed one-file conversion or reinstall the old legacy-header helper.
+
+
+## Audio pilot authentication fix — 2026-10-26
+
+PR #11 is merged. Owner installed the pinned worker (original SHA256 `50515e498048a5ba21d448dc048c734e0274199f4d17395c7132524898a63cc3`) and the explicit AOT S01E01 dry-run correctly planned two TrueHD tracks -> AC3 with pilot original retention. Owner created the private Jellyfin key file. Apply stopped with generic RuntimeError; read-only API diagnostics returned HTTP 401 even after a fresh key.
+
+The helper incorrectly used legacy `X-Emby-Token`, disabled by default in Jellyfin 12. Prepared correction uses `Authorization: MediaBrowser Token="..."` for both session queries and library refresh, keeping tokens out of URLs/logs. HTTP failures now report status/method/fixed API path, not raw response bodies, headers or secrets. Do not create more API keys or enable legacy auth to work around this client bug.
+
+Local suite: 17 tests pass, including GET/POST header format and secret-safe HTTP 401 reporting. Corrected-header Pi HTTP success, one-file apply, Sony validation and timer activation are still pending. No successful worker replacement is claimed. Next: install the corrected pinned worker, verify the existing key with the corrected request path, then resume the explicit single-file --keep-original pilot. Automatic mode still retains no permanent original archive.
+
+
 ## Original retention policy — owner decision 2026-10-24
 
 Owner rejected permanent duplicate storage for audio compatibility. Automatic processing now creates a checked temporary derivative and atomically replaces the library file without an original archive. The first explicit single-file pilot uses `--keep-original` for temporary rollback only; this flag is refused with `--scan` and is absent from the automatic service. No existing archives/test files are deleted by this preparation.
