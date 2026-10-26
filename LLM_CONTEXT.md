@@ -1,5 +1,23 @@
 # HomePi — LLM Context
 
+## Homepage operations status installed — owner confirmation 2026-10-26
+
+This supersedes the earlier preparation-only status. PR #14 is merged.
+Owner verified the pinned archive for commit `bee00a4500de9b7c266cb6eefc24175a6da0bdf7`
+(SHA256 `79cf59d517c878d1cfcec4e578d5821faaa7b4bc594b596dbe595a0a09e36a3f`)
+and supplied matching settings baseline hash. Installer output confirms the Python
+image pull, successful first collection, collector timer enablement, Homepage
+running and status container started. Rollback config is retained at
+`/root/homepi-status-rollback.fnhzWRCx`. Owner then confirmed all Homepage cards work.
+
+The three cards (backup, monthly maintenance, audio) are operational. Existing
+workers, schedules and Healthchecks remain unchanged. No further installation,
+API-key setup or production job run is needed for this feature. Twenty local
+status/HTTP tests passed before deployment. Detailed field-by-field reconciliation,
+live forced-failure/stale-source tests, resource measurement and reboot behavior
+were not separately evidenced; do not infer full backlog completion or new backup
+restore validation from the working cards. See `operations/README.md`.
+
 ## Audio cleanup complete — 2026-10-26
 
 PR #12 is confirmed merged. Owner confirmed deletion of the single retained pilot archive `/srv/data/media-originals/20261026T120935-4bd7557179ec` and the three created MKV files in `/srv/data/media/audio-tests` (Sony-Test, AC3-only, AC3-mit-Untertiteln). The converted normal-library S01E01 remains. Do not repeat these deletions or remove other archives. The now-empty optional Audio-Test Jellyfin library/folder can remain; UI removal was not reported. Automated conversion remains enabled without permanent originals. First two automatic completions are verified; full backlog completion is not yet reported. Next session should resume from the operational state rather than repeat installation, API-key setup or the one-file pilot.
@@ -703,22 +721,3 @@ Recovery interruption: raising `tun0` left qBittorrent on `lo` / port `0`, consi
 The owner created commit `c20e80f` on branch `maintenance/gluetun-pin-2026-10-15` in a separate worktree based on origin/main and published [PR #8](https://github.com/mpstiller/homepi-infra/pull/8). Check its merge status before treating pinning as part of main. The original checkout retains an older HEAD and existing local changes, including unrelated deliverables; do not blindly stage or reset it. The original local HTTPS push failed because Git used marc-perelyn; the owner added mpstiller through gh auth login and successfully pushed using that active account. The raw October 14 inventory remains unchanged with its historical flags/references.
 
 Next: privately verify independent recovery access to restic/rclone/application secrets and choose lightweight failure/staleness notifications. Keep Backup V1 closed within the accepted representative Sonarr-start scope. Radarr hardlinks, Kodi native-library sync and remote Jellyfin playback remain normal-use checks; per-service memory caps remain unset. No further Pi changes are scheduled without the owner's next instruction.
-
-
-## Homepage operations cards prepared — 2026-10-26
-
-Owner requested Homepage visibility for backups, maintenance and audio conversions.
-`operations/` now prepares a read-only systemd/journal collector, internal limited
-Python JSON server and three customapi list cards. Existing worker scripts,
-Healthchecks, credentials and backup/audio schedules are unchanged. Source freshness
-is evaluated on every HTTP request; idle/deferred/failed/overdue/unknown are distinct.
-Live Compose text supplied by owner matches the captured structure; the installer
-checks supplied live Compose/services hashes plus the existing settings baseline,
-saves rollback files and refuses drift or a busy shared backup/audio lock.
-
-Prepared only: not installed on Pi. Local tests cover 20 status/HTTP cases;
-YAML structure, shell syntax and adjusted-path systemd unit verification pass.
-Native collection, Docker Compose, Homepage rendering and live displayed values
-remain VERIFY ON PI. See `operations/README.md` for installation/validation/rollback.
-PR #12 is confirmed merged; pilot/test cleanup is owner-confirmed and documented
-in the separate still-open PR #13. Do not repeat cleanup or claim full-backlog completion.

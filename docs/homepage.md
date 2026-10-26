@@ -200,19 +200,21 @@ This follows the [official Jellyfin widget documentation](https://gethomepage.de
 Widgets use container-to-host connectivity; browser navigation stays on `http://homepi:8096`. The socket proxy remains restricted. Keep the key in the actual env_file for future updates; a simple container restart does not reload changed environment values.
 
 
-## Prepared operations visibility — 2026-10-26
+## Homepage operations status installed — owner confirmation 2026-10-26
 
-Three `Betriebsstatus` customapi cards are prepared for daily backup, monthly
-maintenance and audio conversion. A host collector reads systemd/journald every
-30 seconds and writes sanitized atomic status with bounded history; a nonroot,
-64 MiB Python HTTP container serves it only inside the existing Homepage network.
-There are no new host ports, credentials, worker changes or production service
-hooks. Homepage refreshes every 15 seconds. Last success, running phase/file,
-duration, historical errors and last three runs are text fields; customapi list
-mode does not promise conditional colors. Data older than 120 seconds becomes
-explicitly unknown. The external Healthchecks email alarms remain in place.
+This supersedes the earlier preparation-only status. PR #14 is merged.
+Owner verified the pinned archive for commit `bee00a4500de9b7c266cb6eefc24175a6da0bdf7`
+(SHA256 `79cf59d517c878d1cfcec4e578d5821faaa7b4bc594b596dbe595a0a09e36a3f`)
+and supplied matching settings baseline hash. Installer output confirms the Python
+image pull, successful first collection, collector timer enablement, Homepage
+running and status container started. Rollback config is retained at
+`/root/homepi-status-rollback.fnhzWRCx`. Owner then confirmed all Homepage cards work.
 
-See `../operations/README.md` for evidence limits, thresholds, guarded pinned
-installation, validation and rollback. Source/YAML/local HTTP checks pass;
-actual Pi collection and Homepage rendering remain VERIFY ON PI. The installer
-preserves the local `.env` and refuses drift from reviewed baseline hashes.
+The three cards (backup, monthly maintenance, audio) are operational. Existing
+workers, schedules and Healthchecks remain unchanged. No further installation,
+API-key setup or production job run is needed for this feature. Twenty local
+status/HTTP tests passed before deployment. Detailed field-by-field reconciliation,
+live forced-failure/stale-source tests, resource measurement and reboot behavior
+were not separately evidenced; do not infer full backlog completion or new backup
+restore validation from the working cards. See `../operations/README.md`.
+

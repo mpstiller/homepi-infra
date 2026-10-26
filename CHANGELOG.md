@@ -173,3 +173,8 @@
 - Add read-only systemd/journal collector, bounded persistent history, fresh/stale JSON serving and three internal customapi list widgets for backup, maintenance and audio.
 - Add guarded installer with baseline hashes, payload checksums, shared lock and retained rollback configs. Existing worker scripts, schedules and Healthchecks are unchanged. No Pi installation is claimed.
 - Twenty local status/HTTP tests pass; shell/YAML and adjusted-path systemd units validate. Actual Pi/Docker/Homepage validation remains pending. See operations/README.md.
+
+## 2026-10-26 — Homepage operations status installed
+
+- PR #14 merged; owner verified the pinned archive and matching settings baseline, ran the installer successfully and confirmed all three Homepage cards work.
+- Retained rollback configuration: `/root/homepi-status-rollback.fnhzWRCx`. Existing workers, schedules and external Healthchecks unchanged. No full-backlog, reboot or live forced-failure test is claimed.
