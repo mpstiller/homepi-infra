@@ -1,0 +1,10 @@
+[Unit]
+Description=Check imported HomePi media for TrueHD audio
+
+[Timer]
+OnBootSec=5min
+OnUnitInactiveSec=5min
+Unit=homepi-audio.service
+
+[Install]
+WantedBy=timers.target
