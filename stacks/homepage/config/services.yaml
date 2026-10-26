@@ -158,3 +158,106 @@
         server: homepi
         container: gluetun
         showStats: true
+
+- Betriebsstatus:
+    - Backup:
+        icon: mdi-backup-restore
+        description: Täglich · App-Konfigurationen in Google Drive
+        widget:
+          type: customapi
+          url: http://operations-status:8080/backup.json
+          refreshInterval: 15000
+          display: list
+          mappings:
+            - field: status
+              label: Status
+            - field: detail
+              label: Aktuell / letzter Stand
+            - field: last_run
+              label: Letzter Lauf
+            - field: success
+              label: Letzter Erfolg
+            - field: duration
+              label: Dauer
+            - field: next
+              label: Nächster Lauf
+            - field: snapshot
+              label: Letzter Snapshot
+            - field: error
+              label: Letzter Fehler (historisch)
+            - field: history1
+              label: Verlauf 1
+            - field: history2
+              label: Verlauf 2
+            - field: history3
+              label: Verlauf 3
+            - field: freshness
+              label: Statusquelle
+            - field: updated
+              label: Stand
+    - Backup-Wartung:
+        icon: mdi-backup-restore
+        description: Monatlich · Bereinigung und Standardprüfung
+        widget:
+          type: customapi
+          url: http://operations-status:8080/maintenance.json
+          refreshInterval: 15000
+          display: list
+          mappings:
+            - field: status
+              label: Status
+            - field: detail
+              label: Aktuell / letzter Stand
+            - field: last_run
+              label: Letzter Lauf
+            - field: success
+              label: Letzter Erfolg
+            - field: duration
+              label: Dauer
+            - field: next
+              label: Nächster Lauf
+            - field: error
+              label: Letzter Fehler (historisch)
+            - field: history1
+              label: Verlauf 1
+            - field: history2
+              label: Verlauf 2
+            - field: history3
+              label: Verlauf 3
+            - field: freshness
+              label: Statusquelle
+            - field: updated
+              label: Stand
+    - Audio-Konvertierung:
+        icon: jellyfin.png
+        description: TrueHD → AC-3 · maximal eine Datei pro Lauf
+        widget:
+          type: customapi
+          url: http://operations-status:8080/audio.json
+          refreshInterval: 15000
+          display: list
+          mappings:
+            - field: status
+              label: Status
+            - field: detail
+              label: Aktuell / letzter Stand
+            - field: last_run
+              label: Letzter Lauf
+            - field: success
+              label: Letzte Konvertierung
+            - field: duration
+              label: Dauer
+            - field: next
+              label: Nächster Lauf
+            - field: error
+              label: Letzter Fehler (historisch)
+            - field: history1
+              label: Verlauf 1
+            - field: history2
+              label: Verlauf 2
+            - field: history3
+              label: Verlauf 3
+            - field: freshness
+              label: Statusquelle
+            - field: updated
+              label: Stand

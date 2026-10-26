@@ -164,3 +164,10 @@
 - Fixed `/downloads` path issues and moved media workflow to common `/data` layout.
 - Enabled qBittorrent Automatic Torrent Management so category save paths are applied consistently.
 - Completed first real Sonarr end-to-end workflow and verified hardlinks.
+
+
+## 2026-10-26 — Homepage operations cards (prepared)
+
+- Add read-only systemd/journal collector, bounded persistent history, fresh/stale JSON serving and three internal customapi list widgets for backup, maintenance and audio.
+- Add guarded installer with baseline hashes, payload checksums, shared lock and retained rollback configs. Existing worker scripts, schedules and Healthchecks are unchanged. No Pi installation is claimed.
+- Twenty local status/HTTP tests pass; shell/YAML and adjusted-path systemd units validate. Actual Pi/Docker/Homepage validation remains pending. See operations/README.md.

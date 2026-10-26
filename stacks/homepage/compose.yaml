@@ -15,6 +15,31 @@ services:
     networks:
       - homepage-internal
 
+  operations-status:
+    image: python:3.13-alpine
+    container_name: homepage-operations-status
+    restart: unless-stopped
+    user: "65534:65534"
+    command: ["python3", "-B", "/app/homepi-status", "serve", "--state", "/data/status.json"]
+    read_only: true
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    mem_limit: 64m
+    pids_limit: 32
+    cpus: 0.25
+    healthcheck:
+      test: ["CMD", "python3", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8080/audio.json', timeout=3).read()"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+    volumes:
+      - /usr/local/sbin/homepi-status:/app/homepi-status:ro
+      - /srv/appdata/homepi-status:/data:ro
+    networks:
+      - homepage-internal
+
   homepage:
     image: ghcr.io/gethomepage/homepage:latest
     container_name: homepage
@@ -33,6 +58,7 @@ services:
       - homepage-internal
     depends_on:
       - socket-proxy
+      - operations-status
     extra_hosts:
       - "host.docker.internal:host-gateway"
 

@@ -1,0 +1,291 @@
+#!/usr/bin/python3
+"""Read-only systemd/journal collector and unprivileged Homepage JSON server."""
+import argparse
+from datetime import datetime, timezone
+from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
+import json
+import os
+from pathlib import Path
+import re
+import subprocess
+import tempfile
+import time
+from zoneinfo import ZoneInfo
+
+JOBS = {
+    'backup': ('homepi-backup', 30 * 3600),
+    'maintenance': ('homepi-restic-maintenance', 35 * 86400),
+    'audio': ('homepi-audio', 20 * 60),
+}
+STATE = Path('/srv/appdata/homepi-status/status.json')
+PROPERTIES = ('LoadState', 'ActiveState', 'SubState', 'Result', 'ExecMainStatus',
+              'InvocationID', 'ExecMainStartTimestamp', 'ExecMainExitTimestamp',
+              'NextElapseUSecRealtime')
+
+
+def command(args):
+    # No shell, caller-controlled unit names or raw stderr in the published data.
+    return subprocess.run(args, check=True, capture_output=True, text=True,
+                          timeout=20, env={**os.environ, 'LC_ALL': 'C', 'TZ': 'UTC'}).stdout
+
+
+def show(unit):
+    raw = command(['systemctl', 'show', unit, '--no-pager',
+                   '--property=' + ','.join(PROPERTIES)])
+    return dict(line.split('=', 1) for line in raw.splitlines() if '=' in line)
+
+
+def stamp(value):
+    if not value or value == 'n/a':
+        return 0
+    try:
+        return datetime.strptime(value, '%a %Y-%m-%d %H:%M:%S UTC').replace(
+            tzinfo=timezone.utc).timestamp()
+    except ValueError:
+        return 0
+
+
+def date(value):
+    return datetime.fromtimestamp(value, ZoneInfo('Europe/Berlin')).strftime('%d.%m. %H:%M:%S') if value else 'Unbekannt'
+
+
+def duration(value):
+    seconds = max(0, int(value))
+    return f'{seconds // 60} min {seconds % 60:02d} s'
+
+
+def filename(message):
+    # Publish media basenames only, never arbitrary log contents or full paths.
+    match = re.match(r'^(?:PLAN|REPLACED): (/srv/data/media/(?:tv|movies)/.+?\.mkv); ', message)
+    if not match:
+        return ''
+    return ''.join(c for c in Path(match[1]).name if c.isprintable())[:240]
+
+
+def interpret(message, kind):
+    """Allowlisted semantic events; arbitrary error bodies/URLs never leave journald."""
+    if kind == 'audio':
+        name = filename(message)
+        if name and message.startswith('PLAN:'):
+            return {'outcome': 'running', 'detail': name}
+        if name and message.startswith('REPLACED:'):
+            return {'outcome': 'converted', 'detail': name}
+        if message.startswith('DEFER:'):
+            reason = ('Wiedergabe aktiv/pausiert' if 'playing/paused session' in message
+                      or 'playback started' in message else
+                      'Backup-/Audio-Sperre belegt' if 'lock is busy' in message else
+                      'Datei noch zu neu' if 'younger than five minutes' in message else
+                      'Zurückgestellt')
+            return {'outcome': 'deferred', 'detail': reason}
+        if message.startswith('FAILED:'):
+            return {'outcome': 'failed', 'detail': 'Audio-Lauf fehlgeschlagen; Journal prüfen'}
+    else:
+        if message.startswith('=== HomePi ') and ' completed: ' in message:
+            return {'outcome': 'success', 'detail': 'Backup inkl. Aufbewahrung beendet' if kind == 'backup'
+                    else 'Bereinigung und Standardprüfung beendet'}
+        snapshot = re.fullmatch(r'snapshot ([0-9a-f]{8,64}) saved', message.strip())
+        if kind == 'backup' and snapshot:
+            return {'snapshot': snapshot[1][:8]}
+        phases = {
+            'Waiting for the HomePi backup/maintenance lock...': 'Wartet auf gemeinsame Sperre',
+            'Stopping stateful containers...': 'Anwendungen kurz anhalten',
+            'Creating consistent local staging copy...': 'Konsistente lokale Kopie erstellen',
+            'Uploading snapshot to Google Drive...': 'Snapshot hochladen',
+            'Applying retention policy...': 'Aufbewahrungsregeln anwenden',
+            'Pruning unreferenced repository data...': 'Repository bereinigen',
+            'Checking repository integrity...': 'Repository prüfen',
+        }
+        if message in phases:
+            return {'outcome': 'running', 'detail': phases[message]}
+    return None
+
+
+def journal(unit):
+    raw = command(['journalctl', '--unit=' + unit, '--since=45 days ago',
+                   '--lines=4000', '--output=json', '--no-pager', '--quiet',
+                   '--output-fields=__REALTIME_TIMESTAMP,_SYSTEMD_INVOCATION_ID,INVOCATION_ID,UNIT,MESSAGE_ID,MESSAGE'])
+    return [json.loads(line) for line in raw.splitlines() if line]
+
+
+def summarize(kind, service, timer, rows, previous, now):
+    records = {r['id']: dict(r) for r in previous.get('records', [])}
+    current = None
+    pending_start = 0
+    for row in rows:
+        at = int(row['__REALTIME_TIMESTAMP']) / 1_000_000
+        # systemd's stable structured message IDs, not localized MESSAGE text.
+        if row.get('UNIT') == JOBS[kind][0] + '.service':
+            message_id = row.get('MESSAGE_ID')
+            if message_id == '7d4958e842da4a758f6c1cdc7b36dcc5':
+                pending_start, current = at, row.get('INVOCATION_ID')
+            elif message_id in ('39f53479d3a045ac8e11786248231fbf',
+                                'be02cf6855d2428ba40df7e9d022f03d'):
+                key = row.get('INVOCATION_ID') or current or 'systemd-' + str(int(pending_start or at))
+                rec = records.setdefault(key, {'id': key, 'start': pending_start or at,
+                                               'at': at, 'outcome': 'observed', 'detail': ''})
+                if message_id == 'be02cf6855d2428ba40df7e9d022f03d':
+                    rec.update(outcome='failed', detail='Dienst fehlgeschlagen; Journal prüfen')
+                elif rec['outcome'] in ('running', 'observed'):
+                    rec.update(outcome='idle' if kind == 'audio' else 'success',
+                               detail='Prüfung beendet; keine Konvertierung' if kind == 'audio'
+                               else 'Dienst erfolgreich beendet')
+                rec.update(at=at, final=True, seconds=at-rec['start'])
+            continue
+        ident = row.get('_SYSTEMD_INVOCATION_ID')
+        message = row.get('MESSAGE')
+        if not isinstance(ident, str) or not re.fullmatch('[0-9a-f]{32}', ident):
+            continue
+        if not isinstance(message, str):
+            continue
+        event = interpret(message, kind)
+        if not event:
+            continue
+        current = ident
+        rec = records.setdefault(ident, {'id': ident, 'start': at, 'at': at,
+                                       'outcome': 'observed', 'detail': 'Protokoll erfasst'})
+        if pending_start:
+            rec['start'] = min(rec['start'], pending_start)
+        # Replaying older entries must not regress an already finished record.
+        if at >= rec['at'] and not rec.get('final'):
+            rec.update(event, at=at)
+    ident = service.get('InvocationID')
+    start = stamp(service.get('ExecMainStartTimestamp'))
+    end = stamp(service.get('ExecMainExitTimestamp'))
+    active = service.get('ActiveState') in ('activating', 'active', 'deactivating')
+    # Inactive systemd units can clear InvocationID; correlate using the last start.
+    if not ident and start:
+        matches = [r for r in records.values() if start <= r['start'] <= (end or now)]
+        ident = min(matches, key=lambda r: r['start'])['id'] if matches else 'systemd-' + str(int(start))
+    rec = None
+    if ident and start:
+        rec = records.setdefault(ident, {'id': ident, 'start': start, 'at': start,
+                                        'outcome': 'observed', 'detail': 'Dienst gestartet'})
+        rec['start'] = start
+        if not active and end >= start:
+            result = service.get('Result', '')
+            if result != 'success' or service.get('ExecMainStatus', '0') != '0':
+                rec.update(outcome='failed', detail='Dienst fehlgeschlagen; Journal prüfen')
+            elif rec['outcome'] in ('running', 'observed'):
+                rec.update(outcome='idle' if kind == 'audio' else 'success',
+                           detail='Prüfung beendet; keine Konvertierung' if kind == 'audio' else 'Dienst erfolgreich beendet')
+            rec.update(at=end, final=True, seconds=end-start)
+    ordered = sorted(records.values(), key=lambda r: r['at'], reverse=True)[:50]
+    successes = [r for r in ordered if r['outcome'] in ('success', 'converted')]
+    errors = [r for r in ordered if r['outcome'] == 'failed']
+    latest = ordered[0] if ordered else None
+    last_success = successes[0] if successes else previous.get('last_success')
+    last_error = errors[0] if errors else previous.get('last_error')
+    if service.get('LoadState') != 'loaded':
+        status = 'Unbekannt: Dienst fehlt'
+    elif active:
+        status = 'Läuft'
+    elif latest and latest['outcome'] == 'failed':
+        status = 'Fehler'
+    elif timer.get('ActiveState') != 'active':
+        status = 'Zeitplan inaktiv'
+    elif not latest:
+        status = 'Unbekannt: noch kein Lauf erfasst'
+    elif now - latest['at'] > JOBS[kind][1]:
+        status = 'Überfällig: letzten Lauf prüfen'
+    elif latest['outcome'] in ('running', 'observed'):
+        status = 'Unbekannt: Laufabschluss fehlt'
+    elif latest['outcome'] == 'deferred':
+        status = 'Zurückgestellt'
+    else:
+        status = 'Bereit'
+    labels = {'success': 'Erfolgreich', 'converted': 'Konvertiert', 'deferred': 'Zurückgestellt',
+              'failed': 'Fehler', 'running': 'Begonnen', 'observed': 'Erfasst', 'idle': 'Keine Konvertierung'}
+    history = [f"{date(r['at'])} · {labels[r['outcome']]} · {r['detail']}" for r in ordered[:5]]
+    snapshot = next((r['snapshot'] for r in ordered if r.get('snapshot')), 'Unbekannt')
+    # Keeping last success/error separately prevents busy audio polls erasing useful history.
+    return {'records': ordered, 'last_success': last_success, 'last_error': last_error,
+            'status': status,
+            'detail': rec['detail'] if active and rec else latest['detail'] if latest else 'Noch keine Daten',
+            'last_run': date(latest['at']) if latest else 'Unbekannt',
+            'success': date(last_success['at']) if last_success else 'Noch nicht erfasst',
+            'duration': duration(now-start) + ' (bisher)' if active and start else
+                        duration(latest['seconds']) if latest and 'seconds' in latest else 'Unbekannt',
+            'error': f"{date(last_error['at'])} · {last_error['detail']}" if last_error else 'Keiner erfasst',
+            'snapshot': snapshot,
+            'next': date(stamp(timer.get('NextElapseUSecRealtime'))) if stamp(timer.get('NextElapseUSecRealtime'))
+                    else 'Nach Laufende / unbekannt',
+            **{f'history{i+1}': history[i] if i < len(history) else '—' for i in range(5)}}
+
+
+def atomic_write(path, data):
+    path.parent.mkdir(parents=True, exist_ok=True)
+    temp = None
+    try:
+        with tempfile.NamedTemporaryFile('w', dir=path.parent, delete=False) as stream:
+            temp = stream.name
+            json.dump(data, stream, ensure_ascii=False)
+            stream.write('\n')
+            stream.flush()
+            os.fchmod(stream.fileno(), 0o644)
+            os.fsync(stream.fileno())
+        os.replace(temp, path)
+    finally:
+        if temp and os.path.exists(temp):
+            os.unlink(temp)
+
+
+def collect(path):
+    previous = json.loads(path.read_text()) if path.exists() else {}
+    now = time.time()
+    data = {'generated': now, 'updated': date(now), 'jobs': {}}
+    for kind, (unit, _) in JOBS.items():
+        data['jobs'][kind] = summarize(kind, show(unit+'.service'), show(unit+'.timer'),
+                                      journal(unit+'.service'), previous.get('jobs', {}).get(kind, {}), now)
+    atomic_write(path, data)
+
+
+def response(path, kind, now=None):
+    data = json.loads(path.read_text())
+    job = dict(data['jobs'][kind])
+    job.pop('records', None)
+    job.pop('last_success', None)
+    job.pop('last_error', None)
+    age = (time.time() if now is None else now) - data['generated']
+    job['updated'] = data['updated']
+    job['freshness'] = 'Aktuell' if 0 <= age <= 120 else 'VERALTET: Statusquelle prüfen'
+    if not 0 <= age <= 120:
+        job['status'] = 'Unbekannt: Statusdaten veraltet'
+    return job
+
+
+def make_server(path, port):
+    class Handler(BaseHTTPRequestHandler):
+        def do_GET(self):
+            kind = self.path.removeprefix('/').removesuffix('.json')
+            if self.path != '/' + kind + '.json' or kind not in JOBS:
+                self.send_error(404)
+                return
+            try:
+                payload = response(path, kind)
+                status = 200
+            except (OSError, ValueError, KeyError, TypeError):
+                payload = {'status': 'Unbekannt: Statusquelle fehlt/ungültig'}
+                status = 503
+            raw = json.dumps(payload, ensure_ascii=False).encode()
+            self.send_response(status)
+            self.send_header('Content-Type', 'application/json; charset=utf-8')
+            self.send_header('Cache-Control', 'no-store')
+            self.send_header('Content-Length', str(len(raw)))
+            self.end_headers()
+            self.wfile.write(raw)
+
+        def log_message(self, *args):
+            pass
+    return ThreadingHTTPServer(('0.0.0.0', port), Handler)
+
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('mode', choices=['collect', 'serve'])
+    parser.add_argument('--state', type=Path, default=STATE)
+    parser.add_argument('--port', type=int, default=8080)
+    args = parser.parse_args()
+    if args.mode == 'serve':
+        make_server(args.state, args.port).serve_forever()
+    else:
+        collect(args.state)

@@ -22,3 +22,7 @@ layout:
   System:
     style: row
     columns: 2
+
+  Betriebsstatus:
+    style: row
+    columns: 3

@@ -1,0 +1,17 @@
+[Unit]
+Description=Collect HomePi operations status for Homepage (read only)
+After=systemd-journald.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/sbin/homepi-status collect
+TimeoutStartSec=180
+Nice=15
+UMask=0022
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+ReadWritePaths=/srv/appdata/homepi-status
+RestrictAddressFamilies=AF_UNIX
+MemoryMax=128M
