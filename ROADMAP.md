@@ -205,3 +205,10 @@ Backup V1 closes with full temporary restore, copied-state checks and one repres
 - [ ] Define Home Assistant data/actions contract.
 - [ ] Re-evaluate available 10–13.3-inch touch e-paper hardware at purchase time.
 - [ ] Implement shopping list, calendar, messages, scenes, weather.
+
+
+## Homepage operations visibility — requested 2026-10-26
+
+- [x] Prepare lightweight internal status source and three Homepage cards with freshness, current work, last success, history and errors; preserve existing external alarms and worker schedules.
+- [x] Validate local status/HTTP cases, shell/YAML and adjusted-path systemd units.
+- [ ] Review/merge preparation, confirm installed Homepage settings baseline, install pinned bundle and validate real Pi values/rendering. See operations/README.md. Do not mark installed before owner evidence.
