@@ -1,5 +1,10 @@
 # Changelog
 
+## 2026-10-26
+
+- Owner installed worker and confirmed two-track single-file dry-run. Initial apply was blocked by HTTP 401; no successful replacement was recorded.
+- Fixed the helper's legacy Jellyfin authentication header to Authorization: MediaBrowser Token for Jellyfin 12. Added secret-safe HTTP status diagnostics; 17 local tests pass, including GET/POST auth and redacted errors. Native corrected-header/API/apply validation remains pending; do not rotate further keys or enable legacy authorization.
+
 ## 2026-10-24
 
 - Owner chose no permanent original archive for audio conversion. Automatic apply now replaces only after verification, while --keep-original is available solely for an explicit one-file pilot. No old archives/test copies are deleted. Fifteen local tests pass, including no-archive replacement, preserved torrent bytes and failed-publication preservation. Pi installation remains pending.

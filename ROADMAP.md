@@ -1,5 +1,14 @@
 # Roadmap
 
+## Audio pilot authentication fix — 2026-10-26
+
+PR #11 is merged. Owner installed the pinned worker (original SHA256 `50515e498048a5ba21d448dc048c734e0274199f4d17395c7132524898a63cc3`) and the explicit AOT S01E01 dry-run correctly planned two TrueHD tracks -> AC3 with pilot original retention. Owner created the private Jellyfin key file. Apply stopped with generic RuntimeError; read-only API diagnostics returned HTTP 401 even after a fresh key.
+
+The helper incorrectly used legacy `X-Emby-Token`, disabled by default in Jellyfin 12. Prepared correction uses `Authorization: MediaBrowser Token="..."` for both session queries and library refresh, keeping tokens out of URLs/logs. HTTP failures now report status/method/fixed API path, not raw response bodies, headers or secrets. Do not create more API keys or enable legacy auth to work around this client bug.
+
+Local suite: 17 tests pass, including GET/POST header format and secret-safe HTTP 401 reporting. Corrected-header Pi HTTP success, one-file apply, Sony validation and timer activation are still pending. No successful worker replacement is claimed. Next: install the corrected pinned worker, verify the existing key with the corrected request path, then resume the explicit single-file --keep-original pilot. Automatic mode still retains no permanent original archive.
+
+
 ## Original retention policy — owner decision 2026-10-24
 
 Owner rejected permanent duplicate storage for audio compatibility. Automatic processing now creates a checked temporary derivative and atomically replaces the library file without an original archive. The first explicit single-file pilot uses `--keep-original` for temporary rollback only; this flag is refused with `--scan` and is absent from the automatic service. No existing archives/test files are deleted by this preparation.
@@ -84,7 +93,8 @@ Next: verify independent recovery secrets privately and choose lightweight backu
 
 - [x] Probe AOT S01E01 and test AC3 variants on Sony; removing TrueHD while retaining AC3/subtitles passed owner playback/seeking tests.
 - [x] Prepare guarded worker/disabled-by-default units and local tests; see audio/README.md.
-- [ ] Install worker only and run a read-only single-file plan on Pi.
+- [x] Install worker only and run a read-only single-file plan on Pi (owner output 2026-10-26, two TrueHD tracks detected).
+- [ ] Install/verify corrected Jellyfin 12 Authorization header; initial apply was blocked by legacy-header HTTP 401.
 - [ ] Validate one actual worker replacement with --keep-original for this pilot only, Jellyfin/arr metadata, Sony playback and rollback; automatic runs retain no archive.
 - [ ] Review dry-run backlog/storage and API/session behavior, then explicitly enable automatic processing.
 

@@ -1,5 +1,12 @@
 # Sony audio compatibility worker — pilot pending
 
+## Installed pilot status — 2026-10-26
+
+Original worker installed and single-file dry-run detected both TrueHD tracks. Apply was blocked by HTTP 401 because the worker used a legacy authentication header. The correction uses `Authorization: MediaBrowser Token="..."`, as required by Jellyfin 12 by default. Existing valid API keys can be retained; no legacy-server setting change is needed. Corrected native Pi access/apply remain pending. See [Jellyfin maintainer authentication guidance](https://gist.github.com/nielsvanvelzen/ea047d9028f676185832e51ffaf12a6f).
+
+The request helper reports sanitized HTTP status/method/API path on errors, preserving secret privacy while allowing diagnosis. A library-refresh failure may happen after file publication, so an API failure alone must not be interpreted as proof that no earlier replacement happened.
+
+
 ## Evidence and scope
 
 Owner tested Attack on Titan S01E01 on Sony KD-65AF9 in native Jellyfin Android TV 0.19.10. Source: HEVC Main 10 video, English TrueHD 5.1 and Japanese TrueHD stereo. Adding two AC3 tracks while retaining TrueHD improved playback but still stuttered and the player aborted. Disabling subtitles did not solve it. A video+Japanese-AC3-only copy played smoothly but once aborted during seeking. A further remux retaining both AC3 tracks, original subtitles/chapters and other streams but removing both TrueHD tracks then worked with subtitles, audio switching and seeking. This supports removing TrueHD from the derived TV file; it does not prove a universal TrueHD bug or network cause for the earlier abort.
@@ -40,6 +47,6 @@ Jellyfin is asked to rescan after replacement. A refresh failure after replaceme
 
 ## Validation already performed locally
 
-`python3 -m unittest discover -s tests -p 'test_audio.py' -v`: 15 tests covering stream plans, 7.1 downmix choice, unsupported layout refusal, validation failures, optional pilot archiving, actual default atomic replacement with no original archive (with/without a torrent hardlink), failed-publication preservation, source-change refusal, symlink/outside-root rejection, playback deferral and conversion/archive failure preservation.
+`python3 -m unittest discover -s tests -p 'test_audio.py' -v`: 17 tests covering stream plans, 7.1 downmix choice, unsupported layout refusal, validation failures, optional pilot archiving, actual default atomic replacement with no original archive (with/without a torrent hardlink), failed-publication preservation, source-change refusal, symlink/outside-root rejection, playback deferral, conversion/archive failure preservation, Jellyfin 12 GET/POST authorization and secret-safe HTTP error reporting.
 
 A real native FFmpeg synthetic fixture with two TrueHD tracks, a subtitle, chapter and font attachment converted to AC3 5.1/stereo and passed validation; the encoded video SHA256 stayed identical. This is not a native Docker/Pi worker run. Pi installation, API-key guard, scheduling, unattended playback interaction, real worker replacement/rollback and Sony replay of its exact output remain unverified. The manual Sony result is one episode, not proof for all titles.
