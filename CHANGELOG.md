@@ -2,6 +2,8 @@
 
 ## 2026-10-26
 
+- PR #12 confirmed merged. Owner confirmed targeted deletion of the retained S01E01 pilot archive and the three separate audio-test MKVs; the converted normal-library episode remains. No full-backlog completion or deletion of other archives is claimed.
+
 - Owner verified corrected Jellyfin authorization, completed one-file AOT S01E01 apply with temporary original retention and confirmed flawless normal-library Sony playback. Backlog dry-run listed 36 further AOT episodes.
 - Service/timer installed, verified and enabled by owner. Automatic S01E02 finished 14:09:45 CET and S01E03 finished 14:17:27 CET, both with archive disabled; a third invocation started 14:22:48. Timer re-arming is observed. Full backlog completion, actual rollback/busy-session behavior and pilot/test-copy cleanup are not claimed.
 
