@@ -1,5 +1,10 @@
 # HomePi — LLM Context
 
+## Audio cleanup complete — 2026-10-26
+
+PR #12 is confirmed merged. Owner confirmed deletion of the single retained pilot archive `/srv/data/media-originals/20261026T120935-4bd7557179ec` and the three created MKV files in `/srv/data/media/audio-tests` (Sony-Test, AC3-only, AC3-mit-Untertiteln). The converted normal-library S01E01 remains. Do not repeat these deletions or remove other archives. The now-empty optional Audio-Test Jellyfin library/folder can remain; UI removal was not reported. Automated conversion remains enabled without permanent originals. First two automatic completions are verified; full backlog completion is not yet reported. Next session should resume from the operational state rather than repeat installation, API-key setup or the one-file pilot.
+
+
 ## Sony audio automation operational — owner evidence 2026-10-26
 
 This is the latest resume point and supersedes earlier pilot-pending notes below.
