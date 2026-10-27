@@ -1,4 +1,4 @@
-# Homepage operations status (prepared, not installed)
+# Homepage operations status (operational — 2026-10-26)
 
 Three German `customapi` list cards show backup, monthly maintenance and audio state.
 The host collector reads systemd properties and allowlisted journald events every
@@ -7,6 +7,10 @@ credentials are needed, and existing backup/audio programs, timers and Healthche
 notifications are unchanged. This adds a small Python stdlib container, not a
 general monitoring stack. It has a 64 MiB cap, no host port, no Docker socket,
 no privileges and read-only mounts of the collector script and generated data only.
+
+## Confirmed installation
+
+PR #14 is merged. Owner verified the pinned `bee00a4` archive, completed the guarded installer and confirmed all three cards work on Homepage. The collector timer was enabled and status container started successfully. Original Homepage configs remain at `/root/homepi-status-rollback.fnhzWRCx`. Do not re-run the initial installer. Detailed journal/value comparisons, deliberately forced failure/stale tests, resource use and reboot behavior were not separately demonstrated; a working card does not establish full audio backlog completion.
 
 ## What is shown
 
@@ -74,7 +78,7 @@ proxy, other widgets and other containers are retained. The collector is install
 and a complete first read must succeed before publishing the widgets. Only the
 Homepage and new status container are recreated; existing images are not pulled.
 
-## Verify on Pi (pending)
+## Optional diagnostics on Pi
 
 ```bash
 sudo systemctl status homepi-status.service homepi-status.timer --no-pager
@@ -86,9 +90,9 @@ For a completed oneshot collector, `inactive (dead)` with successful exit is
 normal; its timer should be active. Open Homepage and inspect all three cards.
 Verify current phase/filename during an existing run, historical errors/last
 success against service journals and elapsed/next-run fields. Do not deliberately
-fail a production backup/conversion to test the cards. Native Docker Compose,
-systemd timestamp formatting, journald fields and actual Homepage rendering need
-owner execution: local mocked tests cannot prove these interfaces on the Pi.
+fail a production backup/conversion to test the cards. Native installation and Homepage rendering are now owner-confirmed. Detailed
+field-level comparisons and live forced-failure/staleness scenarios have not been
+separately demonstrated; local tests cover those interpretation paths.
 
 ## Rollback
 
