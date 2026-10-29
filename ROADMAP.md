@@ -1,5 +1,16 @@
 # Roadmap
 
+## Arcane limited update rollout — 2026-10-29
+
+- [x] Upgrade manager to v2.17.1; verify health.
+- [x] Point project discovery to /opt/homelab/stacks.
+- [x] Install Homepage stack tag constraints and validate manual baseline/health.
+- [x] Configure three-container scope, 72-hour delay and Saturday 09:00 UTC schedule; next-run evidence reported.
+- [ ] Verify first eligible unattended execution and actual service outcomes.
+- [ ] Resynchronize Compose after future Arcane tag changes.
+
+Scope decision: use built-in Arcane with existing daily backups; no custom pre-backup gate, scheduled shared-lock integration, failure latch, full functional rollback or Homepage update card installed. See docs/update-strategy.md. Older handoffs below are historical.
+
 ## Sony audio automation operational — owner evidence 2026-10-26
 
 This is the latest resume point and supersedes earlier pilot-pending notes below.
