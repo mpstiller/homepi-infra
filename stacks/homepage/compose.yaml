@@ -1,6 +1,11 @@
 services:
   socket-proxy:
-    image: lscr.io/linuxserver/socket-proxy:latest
+    image: lscr.io/linuxserver/socket-proxy:3.4.6
+    x-arcane:
+      updater:
+        strategy: tag
+        constraint: '3.4.x'
+        tag-pattern: '(?P<version>[0-9]+\.[0-9]+\.[0-9]+)'
     container_name: homepage-socket-proxy
     restart: unless-stopped
     environment:
@@ -16,7 +21,12 @@ services:
       - homepage-internal
 
   operations-status:
-    image: python:3.13-alpine
+    image: python:3.13.17-alpine3.24
+    x-arcane:
+      updater:
+        strategy: tag
+        constraint: '3.13.x'
+        tag-pattern: '(?P<version>[0-9]+\.[0-9]+\.[0-9]+)-alpine3\.24'
     container_name: homepage-operations-status
     restart: unless-stopped
     user: "65534:65534"
@@ -41,7 +51,12 @@ services:
       - homepage-internal
 
   homepage:
-    image: ghcr.io/gethomepage/homepage:latest
+    image: ghcr.io/gethomepage/homepage:v2.4.0
+    x-arcane:
+      updater:
+        strategy: tag
+        constraint: '2.4.x'
+        tag-pattern: 'v(?P<version>[0-9]+\.[0-9]+\.[0-9]+)'
     container_name: homepage
     restart: unless-stopped
     env_file:

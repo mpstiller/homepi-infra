@@ -1,5 +1,21 @@
 # HomePi — LLM Context
 
+## Arcane-managed Homepage patch updates — 2026-10-29
+
+This is the latest update-maintenance handoff; it does not reopen completed backup/audio/status work.
+
+- Owner upgraded Arcane from v2.15.1 to v2.17.1; running version and Docker health verified. Compose still references manager:latest; only its local tag was pointed to the explicitly pulled v2.17.1 image. Do not claim Arcane itself is version-pinned.
+- Arcane Projects Directory changed from /app/data/projects to /opt/homelab/stacks. Owner then saw projects and successfully rechecked the homepage project.
+- Homepage Compose now uses explicit tags plus x-arcane tag strategies: Homepage v2.4.0 constrained to 2.4.x; socket proxy 3.4.6 constrained to 3.4.x; Python 3.13.17-alpine3.24 constrained to 3.13.x and the Alpine 3.24 tag variant. The socket proxy's first manual change installed build 3.4.6-r0-ls102; owner confirmed Homepage Docker indicators still work. Homepage used the identical image; Homepage and status container passed native Compose --wait healthchecks.
+- Owner configured 72-hour delay and excluded all containers except homepage, homepage-socket-proxy and homepage-operations-status. After instruction to enable/save, owner reported next execution 2026-10-31 10:00 CET. This is activation/schedule evidence, not evidence of an unattended update.
+- Schedule: six-field cron 0 0 9 * * 6, UTC (no explicit TZ); Saturday 10:00 winter / 11:00 summer in Germany. Delay begins when a target is detected: the first scheduled job can skip targets younger than 72 hours.
+- Screenshot recheck found Python 3.13.17-alpine3.24 -> 3.13.18-alpine3.24 and socket proxy 3.4.6 -> 3.4.7; Homepage v2.4.0 current. This confirms recognition of the prepared tag policies, not an exhaustive test of rejecting every disallowed tag.
+- Owner chose built-in Arcane updates over a custom controller. Existing daily Restic backup remains the safety net. There is NO newly installed pre-update backup gate, shared host-lock integration for scheduled Arcane updates, durable failure latch, full functional validation/automatic data rollback, or Homepage update-status card. Larger versions and critical services require manual review; a patch number is not a guarantee of harmlessness.
+- One-off Pi changes used the existing shared lock. Existing backup/audio workers, monitoring, status cards, Gluetun digest and qBittorrent VPN isolation were not edited. Timing alone does not prevent a long backup/audio job from overlapping a future Arcane update.
+- Retain /root/homepi-arcane-rollback.HSeiC04t (Arcane data+Compose archive) and local homepi-rollback/arcane:2.15.1. The latter generated the observed registry-check error; it is a local image name, not a published repository.
+- Retain /root/homepi-update-policy-rollback.Lm4egmnJ with old Compose, candidate, homepage-config copy and images-before.tar. Do not delete these. Rollback recovery itself remains untested.
+- Next: inspect the first eligible scheduled run and all three service outcomes; retain explicit limits and synchronize Compose changes back to Git after future Arcane tag updates. Do not repeat initialization. See docs/update-strategy.md.
+
 ## Homepage operations status installed — owner confirmation 2026-10-26
 
 This supersedes the earlier preparation-only status. PR #14 is merged.

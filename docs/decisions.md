@@ -67,3 +67,9 @@
 **Storage/quality trade-off:** temporary output space is required until verification/atomic replacement. Existing torrent hardlinks retain original bytes until established cleanup. Without a retained original, the lossless TrueHD audio cannot be reconstructed from lossy AC3. No archive is automatically created in normal operation; the pilot archive remains outside restic scope and its later removal must target the reviewed pilot entry.
 
 **Limits:** local tests do not prove native Pi/API behavior. Validate the actual single-file worker output, temporary pilot archive, metadata and session/race behavior before enabling unattended processing. See audio/README.md.
+
+## ADR-012 — Use Arcane for a limited patch-update rollout
+
+**Decision (2026-10-29):** prefer built-in Arcane updates to a bespoke controller for low operating effort. Only the three Homepage stack containers are eligible, with stable patch ranges, a 72-hour detection delay and weekly Saturday schedule. Review other services and wider version changes manually.
+
+**Trade-off accepted in session:** existing daily Restic backup is the safety net; no fresh pre-update backup gate, scheduled shared host lock, durable batch failure latch, comprehensive functional checks/automatic data rollback or additional Homepage update card was implemented. Do not describe the initial aspirational safeguards as delivered. New containers must be reviewed because the UI configuration is exclusion-based. See update-strategy.md for native evidence, recovery copies and remaining verification.

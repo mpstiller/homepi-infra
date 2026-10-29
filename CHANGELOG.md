@@ -1,5 +1,12 @@
 # Changelog
 
+## 2026-10-29
+
+- Owner upgraded Arcane 2.15.1 -> 2.17.1, verified running/healthy, and corrected project discovery to /opt/homelab/stacks.
+- Added explicit Homepage-stack image tags with Arcane patch-range policies (Homepage 2.4.x, proxy 3.4.x, Python 3.13.x on Alpine 3.24). Native Compose validation passed; proxy ls102 worked in Homepage; Homepage/status healthchecks passed.
+- Owner configured 72-hour delay and all-container exclusions except the three Homepage services. Reported first scheduled execution: 31 October 10:00 CET. No unattended result is claimed.
+- Documented retained recovery copies and limits: existing daily backups remain independent; no new backup gate, scheduled host-lock integration, global failure latch or Homepage update card. Preserve backup/audio/VPN architecture.
+
 ## 2026-10-26
 
 - PR #12 confirmed merged. Owner confirmed targeted deletion of the retained S01E01 pilot archive and the three separate audio-test MKVs; the converted normal-library episode remains. No full-backlog completion or deletion of other archives is claimed.
