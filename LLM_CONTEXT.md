@@ -1,8 +1,22 @@
 # HomePi — LLM Context
 
+## Arcane runtime labels corrected; Gmail tested — 2026-11-01
+
+This supersedes the 29 October update handoff where runtime policy recognition was not yet proved.
+
+- The scheduled 31 October 10:00 CET job completed, but its activity reported the three existing tags "up to date" and 17 pending image-update records; no installed update was demonstrated. Those records are not a count of applied updates. This cannot be attributed solely to the 72-hour delay.
+- Owner inspect output proved all three running containers lacked updater strategy/constraint/tag-pattern labels. The previous x-arcane-only Compose was started using Docker Compose outside Arcane, which ignores the extension. Project recheck could read the file metadata while container-based checks lacked the policy. Earlier activation was therefore not evidence of working tag selection.
+- Replaced the three x-arcane updater blocks with explicit com.getarcaneapp.arcane.updater.* labels, keeping all image tags, ranges, regexes and other service settings unchanged. Candidate passed native config --quiet; owner recreated only these services with --pull never under the shared host lock. Compose reported all three Healthy; this does not establish a new socket-proxy healthcheck.
+- Runtime inspection now confirms tag / 2.4.x for Homepage, tag / 3.4.x for proxy, and tag / 3.13.x with alpine3.24 suffix for the status image. Fresh Image Update Watcher execution was followed by a container-list screenshot: Homepage current, proxy/status updates available. Exact new targets were not shown in that screenshot; no post-fix application is claimed.
+- Owner re-enabled/saved Auto Update with the existing exclusions, 72-hour delay and Saturday 09:00 UTC schedule; reported next execution in six days on 1 November (expected 7 November 10:00 CET).
+- Gmail SMTP notification setup succeeded using an owner-created app password (never supplied to chat): smtp.gmail.com:587, STARTTLS. Owner confirmed the provider test email arrived. Image-update and container-update subscriptions were instructed; exact persisted subscription flags: VERIFY ON PI if required.
+- Source inspection of Arcane v2.17.1 and its updater v0.11.13 confirms container-update notifications describe successful changes; update failures return before the notifier path. Email is NOT a verified failed-update alarm. No production failure was induced and no separate failure monitor was installed.
+- Next: inspect first post-fix scheduled execution and actual image/tag changes, verify Homepage/cards, then sync any changed Compose tags. Retain three-service scope; preserve independent backup/audio/Healthchecks/VPN setup and prior limitations. Do not repeat initialization or claim a comprehensive failure-stop/backup-gated controller.
+- Recovery directory /root/homepi-update-policy-rollback.Lm4egmnJ now additionally holds compose.before-labels.yaml and compose.labels.yaml. The former restores the pre-fix policy bug; use it only deliberately. Older images-before.tar/config copies remain retained. See docs/update-strategy.md.
+
 ## Arcane-managed Homepage patch updates — 2026-10-29
 
-This is the latest update-maintenance handoff; it does not reopen completed backup/audio/status work.
+Historical 29 October handoff; superseded by the 1 November runtime-label correction above.
 
 - Owner upgraded Arcane from v2.15.1 to v2.17.1; running version and Docker health verified. Compose still references manager:latest; only its local tag was pointed to the explicitly pulled v2.17.1 image. Do not claim Arcane itself is version-pinned.
 - Arcane Projects Directory changed from /app/data/projects to /opt/homelab/stacks. Owner then saw projects and successfully rechecked the homepage project.

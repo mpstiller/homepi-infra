@@ -1,5 +1,18 @@
 # Roadmap
 
+## Update rollout correction and email — 2026-11-01
+
+- [x] Inspect the first scheduled job; successful completion with no demonstrated update application.
+- [x] Diagnose absent runtime policy labels after external Compose deployment.
+- [x] Replace x-arcane-only policies with explicit labels, validate/recreate existing images and verify runtime values.
+- [x] Run Image Update Watcher and verify container-level status/proxy update indications.
+- [x] Configure Gmail SMTP; owner confirmed test email delivery.
+- [x] Inspect notification implementation: successful updates are notified; no general update-failure email alarm verified/installed.
+- [ ] Inspect first post-fix scheduled application (expected slot 7 November 10:00 CET; delay can defer changed targets).
+- [ ] Verify actual updated versions, Homepage/cards and synchronize runtime Compose tags back to Git.
+
+Earlier rollout entries below are historical. See docs/update-strategy.md for current state and limitations.
+
 ## Arcane limited update rollout — 2026-10-29
 
 - [x] Upgrade manager to v2.17.1; verify health.
