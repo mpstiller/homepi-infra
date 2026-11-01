@@ -1,5 +1,12 @@
 # Changelog
 
+## 2026-11-01
+
+- Corrected Homepage updater policies from x-arcane extensions to explicit container labels so both terminal Docker Compose deployments and Arcane container checks receive the same rules. Image tags, ranges, regexes and runtime security settings are unchanged.
+- Owner validated candidate Compose, recreated the three services with existing images under the host lock, and verified all runtime labels. Fresh watcher/container UI showed status/proxy updates and Homepage current. Auto Update re-enabled; next slot expected 7 November 10:00 CET. Actual unattended application remains unverified.
+- First scheduled run (31 October) completed but showed existing tags up to date; do not describe it as proof of successful tag-based updates or merely a delay deferral.
+- Gmail SMTP provider test delivered successfully. Source review confirms successful-update notifications do not supply a general failed-update email alarm; no failure monitor or forced production failure test added.
+
 ## 2026-10-29
 
 - Owner upgraded Arcane 2.15.1 -> 2.17.1, verified running/healthy, and corrected project discovery to /opt/homelab/stacks.
