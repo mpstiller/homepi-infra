@@ -7,7 +7,7 @@
 - [x] Validate local audio/status tests (51) and calendar/adjusted-path systemd units.
 - [x] Guarded pinned installation of worker, service, timer and status collector; owner confirmed success and rollback path 2026-11-02.
 - [x] Confirm next daily trigger: 3 November 07:00 CET; no installation-triggered conversion.
-- [ ] Owner visual confirmation of Homepage daily audio status/card.
+- [x] Owner visual confirmation of Homepage daily audio status/card (after PR #18 merge).
 - [ ] Observe first scheduled daily batch; real busy-lock wait, playback deferral and batch conversions remain unverified live.
 
 
@@ -222,7 +222,9 @@ Backup V1 closes with full temporary restore, copied-state checks and one repres
 
 ## P2 — Smart home
 
-- [ ] Add Matter server/integration without breaking existing Google Home fabric.
+- [x] Add Matter server/integration; owner confirmed all Matter devices connected on 2026-11-02, with first Eve/Google Home switching tested.
+- [ ] Install prepared matter-server backup stop-list addition and verify snapshot/restart.
+- [ ] Confirm Arcane auto-update exclusion and measure post-start resources.
 - [ ] Integrate Nest Doorbell via Google SDM.
 - [ ] Add Yamaha R-N1000A when physically ready.
 - [ ] Optional FRITZ!Box monitoring.
