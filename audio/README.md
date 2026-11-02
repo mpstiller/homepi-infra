@@ -1,4 +1,26 @@
-# Sony audio compatibility worker — operational (2026-10-26)
+# Sony audio compatibility worker
+
+## Daily audio batch installed — owner evidence 2026-11-02
+
+Owner verified installer SHA256 `45b87a8cfbf3f435e67310f7255b620b546255a42a9f559f6dc6cd0968b6f1ff` from commit `cbbeab4a05b8df8b37790b36137e6f55b23bd672` against the previously verified payload from `a722392a2d7624bf1cdfcc9cbf4ea27e7ab05e08`. Guarded installer completed successfully, including four-file baseline/payload checks, Python parsing, native systemd verification, collector refresh and timer restart. No conversion was started by installation.
+
+- New daily timer is active: NEXT `Tue 2026-11-03 07:00:00 CET`. The printed LAST value refers to the previous schedule; it is not evidence of a new batch.
+- Preserve rollback directory `/root/homepi-audio-daily-rollback.VFwqadR8`, containing the old four files and verified payload. Rollback recovery was not exercised.
+- New worker/service support sequential batches and waiting for the existing lock. Existing media guards remain; manual apply still defaults to one file. Homepage collector uses the daily 30-hour overdue heuristic. HTTP routes/freshness remain unchanged.
+- Still pending: owner visual Homepage/card verification, first daily scheduled run, native busy-lock waiting and a real multi-file batch. Do not repeat installation or claim those tests from installer success alone.
+
+## Preparation evidence — 2026-11-02 (installation now confirmed above)
+
+- Owner supplied successful inactive/exit-0 audio state and repeated silent timer completions. Explicit `--scan` produced no output. Within the worker's cached eligible scope, no pending candidates were reported; this is not an independent re-probe of every media file.
+- Owner requested daily processing after backups instead of five-minute polling; accepted 07:00 Europe/Berlin, sequential processing of all eligible files, and waiting for the shared lock.
+- Prepared `--batch` (requires --scan --apply) and `--wait-lock`. Default manual apply remains one file; dry scan still does not write media/cache. Batch stops on playback/source-race deferral or an error; remaining work waits for the next daily run, without automatic retries.
+- New timer: daily 07:00 Europe/Berlin, no boot/monotonic trigger, Persistent=false (missed starts are not caught up outside the scheduled window). Existing backup 04:30 and monthly day-one maintenance 05:30 remain unchanged. Service ordering and the existing exclusive lock prevent simultaneous audio/backup/maintenance; a long batch can delay a later backup. Start time alone is not proof a backup succeeded.
+- Homepage collector now allows 30 hours between audio invocations and recognizes lock waiting and completed-batch counts. JSON freshness remains 120 seconds and collector interval unchanged. A partial/deferred/failed batch is not shown as full success even if earlier files were converted.
+- Local evidence: 51 audio/status tests pass; calendar expression validated; service/timer verified with only local executable path substituted by /usr/bin/true. No production API/conversion/backup run was triggered.
+- Installed baselines supplied by owner still match old worker `17a2c935df16cb8f5c3747d2733e1d238cabae06b4ce9d5f673b0ef1bfef7d2f`, service `a0abaa5f3981bf5ade22700117caf3236deadc704d2529157e083df723550d00`, timer `a54bb6c1649c11262859838bcb9a854ac2894d1222e3c22b5c2a1041c71fc8d1`, collector `e3c4d12944aaaf613a477c3b7deedff070a68cb6931b84e90acf4b72083b9c35`.
+- Preparation completed; installation confirmation and remaining live verification are recorded above. See audio/README.md.
+
+
 
 ## Audio cleanup complete — 2026-10-26
 
@@ -43,7 +65,7 @@ Prepared automation replaces each TrueHD track with AC3 in a derived MKV. Per ow
 
 Only imported `.mkv` files in `/srv/data/media/movies` and `/srv/data/media/tv` are candidates. Audio-test, torrent and archive folders are excluded. Symlinks, paths outside the roots and colon-containing paths are refused. Files younger than five minutes are deferred; the pre-commit fingerprint must still match. The source is mounted read-only in a disposable converter. It reuses the exact local running Jellyfin image ID with `--pull never`, network none, read-only container root, no capabilities, one CPU, 512 MiB RAM/no extra swap and a PID limit. There is no video encoder.
 
-At most one TrueHD candidate is converted per apply invocation. The worker uses the existing exclusive `/run/lock/homepi-restic.lock` so it cannot overlap backup, maintenance or another worker; a busy lock defers the run. The timer checks five minutes after boot/last completed invocation. Old untouched TrueHD files are also eligible after enabling; this is intentionally a backlog scan, not only future downloads. A failing first candidate stops that invocation and may need a targeted fix to avoid starving later files. No unattended error email is configured for this new worker yet; inspect its systemd journal during the pilot.
+By default, at most one TrueHD candidate is converted per apply invocation. The prepared daily service adds --batch to process all candidates sequentially; do not assume it is installed until confirmed. The worker uses the existing exclusive `/run/lock/homepi-restic.lock` so it cannot overlap backup, maintenance or another worker; a busy lock defers a default manual invocation. The prepared daily service adds --wait-lock and waits instead; cancellation still exits without bypassing the lock. The previously installed timer checks five minutes after boot/last completed invocation; the prepared replacement runs daily at 07:00 Europe/Berlin, with Persistent=false. An offline Pi misses that start and waits until the next scheduled day. Old untouched TrueHD files are also eligible after enabling; this is intentionally a backlog scan, not only future downloads. A failing candidate stops the invocation and may need a targeted fix to avoid starving later files. In batch mode, each conversion still performs its own playback checks. Playback/source-race deferral ends the batch; there is no same-day retry. Files younger than five minutes are still skipped. Earlier successful replacements remain published if a later candidate fails or is deferred. A complete batch emits an allowlisted count summary; a partial batch does not advance the Homepage full-success marker. A batch can hold the shared lock for its entire runtime and delay a later backup; no backup-success prerequisite or maximum runtime is added. No unattended error email is configured for this new worker yet; inspect its systemd journal during the pilot.
 
 The worker defers if Jellyfin reports any playing or paused item, including music, and checks again before replacement. API failures prevent replacement. This is a conservative best-effort guard, not an atomic reservation: a client can start playback in the small interval after the last API check. Do the pilot with all players stopped and validate live session behavior before enabling unattended processing.
 

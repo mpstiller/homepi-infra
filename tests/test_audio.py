@@ -221,5 +221,76 @@ class Tests(unittest.TestCase):
         self.assertNotIn(client.key, str(caught.exception))
 
 
+class SchedulingTests(unittest.TestCase):
+    def run_scan(self, extra=(), process_results=(True, True), lock_error=None):
+        from contextlib import ExitStack
+        with tempfile.TemporaryDirectory() as tmp, ExitStack() as stack:
+            root = Path(tmp)
+            paths = [root/'one.mkv', root/'two.mkv']
+            for path in paths:
+                path.write_bytes(b'source')
+                audio.os.utime(path, (1, 1))
+            stack.enter_context(patch.object(audio, 'LOCK', root/'lock'))
+            stack.enter_context(patch.object(audio, 'STATE', root/'state.json'))
+            stack.enter_context(patch.object(audio, 'candidates', return_value=iter(paths)))
+            media = stack.enter_context(patch.object(audio, 'DockerMedia')).return_value
+            media.probe.return_value = info()
+            jf = stack.enter_context(patch.object(audio, 'Jellyfin')).return_value
+            jf.idle.return_value = True
+            process = stack.enter_context(patch.object(audio, 'process', side_effect=process_results))
+            log = stack.enter_context(patch.object(audio, 'log'))
+            flock = stack.enter_context(patch.object(audio.fcntl, 'flock', side_effect=lock_error))
+            stack.enter_context(patch('sys.argv', ['homepi-audio', '--scan', *extra]))
+            audio.main()
+            return process.call_count, media.probe.call_count, jf.idle.call_count, log.call_args_list, flock.call_args_list
+
+    def test_daily_batch_processes_every_candidate(self):
+        calls, probes, idle, logs, locks = self.run_scan(('--apply', '--batch'))
+        self.assertEqual(calls, 2)
+        self.assertEqual(probes, 2)
+        self.assertIn('BATCH: completed; converted=2', [c.args[0] for c in logs])
+
+    def test_manual_apply_still_processes_one(self):
+        self.assertEqual(self.run_scan(('--apply',))[0], 1)
+
+    def test_batch_stops_after_playback_deferral(self):
+        calls, probes, idle, logs, locks = self.run_scan(('--apply', '--batch'), (False, True))
+        self.assertEqual(calls, 1)
+        self.assertEqual(probes, 1)
+        self.assertFalse(any(c.args[0].startswith('BATCH:') for c in logs))
+
+    def test_batch_error_does_not_attempt_later_files(self):
+        with self.assertRaisesRegex(ValueError, 'simulated'):
+            self.run_scan(('--apply', '--batch'), (ValueError('simulated'), True))
+
+    def test_plain_dry_run_never_converts_or_reads_jellyfin(self):
+        calls, probes, idle, logs, locks = self.run_scan()
+        self.assertEqual((calls, probes, idle), (0, 2, 0))
+
+    def test_busy_lock_defaults_to_deferral(self):
+        calls, probes, idle, logs, locks = self.run_scan(lock_error=BlockingIOError())
+        self.assertEqual((calls, probes, idle), (0, 0, 0))
+        self.assertEqual(len(locks), 1)
+        self.assertIn('DEFER: backup/maintenance/audio lock is busy', [c.args[0] for c in logs])
+
+    def test_daily_service_waits_then_scans(self):
+        calls, probes, idle, logs, locks = self.run_scan(
+            ('--apply', '--batch', '--wait-lock'), lock_error=[BlockingIOError(), None])
+        self.assertEqual(calls, 2)
+        self.assertEqual([c.args[1] for c in locks], [audio.fcntl.LOCK_EX | audio.fcntl.LOCK_NB, audio.fcntl.LOCK_EX])
+        self.assertIn('WAIT: backup/maintenance/audio lock is busy', [c.args[0] for c in logs])
+
+    def test_wait_is_interruptible_without_any_conversion(self):
+        with self.assertRaises(InterruptedError):
+            self.run_scan(('--apply', '--batch', '--wait-lock'),
+                          lock_error=[BlockingIOError(), InterruptedError()])
+
+    def test_batch_cannot_enable_writes_in_dry_run(self):
+        with self.assertRaises(SystemExit) as caught:
+            self.run_scan(('--batch',))
+        self.assertEqual(caught.exception.code, 2)
+
+
 if __name__ == '__main__':
     unittest.main()
+

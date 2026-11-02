@@ -1,15 +1,16 @@
 [Unit]
 Description=HomePi TrueHD audio compatibility worker
-After=docker.service network-online.target
+After=docker.service network-online.target homepi-backup.service homepi-restic-maintenance.service
 Wants=network-online.target
 ConditionPathExists=/etc/homepi-audio/enabled
 
 [Service]
 Type=oneshot
-ExecStart=/usr/local/sbin/homepi-audio --scan --apply
+ExecStart=/usr/local/sbin/homepi-audio --scan --apply --batch --wait-lock
 TimeoutStartSec=0
 TimeoutStopSec=90
 Nice=15
 IOSchedulingClass=best-effort
 IOSchedulingPriority=7
 UMask=0077
+

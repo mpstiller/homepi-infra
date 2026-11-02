@@ -1,4 +1,11 @@
-# Homepage operations status (operational — 2026-10-26)
+# Homepage operations status
+
+## Daily audio schedule support installed — 2026-11-02
+
+The installed daily-audio rollout changes only the audio overdue heuristic from 20 minutes to 30 hours and adds allowlisted lock-wait/batch-completion messages. The collector timer, HTTP/JSON contract, 120-second source freshness and other jobs remain unchanged. Owner confirmed successful guarded installation with the daily audio timer and collector refresh; rollback is /root/homepi-audio-daily-rollback.VFwqadR8. The next daily trigger is 3 November 07:00 CET. Visual Homepage verification and the first daily batch are still pending. Complete batch counts are shown as converted. If a later file defers/fails, the invocation is partial and does not claim full success. Prior replacements are not rolled back.
+
+This collector-only change does not require restarting the HTTP container: it serves the already generated status JSON and its route/freshness behavior is unchanged. Replacement of the bind-mounted source file by inode does not hot-reload the running server; a future normal recreation loads the new source. Do not recreate unrelated Homepage stack services just for this collector change.
+
 
 Three German `customapi` list cards show backup, monthly maintenance and audio state.
 The host collector reads systemd properties and allowlisted journald events every
@@ -27,8 +34,8 @@ PR #14 is merged. Owner verified the pinned `bee00a4` archive, completed the gua
 - The HTTP server recalculates freshness for every request. After 120 seconds
   without a complete collection it overrides status with `Unbekannt: Statusdaten
   veraltet`. Missing/invalid data is HTTP 503. Unknown log history stays unknown.
-- Overdue thresholds are 30 hours for backup, 35 days for maintenance and 20
-  minutes for the audio polling service; these are visibility heuristics, not
+- Overdue thresholds are 30 hours for backup, 35 days for maintenance and 30
+  hours for the prepared daily audio service; these are visibility heuristics, not
   replacements for the external scheduled Healthchecks alarms.
 
 ## History and limits

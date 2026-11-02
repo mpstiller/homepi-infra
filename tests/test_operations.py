@@ -116,6 +116,40 @@ class OperationsTests(unittest.TestCase):
             value = summary(kind, [manager(NOW-ops.JOBS[kind][1]-1, kind, 'success')])
             self.assertIn('Überfällig', value['status'])
 
+    def test_audio_daily_schedule_not_overdue_after_24_hours(self):
+        rows = [manager(NOW-24*3600, 'audio', 'success')]
+        self.assertEqual(summary('audio', rows)['status'], 'Bereit')
+
+    def test_audio_wait_for_backup_is_running_not_deferral(self):
+        rows = [worker(NOW-5, 'WAIT: backup/maintenance/audio lock is busy')]
+        value = summary('audio', rows, service(True, NOW-10, ident=A))
+        self.assertEqual(value['status'], 'Läuft')
+        self.assertEqual(value['detail'], 'Wartet auf gemeinsame Sperre')
+
+    def test_completed_batch_remains_success_after_multiple_plans(self):
+        rows = [manager(NOW-100, 'audio', 'start'),
+                worker(NOW-90, f'REPLACED: {PATH}; original archive: disabled'),
+                worker(NOW-70, f'PLAN: {PATH}; 2 tracks'),
+                worker(NOW-3, f'REPLACED: {PATH}; original archive: disabled'),
+                worker(NOW-2, 'BATCH: completed; converted=2'),
+                manager(NOW, 'audio', 'success')]
+        value = summary('audio', rows)
+        self.assertEqual(value['last_success']['outcome'], 'converted')
+        self.assertEqual(value['detail'], '2 Dateien konvertiert')
+
+    def test_batch_summary_does_not_mask_later_service_failure(self):
+        rows = [worker(NOW-2, 'BATCH: completed; converted=2'),
+                manager(NOW, 'audio', 'failure')]
+        self.assertEqual(summary('audio', rows)['status'], 'Fehler')
+
+    def test_partial_batch_playback_deferral_is_not_full_success(self):
+        rows = [worker(NOW-10, f'REPLACED: {PATH}; original archive: disabled'),
+                worker(NOW-5, 'DEFER: Jellyfin has a playing/paused session'),
+                manager(NOW, 'audio', 'success')]
+        value = summary('audio', rows)
+        self.assertEqual(value['status'], 'Zurückgestellt')
+        self.assertIsNone(value['last_success'])
+
     def test_disabled_timer_visible(self):
         value = summary('audio', [worker(NOW, 'DEFER: lock is busy')], timer={'ActiveState': 'inactive'})
         self.assertEqual(value['status'], 'Zeitplan inaktiv')
@@ -217,3 +251,4 @@ class OperationsTests(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+
