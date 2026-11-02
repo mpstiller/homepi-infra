@@ -1,5 +1,17 @@
 # HomePi — LLM Context
 
+## Matter devices connected — owner evidence 2026-11-02
+
+- Owner installed ghcr.io/matter-js/matterjs-server:1.5.5 (arm64, image user 1000:1000); native Compose validation passed and startup reported Healthy.
+- Separate project matter: /opt/homelab/stacks/matter/compose.yaml; data /srv/appdata/matter-server (created owner 1000:1000, mode 0700). Host network, read-only container root, LISTEN_ADDRESS=127.0.0.1 and PRIMARY_INTERFACE=wlan0. Home Assistant 2026.10.0 uses host networking and connected at ws://127.0.0.1:5580/ws.
+- Owner output confirmed IPv6 enabled and an IPv6 route via wlan0; this is not a complete network/firewall audit. Before deployment ~1.7 GiB RAM available and 676 MiB swap used; post-start resource use remains unmeasured.
+- First Eve Energy was shared from Google Home using a fresh pairing code and Home Assistant iPhone flow: Add Devices -> already in use -> Other controllers. Choosing Google Home led to a help flow without direct code entry; do not repeat that route.
+- First device switching and Google Home state were owner-tested successfully. Owner subsequently confirmed all their Matter devices are connected; exact device inventory and individual tests for remaining devices were not supplied. Preserve existing Google Home fabrics; no reset/removal is needed.
+- Excluding matter-server from Arcane Auto Update was instructed but not explicitly confirmed: VERIFY ON PI. Keep automatic eligibility limited to the three Homepage containers.
+- Existing backup rsync includes the new data/Compose directories, but the installed stop list predates matter-server. This branch adds only matter-server to CANDIDATES; installation and a real consistent snapshot are still pending. Do not claim backup integration complete or restore tested. Fabric data/keys and pairing codes stay private, never Git/chat.
+- Next: compare installed backup checksum with the baseline, install the one-line stop-list addition with rollback under the shared lock, and verify a backup and restart. Then capture resource use and optional device inventory. Audio scheduled test 3 November 07:00 CET and Arcane scheduled test 7 November 10:00 CET remain pending.
+- Owner also confirmed daily audio Homepage display correct after PR #18 merged; first scheduled daily batch remains pending.
+
 ## Daily audio batch installed — owner evidence 2026-11-02
 
 Owner verified installer SHA256 `45b87a8cfbf3f435e67310f7255b620b546255a42a9f559f6dc6cd0968b6f1ff` from commit `cbbeab4a05b8df8b37790b36137e6f55b23bd672` against the previously verified payload from `a722392a2d7624bf1cdfcc9cbf4ea27e7ab05e08`. Guarded installer completed successfully, including four-file baseline/payload checks, Python parsing, native systemd verification, collector refresh and timer restart. No conversion was started by installation.
