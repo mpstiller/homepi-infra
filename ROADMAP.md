@@ -223,7 +223,7 @@ Backup V1 closes with full temporary restore, copied-state checks and one repres
 ## P2 — Smart home
 
 - [x] Add Matter server/integration; owner confirmed all Matter devices connected on 2026-11-02, with first Eve/Google Home switching tested.
-- [ ] Install prepared matter-server backup stop-list addition and verify snapshot/restart.
+- [x] Install matter-server backup stop-list addition; owner journal confirms real staging/restart and successful snapshot e43eddfa plus retention (2026-11-02). Matter restore and exact snapshot-file checks remain separate.
 - [ ] Confirm Arcane auto-update exclusion and measure post-start resources.
 - [ ] Integrate Nest Doorbell via Google SDM.
 - [ ] Add Yamaha R-N1000A when physically ready.
