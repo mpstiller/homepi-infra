@@ -5,8 +5,9 @@
 - [x] Owner dry scan returned no candidate messages; existing service successful.
 - [x] Prepare daily 07:00 Europe/Berlin, sequential batch processing, shared-lock waiting and daily Homepage threshold.
 - [x] Validate local audio/status tests (51) and calendar/adjusted-path systemd units.
-- [ ] Guarded pinned installation of worker, service, timer and status collector on Pi.
-- [ ] Confirm next daily trigger and Homepage daily status without starting a conversion during installation.
+- [x] Guarded pinned installation of worker, service, timer and status collector; owner confirmed success and rollback path 2026-11-02.
+- [x] Confirm next daily trigger: 3 November 07:00 CET; no installation-triggered conversion.
+- [ ] Owner visual confirmation of Homepage daily audio status/card.
 - [ ] Observe first scheduled daily batch; real busy-lock wait, playback deferral and batch conversions remain unverified live.
 
 

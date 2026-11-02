@@ -1,6 +1,15 @@
 # Sony audio compatibility worker
 
-## Daily audio batch prepared — 2026-11-02 (not installed)
+## Daily audio batch installed — owner evidence 2026-11-02
+
+Owner verified installer SHA256 `45b87a8cfbf3f435e67310f7255b620b546255a42a9f559f6dc6cd0968b6f1ff` from commit `cbbeab4a05b8df8b37790b36137e6f55b23bd672` against the previously verified payload from `a722392a2d7624bf1cdfcc9cbf4ea27e7ab05e08`. Guarded installer completed successfully, including four-file baseline/payload checks, Python parsing, native systemd verification, collector refresh and timer restart. No conversion was started by installation.
+
+- New daily timer is active: NEXT `Tue 2026-11-03 07:00:00 CET`. The printed LAST value refers to the previous schedule; it is not evidence of a new batch.
+- Preserve rollback directory `/root/homepi-audio-daily-rollback.VFwqadR8`, containing the old four files and verified payload. Rollback recovery was not exercised.
+- New worker/service support sequential batches and waiting for the existing lock. Existing media guards remain; manual apply still defaults to one file. Homepage collector uses the daily 30-hour overdue heuristic. HTTP routes/freshness remain unchanged.
+- Still pending: owner visual Homepage/card verification, first daily scheduled run, native busy-lock waiting and a real multi-file batch. Do not repeat installation or claim those tests from installer success alone.
+
+## Preparation evidence — 2026-11-02 (installation now confirmed above)
 
 - Owner supplied successful inactive/exit-0 audio state and repeated silent timer completions. Explicit `--scan` produced no output. Within the worker's cached eligible scope, no pending candidates were reported; this is not an independent re-probe of every media file.
 - Owner requested daily processing after backups instead of five-minute polling; accepted 07:00 Europe/Berlin, sequential processing of all eligible files, and waiting for the shared lock.
@@ -9,7 +18,7 @@
 - Homepage collector now allows 30 hours between audio invocations and recognizes lock waiting and completed-batch counts. JSON freshness remains 120 seconds and collector interval unchanged. A partial/deferred/failed batch is not shown as full success even if earlier files were converted.
 - Local evidence: 51 audio/status tests pass; calendar expression validated; service/timer verified with only local executable path substituted by /usr/bin/true. No production API/conversion/backup run was triggered.
 - Installed baselines supplied by owner still match old worker `17a2c935df16cb8f5c3747d2733e1d238cabae06b4ce9d5f673b0ef1bfef7d2f`, service `a0abaa5f3981bf5ade22700117caf3236deadc704d2529157e083df723550d00`, timer `a54bb6c1649c11262859838bcb9a854ac2894d1222e3c22b5c2a1041c71fc8d1`, collector `e3c4d12944aaaf613a477c3b7deedff070a68cb6931b84e90acf4b72083b9c35`.
-- Next: pinned download/hash verification; guarded four-file install with rollback copies, timers paused briefly and no active worker stopped; native systemd/calendar and Homepage verification. Do not claim the daily schedule is active until owner installation evidence arrives. See audio/README.md.
+- Preparation completed; installation confirmation and remaining live verification are recorded above. See audio/README.md.
 
 
 

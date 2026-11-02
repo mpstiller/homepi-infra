@@ -1,8 +1,8 @@
 # Homepage operations status
 
-## Daily audio schedule support prepared — 2026-11-02
+## Daily audio schedule support installed — 2026-11-02
 
-The prepared daily-audio rollout changes only the audio overdue heuristic from 20 minutes to 30 hours and adds allowlisted lock-wait/batch-completion messages. The collector timer, HTTP/JSON contract, 120-second source freshness and other jobs remain unchanged. Install this collector together with the daily audio timer; owner installation is not yet confirmed. Complete batch counts are shown as converted. If a later file defers/fails, the invocation is partial and does not claim full success. Prior replacements are not rolled back.
+The installed daily-audio rollout changes only the audio overdue heuristic from 20 minutes to 30 hours and adds allowlisted lock-wait/batch-completion messages. The collector timer, HTTP/JSON contract, 120-second source freshness and other jobs remain unchanged. Owner confirmed successful guarded installation with the daily audio timer and collector refresh; rollback is /root/homepi-audio-daily-rollback.VFwqadR8. The next daily trigger is 3 November 07:00 CET. Visual Homepage verification and the first daily batch are still pending. Complete batch counts are shown as converted. If a later file defers/fails, the invocation is partial and does not claim full success. Prior replacements are not rolled back.
 
 This collector-only change does not require restarting the HTTP container: it serves the already generated status JSON and its route/freshness behavior is unchanged. Replacement of the bind-mounted source file by inode does not hot-reload the running server; a future normal recreation loads the new source. Do not recreate unrelated Homepage stack services just for this collector change.
 
