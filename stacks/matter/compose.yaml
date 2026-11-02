@@ -1,0 +1,14 @@
+services:
+  matter-server:
+    container_name: matter-server
+    image: ghcr.io/matter-js/matterjs-server:1.5.5
+    restart: unless-stopped
+    network_mode: host
+    read_only: true
+    environment:
+      TZ: Europe/Berlin
+      STORAGE_PATH: /data
+      LISTEN_ADDRESS: 127.0.0.1
+      PRIMARY_INTERFACE: wlan0
+    volumes:
+      - /srv/appdata/matter-server:/data
