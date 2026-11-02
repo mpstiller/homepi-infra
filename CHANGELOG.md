@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-11-02 (prepared; Pi installation pending)
+
+- Owner dry scan reported no candidates and requested daily audio processing after backups. Prepare daily 07:00 Europe/Berlin timer without missed-run catch-up, plus sequential batch and blocking shared-lock options for the service.
+- Preserve single-file/manual defaults, playback/source/video/hardlink guards and error stop. No backup, VPN or media quality settings changed.
+- Adapt Homepage audio overdue threshold to 30 hours and allowlisted waiting/batch messages; JSON freshness unchanged. 51 local tests pass; calendar and adjusted-path systemd validation pass. No new Pi run or installation claimed.
+
 ## 2026-11-01
 
 - Corrected Homepage updater policies from x-arcane extensions to explicit container labels so both terminal Docker Compose deployments and Arcane container checks receive the same rules. Image tags, ranges, regexes and runtime security settings are unchanged.

@@ -15,7 +15,7 @@ from zoneinfo import ZoneInfo
 JOBS = {
     'backup': ('homepi-backup', 30 * 3600),
     'maintenance': ('homepi-restic-maintenance', 35 * 86400),
-    'audio': ('homepi-audio', 20 * 60),
+    'audio': ('homepi-audio', 30 * 3600),
 }
 STATE = Path('/srv/appdata/homepi-status/status.json')
 PROPERTIES = ('LoadState', 'ActiveState', 'SubState', 'Result', 'ExecMainStatus',
@@ -65,6 +65,11 @@ def filename(message):
 def interpret(message, kind):
     """Allowlisted semantic events; arbitrary error bodies/URLs never leave journald."""
     if kind == 'audio':
+        if message == 'WAIT: backup/maintenance/audio lock is busy':
+            return {'outcome': 'running', 'detail': 'Wartet auf gemeinsame Sperre'}
+        batch = re.fullmatch(r'BATCH: completed; converted=([1-9][0-9]{0,5})', message)
+        if batch:
+            return {'outcome': 'converted', 'detail': f'{int(batch[1])} Dateien konvertiert'}
         name = filename(message)
         if name and message.startswith('PLAN:'):
             return {'outcome': 'running', 'detail': name}
@@ -289,3 +294,4 @@ if __name__ == '__main__':
         make_server(args.state, args.port).serve_forever()
     else:
         collect(args.state)
+

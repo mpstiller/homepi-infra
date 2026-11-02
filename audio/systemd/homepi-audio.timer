@@ -2,9 +2,11 @@
 Description=Check imported HomePi media for TrueHD audio
 
 [Timer]
-OnBootSec=5min
-OnUnitInactiveSec=5min
+OnCalendar=*-*-* 07:00:00 Europe/Berlin
+Persistent=false
+AccuracySec=1min
 Unit=homepi-audio.service
 
 [Install]
 WantedBy=timers.target
+

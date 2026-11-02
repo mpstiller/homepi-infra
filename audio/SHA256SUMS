@@ -1,0 +1,4 @@
+c8780993d911dc56c4d72ada6106c4ae520ede2fcf5872f839dd6bbcfc183480  audio/bin/homepi-audio
+039d14c8df8bafc5793bc71a130360160c03917d7d26e06b1580790d457dd8d5  audio/systemd/homepi-audio.service
+3b4e9c864ee1842e9f50141339abe8f6df5a05222024b1f3c49292e3f1ac740e  audio/systemd/homepi-audio.timer
+cf31b70bffc04064138443517d835a9bad205f44210655ca47f10d296e96a0ab  operations/homepi-status

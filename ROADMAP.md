@@ -1,5 +1,15 @@
 # Roadmap
 
+## Daily audio processing after backups — 2026-11-02
+
+- [x] Owner dry scan returned no candidate messages; existing service successful.
+- [x] Prepare daily 07:00 Europe/Berlin, sequential batch processing, shared-lock waiting and daily Homepage threshold.
+- [x] Validate local audio/status tests (51) and calendar/adjusted-path systemd units.
+- [ ] Guarded pinned installation of worker, service, timer and status collector on Pi.
+- [ ] Confirm next daily trigger and Homepage daily status without starting a conversion during installation.
+- [ ] Observe first scheduled daily batch; real busy-lock wait, playback deferral and batch conversions remain unverified live.
+
+
 ## Update rollout correction and email — 2026-11-01
 
 - [x] Inspect the first scheduled job; successful completion with no demonstrated update application.

@@ -1,5 +1,16 @@
 # HomePi — LLM Context
 
+## Daily audio batch prepared — 2026-11-02 (not installed)
+
+- Owner supplied successful inactive/exit-0 audio state and repeated silent timer completions. Explicit `--scan` produced no output. Within the worker's cached eligible scope, no pending candidates were reported; this is not an independent re-probe of every media file.
+- Owner requested daily processing after backups instead of five-minute polling; accepted 07:00 Europe/Berlin, sequential processing of all eligible files, and waiting for the shared lock.
+- Prepared `--batch` (requires --scan --apply) and `--wait-lock`. Default manual apply remains one file; dry scan still does not write media/cache. Batch stops on playback/source-race deferral or an error; remaining work waits for the next daily run, without automatic retries.
+- New timer: daily 07:00 Europe/Berlin, no boot/monotonic trigger, Persistent=false (missed starts are not caught up outside the scheduled window). Existing backup 04:30 and monthly day-one maintenance 05:30 remain unchanged. Service ordering and the existing exclusive lock prevent simultaneous audio/backup/maintenance; a long batch can delay a later backup. Start time alone is not proof a backup succeeded.
+- Homepage collector now allows 30 hours between audio invocations and recognizes lock waiting and completed-batch counts. JSON freshness remains 120 seconds and collector interval unchanged. A partial/deferred/failed batch is not shown as full success even if earlier files were converted.
+- Local evidence: 51 audio/status tests pass; calendar expression validated; service/timer verified with only local executable path substituted by /usr/bin/true. No production API/conversion/backup run was triggered.
+- Installed baselines supplied by owner still match old worker `17a2c935df16cb8f5c3747d2733e1d238cabae06b4ce9d5f673b0ef1bfef7d2f`, service `a0abaa5f3981bf5ade22700117caf3236deadc704d2529157e083df723550d00`, timer `a54bb6c1649c11262859838bcb9a854ac2894d1222e3c22b5c2a1041c71fc8d1`, collector `e3c4d12944aaaf613a477c3b7deedff070a68cb6931b84e90acf4b72083b9c35`.
+- Next: pinned download/hash verification; guarded four-file install with rollback copies, timers paused briefly and no active worker stopped; native systemd/calendar and Homepage verification. Do not claim the daily schedule is active until owner installation evidence arrives. See audio/README.md.
+
 ## Arcane runtime labels corrected; Gmail tested — 2026-11-01
 
 This supersedes the 29 October update handoff where runtime policy recognition was not yet proved.
