@@ -21,6 +21,7 @@ STAGE="/srv/backups/restic-staging"
 # Stateful containers whose persistent data lives below /srv/appdata.
 CANDIDATES=(
   homeassistant
+  matter-server
   music-assistant
   jellyfin
   sonarr
