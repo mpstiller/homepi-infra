@@ -1,5 +1,15 @@
 # Matter on HomePi
 
+## Matter backup installation and real run — owner evidence 2026-11-02
+
+This supersedes the preparation-only backup status below.
+
+- Installed baseline SHA256 415d749e771a87148ebdc866d9b1137e20b708c68b318bbb4e7addfc65ac2db9 matched the repository. Guarded installer added only matter-server to CANDIDATES, checked candidate SHA256 0ce674a100f0f9428516e6bb4d72c4372ec02708bd93e0398a54d780b70f7d85 and bash syntax, and retained /root/homepi-matter-backup-rollback.6fxgbvcj. Owner confirmed successful installation.
+- Owner started homepi-backup.service. Journal: started 19:45:51 CET, stateful stop 19:45:52, staging 19:45:59, restart of matter-server 19:46:00, upload 19:46:05. Upload reached retention with new snapshot e43eddfa (19:46:06, 417.233 MiB); completed 19:47:13 and systemd Finished/Deactivated successfully at 19:47:14.
+- Retention kept 10 snapshots and removed the earlier same-day dc59a3ce entry; this is expected daily retention, not loss of the new snapshot.
+- Real backup/staging/restart/upload/retention are now evidenced. Exact Matter file presence inside the cloud snapshot, Matter restoration and post-backup Home Assistant switching were not separately checked. No new restore claim.
+- Remaining: post-backup device switching, explicit Arcane exclusion confirmation and optional resource measurement. Preserve scheduled audio/Arcane verification dates and private fabric data.
+
 ## Matter devices connected — owner evidence 2026-11-02
 
 - Owner installed ghcr.io/matter-js/matterjs-server:1.5.5 (arm64, image user 1000:1000); native Compose validation passed and startup reported Healthy.
@@ -21,15 +31,15 @@ Home Assistant connects to the localhost WebSocket endpoint through its host net
 
 Existing Google Home devices should be shared with fresh per-device pairing codes, using Other controllers in the Home Assistant Companion app when the Google Home selection only offers linking instructions. Do not factory-reset working devices. Codes, fabric keys and the contents of /srv/appdata/matter-server must never be committed.
 
-The data folder is covered by the existing /srv/appdata rsync scope, and the Compose folder by /opt/homelab/stacks. A consistent copy additionally requires pausing matter-server during staging. The repository backup patch adds that container to the existing stop/restart list; it does not alter retention, locks, schedules, notification behavior or other candidates. Installation on Pi is pending. The generic script restarts only containers running before the backup. Once added, backup staging briefly interrupts Home Assistant's Matter connection; Google Home has its own fabric.
+The data folder is covered by the existing /srv/appdata rsync scope, and the Compose folder by /opt/homelab/stacks. A consistent copy additionally requires pausing matter-server during staging. The repository backup patch adds that container to the existing stop/restart list; it does not alter retention, locks, schedules, notification behavior or other candidates. Installation and a real successful backup are now owner-confirmed; see the latest evidence above. The generic script restarts only containers running before the backup. Once added, backup staging briefly interrupts Home Assistant's Matter connection; Google Home has its own fabric.
 
 A restore needs the retained Matter data as well as Home Assistant appdata, the Compose file and independently recoverable backup access. An empty Matter data directory is not equivalent to restoring the existing fabric. No Matter restore or restart drill has been performed. Do not remove this data or existing Google Home fabrics as a troubleshooting shortcut.
 
 ## Next validation
 
-1. Owner reports SHA256 of /usr/local/sbin/homepi-backup; compare with repository baseline before a guarded, rollback-backed installation.
+1. Completed: baseline checksum comparison, guarded installation and successful real backup/staging/restart/upload/retention.
 2. Confirm matter-server is excluded from Arcane Auto Update.
-3. Observe real backup, restart and resulting snapshot inclusion; do not print data file contents.
+3. Verify post-backup device switching; exact Matter snapshot-file inspection and restore remain separate checks. Never print data file contents.
 4. Measure steady-state container memory and optionally record device counts/types without pairing secrets.
 
 Sources: https://www.home-assistant.io/integrations/matter/ and https://github.com/matter-js/matterjs-server/blob/v1.5.5/docs/docker.md
