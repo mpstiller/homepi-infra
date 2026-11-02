@@ -2,6 +2,8 @@
 
 ## 2026-11-02
 
+- Matter backup follow-up installed with verified baseline/candidate checksums and rollback /root/homepi-matter-backup-rollback.6fxgbvcj. Real run completed 19:47:14 CET after staging/restarting matter-server, saving snapshot e43eddfa (417.233 MiB) and retention. Supersedes preparation-only status below; exact Matter file inspection, restore and post-backup functional test are not claimed.
+
 - Record owner-installed Matter.js Server 1.5.5, localhost WebSocket connection and successful first-device multi-controller switching. Owner confirmed all Matter devices connected; exact inventory not supplied. Capture Compose/runbook without fabric secrets.
 - Prepare one-line backup CANDIDATES addition for matter-server; bash syntax validation passed. Pi installation, consistent snapshot/restart, resource measurement and explicit Arcane exclusion confirmation remain pending.
 - Owner confirmed the daily audio Homepage display is correct; first daily scheduled execution remains pending.
