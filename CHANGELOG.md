@@ -2,6 +2,10 @@
 
 ## 2026-11-02
 
+- Record owner-installed Matter.js Server 1.5.5, localhost WebSocket connection and successful first-device multi-controller switching. Owner confirmed all Matter devices connected; exact inventory not supplied. Capture Compose/runbook without fabric secrets.
+- Prepare one-line backup CANDIDATES addition for matter-server; bash syntax validation passed. Pi installation, consistent snapshot/restart, resource measurement and explicit Arcane exclusion confirmation remain pending.
+- Owner confirmed the daily audio Homepage display is correct; first daily scheduled execution remains pending.
+
 - Owner verified and ran guarded installer from cbbeab4; installation completed, collector refreshed and daily audio timer restarted. Next trigger confirmed: 3 November 07:00 CET. Rollback retained at /root/homepi-audio-daily-rollback.VFwqadR8. No conversion was started; first daily execution and Homepage visual check remain pending.
 
 - Owner dry scan reported no candidates and requested daily audio processing after backups. Prepare daily 07:00 Europe/Berlin timer without missed-run catch-up, plus sequential batch and blocking shared-lock options for the service.
