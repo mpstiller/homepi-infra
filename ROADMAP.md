@@ -5,7 +5,8 @@
 - [x] Clarify actual needs: personal archive, ongoing intake + old fragmented files, minimal admin, editable files stay in Google Drive.
 - [x] Compare official v3.4.1 examples and current configuration; obtain 2026-11-03 Pi memory/disk measurements.
 - [x] Prepare versioned localhost-only three-container Compose proposal, secret template, detailed runbook and proposed backup stop-list in a draft PR.
-- [ ] Owner read-only preflight: UID/GID, port 8010, checkout cleanliness, Docker/Compose, resource snapshot and Arcane exclusions.
+- [x] Owner read-only preflight confirmed UID=GID=1000, Compose v5.5.1, port 8010 free, no existing Paperless directories/containers.
+- [ ] Check existing HomePi checkout cleanliness, verify Arcane exclusion, and validate Compose on the Pi.
 - [ ] Validate Compose on Pi, install without existing-service impact, test synthetic PDFs/OCR/search/duplicates and monitor memory/swap.
 - [ ] Deploy proposed backup stop-list under host lock; prove backup snapshot + isolated DB/document restore before any real documents.
 - [ ] Decide secure LAN/Tailscale app access, iPhone/Mac workflow, email rules and gradual Drive/paper import after pilot succeeds.
