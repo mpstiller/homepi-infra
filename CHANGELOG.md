@@ -2,6 +2,8 @@
 
 ## 2026-11-03
 
+- Owner `vmstat 1 6` shows only tiny intermittent swap-in (16/80 KiB/s), no swap-out in five current samples, 95–99% CPU idle, 0% I/O wait. No sustained thrashing observed. Synthetic OCR search remains unconfirmed.
+
 - Owner supplied Paperless post-test resource snapshot: webserver 606.5 MiB, db 49.44 MiB, broker 10.16 MiB; host 1.3 GiB available RAM, 1.2 GiB swap occupied. Synthetic PDF OCR/search success is not yet confirmed; no active swap-rate sample, backup or restore verified.
 
 - Owner verified all three Paperless pilot containers healthy and runtime Arcane opt-out labels false; localhost-only port unchanged. Live usage: web 637.5 MiB, PostgreSQL 45.92 MiB, Valkey 7.922 MiB; Pi 1.1 GiB available RAM, 992 MiB swap used. No real documents, OCR proof or installed backup/restore yet.
