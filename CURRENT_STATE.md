@@ -1,5 +1,10 @@
 # Current State
 
+## Paperless-ngx pilot proposal — 2026-11-03 (not deployed)
+
+After actual user discovery: archive is a personal completed-document paper trail, Google Drive remains for editable files; equal priority for gradual backlog and incoming capture, minimal administration. iPhone/Mac and controlled mail rules later. No employer/client docs; local-first processing, no external AI by default; possible future shared use/permissions unresolved. Owner reported 1.7 GiB available RAM, 745 MiB swap used, 1.4 TB free NVMe. A PR proposes Paperless 3.4.1 + PostgreSQL 18 + Valkey 9, localhost-only 8010, one OCR worker/thread, private env and all data below /srv/appdata/paperless, proposed backup CANDIDATES. **No Pi changes, backup integration, restore, live mobile/mail access or document imports yet.** Preflight UID/GID, port, Arcane exclusions and working-tree checks are pending. See stacks/paperless/README.md and docs/paperless-pilot.md on the proposed branch. Do not mark this as installed or production-safe.
+
+
 ## Next session: tailored Paperless-ngx discovery — 2026-11-03
 
 Owner selected Paperless-ngx as the next experiment, explicitly in a NEW session. Current work is documentation only: do not research the detailed setup, deploy Paperless or import documents in this session. Begin the next session with needs discovery, then thorough current upstream research, then a tailored proposal and short owner-executed Pi steps. See [Paperless discovery brief](docs/paperless-discovery.md) and [ideas backlog](docs/ideas-backlog.md). Document categories/volume, capture sources, users/sharing, taxonomy, privacy, iPhone workflow, resources and recovery are unresolved; do not assume defaults are the owner's preferences.
