@@ -2,6 +2,8 @@
 
 ## 2026-11-03
 
+- Owner confirmed the two synthetic Paperless imports successfully searchable: `Wasserkocher` (born-digital PDF) and `Sonnenuhr` (raster-only scan), proving OCR and indexing. Backup candidate changes remain repository-only; real Restic snapshot and isolated restore are pending. No personal documents ingested.
+
 - Owner `vmstat 1 6` shows only tiny intermittent swap-in (16/80 KiB/s), no swap-out in five current samples, 95–99% CPU idle, 0% I/O wait. No sustained thrashing observed. Synthetic OCR search remains unconfirmed.
 
 - Owner supplied Paperless post-test resource snapshot: webserver 606.5 MiB, db 49.44 MiB, broker 10.16 MiB; host 1.3 GiB available RAM, 1.2 GiB swap occupied. Synthetic PDF OCR/search success is not yet confirmed; no active swap-rate sample, backup or restore verified.
