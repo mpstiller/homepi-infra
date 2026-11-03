@@ -2,6 +2,8 @@
 
 ## 2026-11-03
 
+- Owner supplied Paperless post-test resource snapshot: webserver 606.5 MiB, db 49.44 MiB, broker 10.16 MiB; host 1.3 GiB available RAM, 1.2 GiB swap occupied. Synthetic PDF OCR/search success is not yet confirmed; no active swap-rate sample, backup or restore verified.
+
 - Owner verified all three Paperless pilot containers healthy and runtime Arcane opt-out labels false; localhost-only port unchanged. Live usage: web 637.5 MiB, PostgreSQL 45.92 MiB, Valkey 7.922 MiB; Pi 1.1 GiB available RAM, 992 MiB swap used. No real documents, OCR proof or installed backup/restore yet.
 
 - Owner ran validated Paperless Compose on Pi: images pulled, broker/db healthy, webserver just started (`health: starting`); isolated network and localhost-only port 8010 confirmed. Runtime health/load/Arcane labels are next. No real documents or backup/restore testing yet.
