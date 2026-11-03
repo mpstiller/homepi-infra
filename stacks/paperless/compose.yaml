@@ -6,6 +6,8 @@ services:
   broker:
     image: docker.io/valkey/valkey:9-alpine
     container_name: paperless-broker
+    labels:
+      com.getarcaneapp.arcane.updater: "false"
     restart: unless-stopped
     mem_limit: 96m
     volumes:
@@ -19,6 +21,8 @@ services:
   db:
     image: docker.io/library/postgres:18
     container_name: paperless-db
+    labels:
+      com.getarcaneapp.arcane.updater: "false"
     restart: unless-stopped
     mem_limit: 384m
     environment:
@@ -36,6 +40,8 @@ services:
   webserver:
     image: ghcr.io/paperless-ngx/paperless-ngx:3.4.1
     container_name: paperless-webserver
+    labels:
+      com.getarcaneapp.arcane.updater: "false"
     restart: unless-stopped
     # Official rootless user mode: no USERMAP_UID/GID or additional OCR packages.
     user: "${PAPERLESS_UID:?Set PAPERLESS_UID in .env}:${PAPERLESS_GID:?Set PAPERLESS_GID in .env}"
