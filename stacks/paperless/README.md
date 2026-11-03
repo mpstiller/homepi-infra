@@ -1,6 +1,6 @@
-# Paperless-ngx — reversible pilot (NOT DEPLOYED)
+# Paperless-ngx — reversible pilot (LIVE, BACKUP NOT YET VALIDATED)
 
-This stack is proposed for one personal Paperless archive. It is intentionally
+This stack was deployed as a localhost-only pilot on 2026-11-03 for one personal Paperless archive. It is intentionally
 **localhost-only** until a separate LAN/Tailscale access decision. It does not
 replace Google Drive working files and must not receive real documents until
 backup consistency and an isolated restore are verified.
@@ -56,6 +56,16 @@ backup consistency and an isolated restore are verified.
    Do **not** post `docker compose config` output because it expands secrets.
 7. Exclude all three new containers from Arcane Auto Update. Verify the
    exclusions in Arcane before treating the setup as ready for regular use.
+
+## Verified (owner evidence)
+
+- All three services healthy; Arcane automatic-update opt-out label `false` observed live.
+- Both artificial sample PDFs imported and searched successfully: born-digital
+  `Wasserkocher`, raster-only OCR `Sonnenuhr`.
+- After the test Pi had 1.3 GiB available RAM, and five `vmstat` samples
+  showed no swap-out; this does not establish large-import capacity.
+- **Next:** verify actual installed backup script before modifying it, then
+  prove encrypted Restic snapshot and isolated restore.
 
 ## Pilot and stop gates
 
