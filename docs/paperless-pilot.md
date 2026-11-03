@@ -63,6 +63,18 @@ the discovery brief as historical context.
   credentials), then synthetic PDF OCR/search trial while monitoring memory.
   Backup script is not yet installed; no real document ingestion.
 
+## Initial local browser access
+
+- Owner confirmed on 2026-11-03 that the Paperless web UI opens through
+  the proposed localhost/SSH tunnel. This confirms reachability only:
+  first-user setup, login, OCR, search and backups have **not** yet been
+  verified.
+- Two **synthetic test PDFs** were created for a no-private-data pilot:
+  a born-digital sample containing `Wasserkocher` and a raster-only PDF
+  containing `Sonnenuhr`. The latter contains no embedded PDF text, so
+  successful full-text search demonstrates OCR. Files were given to the owner
+  as conversation attachments, not added to Git or HomePi.
+
 ## Plan and explicit boundaries
 
 1. **Prepared in branch/PR only**: Compose, private env template, runbook and
