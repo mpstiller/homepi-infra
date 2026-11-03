@@ -8,7 +8,8 @@
 - [x] Owner read-only preflight confirmed UID=GID=1000, Compose v5.5.1, port 8010 free, no existing Paperless directories/containers.
 - [x] Owner confirmed all three container images pulled and started, database and broker healthy, webserver initially `health: starting`; published port loopback-only 8010.
 - [x] Verified all three services healthy, runtime Arcane opt-out=false on each, live memory 1.1 GiB available / 992 MiB swap used.
-- [ ] Complete localhost SSH-tunnel first-user setup, test synthetic OCR/search, and check Pi checkout state.
+- [x] Owner confirmed Paperless web UI loads via SSH tunnel.
+- [ ] Complete first-user setup, import the two synthetic PDFs and verify OCR/search under load; check Pi checkout state.
 - [x] Validate Compose on Pi (`config --quiet`), start three services without reported existing-service impact.
 - [ ] Test synthetic PDFs/OCR/search/duplicates and monitor memory/swap.
 - [ ] Deploy proposed backup stop-list under host lock; prove backup snapshot + isolated DB/document restore before any real documents.
