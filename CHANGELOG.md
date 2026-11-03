@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-11-03
+
+- Record the owner's exploratory self-hosting ideas with source pointers, personal use cases and evaluation constraints; link existing dashboard/cloud plans instead of duplicating them.
+- Select Paperless-ngx for a new session, with requirements discovery and thorough current research before tailored configuration or deployment. Add a dedicated session brief; no Paperless stack, import or detailed setup research performed here.
+- Record explicit owner confirmation that Matter is excluded from Arcane Auto Update, the successful silent 07:00:04 scheduled audio invocation, and the decision to defer Seerr/Tailscale automatic login without changes. Arcane's 7 November run remains pending.
+
 ## 2026-11-02
 
 - After the successful Matter-integrated backup/restart, owner confirmed the requested Home Assistant switching and Google Home state check still works. No Matter restore test is claimed; explicit Arcane exclusion confirmation remains pending.
