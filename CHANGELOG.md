@@ -2,6 +2,8 @@
 
 ## 2026-11-03
 
+- Prepare a reversible Paperless-ngx 3.4.1 pilot in a draft PR: localhost-only, PostgreSQL 18 + Valkey 9, rootless Paperless, one OCR worker/thread, all persistent data in /srv/appdata and proposed backup CANDIDATES. No Pi deployment, backups/restore or real-document imports have occurred. Owner supplied resource snapshot (1.7 GiB available RAM, 745 MiB swap used, 1.4 TB free NVMe); UID/GID/port and Arcane exclusion are pending.
+
 - Record the owner's exploratory self-hosting ideas with source pointers, personal use cases and evaluation constraints; link existing dashboard/cloud plans instead of duplicating them.
 - Select Paperless-ngx for a new session, with requirements discovery and thorough current research before tailored configuration or deployment. Add a dedicated session brief; no Paperless stack, import or detailed setup research performed here.
 - Record explicit owner confirmation that Matter is excluded from Arcane Auto Update, the successful silent 07:00:04 scheduled audio invocation, and the decision to defer Seerr/Tailscale automatic login without changes. Arcane's 7 November run remains pending.
