@@ -75,6 +75,17 @@ the discovery brief as historical context.
   successful full-text search demonstrates OCR. Files were given to the owner
   as conversation attachments, not added to Git or HomePi.
 
+## Post-test resource snapshot (owner output, 2026-11-03)
+
+- Webserver 606.5 MiB / 1 GiB, PostgreSQL 49.44 MiB / 384 MiB,
+  Valkey 10.16 MiB / 96 MiB; total around 666 MiB.
+- Host 1.3 GiB available RAM, 1.2 GiB of 2.0 GiB swap occupied.
+  Higher swap occupancy than the prior 992 MiB is not evidence of active
+  memory pressure; examine `vmstat` swap in/out under a future import.
+- Owner did not yet report whether the two synthetic PDF search checks
+  succeeded. **Do not mark OCR or full-text search validated.**
+- Backup script remains unapplied and restore untested; no personal documents.
+
 ## Plan and explicit boundaries
 
 1. **Prepared in branch/PR only**: Compose, private env template, runbook and
