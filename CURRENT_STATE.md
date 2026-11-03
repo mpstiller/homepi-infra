@@ -1,5 +1,17 @@
 # Current State
 
+## Next session: tailored Paperless-ngx discovery — 2026-11-03
+
+Owner selected Paperless-ngx as the next experiment, explicitly in a NEW session. Current work is documentation only: do not research the detailed setup, deploy Paperless or import documents in this session. Begin the next session with needs discovery, then thorough current upstream research, then a tailored proposal and short owner-executed Pi steps. See [Paperless discovery brief](docs/paperless-discovery.md) and [ideas backlog](docs/ideas-backlog.md). Document categories/volume, capture sources, users/sharing, taxonomy, privacy, iPhone workflow, resources and recovery are unresolved; do not assume defaults are the owner's preferences.
+
+All discussed ideas are retained as candidates; existing household e-ink and file/photo-cloud plans are linked rather than duplicated. Immich/heavy stacks, HDD purchase and migration of existing cloud apps remain deferred under existing decisions. No new service/hardware was selected besides the Paperless trial workstream.
+
+Additional owner evidence/decisions since the Matter PR:
+- matter-server is explicitly confirmed excluded from Arcane Auto Update.
+- 3 November audio journal: start 07:00:04, Deactivated successfully and Finished in the same second; no conversion messages. This verifies a scheduled successful invocation, not a multi-file conversion or lock-wait test.
+- Existing logins remain unchanged: the proposed Seerr/Tailscale login bridge was explicitly deferred. No pilot commands, proxy, login service or authentication changes were applied.
+- Arcane first post-fix actual update verification remains pending for 7 November 10:00 CET; do not call it completed.
+
 ## Matter backup installation and real run — owner evidence 2026-11-02
 
 This supersedes the preparation-only backup status below.
