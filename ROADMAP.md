@@ -10,7 +10,7 @@
 - [x] Verified all three services healthy, runtime Arcane opt-out=false on each, live memory 1.1 GiB available / 992 MiB swap used.
 - [x] Owner confirmed Paperless web UI loads via SSH tunnel.
 - [x] Record post-test resource snapshot: Paperless services ~666 MiB, 1.3 GiB available RAM, 1.2 GiB swap used.
-- [ ] Confirm the two synthetic PDF search checks and actual OCR success (not yet reported), check swap activity with vmstat; check Pi checkout state.
+- [ ] Confirm the two synthetic PDF search checks and actual OCR success (not yet reported), vmstat check complete (no sustained swap-out or I/O wait); check Pi checkout state.
 - [x] Validate Compose on Pi (`config --quiet`), start three services without reported existing-service impact.
 - [ ] Test synthetic PDFs/OCR/search/duplicates and monitor memory/swap.
 - [ ] Deploy proposed backup stop-list under host lock; prove backup snapshot + isolated DB/document restore before any real documents.
