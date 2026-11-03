@@ -1,5 +1,15 @@
 # Roadmap
 
+## Selected next workstream — 2026-11-03
+
+- [x] Capture exploratory service ideas in [ideas backlog](docs/ideas-backlog.md), preserving existing cloud/dashboard decisions.
+- [x] Prepare [Paperless discovery brief](docs/paperless-discovery.md) for a NEW session.
+- [ ] In the new session, clarify actual archive/users/intake/search/privacy needs before choosing settings.
+- [ ] Research current official Paperless deployment/configuration guidance, measure Pi headroom, and propose a tailored architecture and recovery plan.
+- [ ] After that discovery, implement and validate a small reversible pilot together; no installation or import has started.
+
+Other backlog entries are options, not a committed deployment queue. Seerr/Tailscale automatic login is deferred; existing logins remain unchanged.
+
 ## Daily audio processing after backups — 2026-11-02
 
 - [x] Owner dry scan returned no candidate messages; existing service successful.
@@ -8,7 +18,8 @@
 - [x] Guarded pinned installation of worker, service, timer and status collector; owner confirmed success and rollback path 2026-11-02.
 - [x] Confirm next daily trigger: 3 November 07:00 CET; no installation-triggered conversion.
 - [x] Owner visual confirmation of Homepage daily audio status/card (after PR #18 merge).
-- [ ] Observe first scheduled daily batch; real busy-lock wait, playback deferral and batch conversions remain unverified live.
+- [x] Observe first scheduled daily invocation: 3 November 07:00:04, successful completion with no conversion messages.
+- [ ] Real busy-lock wait, playback deferral and multi-file batch conversions remain unverified live.
 
 
 ## Update rollout correction and email — 2026-11-01
