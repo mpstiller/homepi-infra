@@ -48,6 +48,21 @@ the discovery brief as historical context.
 - No verified Paperless login, OCR, real backup snapshot, restore, or personal
   document import yet. The host backup script is NOT yet updated.
 
+## Steady-state verification (owner output, 2026-11-03)
+
+- All three services reported **healthy** about two minutes after startup.
+- Live labels: `com.getarcaneapp.arcane.updater=false` for broker, database
+  and webserver; all status=running.
+- Docker stats: broker 7.922 MiB / 96 MiB, PostgreSQL 45.92 MiB / 384 MiB,
+  Paperless webserver 637.5 MiB / 1 GiB, CPU low at the sample.
+- Pi memory: 4.0 GiB total, 2.8 GiB used, 1.1 GiB available.
+  Swap: 992 MiB of 2.0 GiB. Before starting the stack, owner measured
+  1.7 GiB available and 745 MiB swap used. This does not prove OCR headroom.
+- The only host-published port remains loopback-only 127.0.0.1:8010.
+- Next: use SSH tunnel to complete web-based first-user setup (do not share
+  credentials), then synthetic PDF OCR/search trial while monitoring memory.
+  Backup script is not yet installed; no real document ingestion.
+
 ## Plan and explicit boundaries
 
 1. **Prepared in branch/PR only**: Compose, private env template, runbook and
