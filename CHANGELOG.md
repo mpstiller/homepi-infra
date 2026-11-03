@@ -2,6 +2,8 @@
 
 ## 2026-11-03
 
+- Add explicit Arcane updater=false labels to all three proposed Paperless services before launch, preventing unintended unattended updates; runtime verification is still pending.
+
 - Prepare a reversible Paperless-ngx 3.4.1 pilot in a draft PR: localhost-only, PostgreSQL 18 + Valkey 9, rootless Paperless, one OCR worker/thread, all persistent data in /srv/appdata and proposed backup CANDIDATES. No Pi deployment, backups/restore or real-document imports have occurred. Owner supplied resource snapshot (1.7 GiB available RAM, 745 MiB swap used, 1.4 TB free NVMe); UID/GID/port and Arcane exclusion are pending.
 
 - Record the owner's exploratory self-hosting ideas with source pointers, personal use cases and evaluation constraints; link existing dashboard/cloud plans instead of duplicating them.
