@@ -60,4 +60,6 @@ the discovery brief as historical context.
 - All persistent bind mounts intentionally reside below `/srv/appdata`,
   not excluded `/srv/data`. Raw broker/DB copy requires coordinated stop.
 - Arcane Auto Update must remain limited to existing Homepage containers.
-  PR files alone do not enforce exclusion in Arcane UI.
+  Compose includes explicit `com.getarcaneapp.arcane.updater=false` labels on
+  all three Paperless services; verify effective runtime labels after launch.
+  The Arcane UI exclusion list can be checked as an additional safeguard.
