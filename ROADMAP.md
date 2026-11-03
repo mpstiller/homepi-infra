@@ -6,8 +6,10 @@
 - [x] Compare official v3.4.1 examples and current configuration; obtain 2026-11-03 Pi memory/disk measurements.
 - [x] Prepare versioned localhost-only three-container Compose proposal, secret template, detailed runbook and proposed backup stop-list in a draft PR.
 - [x] Owner read-only preflight confirmed UID=GID=1000, Compose v5.5.1, port 8010 free, no existing Paperless directories/containers.
-- [ ] Check existing HomePi checkout cleanliness, verify Arcane opt-out labels at runtime, and validate Compose on the Pi.
-- [ ] Validate Compose on Pi, install without existing-service impact, test synthetic PDFs/OCR/search/duplicates and monitor memory/swap.
+- [x] Owner confirmed all three container images pulled and started, database and broker healthy, webserver initially `health: starting`; published port loopback-only 8010.
+- [ ] Verify webserver healthy after initialization, runtime Arcane opt-out labels, host memory/swap and existing checkout status.
+- [x] Validate Compose on Pi (`config --quiet`), start three services without reported existing-service impact.
+- [ ] Test synthetic PDFs/OCR/search/duplicates and monitor memory/swap.
 - [ ] Deploy proposed backup stop-list under host lock; prove backup snapshot + isolated DB/document restore before any real documents.
 - [ ] Decide secure LAN/Tailscale app access, iPhone/Mac workflow, email rules and gradual Drive/paper import after pilot succeeds.
 
