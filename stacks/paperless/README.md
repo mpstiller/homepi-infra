@@ -8,6 +8,10 @@ backup consistency and an isolated restore are verified.
 ## Baseline and decisions
 
 - Paperless **3.4.1** (2026-10-31), official ARM64 image
+- Explicit `com.getarcaneapp.arcane.updater: "false"` labels on **all three**
+  services prevent unattended image installation, even before UI exclusions
+  are configured. Update checks/notifications remain enabled. Verify the
+  running labels in Arcane/Docker after deployment.
 - PostgreSQL **18** and Valkey **9 Alpine**, following the official PostgreSQL
   new-installation recommendation. Version ranges for these DB/broker images
   are major tags, not immutable digests; updates are manual and reviewed.
