@@ -27,8 +27,10 @@ the discovery brief as historical context.
 - `free -h`: 4.0 GiB RAM, 2.3 GiB used, 1.7 GiB available; 745 MiB of
   2 GiB swap in use.
 - Root NVMe: 1.8 TB total; 356 GB used; 1.4 TB available.
-- Multiple stateful containers still running. Host-specific current port
-  and UID/GID checks are **not yet provided**.
+- Multiple stateful containers still running. Owner's read-only preflight: UID=1000, GID=1000, Docker Compose v5.5.1,
+  port 8010 not listening, no Paperless container and no prior directories
+  at /srv/appdata/paperless or /opt/homelab/stacks/paperless.
+  These observations are not deployment or functional evidence.
 - Proposed three-container baseline; do not interpret available memory as
   guaranteed free capacity under burst load.
 
