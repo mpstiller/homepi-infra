@@ -86,6 +86,16 @@ the discovery brief as historical context.
   succeeded. **Do not mark OCR or full-text search validated.**
 - Backup script remains unapplied and restore untested; no personal documents.
 
+## Swap activity check (owner output, 2026-11-03)
+
+- `vmstat 1 6` returned five current samples after the startup-average
+  line: `si` 16, 80, 0, 0, 0 KiB/s; `so` 0 in every sample.
+- CPU idle 95–99%, I/O wait 0%, blocked processes 0. No evidence of
+  sustained memory thrashing at idle. Occupied swap alone is not a reason
+  to flush swap or adjust container limits.
+- Search results for synthetic `Wasserkocher` and `Sonnenuhr` samples still
+  **not yet confirmed**; backup and restore are still pending.
+
 ## Plan and explicit boundaries
 
 1. **Prepared in branch/PR only**: Compose, private env template, runbook and
