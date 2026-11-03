@@ -34,6 +34,20 @@ the discovery brief as historical context.
 - Proposed three-container baseline; do not interpret available memory as
   guaranteed free capacity under burst load.
 
+## First boot observed (owner output, 2026-11-03)
+
+- After copying the explicit Arcane opt-out labels, `docker compose config --quiet`
+  succeeded and a matching-label count returned 3.
+- All three images were pulled and the isolated `paperless_default` network
+  was created. At the immediate `docker compose ps` check, `paperless-db`
+  (PostgreSQL 18) and `paperless-broker` (Valkey 9) were **healthy**.
+  `paperless-webserver` (Paperless 3.4.1) had just started and showed
+  **health: starting**, not yet verified healthy.
+- The only published host binding reported was `127.0.0.1:8010->8000/tcp`.
+  Runtime auto-update labels and load under steady state still need checks.
+- No verified Paperless login, OCR, real backup snapshot, restore, or personal
+  document import yet. The host backup script is NOT yet updated.
+
 ## Plan and explicit boundaries
 
 1. **Prepared in branch/PR only**: Compose, private env template, runbook and
