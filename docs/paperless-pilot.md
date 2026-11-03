@@ -1,8 +1,20 @@
-# Paperless-ngx HomePi pilot — proposed, not installed
+# Paperless-ngx HomePi pilot — installed, backup and restore pending
 
 Date: 2026-11-03. See `stacks/paperless/README.md` for implementation gates
 and references. This supersedes the earlier discovery-only state while keeping
 the discovery brief as historical context.
+
+## Verified synthetic import (owner confirmation, 2026-11-03)
+
+- Both prepared synthetic documents were imported into Paperless.
+- Search for `Wasserkocher` found the born-digital PDF.
+- Search for `Sonnenuhr` found the image-only scanned PDF, confirming
+  OCR and searchable indexing with the actual configuration.
+- Small-pilot success **does not demonstrate large-batch OCR capacity**.
+- Next gate: verify the **installed** `homepi-backup` script before applying
+  the proposed three-container stop-list. Then confirm an encrypted backup
+  snapshot and a strictly isolated database+document restore.
+- No real identity/financial/medical documents yet.
 
 ## Agreed user needs
 
@@ -82,8 +94,8 @@ the discovery brief as historical context.
 - Host 1.3 GiB available RAM, 1.2 GiB of 2.0 GiB swap occupied.
   Higher swap occupancy than the prior 992 MiB is not evidence of active
   memory pressure; examine `vmstat` swap in/out under a future import.
-- Owner did not yet report whether the two synthetic PDF search checks
-  succeeded. **Do not mark OCR or full-text search validated.**
+- The two synthetic search checks were subsequently confirmed successful;
+  see Verified synthetic import above.
 - Backup script remains unapplied and restore untested; no personal documents.
 
 ## Swap activity check (owner output, 2026-11-03)
@@ -93,13 +105,12 @@ the discovery brief as historical context.
 - CPU idle 95–99%, I/O wait 0%, blocked processes 0. No evidence of
   sustained memory thrashing at idle. Occupied swap alone is not a reason
   to flush swap or adjust container limits.
-- Search results for synthetic `Wasserkocher` and `Sonnenuhr` samples still
-  **not yet confirmed**; backup and restore are still pending.
+- Search results for the synthetic PDFs were subsequently confirmed;
+  backup and restore are still pending.
 
 ## Plan and explicit boundaries
 
-1. **Prepared in branch/PR only**: Compose, private env template, runbook and
-   proposed backup stop-list; no host changes or user files.
+1. **Pilot live, PR still draft**: Compose, private env and runtime services are in place; proposed backup change remains in PR and is not installed.
 2. Verify installation prerequisites, collisions, Arcane exclusion, and
    existing HomePi checkout state. Small owner-executed changes only.
 3. Deploy localhost-only; test one text PDF and one scanned image PDF,
