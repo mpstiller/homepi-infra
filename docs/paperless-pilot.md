@@ -1,5 +1,33 @@
 # Paperless-ngx HomePi pilot — backup/restore validated for synthetic documents
 
+## Secure private access preflight — 2026-11-04
+
+Owner wants to eliminate Mac SSH tunnels, make Paperless usable from home
+and remotely via Tailscale, without any FRITZ!Box port forwarding or public
+exposure. Preferred first phase is **one HTTPS Tailscale Serve URL** accessible
+on both local and remote Tailnet-connected devices, not a plain HTTP LAN
+binding. A second direct-LAN option is deferred pending explicit need.
+
+Live read-only preflight (owner):
+- Tailscale 1.102.5 running on Pi host; FQDN
+  `homepi.tail110996.ts.net`; Tailscale IPv4 `100.72.110.114`.
+- wlan0 `192.168.178.75/24`, Docker published only
+  `127.0.0.1:8010`; nothing listening on 443.
+- Both `tailscale serve status` and `tailscale funnel status`
+  returned "No serve config".
+- Existing Tailnet is owner-only and deny-by-default; allowed port list
+  in `docs/remote-access.md` excludes TCP 443. **Need minimally permit
+  TCP 443 to HomePi for the existing authorized owner** without granting
+  8010 or widening other ports.
+- Proposed proxy `tailscale serve --bg --https=443 http://127.0.0.1:8010`.
+  The HTTPS hostname will require a minimal Paperless application
+  `PAPERLESS_URL`/host/origin review (official configuration automatically
+  merges the URL into allowed hosts, CORS and CSRF origins). Do not guess
+  that login works until checked from a Tailnet client.
+- Tailscale Serve is not Funnel; no public exposure. User may need HTTPS
+  certificate admin enablement on first invocation.
+- **No access changes yet confirmed.** Keep localhost SSH route as fallback.
+
 ## Operating decision — 2026-11-04
 
 Owner explicitly chose to **defer the native `document_exporter` smoke test
