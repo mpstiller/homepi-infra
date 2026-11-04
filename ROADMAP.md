@@ -12,7 +12,8 @@
 - [x] Record post-test resource snapshot: Paperless services ~666 MiB, 1.3 GiB available RAM, 1.2 GiB swap used.
 - [x] Owner confirmed synthetic digital and image-only PDFs searchable by `Wasserkocher` / `Sonnenuhr`; OCR and indexing work.
 - [x] `vmstat 1 6` shows no active swap-out or I/O wait at idle.
-- [ ] Verify installed backup script/service and checkout state before safely integrating Paperless.
+- [x] Installed backup script hash matches repo main exactly; CANDIDATES lacks Paperless.
+- [ ] Read-only inspect three-line backup candidate patch and verify systemd ExecStart; then install guarded backup change and prove snapshot/restore.
 - [x] Validate Compose on Pi (`config --quiet`), start three services without reported existing-service impact.
 - [x] Test synthetic PDFs/OCR/search and monitor post-test memory/swap.
 - [ ] Confirm behavior for duplicate imports in a later controlled test.
