@@ -1,6 +1,21 @@
 # Paperless-ngx HomePi pilot — backup/restore validated for synthetic documents
 
-## HTTPS client verification — blocked on port 443 (2026-11-04)
+## Tailnet HTTPS transport verified — 2026-11-04
+
+Owner added narrow `tcp:443` to pre-existing
+`autogroup:owner`→`homepi-server` grant, preserving the other
+allowed ports. Initial Mac `curl` SSL timeout subsequently cleared.
+Latest forced IPv4, no-proxy, verbose Mac HTTPS request successfully:
+- Resolved `homepi.tail110996.ts.net` to `100.72.110.114`;
+- Connected to TCP 443 and completed TLSv1.3;
+- Validated Let's Encrypt certificate (CN/SAN correct);
+- Negotiated HTTP/2, got `HTTP/2 302` redirect to
+  `/accounts/login/?next=/` from Paperless.
+This proves private Tailscale Serve→Paperless HTTPS transport and that
+the application responded. Browser login / upload and iPhone client
+still **not validated**. Docker port remains loopback only; Funnel off.
+
+## HTTPS client verification — blocked on port 443 (2026-11-04; resolved by subsequent successful test)
 
 Owner confirmed Paperless db, broker, webserver all **healthy** six minutes
 after the HTTPS Compose recreation, Docker still bound to loopback 8010.
