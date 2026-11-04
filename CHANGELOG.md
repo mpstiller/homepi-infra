@@ -2,6 +2,8 @@
 
 ## 2026-11-04
 
+- Restic `ef45cae4` successfully restored to private `/srv/backups/restore-paperless.OBa8o5B2`, 5442 files/directories (486.679 MiB) in 1:19. Post-backup all three Paperless services healthy. Restored PG cluster startup and document integrity/relationship verification remain pending.
+
 - First Paperless-inclusive backup **passed** (11:20:40–11:22:40 CET). Restic snapshot `ef45cae4` saved (3930 files / 486.679 MiB logical), retention succeeded, all three Paperless container restart messages observed. Post-run db/broker healthy; webserver still health:starting at immediate check. Isolated restore and webserver final health pending. Snapshot `f608e5f3` removed by retention.
 
 - Owner installed Paperless additions to live backup candidate stop-list using shared flock and exact byte-match guard; retained rollback `/root/homepi-backup-before-paperless.iutMZWUb`. Next: controlled systemd backup, health and isolated restore verification. No successful new backup or restore confirmed yet.
