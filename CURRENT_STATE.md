@@ -2,6 +2,9 @@
 
 ## Paperless-ngx — live; backup and isolated restore verified 2026-11-04
 
+Owner decision 2026-11-04: defer native `document_exporter` smoke test and separate exporter backup. Existing Restic + isolated PostgreSQL/media restore is accepted for initial personal use; exporter is optional portability/migration enhancement. No exporter test claimed. Next: classify document taxonomy and intake workflow, check daily backup in ordinary operation.
+
+
 - Running Paperless-ngx 3.4.1, PostgreSQL 18, Valkey 9; localhost-only
   `127.0.0.1:8010` (Mac SSH tunnel), Arcane auto-update opt-outs on all
   containers. All three healthy after the backup.
@@ -25,7 +28,7 @@
 - Idle/post-small-test resources: Paperless services approx 666 MiB, host
   `MemAvailable` 1.3 GiB, 1.2 GiB occupied swap without sustained swap-out
   in sampled `vmstat`. Large batch OCR untested.
-- Next: native `document_exporter` smoke test, then archive metadata design,
+- Next: archive metadata design,
   Mac/iOS workflow, controlled migration, backup monitoring; no LAN/Tailscale
   or automated email integration yet. Duplicate import behavior also untested.
 - Full independent host disaster recovery and a full Paperless app startup from
