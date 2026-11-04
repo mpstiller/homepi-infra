@@ -1,5 +1,23 @@
 # Paperless-ngx HomePi pilot — backup/restore validated for synthetic documents
 
+## HTTPS Compose applied on Pi — 2026-11-04
+
+Owner reviewed candidate `compose.https-candidate.yaml` with `diff`.
+It changed only harmless comments and `PAPERLESS_URL` /
+`PAPERLESS_PROXY_SSL_HEADER`, then installed under the existing shared
+Restic/maintenance flock with a dated Compose rollback file. A
+`docker compose up -d --no-deps webserver` recreated only the Paperless
+webserver. DB and broker were still healthy and remained running. Immediately
+after recreation the webserver was `health: starting` (normal initial
+state, still needs a follow-up health check). Docker host port binding was
+confirmed unchanged: `127.0.0.1:8010`.
+
+**Pending:** confirm the webserver becomes healthy, attempt HTTPS access
+from an authorized Tailnet client, then review the existing live Tailscale
+grant/ACL and add exactly TCP 443 for the existing owner→HomePi rule if
+necessary; verify browser login and upload before calling HTTPS operational.
+No public exposure or direct LAN change.
+
 ## Private Serve status confirmed — 2026-11-04
 
 Owner executed `sudo tailscale serve --bg --https=443 http://127.0.0.1:8010`,
