@@ -16,7 +16,8 @@
 - [x] Confirm systemd ExecStart, last successful scheduled run (04:30–04:31 CET), candidate syntax and exact three-line diff.
 - [x] Owner successfully installed the exact candidate under shared lock with retained rollback `/root/homepi-backup-before-paperless.iutMZWUb`.
 - [x] Controlled `homepi-backup.service` completed successfully 2026-11-04 11:22:40 CET, Restic snapshot `ef45cae4` saved, all three Paperless services restarted.
-- [ ] Verify webserver returns healthy after restart, restore `ef45cae4` to isolated private directory and validate DB/media.
+- [x] Paperless webserver returned healthy after restart; Restic restored `ef45cae4` to private `/srv/backups/restore-paperless.OBa8o5B2`, 5,442 entries / 486.679 MiB; restored PostgreSQL/media/Compose paths exist.
+- [ ] Inspect recovered PostgreSQL PGDATA and media and validate start/query on disposable offline DB copy, without touching live state.
 - [x] Validate Compose on Pi (`config --quiet`), start three services without reported existing-service impact.
 - [x] Test synthetic PDFs/OCR/search and monitor post-test memory/swap.
 - [ ] Confirm behavior for duplicate imports in a later controlled test.
