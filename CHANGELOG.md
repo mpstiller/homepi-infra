@@ -2,6 +2,8 @@
 
 ## 2026-11-04
 
+- Restore structure preflight: private 700 root directory, PG18 data in `18/docker` with PG_VERSION/pg_control, six restored media files and ~69 MB restored PostgreSQL cluster. Offline SQL startup using disposable clone still pending.
+
 - Restic `ef45cae4` successfully restored to private `/srv/backups/restore-paperless.OBa8o5B2`, 5442 files/directories (486.679 MiB) in 1:19. Post-backup all three Paperless services healthy. Restored PG cluster startup and document integrity/relationship verification remain pending.
 
 - First Paperless-inclusive backup **passed** (11:20:40–11:22:40 CET). Restic snapshot `ef45cae4` saved (3930 files / 486.679 MiB logical), retention succeeded, all three Paperless container restart messages observed. Post-run db/broker healthy; webserver still health:starting at immediate check. Isolated restore and webserver final health pending. Snapshot `f608e5f3` removed by retention.
