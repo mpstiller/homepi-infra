@@ -2,6 +2,8 @@
 
 ## 2026-11-04
 
+- Owner configured private Tailscale Serve HTTPS `https://homepi.tail110996.ts.net (tailnet only)` → loopback:8010; both Serve/Funnel status show private mapping, no Funnel public exposure. PR Compose prepared external Paperless URL and forwarded HTTPS header, not yet deployed; owner-only TCP 443 Tailnet grant and HTTPS login tests pending.
+
 - Owner accepted validated Restic→isolated PostgreSQL/media restore as sufficient for initial private document use; deliberately deferred native Paperless `document_exporter` and its smoke test to optional later portability/migration work. No exporter run claimed.
 
 - **Paperless synthetic backup/restore acceptance PASSED:** Owner started restored PG18 on disposable offline copy, recovered 2 indexed document records; SHA-256 verified 2 originals and 1 archive PDF against the recovered database, all matched. No live data overwritten. Private restore, DB test clone and backup rollback remain retained. Native `document_exporter` smoke test still pending before first personal documents.
