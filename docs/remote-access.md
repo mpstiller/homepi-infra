@@ -1,6 +1,16 @@
 # Remote access
 
-## Paperless HTTPS Mac timeout — 2026-11-04
+## Paperless HTTPS transport confirmed — 2026-11-04
+
+Owner modified existing deny-by-default grant for
+`autogroup:owner`→`homepi-server`, adding only `tcp:443`.
+Subsequent Mac `curl -4 -v --noproxy '*'` confirmed TCP connection
+to `100.72.110.114:443`, successful TLSv1.3 and validated Let's Encrypt
+certificate for `homepi.tail110996.ts.net`, HTTP/2 302 to
+`/accounts/login/?next=/`. No Funnel. Browser login, CSRF form POST,
+upload, iPhone access still pending.
+
+## Paperless HTTPS Mac timeout — 2026-11-04 (historical, subsequently resolved)
 
 After Compose change, all three Paperless services healthy. Mac `curl`
 to Serve HTTPS hostname fails with port 443 TCP timeout (8 seconds).
