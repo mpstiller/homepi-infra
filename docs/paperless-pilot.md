@@ -1,3 +1,15 @@
+## Access acceptance — 2026-11-04
+
+Owner confirms direct private Tailscale Serve HTTPS access works from both
+Mac and iPhone, including the iPhone mobile-data test. This completes the
+remote-access milestone: no manual SSH tunnel required for normal use.
+Use `https://homepi.tail110996.ts.net` via authorized Tailnet clients.
+Tailscale Serve remains `tailnet only`, not public Funnel, and Docker
+Paperless binding stays `127.0.0.1:8010`. Existing Restic backup and
+restore acceptance unchanged. Further focus: personally tailored archive
+taxonomy, automation, low-friction intake. No claim of external-host
+rebuild test or native document_exporter execution.
+
 # Paperless-ngx HomePi pilot — backup/restore validated for synthetic documents
 
 ## Tailnet HTTPS transport verified — 2026-11-04
