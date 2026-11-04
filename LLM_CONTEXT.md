@@ -1,3 +1,13 @@
+## Paperless access DONE — 2026-11-04
+
+Owner confirmed working Paperless web access via private Tailscale Serve
+HTTPS on Mac and iPhone (iPhone cellular test). URL:
+`https://homepi.tail110996.ts.net`; TCP 443 added to restrictive
+owner→HomePi Tailnet grant. Docker remains host loopback 8010, no Funnel.
+No SSH tunnel required for normal usage. Backup+isolated restore acceptance
+complete; native exporter deferred. Next collaboratively design minimal
+Paperless classification and ingestion workflow before personal import.
+
 # HomePi — LLM Context
 
 ## Paperless HTTPS client test blocked (2026-11-04)
