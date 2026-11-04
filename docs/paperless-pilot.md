@@ -94,6 +94,21 @@ the discovery brief as historical context.
   DB under `--network none`, no host port or live bind mounts.
 - Do not import personal documents or remove the private restore directory.
 
+## Restore structure verified (owner output, 2026-11-04)
+
+- The isolated restore root is `700 root:root`, so restored personal
+  configuration and content are not generally readable on the host.
+- Restored PostgreSQL location:
+  `srv/appdata/paperless/postgres/18/docker/PG_VERSION`; `global/pg_control`
+  is present; PostgreSQL files use the official Postgres 18 PGDATA layout.
+- Restored Paperless media tree contains 6 files. Restored PostgreSQL
+  data size is about 69 MB; the media `du` output was cut off.
+- These checks prove presence/layout only, **not** SQL recovery or document
+  referential integrity. Next is an offline, no-network PostgreSQL container
+  using a disposable COPY of the restored database directory.
+- Never mount the original restore tree or the production database writable
+  for this test.
+
 ## Agreed user needs
 
 - One person initially, shared with partner potentially later; future
