@@ -1,5 +1,14 @@
 # HomePi — LLM Context
 
+## Paperless HTTPS client test blocked (2026-11-04)
+
+All Paperless services healthy after update; direct Mac curl to
+`https://homepi.tail110996.ts.net` returned HTTP 000 due to TCP 443
+connect timeout. Known restrictive Tailscale access policy excludes port
+443; probable cause but needs live policy review. Next inspect existing
+owner→HomePi grant/ACL, add `tcp:443` **only**, retest. No Funnel or
+router public forwarding.
+
 ## Paperless HTTPS Compose now installed — 2026-11-04
 
 Owner reviewed exact Compose diff and installed via shared lock with dated
