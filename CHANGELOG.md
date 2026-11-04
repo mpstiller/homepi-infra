@@ -2,6 +2,8 @@
 
 ## 2026-11-04
 
+- Owner verified private Tailscale Serve HTTPS Paperless access on Mac and iPhone (cellular), replacing routine manual SSH tunnel. Docker remains localhost-bound; Funnel off. Access milestone complete; move to archive taxonomy/intake design.
+
 - HTTPS Compose webserver recovered healthy; Mac connection to `homepi.tail110996.ts.net:443` timed out after 8 seconds (HTTP 000). Suspect missing port in restrictive Tailnet policy. No public access changes; live policy inspection and precise TCP 443 grant still pending.
 
 - Owner installed private Paperless HTTPS Compose update after exact diff review with dated rollback under shared Restic lock; only webserver recreated, initially health:starting; DB/broker healthy and Docker port remains localhost-only 8010. HTTPS client login and owner-only TCP 443 Tailscale policy change pending.
