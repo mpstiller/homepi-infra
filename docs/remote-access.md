@@ -1,5 +1,13 @@
 # Remote access
 
+## Paperless HTTPS Mac timeout — 2026-11-04
+
+After Compose change, all three Paperless services healthy. Mac `curl`
+to Serve HTTPS hostname fails with port 443 TCP timeout (8 seconds).
+Policy does not list 443: probable deny-by-default block. Need inspect
+live owner-only grant/ACL, add just `tcp:443` if still absent, retest.
+No router forwarding, Docker expansion, or Funnel.
+
 ## Paperless HTTPS app configuration applied — 2026-11-04
 
 Owner reviewed and installed the candidate Compose under the shared backup
