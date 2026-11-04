@@ -77,6 +77,23 @@ the discovery brief as historical context.
   beneath `/srv/backups`, then independently check the restored
   PostgreSQL cluster and original/archive documents. No live state writes.
 
+## Isolated restic restore — successful (owner output, 2026-11-04)
+
+- Source: Restic snapshot `ef45cae4`, created at 11:21:50 CET.
+  Restored to separate `/srv/backups/restore-paperless.OBa8o5B2` in 1:19.
+- Restic reports 5,442 files/directories, 486.679 MiB total.
+- Verified restored paths for Paperless `postgres`, `media` and the
+  Compose stack exist. Restore did not overwrite live data.
+- Production Paperless broker, db and webserver all reported **healthy**
+  four minutes after backup restart; port still localhost-only 8010.
+- Disk had 1.4 TB available before restore.
+- **Not yet proven:** whether restored PostgreSQL cluster starts with
+  recovered records and whether original/archive documents are accessible.
+  Next preflight: inspect restored PostgreSQL PG_VERSION location, restored
+  media counts and private target perms. Then test with *disposable copied*
+  DB under `--network none`, no host port or live bind mounts.
+- Do not import personal documents or remove the private restore directory.
+
 ## Agreed user needs
 
 - One person initially, shared with partner potentially later; future
