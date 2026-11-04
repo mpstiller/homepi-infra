@@ -1,5 +1,6 @@
-# Reversible localhost-only Paperless-ngx pilot for HomePi (2026-11-03).
-# Keep outside Arcane Auto Update. Do not expose to LAN/Tailscale until reviewed.
+# Private Paperless-ngx on HomePi. Tailscale Serve supplies tailnet-only HTTPS.
+# The Docker port remains bound to host loopback; never expose this to LAN/Funnel.
+# Keep outside Arcane Auto Update.
 name: paperless
 
 services:
@@ -66,6 +67,10 @@ services:
       PAPERLESS_DBPASS: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in a private .env file}
       PAPERLESS_SECRET_KEY: ${PAPERLESS_SECRET_KEY:?Set PAPERLESS_SECRET_KEY in a private .env file}
       PAPERLESS_ALLOWED_HOSTS: localhost,127.0.0.1
+      # Tailscale Serve terminates TLS; Paperless keeps loopback/SSH fallback.
+      # PAPERLESS_URL adds the external host, CSRF origin and CORS origin.
+      PAPERLESS_URL: https://homepi.tail110996.ts.net
+      PAPERLESS_PROXY_SSL_HEADER: '["HTTP_X_FORWARDED_PROTO", "https"]'
       PAPERLESS_CSRF_TRUSTED_ORIGINS: "http://localhost:${PAPERLESS_PORT:-8010},http://127.0.0.1:${PAPERLESS_PORT:-8010}"
       PAPERLESS_TIME_ZONE: Europe/Berlin
       PAPERLESS_OCR_LANGUAGE: deu+eng
