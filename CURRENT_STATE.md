@@ -2,6 +2,9 @@
 
 ## Paperless-ngx pilot — 2026-11-03 (live; backup/restore pending)
 
+2026-11-04: Verified installed `/usr/local/sbin/homepi-backup` SHA-256 matches `main:backup/bin/homepi-backup` exactly (0ce674a1…7d85). Current CANDIDATES does not include Paperless; proposed PR adds webserver/db/broker. No live backup integration or restore has occurred.
+
+
 After actual user discovery: archive is a personal completed-document paper trail, Google Drive remains for editable files; equal priority for gradual backlog and incoming capture, minimal administration. iPhone/Mac and controlled mail rules later. No employer/client docs; local-first processing, no external AI by default; possible future shared use/permissions unresolved. Owner reported 1.7 GiB available RAM, 745 MiB swap used, 1.4 TB free NVMe. A PR proposes Paperless 3.4.1 + PostgreSQL 18 + Valkey 9, localhost-only 8010, one OCR worker/thread, private env and all data below /srv/appdata/paperless, proposed backup CANDIDATES. **Pilot deployed 2026-11-03:** owner pulled three images; db and broker healthy, webserver initially `health: starting`; bound localhost 8010. **No installed backup integration, restore, live mobile/mail access or real personal document imports yet.** Owner read-only preflight confirmed UID/GID 1000, Compose v5.5.1, free port 8010, no Paperless directories/containers. Compose validated. All three services now **healthy**; effective Arcane opt-out labels false verified. Live docker stats: 637.5 MiB web, 45.92 MiB db, 7.922 MiB broker; RAM available 1.1 GiB, swap used 992 MiB. Owner confirmed synthetic digital PDF `Wasserkocher` and raster-only scan `Sonnenuhr` both searchable; OCR/indexing verified. Installed backup, isolated restore, real documents and large-load headroom remain unverified; checkout cleanliness still pending. See stacks/paperless/README.md and docs/paperless-pilot.md on the proposed branch. Do not mark this as installed or production-safe.
 
 
