@@ -1,5 +1,20 @@
 # Paperless-ngx HomePi pilot — backup/restore validated for synthetic documents
 
+## Operating decision — 2026-11-04
+
+Owner explicitly chose to **defer the native `document_exporter` smoke test
+and any additional exporter routine**. The existing Restic backup covers
+Paperless database, media and stack configuration. Synthetic end-to-end
+backup, isolated PostgreSQL startup, document records, original/archive
+SHA-256 checks all passed. This is the agreed sufficient backup/restore
+acceptance for initial private document archiving, **without** the native
+exporter as a blocking gate.
+
+No native export, importer test or independent-host recovery is claimed.
+Leave exporter as optional future portability/migration task; focus next on
+document metadata, intake, and low-maintenance workflow. Monitor the daily
+scheduled job and container health in ordinary operation.
+
 ## Acceptance checkpoint — 2026-11-04
 
 **PASSED within the synthetic two-document scope:** Paperless web/OCR/search;
@@ -15,8 +30,8 @@ Live Paperless remained unchanged and healthy after backup.
 
 **Not tested:** full independent-host rebuild, full restored Paperless application
 login, high-volume OCR, unattended next-day backup with this patch, mobile/mail
-capture, document classification rules. Existing runbook requires a small native
-`document_exporter` smoke test before first non-synthetic documents.
+capture, document classification rules. A native `document_exporter` smoke test was originally proposed,
+but the owner deliberately deferred it; it is not a gate for private imports.
 Retained private diagnostic dirs and backup rollback are not to be deleted
 without explicit owner approval:
 
