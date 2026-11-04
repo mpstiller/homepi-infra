@@ -2,7 +2,7 @@
 
 ## Paperless-ngx pilot — 2026-11-04 (live; backup passed; restore pending)
 
-2026-11-04 11:22:40 CET: first post-Paperless-integration systemd backup completed successfully, new restic snapshot `ef45cae4`, Paperless db/broker healthy after restart, webserver health still starting at first immediate check. Snapshot has not been restored or independently validated; no real documents ingested.
+2026-11-04 11:22:40 CET: first post-Paperless-integration systemd backup completed successfully, new restic snapshot `ef45cae4`, Paperless db/broker healthy after restart, webserver health still starting at first immediate check. Snapshot restored successfully to separate `/srv/backups/restore-paperless.OBa8o5B2` (5,442 files/dirs, 486.679 MiB); live broker/db/webserver all healthy. Restored DB start/records and media relation not yet validated; no real documents ingested.
 
 
 2026-11-04: Verified installed `/usr/local/sbin/homepi-backup` SHA-256 matches `main:backup/bin/homepi-backup` exactly (0ce674a1…7d85). Current CANDIDATES does not include Paperless; proposed PR adds webserver/db/broker. Backup stop-list installed under lock with exact-diff verification and retained rollback `/root/homepi-backup-before-paperless.iutMZWUb`; no successful post-change backup or isolated restore has occurred.
