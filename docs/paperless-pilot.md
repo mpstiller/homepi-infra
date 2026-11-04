@@ -1,3 +1,15 @@
+## Manual taxonomy progress — 2026-11-04
+
+Owner confirmed creation of all ten thematic tags after the status tags
+and successful synthetic Inbox workflow. V1 tags now:
+`Inbox`, `Zu erledigen`; `Wohnen`, `Finanzen`, `Steuer`,
+`Versicherungen`, `Gesundheit`, `Beruf`, `Mobilität`,
+`Reisen`, `Anschaffungen`, `Persönliches`.
+The thematic tags are initially matching=None and no auto-match rule is
+claimed. Next proposed manual creation: document types `Rechnung`,
+`Vertrag`, `Abrechnung`, `Bescheid`, `Bescheinigung`,
+`Schreiben`; initially matching=None. No types yet confirmed as created.
+
 ## Inbox automation validated — 2026-11-04
 
 Owner created status tags `Inbox` (inbox designation) and
