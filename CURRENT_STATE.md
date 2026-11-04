@@ -1,3 +1,13 @@
+## Paperless private HTTPS access complete — 2026-11-04
+
+Owner confirmed Mac and iPhone Paperless access, including iPhone
+cellular-over-Tailscale test. Regular SSH tunnel is no longer needed:
+`https://homepi.tail110996.ts.net` private Serve HTTPS is operational.
+Tailnet owner-to-HomePi TCP 443 narrowly allowed, Docker Paperless still
+loopback `127.0.0.1:8010`; no Funnel or router exposure. Backup/isolated
+restore tested separately, native exporter optional/deferred. Next
+document types, correspondents, tags, matching and import.
+
 # Current State
 
 ## Paperless HTTPS transport verified — 2026-11-04
