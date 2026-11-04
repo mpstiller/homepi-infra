@@ -24,7 +24,7 @@
 - [x] Test synthetic PDFs/OCR/search and monitor post-test memory/swap.
 - [ ] Confirm behavior for duplicate imports in a later controlled test.
 - [x] Installed backup candidate list; validated real Restic snapshot `ef45cae4` and isolated PostgreSQL + document checksum restore (synthetic scope).
-- [ ] Smoke-test built-in Paperless `document_exporter` for portable export, as stipulated in the runbook, before first real documents.
+- [ ] Optional/deferred by owner: native Paperless `document_exporter` smoke test for portability and migration; **not required** before real documents given validated Restic restore.
 - [ ] Decide safe cleanup of retained private restore/test copies and rollback only with owner approval.
 - [ ] Decide secure LAN/Tailscale app access, iPhone/Mac workflow, email rules and gradual Drive/paper import after pilot succeeds.
 
