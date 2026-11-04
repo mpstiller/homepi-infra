@@ -4,7 +4,9 @@ This stack was deployed as a localhost-only pilot on 2026-11-03 for one personal
 **localhost-only** until a separate LAN/Tailscale access decision. It does not
 replace Google Drive working files. Backup consistency and isolated
 PostgreSQL/media restore were verified for synthetic documents on 2026-11-04;
-complete the native document-exporter smoke test before introducing real data.
+the native document-exporter smoke test was explicitly deferred by the owner;
+it is an optional later portability/migration enhancement, not a gate for
+initial real documents after the verified Restic restore.
 
 ## Baseline and decisions
 
@@ -70,7 +72,8 @@ complete the native document-exporter smoke test before introducing real data.
   Offline recovered PostgreSQL started, containing both synthetic document
   records; SHA-256 checks passed for 2 originals and 1 archival PDF.
   This is not an independent-host or full restored-application startup test.
-- **Next:** native `document_exporter` smoke test, then real-document workflows.
+- **Next:** real-document metadata and ingestion workflows. A native
+  `document_exporter` smoke test is optional/deferred by owner.
 
 ## Pilot and stop gates
 
@@ -86,10 +89,10 @@ complete the native document-exporter smoke test before introducing real data.
   remain under `/srv/appdata/paperless`. Rollback and restored test copies
   are intentionally retained privately.
 - Real encrypted Restic backup and isolated PostgreSQL/media integrity
-  restore have passed. **Still required before non-synthetic documents:**
-  a native `document_exporter` smoke test; large OCR batches should begin
-  cautiously. A portable Paperless export is supplementary to Restic,
-  not a replacement.
+  restore have passed. Owner accepted this as enough to start private
+  archiving; the native `document_exporter` is **optional/deferred**,
+  not a prerequisite. Large OCR batches should begin cautiously.
+  A portable Paperless export is supplementary to Restic, not a replacement.
 - For rollback, remove containers with `docker compose down` **without -v**;
   keep /srv/appdata/paperless and any tested snapshots unless separately
   authorized to delete. Do not delete backups or originals.
