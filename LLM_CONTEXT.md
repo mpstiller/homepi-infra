@@ -2,6 +2,9 @@
 
 ## Paperless-ngx — live; isolated backup/restore complete (2026-11-04)
 
+Decision 2026-11-04: owner explicitly deferred the native Paperless `document_exporter` smoke test. Treat as optional portability/migration task, NOT a prerequisite for private imports. Synthetic Restic→isolated PostgreSQL+media restore/3 hash checks already passed. Next is metadata/taxonomy and Mac/iOS intake; monitor recurring backup as normal.
+
+
 - Current stack: Paperless 3.4.1, PostgreSQL 18, Valkey 9; local port
   `127.0.0.1:8010`, SSH-tunnel access from Mac. Three healthy services,
   with effective Arcane automatic-update exclusion labels.
@@ -24,7 +27,7 @@
 - No full independent-host restore, recovered full Paperless UI login,
   large OCR load, next unattended daily run, native exporter smoke test,
   duplicate handling, mail/iOS sync, or LAN/Tailscale sharing yet.
-  Runbook stipulates `document_exporter` smoke test before real documents.
+  Native `document_exporter` smoke test intentionally deferred by owner.
 - Approx 666 MiB Paperless container memory after small test; 1.3 GiB host
   available; occupied swap 1.2 GiB but no sustained swap-out sampled.
 - Keep low-risk, incremental, reversible commands. Do not delete retained
