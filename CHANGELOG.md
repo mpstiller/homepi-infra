@@ -2,6 +2,8 @@
 
 ## 2026-11-04
 
+- Owner installed private Paperless HTTPS Compose update after exact diff review with dated rollback under shared Restic lock; only webserver recreated, initially health:starting; DB/broker healthy and Docker port remains localhost-only 8010. HTTPS client login and owner-only TCP 443 Tailscale policy change pending.
+
 - Owner configured private Tailscale Serve HTTPS `https://homepi.tail110996.ts.net (tailnet only)` → loopback:8010; both Serve/Funnel status show private mapping, no Funnel public exposure. PR Compose prepared external Paperless URL and forwarded HTTPS header, not yet deployed; owner-only TCP 443 Tailnet grant and HTTPS login tests pending.
 
 - Owner accepted validated Restic→isolated PostgreSQL/media restore as sufficient for initial private document use; deliberately deferred native Paperless `document_exporter` and its smoke test to optional later portability/migration work. No exporter run claimed.
