@@ -7,7 +7,8 @@
 - [ ] Add only owner→HomePi TCP 443 to existing deny-by-default Tailnet ACL/grant; review actual live rule before applying.
 - [x] Prepare `PAPERLESS_URL` and proxy HTTPS scheme in draft-PR Compose (not installed on Pi).
 - [x] Owner applied reviewed HTTPS Compose with dated rollback under shared backup lock and recreated webserver only; db/broker healthy and Docker stays loopback:8010.
-- [ ] Verify Paperless webserver healthy and test Mac Tailnet HTTPS, update owner→HomePi TCP 443 grant only if required, then verify HTTPS login/upload.
+- [x] Paperless webserver healthy after HTTPS settings; Mac HTTPS TCP 443 timed out, likely missing narrow Tailnet access grant.
+- [ ] Inspect live access policy and allow **only** existing owner's TCP 443 to HomePi, then retest HTTPS login/upload.
 - [ ] Consider independent direct LAN HTTP route only if truly needed; preserve privacy and no router port forwarding.
 
 ## Paperless-ngx controlled pilot — 2026-11-03
