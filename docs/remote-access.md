@@ -1,5 +1,16 @@
 # Remote access
 
+## Paperless HTTPS app configuration applied — 2026-11-04
+
+Owner reviewed and installed the candidate Compose under the shared backup
+lock with dated rollback. Only `paperless-webserver` was recreated; DB
+and broker were healthy, Docker port remained `127.0.0.1:8010`.
+`PAPERLESS_URL=https://homepi.tail110996.ts.net` and the forwarded
+HTTPS scheme setting are now active in the proposed Compose. Webserver
+initially reported `health: starting`, not yet confirmed healthy after
+recreate. Restrictive Tailnet owner-to-HomePi TCP 443 grant and actual
+Mac/iOS login still need verification. No Funnel activated.
+
 ## Paperless private HTTPS — 2026-11-04 (Serve configured, access not yet validated)
 
 Owner verified Tailscale Serve reports
