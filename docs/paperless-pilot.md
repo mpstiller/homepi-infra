@@ -1,5 +1,22 @@
 # Paperless-ngx HomePi pilot — backup/restore validated for synthetic documents
 
+## Private Serve status confirmed — 2026-11-04
+
+Owner executed `sudo tailscale serve --bg --https=443 http://127.0.0.1:8010`,
+enabled only HTTPS certificates (not Funnel), and confirmed both
+`tailscale serve status` and `tailscale funnel status` print:
+`https://homepi.tail110996.ts.net (tailnet only)` with root proxy to
+`http://127.0.0.1:8010`. **Tailnet-only** means no public Funnel exposure.
+Reverse proxy is configured on host; user login via HTTPS not yet verified.
+
+The PR Compose now adds `PAPERLESS_URL=https://homepi.tail110996.ts.net`
+and the loopback-only reverse-proxy HTTPS scheme header. This is **not yet
+installed on the Pi**. Next: owner reviews and applies minimal Compose
+update, checks health/SSH fallback, and minimally adds TCP 443 to the
+existing Tailnet deny-by-default owner→HomePi rule (inspect the actual
+live rule before editing). Validate from Mac/iPhone over HTTPS.
+Neither port 8010 nor router exposure should be enabled.
+
 ## Secure private access preflight — 2026-11-04
 
 Owner wants to eliminate Mac SSH tunnels, make Paperless usable from home
