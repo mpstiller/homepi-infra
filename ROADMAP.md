@@ -9,7 +9,8 @@
 - [x] Owner applied reviewed HTTPS Compose with dated rollback under shared backup lock and recreated webserver only; db/broker healthy and Docker stays loopback:8010.
 - [x] Paperless webserver healthy after HTTPS settings; Mac HTTPS TCP 443 timed out, likely missing narrow Tailnet access grant.
 - [x] Owner added only TCP 443 to existing owner→HomePi Tailnet grant; Mac curl verified TLS 1.3, valid certificate and HTTP/2 302 redirect to Paperless login.
-- [ ] Verify HTTPS browser login (POST/CSRF) and document upload, then iPhone access; SSH remains emergency fallback.
+- [x] Owner confirmed browser access on Mac and iPhone (iPhone on cellular via Tailscale), eliminating routine SSH tunneling.
+- [ ] Design minimal private archive taxonomy and auto-classification; validate first controlled import workflow. SSH remains emergency fallback.
 - [ ] Consider independent direct LAN HTTP route only if truly needed; preserve privacy and no router port forwarding.
 
 ## Paperless-ngx controlled pilot — 2026-11-03
