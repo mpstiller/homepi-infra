@@ -1,5 +1,23 @@
 # Remote access
 
+## Paperless private HTTPS proposal — 2026-11-04 (not yet enabled)
+
+- Owner confirmed Tailscale 1.102.5, `homepi.tail110996.ts.net`,
+  `100.72.110.114`, wlan0 `192.168.178.75/24`, no Serve/Funnel
+  configuration, port 443 unused, Paperless loopback only on 8010.
+- Preferred: Tailscale Serve HTTPS on TCP 443 forwarding to loopback
+  Paperless port 8010; use one HTTPS URL on Mac/iPhone on the Tailnet.
+  This does **not** require exposing 8010 on LAN or on Tailscale, nor router
+  forwarding, nor public Tailscale Funnel.
+- Tailnet deny-by-default policy below does **not** yet include TCP 443.
+  Extend **only** authorized owner's access to HomePi TCP 443, do not
+  replace or open all-port rules. Review the live policy before editing.
+- Add correct Paperless HTTPS external URL, preserve localhost
+  health-check and SSH fallback. Backups/Restic isolation unchanged.
+  No installation claimed.
+
+
+
 ## Current solution: Tailscale
 
 Tailscale is installed directly on the HomePi host and is the private remote-access layer.
