@@ -1,5 +1,15 @@
 # Current State
 
+## Paperless private Tailscale Serve (2026-11-04)
+
+Owner configured background Tailscale Serve HTTPS at
+`homepi.tail110996.ts.net` -> `http://127.0.0.1:8010`; both Serve and
+Funnel status report **tailnet only**, no public Funnel exposure. Docker
+paperless port remains loopback-only. Draft PR adds Paperless external URL
+and forwarded HTTPS proxy header, but no Pi app configuration change yet.
+Restrictive Tailnet policy still needs owner→HomePi TCP 443; no verified
+HTTPS client login yet. Preserve SSH fallback.
+
 ## Paperless-ngx — live; backup and isolated restore verified 2026-11-04
 
 Owner decision 2026-11-04: defer native `document_exporter` smoke test and separate exporter backup. Existing Restic + isolated PostgreSQL/media restore is accepted for initial personal use; exporter is optional portability/migration enhancement. No exporter test claimed. Next: classify document taxonomy and intake workflow, check daily backup in ordinary operation.
