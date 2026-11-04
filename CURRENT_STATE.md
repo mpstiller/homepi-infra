@@ -1,15 +1,36 @@
 # Current State
 
-## Paperless-ngx pilot — 2026-11-04 (live; backup passed; restore pending)
+## Paperless-ngx — live; backup and isolated restore verified 2026-11-04
 
-2026-11-04 11:22:40 CET: first post-Paperless-integration systemd backup completed successfully, new restic snapshot `ef45cae4`, Paperless db/broker healthy after restart, webserver health still starting at first immediate check. Snapshot restored successfully to separate `/srv/backups/restore-paperless.OBa8o5B2` (5,442 files/dirs, 486.679 MiB); live broker/db/webserver all healthy. Restored PostgreSQL independently started from disposable `/srv/backups/paperless-db-test.HSXnpPsP` with `--network none`; recovered DB returned two synthetic documents and one search match for each. Restored media checksum validation remains pending; no real documents ingested.
-
-
-2026-11-04: Verified installed `/usr/local/sbin/homepi-backup` SHA-256 matches `main:backup/bin/homepi-backup` exactly (0ce674a1…7d85). Current CANDIDATES does not include Paperless; proposed PR adds webserver/db/broker. Backup stop-list installed under lock with exact-diff verification and retained rollback `/root/homepi-backup-before-paperless.iutMZWUb`; no successful post-change backup or isolated restore has occurred.
-
-
-After actual user discovery: archive is a personal completed-document paper trail, Google Drive remains for editable files; equal priority for gradual backlog and incoming capture, minimal administration. iPhone/Mac and controlled mail rules later. No employer/client docs; local-first processing, no external AI by default; possible future shared use/permissions unresolved. Owner reported 1.7 GiB available RAM, 745 MiB swap used, 1.4 TB free NVMe. A PR proposes Paperless 3.4.1 + PostgreSQL 18 + Valkey 9, localhost-only 8010, one OCR worker/thread, private env and all data below /srv/appdata/paperless, proposed backup CANDIDATES. **Pilot deployed 2026-11-03:** owner pulled three images; db and broker healthy, webserver initially `health: starting`; bound localhost 8010. **No installed backup integration, restore, live mobile/mail access or real personal document imports yet.** Owner read-only preflight confirmed UID/GID 1000, Compose v5.5.1, free port 8010, no Paperless directories/containers. Compose validated. All three services now **healthy**; effective Arcane opt-out labels false verified. Live docker stats: 637.5 MiB web, 45.92 MiB db, 7.922 MiB broker; RAM available 1.1 GiB, swap used 992 MiB. Owner confirmed synthetic digital PDF `Wasserkocher` and raster-only scan `Sonnenuhr` both searchable; OCR/indexing verified. Installed backup, isolated restore, real documents and large-load headroom remain unverified; checkout cleanliness still pending. See stacks/paperless/README.md and docs/paperless-pilot.md on the proposed branch. Do not mark this as installed or production-safe.
-
+- Running Paperless-ngx 3.4.1, PostgreSQL 18, Valkey 9; localhost-only
+  `127.0.0.1:8010` (Mac SSH tunnel), Arcane auto-update opt-outs on all
+  containers. All three healthy after the backup.
+- Personal completed-document archive; Google Drive remains editable workspace.
+  No real personal, employer or client documents have been imported.
+- Synthetic born-digital `Wasserkocher` and image-only OCR `Sonnenuhr`
+  were imported and found through full-text search.
+- Installed `/usr/local/sbin/homepi-backup` now stops and restarts
+  `paperless-webserver`, `paperless-db`, `paperless-broker` around restic
+  staging. Shared Restic lock, daily 04:30 schedule, retention and monitoring
+  unchanged. Live rollback retained at
+  `/root/homepi-backup-before-paperless.iutMZWUb`.
+- Controlled backup 2026-11-04 11:20:40–11:22:40 CET succeeded, Restic
+  snapshot `ef45cae4`. Restored 5,442 files/dirs to private
+  `/srv/backups/restore-paperless.OBa8o5B2`.
+- PostgreSQL 18 disposable offline clone from restored snapshot started and
+  returned `Dokumente=2|Wasserkocher=1|Sonnenuhr=1`. DB clone retained at
+  `/srv/backups/paperless-db-test.HSXnpPsP`. Verified **2 originals and
+  1 archive PDF** against SHA-256 digests stored in restored DB: all match.
+  Verification container stopped/removed; production data never overwritten.
+- Idle/post-small-test resources: Paperless services approx 666 MiB, host
+  `MemAvailable` 1.3 GiB, 1.2 GiB occupied swap without sustained swap-out
+  in sampled `vmstat`. Large batch OCR untested.
+- Next: native `document_exporter` smoke test, then archive metadata design,
+  Mac/iOS workflow, controlled migration, backup monitoring; no LAN/Tailscale
+  or automated email integration yet. Duplicate import behavior also untested.
+- Full independent host disaster recovery and a full Paperless app startup from
+  restored volumes have **not** been tested. Repo integration remains draft
+  PR #21; do not claim branch merged to main. See `docs/paperless-pilot.md`.
 
 ## Next session: tailored Paperless-ngx discovery — 2026-11-03
 
