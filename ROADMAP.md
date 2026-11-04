@@ -3,8 +3,10 @@
 ## Paperless secure access — 2026-11-04
 
 - [x] Verified Tailscale 1.102.5 running, FQDN `homepi.tail110996.ts.net`, tailnet IPv4 `100.72.110.114`, WLAN `192.168.178.75`, loopback Paperless 8010 and free HTTPS port 443; no Serve/Funnel config.
-- [ ] Configure private **Tailscale Serve** HTTPS for localhost:8010 and minimally grant only authorized tailnet owner TCP 443 in live deny-by-default policy.
-- [ ] Configure Paperless external URL / trusted host and HTTPS origin correctly without exposing port 8010; check login/upload over HTTPS from authorized Mac/iPhone. SSH remains fallback.
+- [x] Owner configured Tailscale Serve HTTPS `homepi.tail110996.ts.net` → localhost:8010; status explicitly `tailnet only`, not Funnel.
+- [ ] Add only owner→HomePi TCP 443 to existing deny-by-default Tailnet ACL/grant; review actual live rule before applying.
+- [x] Prepare `PAPERLESS_URL` and proxy HTTPS scheme in draft-PR Compose (not installed on Pi).
+- [ ] Apply versioned Compose change on Pi with rollback; check local health and SSH fallback, then login/upload from authorized Mac/iPhone over Tailnet HTTPS.
 - [ ] Consider independent direct LAN HTTP route only if truly needed; preserve privacy and no router port forwarding.
 
 ## Paperless-ngx controlled pilot — 2026-11-03
