@@ -31,9 +31,9 @@ CANDIDATES=(
   qbittorrent
   arcane
   homepage
-  paperless-broker
-  paperless-db
   paperless-webserver
+  paperless-db
+  paperless-broker
 )
 
 RUNNING=()
