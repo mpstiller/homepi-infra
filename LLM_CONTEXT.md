@@ -1,5 +1,15 @@
 # HomePi — LLM Context
 
+## Paperless Tailscale private HTTPS access (2026-11-04)
+
+Background Serve configured: `https://homepi.tail110996.ts.net (tailnet only)`
+proxies `http://127.0.0.1:8010`. Funnel remains non-public; both status
+commands show Serve mapping. This does NOT prove HTTPS login. Draft
+PR Compose now adds `PAPERLESS_URL` and HTTPS proxy SSL header; owner has
+not yet applied it on Pi. Tailnet deny-by-default rule must be extended
+by owner→HomePi TCP 443 only, no router exposure, preserving loopback SSH.
+Next is reviewed Pi Compose update and live ACL review/testing.
+
 ## Paperless-ngx — live; isolated backup/restore complete (2026-11-04)
 
 Decision 2026-11-04: owner explicitly deferred the native Paperless `document_exporter` smoke test. Treat as optional portability/migration task, NOT a prerequisite for private imports. Synthetic Restic→isolated PostgreSQL+media restore/3 hash checks already passed. Next is metadata/taxonomy and Mac/iOS intake; monitor recurring backup as normal.
