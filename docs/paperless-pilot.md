@@ -1,3 +1,15 @@
+## Six document types created — 2026-11-04
+
+Owner confirms manual creation of all six V1 document types:
+Rechnung, Vertrag, Abrechnung, Bescheid, Bescheinigung, Schreiben.
+Tags remain 12 total and initial synthetic Inbox import succeeded.
+Next correspondent strategy: don't pre-seed institutions; create on
+first genuine occurrence and avoid correspondent-as-tag duplication.
+Next test: manually classify one existing synthetic test document with
+a fitting document type/tag (without creating fictitious correspondents),
+check that removing Inbox after review keeps the classification.
+No genuine personal documents imported yet.
+
 ## Manual taxonomy progress — 2026-11-04
 
 Owner confirmed creation of all ten thematic tags after the status tags
