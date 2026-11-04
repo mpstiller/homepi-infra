@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-11-04
+
+- Owner supplied installed backup candidate list and SHA-256 0ce674a1…7d85; independently verified it matches `main:backup/bin/homepi-backup` byte-for-byte. Paperless backup addition is still PR-only. Prepared a frontend-first stop list; live restart/restore remains to be tested.
+
 ## 2026-11-03
 
 - Owner confirmed the two synthetic Paperless imports successfully searchable: `Wasserkocher` (born-digital PDF) and `Sonnenuhr` (raster-only scan), proving OCR and indexing. Backup candidate changes remain repository-only; real Restic snapshot and isolated restore are pending. No personal documents ingested.
