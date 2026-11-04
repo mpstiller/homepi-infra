@@ -1,9 +1,10 @@
-# Paperless-ngx — reversible pilot (LIVE, BACKUP NOT YET VALIDATED)
+# Paperless-ngx — live localhost pilot (backup/restore verified for synthetic docs)
 
 This stack was deployed as a localhost-only pilot on 2026-11-03 for one personal Paperless archive. It is intentionally
 **localhost-only** until a separate LAN/Tailscale access decision. It does not
-replace Google Drive working files and must not receive real documents until
-backup consistency and an isolated restore are verified.
+replace Google Drive working files. Backup consistency and isolated
+PostgreSQL/media restore were verified for synthetic documents on 2026-11-04;
+complete the native document-exporter smoke test before introducing real data.
 
 ## Baseline and decisions
 
@@ -64,8 +65,12 @@ backup consistency and an isolated restore are verified.
   `Wasserkocher`, raster-only OCR `Sonnenuhr`.
 - After the test Pi had 1.3 GiB available RAM, and five `vmstat` samples
   showed no swap-out; this does not establish large-import capacity.
-- **Next:** verify actual installed backup script before modifying it, then
-  prove encrypted Restic snapshot and isolated restore.
+- Installed daily backup script now includes all three Paperless containers.
+  A controlled encrypted Restic snapshot `ef45cae4` was independently restored.
+  Offline recovered PostgreSQL started, containing both synthetic document
+  records; SHA-256 checks passed for 2 originals and 1 archival PDF.
+  This is not an independent-host or full restored-application startup test.
+- **Next:** native `document_exporter` smoke test, then real-document workflows.
 
 ## Pilot and stop gates
 
@@ -75,14 +80,16 @@ backup consistency and an isolated restore are verified.
 - Observe `free -h`, `docker stats --no-stream`, logs, OCR output, text search,
   and duplicate behavior. If system becomes swap-bound or OCR OOMs, stop and
   retune. No auto-restart storm or uncontrolled backfill.
-- **Backup is not yet live-integrated**: the proposed
-  `backup/bin/homepi-backup` change only affects the repository until the
-  installed script has been securely updated and verified. The script must stop
-  all three containers during staging; this only works for state under
-  `/srv/appdata/paperless`. Schedule remains 04:30.
-- Verify a real encrypted Restic snapshot and an isolated Paperless
-  DB+media restore, plus a native `document_exporter` test, **before**
-  ingesting non-synthetic personal documents.
+- **Backup is live-integrated**: the installed `homepi-backup` now stops
+  all three containers during staging and restarts them before the Restic
+  upload; this was tested 2026-11-04. Schedule remains 04:30 and sources
+  remain under `/srv/appdata/paperless`. Rollback and restored test copies
+  are intentionally retained privately.
+- Real encrypted Restic backup and isolated PostgreSQL/media integrity
+  restore have passed. **Still required before non-synthetic documents:**
+  a native `document_exporter` smoke test; large OCR batches should begin
+  cautiously. A portable Paperless export is supplementary to Restic,
+  not a replacement.
 - For rollback, remove containers with `docker compose down` **without -v**;
   keep /srv/appdata/paperless and any tested snapshots unless separately
   authorized to delete. Do not delete backups or originals.
