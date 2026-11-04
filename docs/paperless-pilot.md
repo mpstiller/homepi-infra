@@ -109,6 +109,22 @@ the discovery brief as historical context.
 - Never mount the original restore tree or the production database writable
   for this test.
 
+## Offline recovered PostgreSQL verified (owner output, 2026-11-04)
+
+- From snapshot `ef45cae4`, owner created a **disposable copy** of the
+  recovered PG18 data at `/srv/backups/paperless-db-test.HSXnpPsP`.
+- Using the running PostgreSQL image ID, owner started this copy isolated
+  with `--network none`, no published ports. The database became ready.
+- Read-only query against restored `documents_document`: `Dokumente=2`,
+  `Wasserkocher=1`, `Sonnenuhr=1`. This proves the recovered DB starts
+  and contains both synthetic indexed texts independently of production.
+- Test container stopped and removed; offline database copy and original
+  restored data remain retained for file-integrity checks.
+- **Next gate:** compare restored media originals/archive SHA-256 file digests
+  against the recovered `documents_document.checksum/archive_checksum`
+  using a second offline read-only query. Only then call Paperless backup/
+  restore pilot validated for the synthetic samples.
+
 ## Agreed user needs
 
 - One person initially, shared with partner potentially later; future
