@@ -1,5 +1,14 @@
 # HomePi — LLM Context
 
+## Paperless HTTPS Compose now installed — 2026-11-04
+
+Owner reviewed exact Compose diff and installed via shared lock with dated
+rollback, recreating webserver only. DB/broker healthy; frontend initially
+health:starting, loopback binding still `127.0.0.1:8010`. External
+`PAPERLESS_URL` and proxy SSL header now in live Compose. Tailscale Serve
+still private. Need fresh webserver health, Mac HTTPS test, and review/adjust
+owner-only Tailnet TCP 443 access without widening other grants.
+
 ## Paperless Tailscale private HTTPS access (2026-11-04)
 
 Background Serve configured: `https://homepi.tail110996.ts.net (tailnet only)`
