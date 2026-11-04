@@ -1,5 +1,13 @@
 # Current State
 
+## Paperless HTTPS client check — 2026-11-04
+
+After the Compose restart all Paperless services were healthy. Mac
+`curl` to Tailscale HTTPS hostname timed out connecting TCP 443 (8 seconds,
+HTTP 000). Existing deny-by-default Tailnet policy is missing 443, likely
+cause; not yet confirmed by live policy inspection. Must add minimal
+authorized-owner TCP 443 grant and retest. Funnel off, Docker localhost:8010.
+
 ## Paperless HTTPS Compose applied on Pi — 2026-11-04
 
 Owner installed reviewed HTTPS Compose under backup lock with dated rollback;
