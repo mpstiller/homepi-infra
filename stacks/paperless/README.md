@@ -18,8 +18,15 @@ initial real documents after the verified Restic restore.
 - PostgreSQL **18** and Valkey **9 Alpine**, following the official PostgreSQL
   new-installation recommendation. Version ranges for these DB/broker images
   are major tags, not immutable digests; updates are manual and reviewed.
-- Dedicated Compose project `paperless`; no reverse proxy or public routes.
-  Host `127.0.0.1:8010` only. Mac SSH forwarding is optional during the pilot:
+- Dedicated Compose project `paperless`; no Docker reverse-proxy
+  container or public route. Tailscale Serve runs privately on the host,
+  terminating tailnet-only HTTPS at `https://homepi.tail110996.ts.net`
+  and proxying to host `127.0.0.1:8010`. `PAPERLESS_URL` configures host,
+  CORS and CSRF origins for the HTTPS endpoint; the forwarded-protocol
+  setting is trusted only because the Docker port remains loopback-bound.
+  Tailnet deny-by-default must permit authorized owner TCP 443; 8010
+  must not be opened, and Funnel must remain disabled.
+  Mac SSH forwarding is an available fallback: 
   `ssh -N -L 8010:127.0.0.1:8010 marc@homepi`, then
   `http://127.0.0.1:8010`. Verify hostname and port before use.
 - Webserver runs as a rootless host UID/GID, set after `id -u; id -g`.
