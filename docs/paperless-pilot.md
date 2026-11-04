@@ -30,6 +30,20 @@ the discovery brief as historical context.
   proves fragile, address it before unsupervised scheduling.
 - **No backup modification or successful backup run has occurred yet.**
 
+## Backup candidate exactly verified (owner output, 2026-11-04)
+
+- `systemctl show homepi-backup.service -p ExecStart` confirms active script
+  `/usr/local/sbin/homepi-backup`. Most recent scheduled run started
+  04:30:04 CET and finished 04:31:06 CET with `status=0`; this occurred
+  **before Paperless was in the backup candidate list** and does not prove
+  a Paperless snapshot.
+- Candidate file `/tmp/homepi-backup.paperless-candidate` passed `bash -n`.
+  `diff -u` shows **exactly three added lines** after `homepage`:
+  `paperless-webserver`, `paperless-db`, `paperless-broker`.
+- Owner has **not yet installed** this candidate. Next step is guarded
+  atomic installation under the shared lock with a retained rollback copy,
+  then a real backup run and isolated restore.
+
 ## Agreed user needs
 
 - One person initially, shared with partner potentially later; future
