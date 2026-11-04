@@ -1,4 +1,30 @@
-# Paperless-ngx HomePi pilot — installed, first backup passed, restore pending
+# Paperless-ngx HomePi pilot — backup/restore validated for synthetic documents
+
+## Acceptance checkpoint — 2026-11-04
+
+**PASSED within the synthetic two-document scope:** Paperless web/OCR/search;
+all three services healthy; Arcane auto-update opt-outs effective;
+PostgreSQL and broker included in the installed stop-copy-restart backup
+script; automatic-style Restic backup snapshot `ef45cae4` completed successfully;
+full isolated restic restore to `/srv/backups/restore-paperless.OBa8o5B2`;
+disposable offline PostgreSQL 18 clone started under `--network none`;
+restored SQL contains both synthetic documents; **SHA-256 checksums matched for
+2 original documents and 1 associated archive PDF** using the **restored
+database checksum columns**. A temporary verification container was removed.
+Live Paperless remained unchanged and healthy after backup.
+
+**Not tested:** full independent-host rebuild, full restored Paperless application
+login, high-volume OCR, unattended next-day backup with this patch, mobile/mail
+capture, document classification rules. Existing runbook requires a small native
+`document_exporter` smoke test before first non-synthetic documents.
+Retained private diagnostic dirs and backup rollback are not to be deleted
+without explicit owner approval:
+
+- `/srv/backups/restore-paperless.OBa8o5B2`
+- `/srv/backups/paperless-db-test.HSXnpPsP`
+- `/root/homepi-backup-before-paperless.iutMZWUb`
+
+Historical checkpoints below reflect the state *at their recording time*.
 
 Date: 2026-11-03. See `stacks/paperless/README.md` for implementation gates
 and references. This supersedes the earlier discovery-only state while keeping
