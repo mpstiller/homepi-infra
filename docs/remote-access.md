@@ -1,5 +1,17 @@
 # Remote access
 
+## Paperless private HTTPS client verification — 2026-11-04
+
+Owner confirms successful Paperless access on Mac and on iPhone over
+cellular with Tailscale. Use `https://homepi.tail110996.ts.net`
+instead of the manual SSH tunnel. Serve reports `tailnet only`, and
+the owner-only TCP 443 addition to `homepi-server` Tailnet grant is
+active. Port 8010 remains loopback-bound; no router forwarding or Funnel
+is enabled. HTTPS application access validated by owner, while
+automated document-upload workflow remains forthcoming.
+
+
+
 ## Paperless HTTPS transport confirmed — 2026-11-04
 
 Owner modified existing deny-by-default grant for
