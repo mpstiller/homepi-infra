@@ -1,6 +1,15 @@
 # Current State
 
-## Paperless HTTPS client check — 2026-11-04
+## Paperless HTTPS transport verified — 2026-11-04
+
+Owner added `tcp:443` in existing owner-only Tailscale grant.
+Mac `curl -4 -v --noproxy '*'` successfully reached Serve at
+`100.72.110.114:443`, validated TLSv1.3 Let's Encrypt hostname
+certificate and got Paperless `HTTP/2 302` redirect to login.
+Earlier connect/SSL timeouts are resolved. Browser login, upload and
+iPhone remain to test. Docker still loopback 8010, Funnel disabled.
+
+## Paperless HTTPS client check — 2026-11-04 (historical)
 
 After the Compose restart all Paperless services were healthy. Mac
 `curl` to Tailscale HTTPS hostname timed out connecting TCP 443 (8 seconds,
