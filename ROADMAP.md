@@ -8,7 +8,8 @@
 - [x] Prepare `PAPERLESS_URL` and proxy HTTPS scheme in draft-PR Compose (not installed on Pi).
 - [x] Owner applied reviewed HTTPS Compose with dated rollback under shared backup lock and recreated webserver only; db/broker healthy and Docker stays loopback:8010.
 - [x] Paperless webserver healthy after HTTPS settings; Mac HTTPS TCP 443 timed out, likely missing narrow Tailnet access grant.
-- [ ] Inspect live access policy and allow **only** existing owner's TCP 443 to HomePi, then retest HTTPS login/upload.
+- [x] Owner added only TCP 443 to existing owner→HomePi Tailnet grant; Mac curl verified TLS 1.3, valid certificate and HTTP/2 302 redirect to Paperless login.
+- [ ] Verify HTTPS browser login (POST/CSRF) and document upload, then iPhone access; SSH remains emergency fallback.
 - [ ] Consider independent direct LAN HTTP route only if truly needed; preserve privacy and no router port forwarding.
 
 ## Paperless-ngx controlled pilot — 2026-11-03
