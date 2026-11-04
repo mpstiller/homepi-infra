@@ -19,11 +19,13 @@
 - [x] Paperless webserver returned healthy after restart; Restic restored `ef45cae4` to private `/srv/backups/restore-paperless.OBa8o5B2`, 5,442 entries / 486.679 MiB; restored PostgreSQL/media/Compose paths exist.
 - [x] Owner confirmed 700 root-only restore, PostgreSQL 18/docker/PG_VERSION + global/pg_control, six restored media files, ~69 MB PostgreSQL data.
 - [x] Independent restored PostgreSQL 18 cluster started via disposable copy and `--network none`; SQL returned 2 documents, `Wasserkocher=1`, `Sonnenuhr=1`.
-- [ ] Verify restored media originals/archive against SHA-256 digests stored in recovered DB; then complete Paperless backup/restore acceptance.
+- [x] Restored SQL manifest and independent SHA-256 verification passed: 2 original PDFs + 1 archive PDF match recovered PostgreSQL checksums; all temporary test containers removed.
 - [x] Validate Compose on Pi (`config --quiet`), start three services without reported existing-service impact.
 - [x] Test synthetic PDFs/OCR/search and monitor post-test memory/swap.
 - [ ] Confirm behavior for duplicate imports in a later controlled test.
-- [ ] Deploy proposed backup stop-list under host lock; prove backup snapshot + isolated DB/document restore before any real documents.
+- [x] Installed backup candidate list; validated real Restic snapshot `ef45cae4` and isolated PostgreSQL + document checksum restore (synthetic scope).
+- [ ] Smoke-test built-in Paperless `document_exporter` for portable export, as stipulated in the runbook, before first real documents.
+- [ ] Decide safe cleanup of retained private restore/test copies and rollback only with owner approval.
 - [ ] Decide secure LAN/Tailscale app access, iPhone/Mac workflow, email rules and gradual Drive/paper import after pilot succeeds.
 
 
