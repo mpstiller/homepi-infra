@@ -1,3 +1,21 @@
+## Inbox automation validated — 2026-11-04
+
+Owner created status tags `Inbox` (inbox designation) and
+`Zu erledigen` (separate action status). A Paperless workflow
+`01 – Neue Dokumente in Inbox` triggers at Consumption Started and
+assigns Inbox. An additional synthetic PDF was uploaded via the
+private HTTPS web UI: document import succeeded, Inbox tag was
+automatically assigned, and search found the unique synthetic text.
+Owner confirmed all three checks passed. Do not claim broader
+classification has been tested.
+
+Next: create up to ten thematic tags without automatic matching:
+Wohnen, Finanzen, Steuer, Versicherungen, Gesundheit, Beruf, Mobilität,
+Reisen, Anschaffungen, Persönliches. These are overlapping life-area
+tags, not correspondents or document types. `Steuer` is cross-cutting.
+Then test classification on the existing synthetic examples; avoid
+importing real personal files until archive structure is established.
+
 ## Access acceptance — 2026-11-04
 
 Owner confirms direct private Tailscale Serve HTTPS access works from both
