@@ -1,5 +1,17 @@
 # Paperless-ngx HomePi pilot — backup/restore validated for synthetic documents
 
+## HTTPS client verification — blocked on port 443 (2026-11-04)
+
+Owner confirmed Paperless db, broker, webserver all **healthy** six minutes
+after the HTTPS Compose recreation, Docker still bound to loopback 8010.
+From Mac, `curl` to `https://homepi.tail110996.ts.net/` timed out on
+TCP port 443 after ~8 seconds with HTTP 000. Private Serve status had been
+confirmed earlier. Existing Tailnet policy is deny-by-default and does not
+include the new Serve TCP 443 destination. This is the leading explanation,
+not yet a proved root cause. Next inspect and modify the *live* owner→HomePi
+grant/ACL with the narrowest `tcp:443` permission, and retest HTTPS.
+Do not open router ports or change Docker loopback.
+
 ## HTTPS Compose applied on Pi — 2026-11-04
 
 Owner reviewed candidate `compose.https-candidate.yaml` with `diff`.
