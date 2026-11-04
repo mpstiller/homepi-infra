@@ -1,6 +1,18 @@
 # Remote access
 
-## Paperless private HTTPS proposal — 2026-11-04 (not yet enabled)
+## Paperless private HTTPS — 2026-11-04 (Serve configured, access not yet validated)
+
+Owner verified Tailscale Serve reports
+`https://homepi.tail110996.ts.net (tailnet only)` proxying
+`http://127.0.0.1:8010`. Both serve/funnel status show this same
+**tailnet-only** mapping; no Funnel/public access is active.
+Tailscale Serve persists in the background after reboot, per `--bg`.
+PR Paperless Compose adds the URL and trusted forwarded HTTPS scheme,
+but Pi Compose not yet updated. Current restrictive Tailnet grants
+do not explicitly permit TCP 443, and browser authentication/upload over
+HTTPS have not yet been tested. Preserve loopback/SSH fallback.
+
+## Paperless private HTTPS proposal — 2026-11-04 (preflight history)
 
 - Owner confirmed Tailscale 1.102.5, `homepi.tail110996.ts.net`,
   `100.72.110.114`, wlan0 `192.168.178.75/24`, no Serve/Funnel
