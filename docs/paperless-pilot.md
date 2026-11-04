@@ -16,6 +16,20 @@ the discovery brief as historical context.
   snapshot and a strictly isolated database+document restore.
 - No real identity/financial/medical documents yet.
 
+## Installed backup script baseline verification (owner output, 2026-11-04)
+
+- `/usr/local/sbin/homepi-backup` currently includes candidates through
+  `homepage`, with no Paperless entries. Owner reported SHA-256
+  `0ce674a100f0f9428516e6bb4d72c4372ec02708bd93e0398a54d780b70f7d85`.
+- Verified this digest is byte-for-byte identical to the checked-in
+  `main:backup/bin/homepi-backup` source (SHA-256 independently calculated).
+  A controlled three-line extension can therefore be compared exactly.
+- PR candidate stop order is webserver, database, broker (frontend first).
+  Existing restart implementation will restart in list order, so check
+  Paperless health carefully after the first live backup; if restart ordering
+  proves fragile, address it before unsupervised scheduling.
+- **No backup modification or successful backup run has occurred yet.**
+
 ## Agreed user needs
 
 - One person initially, shared with partner potentially later; future
