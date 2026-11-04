@@ -14,7 +14,8 @@
 - [x] `vmstat 1 6` shows no active swap-out or I/O wait at idle.
 - [x] Installed backup script hash matches repo main exactly; CANDIDATES lacks Paperless.
 - [x] Confirm systemd ExecStart, last successful scheduled run (04:30–04:31 CET), candidate syntax and exact three-line diff.
-- [ ] Guarded install of backup candidate under shared lock with rollback; verify successful snapshot and isolated Paperless restore.
+- [x] Owner successfully installed the exact candidate under shared lock with retained rollback `/root/homepi-backup-before-paperless.iutMZWUb`.
+- [ ] Execute systemd backup and verify fresh encrypted snapshot, three Paperless restarts and isolated restore.
 - [x] Validate Compose on Pi (`config --quiet`), start three services without reported existing-service impact.
 - [x] Test synthetic PDFs/OCR/search and monitor post-test memory/swap.
 - [ ] Confirm behavior for duplicate imports in a later controlled test.
