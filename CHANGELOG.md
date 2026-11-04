@@ -2,6 +2,8 @@
 
 ## 2026-11-04
 
+- First Paperless-inclusive backup **passed** (11:20:40–11:22:40 CET). Restic snapshot `ef45cae4` saved (3930 files / 486.679 MiB logical), retention succeeded, all three Paperless container restart messages observed. Post-run db/broker healthy; webserver still health:starting at immediate check. Isolated restore and webserver final health pending. Snapshot `f608e5f3` removed by retention.
+
 - Owner installed Paperless additions to live backup candidate stop-list using shared flock and exact byte-match guard; retained rollback `/root/homepi-backup-before-paperless.iutMZWUb`. Next: controlled systemd backup, health and isolated restore verification. No successful new backup or restore confirmed yet.
 
 - Owner verified Paperless backup candidate against live script: `bash -n` passed and `diff -u` showed only three new CANDIDATES lines. Systemd ExecStart points to live script; 04:30–04:31 CET scheduled run exited 0 before Paperless integration. Candidate not yet installed; guarded install/restore pending.
