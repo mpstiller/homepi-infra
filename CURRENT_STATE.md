@@ -1,5 +1,14 @@
 # Current State
 
+## Paperless HTTPS Compose applied on Pi — 2026-11-04
+
+Owner installed reviewed HTTPS Compose under backup lock with dated rollback;
+`PAPERLESS_URL` and the forwarded HTTPS header are configured. Only
+Paperless webserver recreated, initially health:starting; db and broker
+healthy. Loopback published port still `127.0.0.1:8010`. Await
+webserver health confirmation, Tailscale owner→HomePi TCP 443 allow
+and client login test. No Funnel or direct LAN exposure.
+
 ## Paperless private Tailscale Serve (2026-11-04)
 
 Owner configured background Tailscale Serve HTTPS at
