@@ -1,4 +1,4 @@
-# Paperless-ngx HomePi pilot — installed, backup and restore pending
+# Paperless-ngx HomePi pilot — installed, first backup passed, restore pending
 
 Date: 2026-11-03. See `stacks/paperless/README.md` for implementation gates
 and references. This supersedes the earlier discovery-only state while keeping
@@ -57,6 +57,25 @@ the discovery brief as historical context.
   one controlled systemd service run, check both result and fresh restic
   snapshot, verify every Paperless container returned healthy, then restore
   into isolated temporary paths without overwriting live databases.
+
+## First post-integration backup — success (owner log, 2026-11-04)
+
+- `homepi-backup.service` ran from 11:20:40 to 11:22:40 CET,
+  `Result=success` and `ExecMainStatus=0`.
+- Logs confirmed stop/staging, explicit restart messages for all three
+  Paperless services, cloud upload and retention.
+- Restic created encrypted snapshot **`ef45cae4`** at 11:21:50 CET,
+  processed 3930 files, logical size 486.679 MiB; 43.931 MiB was newly
+  added to repository (8.739 MiB stored).
+- Automatic retention completed. Most recent 04:30 snapshot `f608e5f3`
+  was removed per policy after the new manual one was retained.
+- Paperless broker and database reported **healthy** at immediate post-run
+  check; webserver was **health: starting** 53 seconds after restart.
+  Recheck until healthy before marking post-backup services stable.
+- A successful backup does not prove that restored DB/media are usable.
+  Next: confirm health, restore `ef45cae4` to a new root-only directory
+  beneath `/srv/backups`, then independently check the restored
+  PostgreSQL cluster and original/archive documents. No live state writes.
 
 ## Agreed user needs
 
