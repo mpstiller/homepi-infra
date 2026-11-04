@@ -44,6 +44,20 @@ the discovery brief as historical context.
   atomic installation under the shared lock with a retained rollback copy,
   then a real backup run and isolated restore.
 
+## Backup script installed (owner output, 2026-11-04)
+
+- Protected installation was executed under the shared Restic maintenance
+  flock. An exact byte-level replacement check against the verified old
+  script succeeded, and `bash -n` succeeded.
+- The live `CANDIDATES` list now includes `paperless-webserver`,
+  `paperless-db`, and `paperless-broker` after `homepage`.
+- Rollback copy retained at
+  `/root/homepi-backup-before-paperless.iutMZWUb`.
+- **The modified backup has NOT yet been run or restored.** Next: launch
+  one controlled systemd service run, check both result and fresh restic
+  snapshot, verify every Paperless container returned healthy, then restore
+  into isolated temporary paths without overwriting live databases.
+
 ## Agreed user needs
 
 - One person initially, shared with partner potentially later; future
