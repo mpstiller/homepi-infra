@@ -2,6 +2,8 @@
 
 ## 2026-11-04
 
+- Owner verified Paperless backup candidate against live script: `bash -n` passed and `diff -u` showed only three new CANDIDATES lines. Systemd ExecStart points to live script; 04:30–04:31 CET scheduled run exited 0 before Paperless integration. Candidate not yet installed; guarded install/restore pending.
+
 - Owner supplied installed backup candidate list and SHA-256 0ce674a1…7d85; independently verified it matches `main:backup/bin/homepi-backup` byte-for-byte. Paperless backup addition is still PR-only. Prepared a frontend-first stop list; live restart/restore remains to be tested.
 
 ## 2026-11-03
