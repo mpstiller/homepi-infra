@@ -1,3 +1,23 @@
+## First correspondent matching rule — 2026-11-04
+
+Owner imported an actual cleaning-service invoice (first personal
+document), configured it under document type `Rechnung`, tags
+`Wohnen` and `Steuer` (as potentially tax relevant), and created
+the genuine invoice issuer as first correspondent. Subsequently,
+owner confirmed saving its `Exact` name-based match pattern
+using OCR text. The rule is configured, but **has not yet been
+validated against another invoice**; avoid claiming auto-classification
+success. Do not record private correspondent name, personal data or
+document content in repository.
+
+For low-maintenance intake, suggested first: Mac drag-and-drop via
+Tailscale-only HTTPS Paperless web interface; on iPhone pilot native
+Swift Paperless app via same Tailnet HTTPS URL, with scan/upload and
+verify Inbox assignment. Dedicated, narrowly scoped IMAP folder-based
+import is a later opt-in and must avoid deletion/moves of personal
+inbox messages until safely tested. No additional import service
+installed.
+
 ## Six document types created — 2026-11-04
 
 Owner confirms manual creation of all six V1 document types:
