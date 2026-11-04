@@ -2,6 +2,8 @@
 
 ## 2026-11-04
 
+- Restored PostgreSQL 18 started independently with `--network none` on disposable `/srv/backups/paperless-db-test.HSXnpPsP`; queried restored `documents_document` returned 2 records and content matches `Wasserkocher=1`, `Sonnenuhr=1`. Test container stopped and removed. Original/archive media SHA-256 verification pending.
+
 - Restore structure preflight: private 700 root directory, PG18 data in `18/docker` with PG_VERSION/pg_control, six restored media files and ~69 MB restored PostgreSQL cluster. Offline SQL startup using disposable clone still pending.
 
 - Restic `ef45cae4` successfully restored to private `/srv/backups/restore-paperless.OBa8o5B2`, 5442 files/directories (486.679 MiB) in 1:19. Post-backup all three Paperless services healthy. Restored PG cluster startup and document integrity/relationship verification remain pending.
