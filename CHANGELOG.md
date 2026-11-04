@@ -2,6 +2,8 @@
 
 ## 2026-11-04
 
+- Owner accepted validated Restic→isolated PostgreSQL/media restore as sufficient for initial private document use; deliberately deferred native Paperless `document_exporter` and its smoke test to optional later portability/migration work. No exporter run claimed.
+
 - **Paperless synthetic backup/restore acceptance PASSED:** Owner started restored PG18 on disposable offline copy, recovered 2 indexed document records; SHA-256 verified 2 originals and 1 archive PDF against the recovered database, all matched. No live data overwritten. Private restore, DB test clone and backup rollback remain retained. Native `document_exporter` smoke test still pending before first personal documents.
 
 - Restored PostgreSQL 18 started independently with `--network none` on disposable `/srv/backups/paperless-db-test.HSXnpPsP`; queried restored `documents_document` returned 2 records and content matches `Wasserkocher=1`, `Sonnenuhr=1`. Test container stopped and removed. Original/archive media SHA-256 verification pending.
