@@ -1,3 +1,13 @@
+# Paperless-ngx — current private archive (2026-11-06)
+
+**Operational status:** owner-confirmed live personal use; 3.4.1 with PostgreSQL 18 and Valkey 9; secure `https://homepi.tail110996.ts.net` from Mac and cellular iPhone (and home Wi-Fi with Tailscale connected). Docker continues loopback only `127.0.0.1:8010`, Tailscale Serve tailnet-only, no Funnel. Arcane auto-update opt-outs unchanged. `docs/paperless-pilot.md` is the up-to-date archive/migration record. Detailed text below includes historical pre-install instructions: **do not execute them again for a live instance**.
+
+**Current content:** 12 owner-created tags, 6 types, Consumption Started -> Inbox workflow; exact matching validated for a cleaning correspondent. Owner imported four housing proofs, two heating invoices, electricity welcome letter, twelve cleaning invoices and final signed tenancy agreement V2; no completed deposit migration yet. After review remove Inbox, preserve other status/domain tags as appropriate.
+
+**Backup boundary:** 2026-11-04 real backup/isolated restore succeeded **only with synthetic archive data**. A subsequent successful Restic run and sample content verification for the current personal archive are still to be confirmed before any source cleanup. Native exporter deferred. Never place originals into the auto-consuming folder; no Google Drive integration, direct LAN HTTP or IMAP intake configured.
+
+## Original deployment notes (historical)
+
 # Paperless-ngx — live localhost pilot (backup/restore verified for synthetic docs)
 
 This stack was deployed as a localhost-only pilot on 2026-11-03 for one personal Paperless archive. It is intentionally
