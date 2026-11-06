@@ -1,5 +1,12 @@
 # Changelog
 
+## 2026-11-06 — Housing review closure and moving-company split
+
+- Owner confirms archived Mieterstammblatt and relevant household-insurance proposal; originals moved from review folder to Paperless source-copy folder (read-back checked).
+- Löwen Umzüge e.K. identified as commissioned company; two dated 2025-08-29 offers 1241/1242 found. Drive reorganized into vendor commissioned vs remaining uncommissioned quotes, preserving all files. Paperless imports of Löwen offers still pending.
+
+
+
 ## 2026-11-06 — Google Drive housing organization completed
 
 - Per owner request created five category folders under existing housing Drive root; moved 20 owner-confirmed Paperless source PDFs (including nested invoice folders), three deposit proof PDFs, original project folders, eight work/media assets, five negotiation/application drafts and two documents pending review. Read-back confirmed root contains only five categories. No deletion, no renaming, and no Paperless API import by assistant. Full destination links and classification in `docs/paperless-pilot.md`.
