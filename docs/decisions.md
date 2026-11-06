@@ -83,3 +83,14 @@
 **Security and recovery:** Paperless only at Docker loopback `127.0.0.1:8010`, privately accessed via Tailscale Serve HTTPS `https://homepi.tail110996.ts.net` and narrow owner-only TCP 443 grant; no Funnel/public exposure. Encrypted daily Restic is the accepted primary backup, synthetic isolated recovery proved 2026-11-04, new verification after actual-data migration still due. Native document exporter optional by owner's choice.
 
 **Source cleanup:** no Google Drive deletes or moves until documents have been validated in Paperless, a subsequent current archive backup has succeeded and the owner explicitly approves source cleanup. Final signed legal documents and historical proof may both matter; don't assume equal filenames mean duplicates.
+
+## ADR-014 — Paperless administrative archive versus Drive reference/workspace (2026-11-06)
+
+Decision: Paperless is the user's lean, automation-first private administrative archive for invoices, contracts, insurance, tax, banking, official correspondence and evidentiary proofs; NOT a catch-all for all PDFs. Google Drive holds project files, editable content, photos, research, vendor offers and price-comparison collections. An accepted quotation can deliberately exist in BOTH systems when Paperless preserves contract evidence and Drive keeps a comparable future price reference.
+
+The Drive folder "00_Temporaere_Paperless_Migrationskopien" is a temporary migration safety area rather than a permanent second archive. Never delete its copies absent actual document-to-Paperless reconciliation, confidence in recoverability, and explicit owner permission. The 2026-11-06 snapshot was successful but current dataset not independently restored.
+
+Execution: User confirmed Löwen Umzüge quote PDFs 1241/1242 imported into Paperless; both source originals moved BACK to existing Drive folder "01_Beauftragte_Firma_Loewen_Umzuege", verified by destination readback. All uncommissioned vendor offers remain in Drive. Root housing categories were renamed without new IDs: "01_Aktive_Projekte" to "01_Projekte_und_Referenzen"; moving subfolder "Umzugsunternehmen" to "Umzugsunternehmen_Angebotsvergleich"; source archive to "00_Temporaere_Paperless_Migrationskopien". No Drive originals deleted.
+
+Paperless has existing Intake->Inbox workflow and one validated cleaning provider exact correspondent rule. Broader classification and IMAP email intake have NOT been implemented. Pilot additional automation cautiously with real samples and review before auto-filing.
+
