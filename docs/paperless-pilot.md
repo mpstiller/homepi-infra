@@ -1,3 +1,21 @@
+## Housing migration: cleaning invoices complete — 2026-11-06
+
+Owner confirms remaining ten 2026 cleaning invoices were imported and
+checked in Paperless. Combined with the two prior invoices, all twelve
+known files in the Google Drive cleaning folder have been reviewed in
+Paperless. The user reports successful checks; this is not an independent
+Paperless API reconciliation. Keep Drive originals intact until
+a new successful Restic backup and file-level completeness/duplication
+verification; do not delete or move anything automatically.
+
+Next controlled batch is legally important tenancy records: compare
+the two apparent tenancy contract versions and determine which is
+executed/final; compare three deposit account applications, the deposit
+confirmation and account termination/closure document for relevance and
+source dates before import. Avoid guessing legal effect or definitive
+duplicates from filenames/text extraction. Ask owner to verify signed
+version visually; do not expose private terms or bank details in repo.
+
 ## Google Drive housing migration progress — 2026-11-06
 
 Owner confirmed initial housing batch of four proof documents imported,
