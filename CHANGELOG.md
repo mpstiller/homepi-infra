@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-11-06 — Google Drive housing organization completed
+
+- Per owner request created five category folders under existing housing Drive root; moved 20 owner-confirmed Paperless source PDFs (including nested invoice folders), three deposit proof PDFs, original project folders, eight work/media assets, five negotiation/application drafts and two documents pending review. Read-back confirmed root contains only five categories. No deletion, no renaming, and no Paperless API import by assistant. Full destination links and classification in `docs/paperless-pilot.md`.
+
+
+
 ## 2026-11-06 — Post-import backup checkpoint (afternoon)
 
 - Owner initiated a controlled extra encrypted Restic backup after real document imports; `homepi-backup.service` and notify hooks exited 0, consistent staging and Paperless web/db/broker restarts reported, encrypted upload completed. New snapshot `c15d8d59` saved 15:09:13 CET (509.830 MiB logical); backup finished 15:10:08 CET. Normal retention removed the earlier same-day `cea5a742`.
