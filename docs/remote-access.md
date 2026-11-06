@@ -165,7 +165,7 @@ Allowed Tailscale ports:
 9696  Prowlarr
 ```
 
-The Tailnet policy is deny-by-default for all other HomePi ports.
+The Tailnet policy is deny-by-default for all other HomePi ports. The 443 addition was owner-verified on 2026-11-04; older notes above retain their original historical pre-change state.
 
 
 ### Resolved: Jellyfin remote server connection — 2026-10-14
