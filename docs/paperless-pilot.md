@@ -1,3 +1,22 @@
+# Paperless pilot — CURRENT STATUS / owner confirmation, 2026-11-06
+
+The chronological sections below retain historical checkpoints and outdated contemporaneous next steps; **use this section for the latest owner-confirmed state**.
+
+## Real document archive and Google Drive migration
+
+- Current access: `https://homepi.tail110996.ts.net` via authorized Tailscale client, including while on home Wi-Fi. Tailnet-only HTTPS; not direct LAN `:8010`; no Funnel. Mac browser and cellular iPhone tested.
+- Core stack/restore: Paperless 3.4.1, Postgres 18, Valkey 9; Compose and Arcane labels unchanged. Daily 04:30 encrypted Restic backup includes containers and data. Controlled successful backup + isolated Postgres/media restore was **2026-11-04 using synthetic documents only**. No fresh verified backup for imported personal documents; preserve original Drive files.
+- Metadata live: 12 tags (status: `Inbox`, `Zu erledigen`; domains: `Wohnen`, `Finanzen`, `Steuer`, `Versicherungen`, `Gesundheit`, `Beruf`, `Mobilität`, `Reisen`, `Anschaffungen`, `Persönliches`); six types `Rechnung`, `Vertrag`, `Abrechnung`, `Bescheid`, `Bescheinigung`, `Schreiben`. Consumption Started workflow assigns Inbox; owner confirmed successful synthetic test. Remove Inbox after classifying and checking. `Zu erledigen` independent of Inbox.
+- Real document import **confirmed by owner**: four housing documents (registration and housing-provider confirmations, handover, utilities settlement); two heating invoices; electricity welcome letter; **all twelve** cleaning invoices; **executed tenancy agreement V2**. Count by distinct reported items = 20; no direct API-count verification. The old V1 contract remains in Drive as negotiation history and should not be labeled an active executed contract.
+- Cleaning provider correspondent exact rule proved in a second separate September 2026 invoice; other automatic classifier fields not proven. For final tenancy agreement, formal landlady as correspondent; for handover made by acting manager/son, owner confirmed assigning him. Correspondent is about document issuer/author, not merely searchable mention. Do not commit actual document contents or names here.
+- PSD deposit: among three forms, larger ~7.3MB scanned `Mietkautionskontoantrag_Stiller.pdf` dated in Drive 2025-09-29 is *owner-confirmed signed final application*; **import is NOT yet confirmed**. Two smaller PSD forms had small differences, including one beneficiary/name text; retain as drafts temporarily. Owner confirms PSD account opened; evidence is an email, not yet archived. Hausbank München account establishment 2025-09-16 and closure/payment entry 2025-09-25 are separate relevant historical proofs, not PSD documents. Their import **not yet confirmed**.
+- Proposed next controlled import: signed PSD application (`Vertrag` + `Wohnen`/`Finanzen`); complete PDF of PSD account-confirmation email (`Schreiben`, same tags); Hausbank setup document (`Bescheinigung`) and dissolution document (`Schreiben`), both `Wohnen`/`Finanzen`. Verify actual date and issuer, OCR on scanned PSD application, remove Inbox at final review. Do not infer account creation merely from application.
+- Drive cleanup policy: distinct active vs outdated drafts vs historical banking proof, manual review, exact dedupe not merely filename. Never delete/move Google Drive original automatically; wait for verified current-state backup and user permission. Direct cloud-to-Paperless import not installed; user imported manually using HTTPS.
+- Swift Paperless iPhone third-party app **suggested only**; no owner installation/scan test confirmed. Dedicated IMAP mailbox and native Paperless exporter intentionally not installed/tested. Avoid assuming future capabilities are active.
+- Documentation-only GitHub updates must not be treated as live Pi runtime changes or new backup snapshots.
+
+---
+
 ## Housing migration: cleaning invoices complete — 2026-11-06
 
 Owner confirms remaining ten 2026 cleaning invoices were imported and
