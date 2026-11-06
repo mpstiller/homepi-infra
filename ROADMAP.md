@@ -1,5 +1,29 @@
 # Roadmap
 
+## CURRENT PRIORITIES — 2026-11-06 (supersedes stale historical checklists below)
+
+### Paperless-ngx / private document migration
+- [x] Deploy Paperless 3.4.1, Postgres 18, Valkey 9 with private loopback Docker port and Arcane update opt-outs.
+- [x] Pass synthetic document OCR/search, real Restic encrypted backup and isolated PostgreSQL/media checksum restore (2026-11-04).
+- [x] Activate private Tailscale Serve HTTPS, owner-only TCP 443; browser access from Mac and iPhone cellular confirmed; no Funnel.
+- [x] Configure 12 real tags, 6 document types and automatic Intake/Inbox workflow; validate Inbox with synthetic upload.
+- [x] Validate `Exact` correspondent matching on second real cleaning invoice.
+- [x] Owner import/check of four housing proofs, two heating invoices, electricity letter, all 12 cleaning invoices; executed tenancy agreement V2 imported.
+- [x] Identify signed final PSD Bank deposit application; user confirms PSD account active.
+- [ ] Import and check **signed PSD Bank application** (identified, *not yet confirmed imported*), PDF of bank email confirmation with sender/date, Hausbank account setup and closure documents.
+- [ ] Confirm automatic metadata/Inbox removal for remaining deposit documents and reconcile no accidental duplicate archive items.
+- [ ] Observe fresh successful **post-real-import** daily 04:30 Restic run, optionally inspect snapshot and perform limited restoration/integrity sample before approving any source cleanup. **No Google Drive deletion/move without explicit approval.**
+- [ ] Drive migration phase 2: review other Finance/Tax/Insurance/Career/Health folders by metadata and document purpose; retain working documents, do not mass-import certificates/secrets.
+- [ ] Optional: native iPhone scan/share integration trial; opt-in dedicated IMAP email import; classify based on real examples rather than speculative auto-match.
+- [ ] Optional: native Paperless `document_exporter` portability test, deferred by owner; large-batch OCR, fully independent host recovery and UI restored-login remain unverified.
+
+### Other open verification
+- [ ] Review first Arcane scheduled update *after* tag-label correction; expected 2026-11-07 10:00 CET (not yet observed).
+- [ ] Independently verify Paperless production backup from **after** personal-data migration; do not rely on 2026-11-04 synthetic-only restore as proof of current archive contents.
+- [ ] Check current Pi operational health/live image revisions before claiming anything changed since last supplied evidence.
+
+---
+
 ## Paperless secure access — 2026-11-04
 
 - [x] Verified Tailscale 1.102.5 running, FQDN `homepi.tail110996.ts.net`, tailnet IPv4 `100.72.110.114`, WLAN `192.168.178.75`, loopback Paperless 8010 and free HTTPS port 443; no Serve/Funnel config.
