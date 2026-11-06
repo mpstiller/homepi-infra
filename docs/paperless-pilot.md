@@ -1,3 +1,18 @@
+## Google Drive housing migration progress — 2026-11-06
+
+Owner confirmed initial housing batch of four proof documents imported,
+then two heating invoices and the electricity welcome letter imported.
+Two actual cleaning invoices are now in Paperless (original sample and
+a second dated 2026-09-13), and the existing correspondent `Exact`
+matching rule **correctly recognized** the second issuer. Twelve 2026
+cleaning invoices are present in source Drive folder, so **ten** remain
+pending import; do not reimport the two already present. Suggest
+two controlled batches of five due to Pi 5 4GB RAM, verifying OCR/date,
+correspondent, `Rechnung`, `Wohnen`, optional tax relevance, and
+removing Inbox only after review. Retain all Drive originals until
+verified Paperless state and a subsequent successful Restic backup.
+No source deletion/move yet. Never record personal invoice contents in repo.
+
 ## First correspondent matching rule — 2026-11-04
 
 Owner imported an actual cleaning-service invoice (first personal
