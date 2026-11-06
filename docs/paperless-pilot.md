@@ -1,3 +1,15 @@
+## Read-only Google Drive housing folder audit — 2026-11-06
+
+Audited the current source Drive folder `02_Areas/Home/Adam-Berg-Straße` and subfolders `Nebenkosten`, `Putzkraft`, `Heizung`, `Strom`, `Dachfenster` (photos/estimates), `Umzugsunternehmen` (estimates). **Read-only** inspection; no file moved/deleted and no live Paperless API inventory.
+
+- Owner-reported already migrated and classified: registration certificate, housing-provider certificate, handover report (3 PDFs); older utilities settlement (1); heating invoices (2); electricity welcome letter (1); all twelve cleaning invoices (12); executed lease V2 (1). That is **20** known distinct Drive-PDF source records, pending Paperless-side reconciliation before source disposition.
+- Deposit: source folder includes signed scanned PSD bank application, two smaller unsigned PSD versions, former Hausbank account creation notice and account dissolution notice. Owner has said deposit batch was completed, but no separate Paperless API verification. The PSD opening-confirmation email is not necessarily a Drive-folder file. Also found `Mieterstammblatt HB-Kautionen.pdf` as an additional historical proof; review its necessity independently.
+- `Ausdruck (50).pdf` text identifies a **proposal** for household contents insurance, not necessarily a bound policy; check status before considering insurance archiving. A rental self-disclosure is a prior application document, not active agreement.
+- Keep in Drive: editable `Küchenecke.pptx`, native shared cleaning plan, Word letterbox-label file, Internet/electricity comparisons in XLSX, meter photo, MOV videos, roof-window photo evidence and active quote/project folders. Roofing/window or moving quotes may merit Paperless **only if accepted, invoiced or needed as durable proof**; otherwise avoid bulk archival of every quote. Prior contract V1 and PSD application drafts are negotiation/history, not active official documents.
+- **Next action**: obtain owner consent for a safe, itemized disposition proposal; check specific ambiguous records and actual Paperless presence one by one. Recommend reversible relocation/archiving before irreversible Drive Trash only if owner approves; do not assume Restic snapshot alone guarantees full document-level restore.
+
+---
+
 ## Post-import backup milestone — 2026-11-06
 
 Following owner-reported completion of the tenancy/deposit filing stage, the owner manually triggered the existing `homepi-backup.service`. Service returned 0 and log confirmed consistent staging, restart of Paperless webserver/db/broker, Google Drive upload and Restic snapshot `c15d8d59` saved (2026-11-06 15:09:13 CET; logical size 509.830 MiB), followed by successful retention/completion at 15:10:08 CET. A read-only `du -sh` of the **staging copy** showed `postgres=71M`, `media=21M`, `data=1.9M`. These are existence/size checks, **not** a file-level restic snapshot listing, database validation, or restored document-level checksum proof. Only the earlier synthetic isolated restore has been tested.
