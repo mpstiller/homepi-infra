@@ -30,3 +30,11 @@ After a meaningful change, update at least:
 - `LLM_CONTEXT.md` if the change materially affects future handoffs
 
 If a setting is unknown, write `VERIFY ON PI` rather than guessing.
+
+
+## Avoid stale handoff traps (2026-11-06)
+
+- `CURRENT_STATE.md`, `LLM_CONTEXT.md`, `ROADMAP.md` and Paperless pilot notes contain chronological history. Always read the newest **CURRENT** block first and treat superseded older TODOs as historical; never infer the archive is still unused, that Tailscale access is pending, or that taxonomy was not created.
+- Document changes confirmed by the owner separately from live Pi command evidence and independent API/restore verification. GitHub commits do not mean runtime changes are installed or tested.
+- Existing private repository PR #21 is draft until GitHub reports otherwise. Keep the selected personal GitHub identity separate from work identities. Never commit actual document OCR, legal names/addresses, IBAN, passwords, keys, certificates or sample private bank PDFs.
+- For the current Google Drive → Paperless migration, preserve source files; require an observed successful post-import backup and explicit approval before any cleanup.
