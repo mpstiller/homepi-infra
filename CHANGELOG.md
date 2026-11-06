@@ -1,5 +1,14 @@
 # Changelog
 
+## 2026-11-06 — Operating model correction / restored vendor reference set
+
+- Owner chose automated administrative Paperless archive, not all-PDF consolidation; Drive retains projects/reference and vendor comparisons (ADR-014).
+- Returned two commissioned Löwen Umzüge quote originals 1241 and 1242 to Drive's commissioned vendor folder, with owner-confirmed Paperless imports retained. Verified destination. Other vendor offers kept.
+- Renamed Drive housing categories to 01_Projekte_und_Referenzen, Umzugsunternehmen_Angebotsvergleich, 00_Temporaere_Paperless_Migrationskopien. IDs preserved; nothing deleted.
+- Automation presently limited to Inbox workflow and validated exact-match cleaning correspondent; further rules/email ingestion are future work.
+
+
+
 ## 2026-11-06 — Housing review closure and moving-company split
 
 - Owner confirms archived Mieterstammblatt and relevant household-insurance proposal; originals moved from review folder to Paperless source-copy folder (read-back checked).
