@@ -1,3 +1,11 @@
+## Follow-up migration and moving company triage — 2026-11-06
+
+Owner confirmed two further **Paperless** imports: `Mieterstammblatt HB-Kautionen.pdf` and `Ausdruck (50).pdf` (insurance proposal; owner considers it relevant). Assistant moved both Drive originals from the housing review folder to `00_Bereits_in_Paperless_Archivkopien/04_Versicherung_und_weitere_Belege`: https://drive.google.com/drive/folders/1NVKcOkVhJcgfqOw_5ynhZ_VyRBBiRQep . Neither source was deleted; the review folder remains empty and ready for future findings. Item-level Paperless API validation still unavailable.
+
+Owner says the commissioned moving company was **Löwen Umzüge**, for two separately quoted moves. Text extraction confirmed both exact original PDF sources are Löwen Umzüge e.K. offers dated **2025-08-29**, quote **1241** (Schick) and **1242** (Stiller). File IDs `1IVL4tZQzv-lkZfO1zqaQP3SE_tNhBtSg` and `1tFAXw3kNj5coct7f9Xx7tHX09hGr_9pJ`. Recommended Paperless metadata for EACH: document type `Vertrag` only if accepted/commissioned offer, issuer/correspondent `Löwen Umzüge e.K.`, tag `Wohnen`, date 2025-08-29, title `Umzug 2025 – Löwen Umzüge – Angebot 1241/1242` respectively; examine OCR/acceptance page, remove Inbox after check. **Paperless import of these two quotes NOT yet confirmed.**
+
+Drive folder `01_Aktive_Projekte/Umzugsunternehmen` now contains only two subfolders: commissioned vendor `01_Beauftragte_Firma_Loewen_Umzuege` (https://drive.google.com/drive/folders/1SZXoxTGeEVirsfxr9jgIfXpAlmEgw9rQ) holding the **two original accepted quote PDFs**, and `02_Nicht_beauftragte_Angebote` (https://drive.google.com/drive/folders/18a31qpA84VRP3FkG7wRVnaHU3Ox38MVa) holding remaining two PDFs plus the original Optimus and Powerteam subfolders (with all children). Destinations checked by readback. The second Optimus PDF and a top-level Optimus-named PDF appear content-identical in text but have not been binary-deduplicated; **neither deleted**. No further actions on the Pi or backups.
+
 ## Google Drive source organization executed — 2026-11-06
 
 Owner explicitly requested expedited Paperless import recommendations and direct Google Drive reorganization. **Drive writes completed and destination listings read back**; no deletes, no file renames, no Paperless API imports performed by assistant.
