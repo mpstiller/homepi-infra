@@ -1,5 +1,15 @@
 # Changelog
 
+## 2026-11-06 — Paperless document-archive rollout and repository audit
+
+- Confirmed owner-guided migration from Google Drive into Paperless: four housing proof documents, two heating invoices, electricity welcome letter, 12 cleaning invoices and final signed tenancy agreement V2. User states imports/checks completed. No independent Paperless API inventory or current production backup verification claimed.
+- Verified practical taxonomy workflow: 12 tags (including ephemeral `Inbox` and action-state `Zu erledigen`), six document types, Inbox-on-consumption workflow. Owner configured exact correspondent match for real cleaner invoice; automatic recognition succeeded on another invoice. Inbox is removed after verification, thematic tags remain.
+- Compared two tenancy contract PDFs and identified substantive negotiated revisions to clauses on minor repairs, decorating and landlord key retention. Owner confirmed V2 is executed and imported. Legal landlady vs acting son treated as distinct document correspondents (signed contract vs handover record).
+- Investigated three PSD Bank deposit applications and earlier Hausbank München establishment/closure. Owner identified the larger scanned PSD PDF as signed final version and says account is active, while account confirmation exists as email only. **Import of those deposit artifacts remains pending**, so earlier records must not be marked migrated.
+- Existing Tailscale Serve private HTTPS remains `https://homepi.tail110996.ts.net`; works at home over Tailscale and remotely on authorized clients. No direct LAN port 8010 or Funnel exposure.
+- Documentation audit corrected superseded handoff, Roadmap, operational remote access, pilot, runbook, README, idea backlog and current-state references. No Pi configuration, services, data, Google Drive originals or secrets modified; all updates made on Paperless feature branch/draft PR #21.
+- Follow-up required: fresh successful Restic backup **after** actual documents and controlled verification before considering any source deletion. Native exporter remains deferred. Historical dated entries below preserve what was known *at the time*; open items from those dates are not necessarily current.
+
 ## 2026-11-04
 
 - Owner verified private Tailscale Serve HTTPS Paperless access on Mac and iPhone (cellular), replacing routine manual SSH tunnel. Docker remains localhost-bound; Funnel off. Access milestone complete; move to archive taxonomy/intake design.
