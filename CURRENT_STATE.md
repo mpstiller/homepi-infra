@@ -1,3 +1,9 @@
+## Post-import Paperless backup verified at staging level — 2026-11-06 15:10 CET
+
+Owner initiated an extra `homepi-backup.service` run after the confirmed housing/deposit import batch. Systemd service and pre/post hooks all exited 0. Backup journal confirms consistent staging, paperless-webserver/db/broker restart, upload to Google Drive, Restic snapshot **`c15d8d59`** saved at 15:09:13 CET, and successful retention/completion at 15:10:08 CET. Snapshot reported logical size **509.830 MiB**. Owner's read-only `du -sh` of the staging paths reported `paperless/postgres` **71M**, `paperless/media` **21M**, `paperless/data` **1.9M**. These show staging directories exist and are nonempty; they do **not** independently establish document-by-document completeness or a current restored DB/media integrity test. Prior 2026-11-04 synthetic restore remains the only tested restore. Keep Google Drive source files intact until per-document reconciliation and express owner approval of moves/deletion.
+
+Owner's short "erledigt" after a proposed four-document deposit batch was interpreted in conversation as confirming imports of signed PSD form, PSD email PDF, and two Hausbank records; no independent Paperless API inventory was performed. Verify any ambiguous individual item during reconciliation. This is the latest backup milestone; older notes describing no post-real-document backup are historical.
+
 # Aktueller Überblick — 2026-11-06 (owner-confirmed; Supersedes ältere Statusnotizen)
 
 **Quelle der Wahrheit für den momentanen HomePi-Stand:** dieser Abschnitt und `docs/paperless-pilot.md`; die darunterstehenden datierten Einträge sind **historische Zwischenstände**, auch wenn sie damalige TODOs enthalten. Keine neue direkte Pi-Inspektion wurde für dieses Update ausgeführt.
