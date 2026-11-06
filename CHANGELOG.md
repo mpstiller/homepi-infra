@@ -1,5 +1,13 @@
 # Changelog
 
+## 2026-11-06 — Post-import backup checkpoint (afternoon)
+
+- Owner initiated a controlled extra encrypted Restic backup after real document imports; `homepi-backup.service` and notify hooks exited 0, consistent staging and Paperless web/db/broker restarts reported, encrypted upload completed. New snapshot `c15d8d59` saved 15:09:13 CET (509.830 MiB logical); backup finished 15:10:08 CET. Normal retention removed the earlier same-day `cea5a742`.
+- Read-only staging size check after the run: PostgreSQL 71M, document media 21M, application data 1.9M. This confirms nonempty staged paths, **not** a verified current database/document manifest or independent restore. The earlier two-synthetic-document isolated restore is the historical restoration evidence.
+- Owner indicated completion of the proposed deposit document import batch, though no item-by-item Paperless API reconciliation has taken place. Plan controlled Google Drive reconciliation first; **no Drive source deletion or move approved/performed**.
+
+
+
 ## 2026-11-06 — Paperless document-archive rollout and repository audit
 
 - Confirmed owner-guided migration from Google Drive into Paperless: four housing proof documents, two heating invoices, electricity welcome letter, 12 cleaning invoices and final signed tenancy agreement V2. User states imports/checks completed. No independent Paperless API inventory or current production backup verification claimed.
