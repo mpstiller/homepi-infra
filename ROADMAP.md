@@ -1,5 +1,16 @@
 # Roadmap
 
+## Backup checkpoint and Drive cleanup gate — 2026-11-06
+
+- [x] Extra post-import Restic backup service succeeded: snapshot `c15d8d59` at 15:09:13 CET, completed 15:10:08 CET, with Paperless service restart and Google Drive upload journal.
+- [x] Owner read-only staging `du` shows populated Paperless PostgreSQL 71M, media 21M and data 1.9M.
+- [ ] Reconcile actual Paperless inventory and the four reported deposit imports (owner said completed; independent item inventory unavailable).
+- [ ] Optional stronger snapshot verification: list exact paths in `c15d8d59`; isolated restore+document checksums for current records not yet performed.
+- [ ] Classify and propose Google Drive cleanup candidates **without deleting**; request explicit owner approval before any irreversible move/delete.
+- [ ] Do not infer directory size proves all imported files backed up; existing synthetic restore test is not a current-dataset restore.
+
+
+
 ## CURRENT PRIORITIES — 2026-11-06 (supersedes stale historical checklists below)
 
 ### Paperless-ngx / private document migration
