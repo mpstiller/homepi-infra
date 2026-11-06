@@ -1,3 +1,11 @@
+## Post-import backup milestone — 2026-11-06
+
+Following owner-reported completion of the tenancy/deposit filing stage, the owner manually triggered the existing `homepi-backup.service`. Service returned 0 and log confirmed consistent staging, restart of Paperless webserver/db/broker, Google Drive upload and Restic snapshot `c15d8d59` saved (2026-11-06 15:09:13 CET; logical size 509.830 MiB), followed by successful retention/completion at 15:10:08 CET. A read-only `du -sh` of the **staging copy** showed `postgres=71M`, `media=21M`, `data=1.9M`. These are existence/size checks, **not** a file-level restic snapshot listing, database validation, or restored document-level checksum proof. Only the earlier synthetic isolated restore has been tested.
+
+The user's "erledigt" followed a batch of four proposed deposit artifacts (signed PSD application, emailed opening confirmation as PDF, earlier Hausbank setup and closure). Conversation treats this as owner-reported completion, but actual Paperless inventory remains unreconciled. Preserve Drive originals, including older contract/PSD drafts, pending item-by-item checking and explicit owner permission. No archival content, customer names, bank details or private source documents committed to GitHub.
+
+Next: compare source Drive housing folder to archive inventory; separate keep-in-Drive working files, archival copies verified in Paperless, superseded drafts and uncertain items. No automatic deletes or moves. For stronger safety, optionally inspect snapshot tree and test current DB/media recovery before any irreversible removal.
+
 # Paperless pilot — CURRENT STATUS / owner confirmation, 2026-11-06
 
 The chronological sections below retain historical checkpoints and outdated contemporaneous next steps; **use this section for the latest owner-confirmed state**.
