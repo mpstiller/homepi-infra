@@ -73,3 +73,13 @@
 **Decision (2026-10-29):** prefer built-in Arcane updates to a bespoke controller for low operating effort. Only the three Homepage stack containers are eligible, with stable patch ranges, a 72-hour detection delay and weekly Saturday schedule. Review other services and wider version changes manually.
 
 **Trade-off accepted in session:** existing daily Restic backup is the safety net; no fresh pre-update backup gate, scheduled shared host lock, durable batch failure latch, comprehensive functional checks/automatic data rollback or additional Homepage update card was implemented. Do not describe the initial aspirational safeguards as delivered. New containers must be reviewed because the UI configuration is exclusion-based. See update-strategy.md for native evidence, recovery copies and remaining verification.
+
+## ADR-013 — Separate private document archive from editable cloud workspace
+
+**Decision (2026-11-06):** use Paperless-ngx for personal final records and evidence (contracts, official letters, invoices, bank/insurance and housing proofs); keep Google Drive for editable/collaborative files, projects, photographs/media and source documents during controlled migration. Choose based on document purpose, not merely PDF extension. Actual private records stay on HomePi; no real document content or secrets belong in Git.
+
+**Metadata convention:** document type describes form, correspondent describes issuer/author (can be different from operational contact), thematic tags represent overlapping life areas, `Inbox` is a temporary review state removed after verification, `Zu erledigen` is independent actionable status. Use automatic matching only after validating representative examples; do not create fictitious correspondents to force matches.
+
+**Security and recovery:** Paperless only at Docker loopback `127.0.0.1:8010`, privately accessed via Tailscale Serve HTTPS `https://homepi.tail110996.ts.net` and narrow owner-only TCP 443 grant; no Funnel/public exposure. Encrypted daily Restic is the accepted primary backup, synthetic isolated recovery proved 2026-11-04, new verification after actual-data migration still due. Native document exporter optional by owner's choice.
+
+**Source cleanup:** no Google Drive deletes or moves until documents have been validated in Paperless, a subsequent current archive backup has succeeded and the owner explicitly approves source cleanup. Final signed legal documents and historical proof may both matter; don't assume equal filenames mean duplicates.

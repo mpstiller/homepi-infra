@@ -1,5 +1,12 @@
 # HomePi Infrastructure
 
+## Current deployment at a glance — 2026-11-06
+
+- Paperless-ngx is **live** on the private Tailscale HTTPS endpoint `https://homepi.tail110996.ts.net` on authorized clients, at home and away; the host Docker port remains loopback-only `127.0.0.1:8010`, no Funnel or public router forwarding.
+- Paperless is in actual private use with an owner-verified small housing/household archive and 12-tag/6-type metadata workflow. Google Drive remains the editable workspace and source files are retained for now.
+- Verified synthetic Paperless backup/isolated restore on 2026-11-04; **fresh verification after real-document migration still outstanding**. Main canonical status is `CURRENT_STATE.md`, operational runbook `docs/paperless-pilot.md`, historical progression `CHANGELOG.md`.
+- Infrastructure Git PR #21 is a **draft feature branch** unless GitHub explicitly reports otherwise; do not infer that `main` contains all Paperless work. No secrets or real personal document contents in repository.
+
 Documentation and configuration repository for the `homepi` Raspberry Pi 5 homelab.
 
 This repository is intended to be the **portable source of context** for humans and LLMs working on the system. It documents architecture, decisions, current state, known settings, troubleshooting history, and the roadmap. Verified Compose definitions and sanitized Homepage configuration are checked in and take precedence over prose. Live secrets remain on the Pi; changes after the last capture require verification.

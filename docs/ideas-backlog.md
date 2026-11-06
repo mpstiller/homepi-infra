@@ -1,3 +1,5 @@
+> **Status update 2026-11-06:** Paperless-ngx is no longer only an idea or a pending discovery session. It is deployed, secured via private Tailscale HTTPS, backup/isolated restore tested with synthetic docs, and in active personal document use. Original proposal text below is retained as historical exploration. Refer to `CURRENT_STATE.md` and `docs/paperless-pilot.md` for current state. Other ideas stay uncommitted.
+
 # Ideas backlog
 
 Recorded 2026-11-03 from the owner's exploratory self-hosting discussion. This is a collection of options, not a deployment commitment. No services were installed or configured for these ideas.
