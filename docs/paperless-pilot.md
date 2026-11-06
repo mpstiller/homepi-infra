@@ -1,3 +1,9 @@
+## Löwen Umzüge offers archived in Paperless — owner confirmation 2026-11-06
+
+Owner confirmed both commissioned Löwen Umzüge quote PDFs (numbers 1241 and 1242, dated 2025-08-29) were copied/imported into Paperless. Both original Drive files were moved from `01_Aktive_Projekte/Umzugsunternehmen/01_Beauftragte_Firma_Loewen_Umzuege` to `00_Bereits_in_Paperless_Archivkopien/01_Vertrag_und_Nachweise` (destination folder https://drive.google.com/drive/folders/1gcOtIOOQJRcVJFAyqjLPDI8FQl9vOAWN), with updated parent IDs confirmed. **Not deleted:** originals are still stored in Drive as provisional redundant copies. Uncommissioned quotes remain in Google Drive under `02_Nicht_beauftragte_Angebote`. Removing source originals entirely requires later explicit approval after full archive verification.
+
+---
+
 ## Follow-up migration and moving company triage — 2026-11-06
 
 Owner confirmed two further **Paperless** imports: `Mieterstammblatt HB-Kautionen.pdf` and `Ausdruck (50).pdf` (insurance proposal; owner considers it relevant). Assistant moved both Drive originals from the housing review folder to `00_Bereits_in_Paperless_Archivkopien/04_Versicherung_und_weitere_Belege`: https://drive.google.com/drive/folders/1NVKcOkVhJcgfqOw_5ynhZ_VyRBBiRQep . Neither source was deleted; the review folder remains empty and ready for future findings. Item-level Paperless API validation still unavailable.
