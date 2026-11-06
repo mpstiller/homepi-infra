@@ -1,5 +1,9 @@
 # Remote access
 
+## Current operational access — 2026-11-06
+
+Paperless on authorized devices uses **`https://homepi.tail110996.ts.net`**, also from home Wi-Fi **as long as Tailscale is connected**. Owner verified Mac browser and iPhone cellular via Tailscale. Host Serve terminates HTTPS at TCP 443 and forwards privately to `127.0.0.1:8010`. Docker Paperless port `127.0.0.1:8010` is **not** a direct LAN endpoint. Existing owner-only, deny-by-default Tailnet grant includes `tcp:443` to `homepi-server`; Funnel/router port forwarding remain off. Emergency SSH tunnel: `ssh -N -L 8010:127.0.0.1:8010 marc@homepi`, then `http://127.0.0.1:8010`. Historical notes below describe pre-fix states. If the secure URL fails, inspect Tailscale status/Serve before changing firewall or Docker bind address.
+
 ## Paperless private HTTPS client verification — 2026-11-04
 
 Owner confirms successful Paperless access on Mac and on iPhone over
