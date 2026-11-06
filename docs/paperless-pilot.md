@@ -1,3 +1,16 @@
+## Google Drive source organization executed — 2026-11-06
+
+Owner explicitly requested expedited Paperless import recommendations and direct Google Drive reorganization. **Drive writes completed and destination listings read back**; no deletes, no file renames, no Paperless API imports performed by assistant.
+
+Root housing folder: `https://drive.google.com/drive/folders/1hbwBQ6klrDlq8w3o9DZixqlxoa-bEpbF` now contains only five categories:
+- `00_Bereits_in_Paperless_Archivkopien`: `https://drive.google.com/drive/folders/1LtJ6IXO8EkGwlB6AKLCyvwHUoKjOGcrm`; children `01_Vertrag_und_Nachweise` (four signed/housing PDF records), `02_Hauskosten_und_Rechnungen` (old original nested folders Nebenkosten 1, Putzkraft 12, Heizung 2, Strom 1 = 16 PDFs), `03_Kaution` (owner-reported imported signed PSD PDF plus two prior Hausbank PDFs), `99_Alte_Quellordner` (empty, newly created; no files moved into it).
+- `01_Aktive_Projekte` `https://drive.google.com/drive/folders/1jUTWIhESycJO6vAJv2OFlpRdInmvZBQ6`: moved folders Dachfenster and Umzugsunternehmen preserving descendants.
+- `02_Arbeitsdateien_und_Medien` `https://drive.google.com/drive/folders/1dKeAkF7uykQqAOrUhpzNtlESdxZ7jZiz`: 8 items (kitchen presentation, shared cleaning Doc, letterbox Word, internet/power comparisons, meter picture and two MOV files).
+- `03_Entwuerfe_und_Bewerbung` `https://drive.google.com/drive/folders/1gpvoIvXYO34mQlD8l2ufiPk_nUqIgE4A`: lease V1, two unsigned PSD applications, Word negotiation notes, old tenant application PDF.
+- `04_Zu_pruefende_Belege` `https://drive.google.com/drive/folders/1iLqY3e30YE8yBSmDhNDHfALKP3Xhx7Uy`: Hausbank `Mieterstammblatt HB-Kautionen.pdf` (suggested archive as `Bescheinigung`, `Wohnen`+`Finanzen` dated 2025-09-16), `Ausdruck (50).pdf` (text identifies **household insurance proposal**; only archive if relevant/accepted, should not be called confirmed insurance policy).
+
+All destinations and root listing verified. No Paperless cross-system automatic import is installed: categorization proposed, user performs Paperless imports. Owner's previous brief `erledigt` for four deposit items was interpreted as completed but not individually reconciled via Paperless API. PSD bank email PDF not a separate Drive source in the audited folder. Before source deletion, perform actual Paperless/document comparison and get express authorization. Do not publish private document text, IBAN, names, amounts or images in Git.
+
 ## Read-only Google Drive housing folder audit — 2026-11-06
 
 Audited the current source Drive folder `02_Areas/Home/Adam-Berg-Straße` and subfolders `Nebenkosten`, `Putzkraft`, `Heizung`, `Strom`, `Dachfenster` (photos/estimates), `Umzugsunternehmen` (estimates). **Read-only** inspection; no file moved/deleted and no live Paperless API inventory.
