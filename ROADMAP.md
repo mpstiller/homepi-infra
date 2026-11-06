@@ -1,5 +1,16 @@
 # Roadmap
 
+## Latest (2026-11-06): administrative archive rather than all-PDF repository
+
+- [x] Owner chose Paperless as lean automated administrative archive and Drive as project/reference store; allow bounded duplicate for commissioned offers with future comparison value (ADR-014).
+- [x] Restore Löwen quote PDFs 1241/1242 to commissioned-vendor comparison folder in Drive; Paperless imports previously owner-confirmed. Verify destination listing.
+- [x] Rename Drive categories for clarity without deleting/moving other files: 01_Projekte_und_Referenzen, Umzugsunternehmen_Angebotsvergleich, 00_Temporaere_Paperless_Migrationskopien.
+- [ ] Test cautious automatic recognition for repeated invoices and document types/tags in live Paperless; current matching evidence is only the exact supplier correspondent and the Intake->Inbox workflow.
+- [ ] Optionally configure strictly scoped private IMAP ingestion after owner's deliberate mailbox decision; no blanket mail import.
+- [ ] Reconcile current archive inventory with temporarily held Drive originals and current-dataset restore evidence; get explicit authorization before any source deletions.
+
+
+
 ## Backup checkpoint and Drive cleanup gate — 2026-11-06
 
 - [x] Extra post-import Restic backup service succeeded: snapshot `c15d8d59` at 15:09:13 CET, completed 15:10:08 CET, with Paperless service restart and Google Drive upload journal.
