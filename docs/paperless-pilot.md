@@ -1,3 +1,13 @@
+## NEXT SESSION HANDOFF — 2026-11-09 (latest)
+
+**Paperless V1 baseline accepted by owner:** Gmail connected and initial mail import rule worked; owner changed post-processing to **move to `Paperless-Verarbeitet`** so already-read mail can be imported, but final post-change test not explicitly confirmed. Owner also confirmed **mobile Paperless iPhone app captures/imports documents on and off home network via Tailscale**. Normal manual web/mobile intake and the Gmail-label intake are considered ready for everyday use. No new Pi deployment performed in this documentation-only checkpoint.
+
+**Read `docs/paperless-drive-migration-handoff.md` FIRST in the new session.** Owner wants selective administrative-document archive migration from Google Drive in joint reviewable batches, with direct Drive links and recommended title/date/correspondent/document type/tags per file. Drive reference projects and working documents must not be swallowed indiscriminately into Paperless; accepted vendor quotes may remain duplicated for reference (ADR-014).
+
+**Verification gates, not setup blockers:** Gmail changed rule should be tested once with already-read mail; any optional `02 – Reinigungsrechnungen klassifizieren` workflow was proposed but never independently confirmed active; last owner-verified Restic snapshot 2026-11-06 `c15d8d59` predates later imports, so check a fresh backup/current archive integrity before eventual Drive source deletion. No Drive originals deleted. Previous dated notes below are historical intermediate state, not new to-dos.
+
+---
+
 ## LATEST — 2026-11-06: Paperless administrative archive, Drive reference library
 
 User explicitly selected an automation-first administrative archive (NOT every private PDF). Paperless stores invoices, signed contracts, official and banking/insurance/tax records, warranties and important evidence. Drive keeps active work, vendor comparisons, planning, media, editable project files. Limited duplication is intentional for commissioned offers that double as legally relevant records AND future price comparisons.
