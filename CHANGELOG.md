@@ -1,5 +1,15 @@
 # Changelog
 
+## 2026-11-09 — Paperless V1 signed off; Gmail and iPhone remote intake; Drive handoff
+
+- Owner considers base Paperless installation complete and ready to leave the setup session; next session devoted to collaborative, selective administrative-document import from Google Drive.
+- Owner verified **Paperless iPhone app document capture/upload, including remote access**. Tailscale-only HTTPS remains the access model; no new Pi service, firewall opening or deployment was performed in this documentation pass.
+- Gmail `Paperless` label exists, private Gmail IMAP account tested, and an initial mail rule worked. Following read/unread discussion, owner changed rule action to move processed messages to Gmail label `Paperless-Verarbeitet`; a **post-change already-read-mail test is not explicitly confirmed**. Do not claim all incoming Gmail is auto-imported.
+- Previously confirmed Nov 06 Restic snapshot `c15d8d59` is not a guarantee of Nov 09 imports or full current restored archive. Keep Drive source safety copies and require actual verification plus owner permission before deletion.
+- Created `docs/paperless-drive-migration-handoff.md` and synchronized prominent status notes in `LLM_CONTEXT.md`, `CURRENT_STATE.md`, `README.md`, `stacks/paperless/README.md`, `ROADMAP.md`, `docs/paperless-pilot.md` and guidance. Existing historical chronological sections remain for traceability.
+
+
+
 ## 2026-11-06 — Operating model correction / restored vendor reference set
 
 - Owner chose automated administrative Paperless archive, not all-PDF consolidation; Drive retains projects/reference and vendor comparisons (ADR-014).
