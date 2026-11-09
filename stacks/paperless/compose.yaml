@@ -1,0 +1,86 @@
+# Private Paperless-ngx on HomePi. Tailscale Serve supplies tailnet-only HTTPS.
+# The Docker port remains bound to host loopback; never expose this to LAN/Funnel.
+# Keep outside Arcane Auto Update.
+name: paperless
+
+services:
+  broker:
+    image: docker.io/valkey/valkey:9-alpine
+    container_name: paperless-broker
+    labels:
+      com.getarcaneapp.arcane.updater: "false"
+    restart: unless-stopped
+    mem_limit: 96m
+    volumes:
+      - /srv/appdata/paperless/broker:/data
+    healthcheck:
+      test: ["CMD", "valkey-cli", "ping"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+
+  db:
+    image: docker.io/library/postgres:18
+    container_name: paperless-db
+    labels:
+      com.getarcaneapp.arcane.updater: "false"
+    restart: unless-stopped
+    mem_limit: 384m
+    environment:
+      POSTGRES_DB: paperless
+      POSTGRES_USER: paperless
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in a private .env file}
+    volumes:
+      - /srv/appdata/paperless/postgres:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U paperless -d paperless"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+
+  webserver:
+    image: ghcr.io/paperless-ngx/paperless-ngx:3.4.1
+    container_name: paperless-webserver
+    labels:
+      com.getarcaneapp.arcane.updater: "false"
+    restart: unless-stopped
+    # Official rootless user mode: no USERMAP_UID/GID or additional OCR packages.
+    user: "${PAPERLESS_UID:?Set PAPERLESS_UID in .env}:${PAPERLESS_GID:?Set PAPERLESS_GID in .env}"
+    mem_limit: 1024m
+    cpus: 1.5
+    pids_limit: 256
+    security_opt:
+      - no-new-privileges:true
+    depends_on:
+      broker:
+        condition: service_healthy
+      db:
+        condition: service_healthy
+    ports:
+      - "127.0.0.1:${PAPERLESS_PORT:-8010}:8000"
+    environment:
+      PAPERLESS_REDIS: redis://broker:6379
+      PAPERLESS_DBENGINE: postgresql
+      PAPERLESS_DBHOST: db
+      PAPERLESS_DBNAME: paperless
+      PAPERLESS_DBUSER: paperless
+      PAPERLESS_DBPASS: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in a private .env file}
+      PAPERLESS_SECRET_KEY: ${PAPERLESS_SECRET_KEY:?Set PAPERLESS_SECRET_KEY in a private .env file}
+      PAPERLESS_ALLOWED_HOSTS: localhost,127.0.0.1
+      # Tailscale Serve terminates TLS; Paperless keeps loopback/SSH fallback.
+      # PAPERLESS_URL adds the external host, CSRF origin and CORS origin.
+      PAPERLESS_URL: https://homepi.tail110996.ts.net
+      PAPERLESS_PROXY_SSL_HEADER: '["HTTP_X_FORWARDED_PROTO", "https"]'
+      PAPERLESS_CSRF_TRUSTED_ORIGINS: "http://localhost:${PAPERLESS_PORT:-8010},http://127.0.0.1:${PAPERLESS_PORT:-8010}"
+      PAPERLESS_TIME_ZONE: Europe/Berlin
+      PAPERLESS_OCR_LANGUAGE: deu+eng
+      PAPERLESS_OCR_MODE: auto
+      PAPERLESS_ARCHIVE_FILE_GENERATION: auto
+      PAPERLESS_TASK_WORKERS: "1"
+      PAPERLESS_THREADS_PER_WORKER: "1"
+      PAPERLESS_CONSUMER_DELETE_DUPLICATES: "true"
+    volumes:
+      - /srv/appdata/paperless/data:/usr/src/paperless/data
+      - /srv/appdata/paperless/media:/usr/src/paperless/media
+      - /srv/appdata/paperless/consume:/usr/src/paperless/consume
+      - /srv/appdata/paperless/export:/usr/src/paperless/export

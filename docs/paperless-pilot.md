@@ -1,0 +1,569 @@
+## NEXT SESSION HANDOFF — 2026-11-09 (latest)
+
+**Paperless V1 baseline accepted by owner:** Gmail connected and initial mail import rule worked; owner changed post-processing to **move to `Paperless-Verarbeitet`** so already-read mail can be imported, but final post-change test not explicitly confirmed. Owner also confirmed **mobile Paperless iPhone app captures/imports documents on and off home network via Tailscale**. Normal manual web/mobile intake and the Gmail-label intake are considered ready for everyday use. No new Pi deployment performed in this documentation-only checkpoint.
+
+**Read `docs/paperless-drive-migration-handoff.md` FIRST in the new session.** Owner wants selective administrative-document archive migration from Google Drive in joint reviewable batches, with direct Drive links and recommended title/date/correspondent/document type/tags per file. Drive reference projects and working documents must not be swallowed indiscriminately into Paperless; accepted vendor quotes may remain duplicated for reference (ADR-014).
+
+**Verification gates, not setup blockers:** Gmail changed rule should be tested once with already-read mail; any optional `02 – Reinigungsrechnungen klassifizieren` workflow was proposed but never independently confirmed active; last owner-verified Restic snapshot 2026-11-06 `c15d8d59` predates later imports, so check a fresh backup/current archive integrity before eventual Drive source deletion. No Drive originals deleted. Previous dated notes below are historical intermediate state, not new to-dos.
+
+---
+
+## LATEST — 2026-11-06: Paperless administrative archive, Drive reference library
+
+User explicitly selected an automation-first administrative archive (NOT every private PDF). Paperless stores invoices, signed contracts, official and banking/insurance/tax records, warranties and important evidence. Drive keeps active work, vendor comparisons, planning, media, editable project files. Limited duplication is intentional for commissioned offers that double as legally relevant records AND future price comparisons.
+
+Verified Drive changes: Both Löwen Umzüge quotes 1241/1242 returned to https://drive.google.com/drive/folders/1SZXoxTGeEVirsfxr9jgIfXpAlmEgw9rQ (owner says both are also imported into Paperless). The remaining offers are untouched in the sibling comparison folder. Folder IDs preserved but renamed: 01_Aktive_Projekte -> 01_Projekte_und_Referenzen; Umzugsunternehmen -> Umzugsunternehmen_Angebotsvergleich; 00_Bereits_in_Paperless_Archivkopien -> 00_Temporaere_Paperless_Migrationskopien. All moves and renamed root checked by Drive list. No deletes. Older dated sections below chronicle intermediate locations, NOT latest locations.
+
+Automation next: retain current Consumption Started -> Inbox check, use one confirmed exact-match cleaning provider rule; verify document type/tag classification with controlled test invoices before enabling any auto-rule. Never silently clear Inbox on uncertain matches. IMAP ingestion is separate opt-in scope requiring dedicated mail account/filter and secure credentials, not deployed. Do not claim changes on live Pi.
+
+## Löwen Umzüge offers archived in Paperless — owner confirmation 2026-11-06
+
+Owner confirmed both commissioned Löwen Umzüge quote PDFs (numbers 1241 and 1242, dated 2025-08-29) were copied/imported into Paperless. Both original Drive files were moved from `01_Aktive_Projekte/Umzugsunternehmen/01_Beauftragte_Firma_Loewen_Umzuege` to `00_Bereits_in_Paperless_Archivkopien/01_Vertrag_und_Nachweise` (destination folder https://drive.google.com/drive/folders/1gcOtIOOQJRcVJFAyqjLPDI8FQl9vOAWN), with updated parent IDs confirmed. **Not deleted:** originals are still stored in Drive as provisional redundant copies. Uncommissioned quotes remain in Google Drive under `02_Nicht_beauftragte_Angebote`. Removing source originals entirely requires later explicit approval after full archive verification.
+
+---
+
+## Follow-up migration and moving company triage — 2026-11-06
+
+Owner confirmed two further **Paperless** imports: `Mieterstammblatt HB-Kautionen.pdf` and `Ausdruck (50).pdf` (insurance proposal; owner considers it relevant). Assistant moved both Drive originals from the housing review folder to `00_Bereits_in_Paperless_Archivkopien/04_Versicherung_und_weitere_Belege`: https://drive.google.com/drive/folders/1NVKcOkVhJcgfqOw_5ynhZ_VyRBBiRQep . Neither source was deleted; the review folder remains empty and ready for future findings. Item-level Paperless API validation still unavailable.
+
+Owner says the commissioned moving company was **Löwen Umzüge**, for two separately quoted moves. Text extraction confirmed both exact original PDF sources are Löwen Umzüge e.K. offers dated **2025-08-29**, quote **1241** (Schick) and **1242** (Stiller). File IDs `1IVL4tZQzv-lkZfO1zqaQP3SE_tNhBtSg` and `1tFAXw3kNj5coct7f9Xx7tHX09hGr_9pJ`. Recommended Paperless metadata for EACH: document type `Vertrag` only if accepted/commissioned offer, issuer/correspondent `Löwen Umzüge e.K.`, tag `Wohnen`, date 2025-08-29, title `Umzug 2025 – Löwen Umzüge – Angebot 1241/1242` respectively; examine OCR/acceptance page, remove Inbox after check. **Paperless import of these two quotes NOT yet confirmed.**
+
+Drive folder `01_Aktive_Projekte/Umzugsunternehmen` now contains only two subfolders: commissioned vendor `01_Beauftragte_Firma_Loewen_Umzuege` (https://drive.google.com/drive/folders/1SZXoxTGeEVirsfxr9jgIfXpAlmEgw9rQ) holding the **two original accepted quote PDFs**, and `02_Nicht_beauftragte_Angebote` (https://drive.google.com/drive/folders/18a31qpA84VRP3FkG7wRVnaHU3Ox38MVa) holding remaining two PDFs plus the original Optimus and Powerteam subfolders (with all children). Destinations checked by readback. The second Optimus PDF and a top-level Optimus-named PDF appear content-identical in text but have not been binary-deduplicated; **neither deleted**. No further actions on the Pi or backups.
+
+## Google Drive source organization executed — 2026-11-06
+
+Owner explicitly requested expedited Paperless import recommendations and direct Google Drive reorganization. **Drive writes completed and destination listings read back**; no deletes, no file renames, no Paperless API imports performed by assistant.
+
+Root housing folder: `https://drive.google.com/drive/folders/1hbwBQ6klrDlq8w3o9DZixqlxoa-bEpbF` now contains only five categories:
+- `00_Bereits_in_Paperless_Archivkopien`: `https://drive.google.com/drive/folders/1LtJ6IXO8EkGwlB6AKLCyvwHUoKjOGcrm`; children `01_Vertrag_und_Nachweise` (four signed/housing PDF records), `02_Hauskosten_und_Rechnungen` (old original nested folders Nebenkosten 1, Putzkraft 12, Heizung 2, Strom 1 = 16 PDFs), `03_Kaution` (owner-reported imported signed PSD PDF plus two prior Hausbank PDFs), `99_Alte_Quellordner` (empty, newly created; no files moved into it).
+- `01_Aktive_Projekte` `https://drive.google.com/drive/folders/1jUTWIhESycJO6vAJv2OFlpRdInmvZBQ6`: moved folders Dachfenster and Umzugsunternehmen preserving descendants.
+- `02_Arbeitsdateien_und_Medien` `https://drive.google.com/drive/folders/1dKeAkF7uykQqAOrUhpzNtlESdxZ7jZiz`: 8 items (kitchen presentation, shared cleaning Doc, letterbox Word, internet/power comparisons, meter picture and two MOV files).
+- `03_Entwuerfe_und_Bewerbung` `https://drive.google.com/drive/folders/1gpvoIvXYO34mQlD8l2ufiPk_nUqIgE4A`: lease V1, two unsigned PSD applications, Word negotiation notes, old tenant application PDF.
+- `04_Zu_pruefende_Belege` `https://drive.google.com/drive/folders/1iLqY3e30YE8yBSmDhNDHfALKP3Xhx7Uy`: Hausbank `Mieterstammblatt HB-Kautionen.pdf` (suggested archive as `Bescheinigung`, `Wohnen`+`Finanzen` dated 2025-09-16), `Ausdruck (50).pdf` (text identifies **household insurance proposal**; only archive if relevant/accepted, should not be called confirmed insurance policy).
+
+All destinations and root listing verified. No Paperless cross-system automatic import is installed: categorization proposed, user performs Paperless imports. Owner's previous brief `erledigt` for four deposit items was interpreted as completed but not individually reconciled via Paperless API. PSD bank email PDF not a separate Drive source in the audited folder. Before source deletion, perform actual Paperless/document comparison and get express authorization. Do not publish private document text, IBAN, names, amounts or images in Git.
+
+## Read-only Google Drive housing folder audit — 2026-11-06
+
+Audited the current source Drive folder `02_Areas/Home/Adam-Berg-Straße` and subfolders `Nebenkosten`, `Putzkraft`, `Heizung`, `Strom`, `Dachfenster` (photos/estimates), `Umzugsunternehmen` (estimates). **Read-only** inspection; no file moved/deleted and no live Paperless API inventory.
+
+- Owner-reported already migrated and classified: registration certificate, housing-provider certificate, handover report (3 PDFs); older utilities settlement (1); heating invoices (2); electricity welcome letter (1); all twelve cleaning invoices (12); executed lease V2 (1). That is **20** known distinct Drive-PDF source records, pending Paperless-side reconciliation before source disposition.
+- Deposit: source folder includes signed scanned PSD bank application, two smaller unsigned PSD versions, former Hausbank account creation notice and account dissolution notice. Owner has said deposit batch was completed, but no separate Paperless API verification. The PSD opening-confirmation email is not necessarily a Drive-folder file. Also found `Mieterstammblatt HB-Kautionen.pdf` as an additional historical proof; review its necessity independently.
+- `Ausdruck (50).pdf` text identifies a **proposal** for household contents insurance, not necessarily a bound policy; check status before considering insurance archiving. A rental self-disclosure is a prior application document, not active agreement.
+- Keep in Drive: editable `Küchenecke.pptx`, native shared cleaning plan, Word letterbox-label file, Internet/electricity comparisons in XLSX, meter photo, MOV videos, roof-window photo evidence and active quote/project folders. Roofing/window or moving quotes may merit Paperless **only if accepted, invoiced or needed as durable proof**; otherwise avoid bulk archival of every quote. Prior contract V1 and PSD application drafts are negotiation/history, not active official documents.
+- **Next action**: obtain owner consent for a safe, itemized disposition proposal; check specific ambiguous records and actual Paperless presence one by one. Recommend reversible relocation/archiving before irreversible Drive Trash only if owner approves; do not assume Restic snapshot alone guarantees full document-level restore.
+
+---
+
+## Post-import backup milestone — 2026-11-06
+
+Following owner-reported completion of the tenancy/deposit filing stage, the owner manually triggered the existing `homepi-backup.service`. Service returned 0 and log confirmed consistent staging, restart of Paperless webserver/db/broker, Google Drive upload and Restic snapshot `c15d8d59` saved (2026-11-06 15:09:13 CET; logical size 509.830 MiB), followed by successful retention/completion at 15:10:08 CET. A read-only `du -sh` of the **staging copy** showed `postgres=71M`, `media=21M`, `data=1.9M`. These are existence/size checks, **not** a file-level restic snapshot listing, database validation, or restored document-level checksum proof. Only the earlier synthetic isolated restore has been tested.
+
+The user's "erledigt" followed a batch of four proposed deposit artifacts (signed PSD application, emailed opening confirmation as PDF, earlier Hausbank setup and closure). Conversation treats this as owner-reported completion, but actual Paperless inventory remains unreconciled. Preserve Drive originals, including older contract/PSD drafts, pending item-by-item checking and explicit owner permission. No archival content, customer names, bank details or private source documents committed to GitHub.
+
+Next: compare source Drive housing folder to archive inventory; separate keep-in-Drive working files, archival copies verified in Paperless, superseded drafts and uncertain items. No automatic deletes or moves. For stronger safety, optionally inspect snapshot tree and test current DB/media recovery before any irreversible removal.
+
+# Paperless pilot — CURRENT STATUS / owner confirmation, 2026-11-06
+
+The chronological sections below retain historical checkpoints and outdated contemporaneous next steps; **use this section for the latest owner-confirmed state**.
+
+## Real document archive and Google Drive migration
+
+- Current access: `https://homepi.tail110996.ts.net` via authorized Tailscale client, including while on home Wi-Fi. Tailnet-only HTTPS; not direct LAN `:8010`; no Funnel. Mac browser and cellular iPhone tested.
+- Core stack/restore: Paperless 3.4.1, Postgres 18, Valkey 9; Compose and Arcane labels unchanged. Daily 04:30 encrypted Restic backup includes containers and data. Controlled successful backup + isolated Postgres/media restore was **2026-11-04 using synthetic documents only**. No fresh verified backup for imported personal documents; preserve original Drive files.
+- Metadata live: 12 tags (status: `Inbox`, `Zu erledigen`; domains: `Wohnen`, `Finanzen`, `Steuer`, `Versicherungen`, `Gesundheit`, `Beruf`, `Mobilität`, `Reisen`, `Anschaffungen`, `Persönliches`); six types `Rechnung`, `Vertrag`, `Abrechnung`, `Bescheid`, `Bescheinigung`, `Schreiben`. Consumption Started workflow assigns Inbox; owner confirmed successful synthetic test. Remove Inbox after classifying and checking. `Zu erledigen` independent of Inbox.
+- Real document import **confirmed by owner**: four housing documents (registration and housing-provider confirmations, handover, utilities settlement); two heating invoices; electricity welcome letter; **all twelve** cleaning invoices; **executed tenancy agreement V2**. Count by distinct reported items = 20; no direct API-count verification. The old V1 contract remains in Drive as negotiation history and should not be labeled an active executed contract.
+- Cleaning provider correspondent exact rule proved in a second separate September 2026 invoice; other automatic classifier fields not proven. For final tenancy agreement, formal landlady as correspondent; for handover made by acting manager/son, owner confirmed assigning him. Correspondent is about document issuer/author, not merely searchable mention. Do not commit actual document contents or names here.
+- PSD deposit: among three forms, larger ~7.3MB scanned `Mietkautionskontoantrag_Stiller.pdf` dated in Drive 2025-09-29 is *owner-confirmed signed final application*; **import is NOT yet confirmed**. Two smaller PSD forms had small differences, including one beneficiary/name text; retain as drafts temporarily. Owner confirms PSD account opened; evidence is an email, not yet archived. Hausbank München account establishment 2025-09-16 and closure/payment entry 2025-09-25 are separate relevant historical proofs, not PSD documents. Their import **not yet confirmed**.
+- Proposed next controlled import: signed PSD application (`Vertrag` + `Wohnen`/`Finanzen`); complete PDF of PSD account-confirmation email (`Schreiben`, same tags); Hausbank setup document (`Bescheinigung`) and dissolution document (`Schreiben`), both `Wohnen`/`Finanzen`. Verify actual date and issuer, OCR on scanned PSD application, remove Inbox at final review. Do not infer account creation merely from application.
+- Drive cleanup policy: distinct active vs outdated drafts vs historical banking proof, manual review, exact dedupe not merely filename. Never delete/move Google Drive original automatically; wait for verified current-state backup and user permission. Direct cloud-to-Paperless import not installed; user imported manually using HTTPS.
+- Swift Paperless iPhone third-party app **suggested only**; no owner installation/scan test confirmed. Dedicated IMAP mailbox and native Paperless exporter intentionally not installed/tested. Avoid assuming future capabilities are active.
+- Documentation-only GitHub updates must not be treated as live Pi runtime changes or new backup snapshots.
+
+---
+
+## Housing migration: cleaning invoices complete — 2026-11-06
+
+Owner confirms remaining ten 2026 cleaning invoices were imported and
+checked in Paperless. Combined with the two prior invoices, all twelve
+known files in the Google Drive cleaning folder have been reviewed in
+Paperless. The user reports successful checks; this is not an independent
+Paperless API reconciliation. Keep Drive originals intact until
+a new successful Restic backup and file-level completeness/duplication
+verification; do not delete or move anything automatically.
+
+Next controlled batch is legally important tenancy records: compare
+the two apparent tenancy contract versions and determine which is
+executed/final; compare three deposit account applications, the deposit
+confirmation and account termination/closure document for relevance and
+source dates before import. Avoid guessing legal effect or definitive
+duplicates from filenames/text extraction. Ask owner to verify signed
+version visually; do not expose private terms or bank details in repo.
+
+## Google Drive housing migration progress — 2026-11-06
+
+Owner confirmed initial housing batch of four proof documents imported,
+then two heating invoices and the electricity welcome letter imported.
+Two actual cleaning invoices are now in Paperless (original sample and
+a second dated 2026-09-13), and the existing correspondent `Exact`
+matching rule **correctly recognized** the second issuer. Twelve 2026
+cleaning invoices are present in source Drive folder, so **ten** remain
+pending import; do not reimport the two already present. Suggest
+two controlled batches of five due to Pi 5 4GB RAM, verifying OCR/date,
+correspondent, `Rechnung`, `Wohnen`, optional tax relevance, and
+removing Inbox only after review. Retain all Drive originals until
+verified Paperless state and a subsequent successful Restic backup.
+No source deletion/move yet. Never record personal invoice contents in repo.
+
+## First correspondent matching rule — 2026-11-04
+
+Owner imported an actual cleaning-service invoice (first personal
+document), configured it under document type `Rechnung`, tags
+`Wohnen` and `Steuer` (as potentially tax relevant), and created
+the genuine invoice issuer as first correspondent. Subsequently,
+owner confirmed saving its `Exact` name-based match pattern
+using OCR text. The rule is configured, but **has not yet been
+validated against another invoice**; avoid claiming auto-classification
+success. Do not record private correspondent name, personal data or
+document content in repository.
+
+For low-maintenance intake, suggested first: Mac drag-and-drop via
+Tailscale-only HTTPS Paperless web interface; on iPhone pilot native
+Swift Paperless app via same Tailnet HTTPS URL, with scan/upload and
+verify Inbox assignment. Dedicated, narrowly scoped IMAP folder-based
+import is a later opt-in and must avoid deletion/moves of personal
+inbox messages until safely tested. No additional import service
+installed.
+
+## Six document types created — 2026-11-04
+
+Owner confirms manual creation of all six V1 document types:
+Rechnung, Vertrag, Abrechnung, Bescheid, Bescheinigung, Schreiben.
+Tags remain 12 total and initial synthetic Inbox import succeeded.
+Next correspondent strategy: don't pre-seed institutions; create on
+first genuine occurrence and avoid correspondent-as-tag duplication.
+Next test: manually classify one existing synthetic test document with
+a fitting document type/tag (without creating fictitious correspondents),
+check that removing Inbox after review keeps the classification.
+No genuine personal documents imported yet.
+
+## Manual taxonomy progress — 2026-11-04
+
+Owner confirmed creation of all ten thematic tags after the status tags
+and successful synthetic Inbox workflow. V1 tags now:
+`Inbox`, `Zu erledigen`; `Wohnen`, `Finanzen`, `Steuer`,
+`Versicherungen`, `Gesundheit`, `Beruf`, `Mobilität`,
+`Reisen`, `Anschaffungen`, `Persönliches`.
+The thematic tags are initially matching=None and no auto-match rule is
+claimed. Next proposed manual creation: document types `Rechnung`,
+`Vertrag`, `Abrechnung`, `Bescheid`, `Bescheinigung`,
+`Schreiben`; initially matching=None. No types yet confirmed as created.
+
+## Inbox automation validated — 2026-11-04
+
+Owner created status tags `Inbox` (inbox designation) and
+`Zu erledigen` (separate action status). A Paperless workflow
+`01 – Neue Dokumente in Inbox` triggers at Consumption Started and
+assigns Inbox. An additional synthetic PDF was uploaded via the
+private HTTPS web UI: document import succeeded, Inbox tag was
+automatically assigned, and search found the unique synthetic text.
+Owner confirmed all three checks passed. Do not claim broader
+classification has been tested.
+
+Next: create up to ten thematic tags without automatic matching:
+Wohnen, Finanzen, Steuer, Versicherungen, Gesundheit, Beruf, Mobilität,
+Reisen, Anschaffungen, Persönliches. These are overlapping life-area
+tags, not correspondents or document types. `Steuer` is cross-cutting.
+Then test classification on the existing synthetic examples; avoid
+importing real personal files until archive structure is established.
+
+## Access acceptance — 2026-11-04
+
+Owner confirms direct private Tailscale Serve HTTPS access works from both
+Mac and iPhone, including the iPhone mobile-data test. This completes the
+remote-access milestone: no manual SSH tunnel required for normal use.
+Use `https://homepi.tail110996.ts.net` via authorized Tailnet clients.
+Tailscale Serve remains `tailnet only`, not public Funnel, and Docker
+Paperless binding stays `127.0.0.1:8010`. Existing Restic backup and
+restore acceptance unchanged. Further focus: personally tailored archive
+taxonomy, automation, low-friction intake. No claim of external-host
+rebuild test or native document_exporter execution.
+
+# Paperless-ngx HomePi pilot — backup/restore validated for synthetic documents
+
+## Tailnet HTTPS transport verified — 2026-11-04
+
+Owner added narrow `tcp:443` to pre-existing
+`autogroup:owner`→`homepi-server` grant, preserving the other
+allowed ports. Initial Mac `curl` SSL timeout subsequently cleared.
+Latest forced IPv4, no-proxy, verbose Mac HTTPS request successfully:
+- Resolved `homepi.tail110996.ts.net` to `100.72.110.114`;
+- Connected to TCP 443 and completed TLSv1.3;
+- Validated Let's Encrypt certificate (CN/SAN correct);
+- Negotiated HTTP/2, got `HTTP/2 302` redirect to
+  `/accounts/login/?next=/` from Paperless.
+This proves private Tailscale Serve→Paperless HTTPS transport and that
+the application responded. Browser login / upload and iPhone client
+still **not validated**. Docker port remains loopback only; Funnel off.
+
+## HTTPS client verification — blocked on port 443 (2026-11-04; resolved by subsequent successful test)
+
+Owner confirmed Paperless db, broker, webserver all **healthy** six minutes
+after the HTTPS Compose recreation, Docker still bound to loopback 8010.
+From Mac, `curl` to `https://homepi.tail110996.ts.net/` timed out on
+TCP port 443 after ~8 seconds with HTTP 000. Private Serve status had been
+confirmed earlier. Existing Tailnet policy is deny-by-default and does not
+include the new Serve TCP 443 destination. This is the leading explanation,
+not yet a proved root cause. Next inspect and modify the *live* owner→HomePi
+grant/ACL with the narrowest `tcp:443` permission, and retest HTTPS.
+Do not open router ports or change Docker loopback.
+
+## HTTPS Compose applied on Pi — 2026-11-04
+
+Owner reviewed candidate `compose.https-candidate.yaml` with `diff`.
+It changed only harmless comments and `PAPERLESS_URL` /
+`PAPERLESS_PROXY_SSL_HEADER`, then installed under the existing shared
+Restic/maintenance flock with a dated Compose rollback file. A
+`docker compose up -d --no-deps webserver` recreated only the Paperless
+webserver. DB and broker were still healthy and remained running. Immediately
+after recreation the webserver was `health: starting` (normal initial
+state, still needs a follow-up health check). Docker host port binding was
+confirmed unchanged: `127.0.0.1:8010`.
+
+**Pending:** confirm the webserver becomes healthy, attempt HTTPS access
+from an authorized Tailnet client, then review the existing live Tailscale
+grant/ACL and add exactly TCP 443 for the existing owner→HomePi rule if
+necessary; verify browser login and upload before calling HTTPS operational.
+No public exposure or direct LAN change.
+
+## Private Serve status confirmed — 2026-11-04
+
+Owner executed `sudo tailscale serve --bg --https=443 http://127.0.0.1:8010`,
+enabled only HTTPS certificates (not Funnel), and confirmed both
+`tailscale serve status` and `tailscale funnel status` print:
+`https://homepi.tail110996.ts.net (tailnet only)` with root proxy to
+`http://127.0.0.1:8010`. **Tailnet-only** means no public Funnel exposure.
+Reverse proxy is configured on host; user login via HTTPS not yet verified.
+
+The PR Compose now adds `PAPERLESS_URL=https://homepi.tail110996.ts.net`
+and the loopback-only reverse-proxy HTTPS scheme header. This is **not yet
+installed on the Pi**. Next: owner reviews and applies minimal Compose
+update, checks health/SSH fallback, and minimally adds TCP 443 to the
+existing Tailnet deny-by-default owner→HomePi rule (inspect the actual
+live rule before editing). Validate from Mac/iPhone over HTTPS.
+Neither port 8010 nor router exposure should be enabled.
+
+## Secure private access preflight — 2026-11-04
+
+Owner wants to eliminate Mac SSH tunnels, make Paperless usable from home
+and remotely via Tailscale, without any FRITZ!Box port forwarding or public
+exposure. Preferred first phase is **one HTTPS Tailscale Serve URL** accessible
+on both local and remote Tailnet-connected devices, not a plain HTTP LAN
+binding. A second direct-LAN option is deferred pending explicit need.
+
+Live read-only preflight (owner):
+- Tailscale 1.102.5 running on Pi host; FQDN
+  `homepi.tail110996.ts.net`; Tailscale IPv4 `100.72.110.114`.
+- wlan0 `192.168.178.75/24`, Docker published only
+  `127.0.0.1:8010`; nothing listening on 443.
+- Both `tailscale serve status` and `tailscale funnel status`
+  returned "No serve config".
+- Existing Tailnet is owner-only and deny-by-default; allowed port list
+  in `docs/remote-access.md` excludes TCP 443. **Need minimally permit
+  TCP 443 to HomePi for the existing authorized owner** without granting
+  8010 or widening other ports.
+- Proposed proxy `tailscale serve --bg --https=443 http://127.0.0.1:8010`.
+  The HTTPS hostname will require a minimal Paperless application
+  `PAPERLESS_URL`/host/origin review (official configuration automatically
+  merges the URL into allowed hosts, CORS and CSRF origins). Do not guess
+  that login works until checked from a Tailnet client.
+- Tailscale Serve is not Funnel; no public exposure. User may need HTTPS
+  certificate admin enablement on first invocation.
+- **No access changes yet confirmed.** Keep localhost SSH route as fallback.
+
+## Operating decision — 2026-11-04
+
+Owner explicitly chose to **defer the native `document_exporter` smoke test
+and any additional exporter routine**. The existing Restic backup covers
+Paperless database, media and stack configuration. Synthetic end-to-end
+backup, isolated PostgreSQL startup, document records, original/archive
+SHA-256 checks all passed. This is the agreed sufficient backup/restore
+acceptance for initial private document archiving, **without** the native
+exporter as a blocking gate.
+
+No native export, importer test or independent-host recovery is claimed.
+Leave exporter as optional future portability/migration task; focus next on
+document metadata, intake, and low-maintenance workflow. Monitor the daily
+scheduled job and container health in ordinary operation.
+
+## Acceptance checkpoint — 2026-11-04
+
+**PASSED within the synthetic two-document scope:** Paperless web/OCR/search;
+all three services healthy; Arcane auto-update opt-outs effective;
+PostgreSQL and broker included in the installed stop-copy-restart backup
+script; automatic-style Restic backup snapshot `ef45cae4` completed successfully;
+full isolated restic restore to `/srv/backups/restore-paperless.OBa8o5B2`;
+disposable offline PostgreSQL 18 clone started under `--network none`;
+restored SQL contains both synthetic documents; **SHA-256 checksums matched for
+2 original documents and 1 associated archive PDF** using the **restored
+database checksum columns**. A temporary verification container was removed.
+Live Paperless remained unchanged and healthy after backup.
+
+**Not tested:** full independent-host rebuild, full restored Paperless application
+login, high-volume OCR, unattended next-day backup with this patch, mobile/mail
+capture, document classification rules. A native `document_exporter` smoke test was originally proposed,
+but the owner deliberately deferred it; it is not a gate for private imports.
+Retained private diagnostic dirs and backup rollback are not to be deleted
+without explicit owner approval:
+
+- `/srv/backups/restore-paperless.OBa8o5B2`
+- `/srv/backups/paperless-db-test.HSXnpPsP`
+- `/root/homepi-backup-before-paperless.iutMZWUb`
+
+Historical checkpoints below reflect the state *at their recording time*.
+
+Date: 2026-11-03. See `stacks/paperless/README.md` for implementation gates
+and references. This supersedes the earlier discovery-only state while keeping
+the discovery brief as historical context.
+
+## Verified synthetic import (owner confirmation, 2026-11-03)
+
+- Both prepared synthetic documents were imported into Paperless.
+- Search for `Wasserkocher` found the born-digital PDF.
+- Search for `Sonnenuhr` found the image-only scanned PDF, confirming
+  OCR and searchable indexing with the actual configuration.
+- Small-pilot success **does not demonstrate large-batch OCR capacity**.
+- Next gate: verify the **installed** `homepi-backup` script before applying
+  the proposed three-container stop-list. Then confirm an encrypted backup
+  snapshot and a strictly isolated database+document restore.
+- No real identity/financial/medical documents yet.
+
+## Installed backup script baseline verification (owner output, 2026-11-04)
+
+- `/usr/local/sbin/homepi-backup` currently includes candidates through
+  `homepage`, with no Paperless entries. Owner reported SHA-256
+  `0ce674a100f0f9428516e6bb4d72c4372ec02708bd93e0398a54d780b70f7d85`.
+- Verified this digest is byte-for-byte identical to the checked-in
+  `main:backup/bin/homepi-backup` source (SHA-256 independently calculated).
+  A controlled three-line extension can therefore be compared exactly.
+- PR candidate stop order is webserver, database, broker (frontend first).
+  Existing restart implementation will restart in list order, so check
+  Paperless health carefully after the first live backup; if restart ordering
+  proves fragile, address it before unsupervised scheduling.
+- **No backup modification or successful backup run has occurred yet.**
+
+## Backup candidate exactly verified (owner output, 2026-11-04)
+
+- `systemctl show homepi-backup.service -p ExecStart` confirms active script
+  `/usr/local/sbin/homepi-backup`. Most recent scheduled run started
+  04:30:04 CET and finished 04:31:06 CET with `status=0`; this occurred
+  **before Paperless was in the backup candidate list** and does not prove
+  a Paperless snapshot.
+- Candidate file `/tmp/homepi-backup.paperless-candidate` passed `bash -n`.
+  `diff -u` shows **exactly three added lines** after `homepage`:
+  `paperless-webserver`, `paperless-db`, `paperless-broker`.
+- Owner has **not yet installed** this candidate. Next step is guarded
+  atomic installation under the shared lock with a retained rollback copy,
+  then a real backup run and isolated restore.
+
+## Backup script installed (owner output, 2026-11-04)
+
+- Protected installation was executed under the shared Restic maintenance
+  flock. An exact byte-level replacement check against the verified old
+  script succeeded, and `bash -n` succeeded.
+- The live `CANDIDATES` list now includes `paperless-webserver`,
+  `paperless-db`, and `paperless-broker` after `homepage`.
+- Rollback copy retained at
+  `/root/homepi-backup-before-paperless.iutMZWUb`.
+- **The modified backup has NOT yet been run or restored.** Next: launch
+  one controlled systemd service run, check both result and fresh restic
+  snapshot, verify every Paperless container returned healthy, then restore
+  into isolated temporary paths without overwriting live databases.
+
+## First post-integration backup — success (owner log, 2026-11-04)
+
+- `homepi-backup.service` ran from 11:20:40 to 11:22:40 CET,
+  `Result=success` and `ExecMainStatus=0`.
+- Logs confirmed stop/staging, explicit restart messages for all three
+  Paperless services, cloud upload and retention.
+- Restic created encrypted snapshot **`ef45cae4`** at 11:21:50 CET,
+  processed 3930 files, logical size 486.679 MiB; 43.931 MiB was newly
+  added to repository (8.739 MiB stored).
+- Automatic retention completed. Most recent 04:30 snapshot `f608e5f3`
+  was removed per policy after the new manual one was retained.
+- Paperless broker and database reported **healthy** at immediate post-run
+  check; webserver was **health: starting** 53 seconds after restart.
+  Recheck until healthy before marking post-backup services stable.
+- A successful backup does not prove that restored DB/media are usable.
+  Next: confirm health, restore `ef45cae4` to a new root-only directory
+  beneath `/srv/backups`, then independently check the restored
+  PostgreSQL cluster and original/archive documents. No live state writes.
+
+## Isolated restic restore — successful (owner output, 2026-11-04)
+
+- Source: Restic snapshot `ef45cae4`, created at 11:21:50 CET.
+  Restored to separate `/srv/backups/restore-paperless.OBa8o5B2` in 1:19.
+- Restic reports 5,442 files/directories, 486.679 MiB total.
+- Verified restored paths for Paperless `postgres`, `media` and the
+  Compose stack exist. Restore did not overwrite live data.
+- Production Paperless broker, db and webserver all reported **healthy**
+  four minutes after backup restart; port still localhost-only 8010.
+- Disk had 1.4 TB available before restore.
+- **Not yet proven:** whether restored PostgreSQL cluster starts with
+  recovered records and whether original/archive documents are accessible.
+  Next preflight: inspect restored PostgreSQL PG_VERSION location, restored
+  media counts and private target perms. Then test with *disposable copied*
+  DB under `--network none`, no host port or live bind mounts.
+- Do not import personal documents or remove the private restore directory.
+
+## Restore structure verified (owner output, 2026-11-04)
+
+- The isolated restore root is `700 root:root`, so restored personal
+  configuration and content are not generally readable on the host.
+- Restored PostgreSQL location:
+  `srv/appdata/paperless/postgres/18/docker/PG_VERSION`; `global/pg_control`
+  is present; PostgreSQL files use the official Postgres 18 PGDATA layout.
+- Restored Paperless media tree contains 6 files. Restored PostgreSQL
+  data size is about 69 MB; the media `du` output was cut off.
+- These checks prove presence/layout only, **not** SQL recovery or document
+  referential integrity. Next is an offline, no-network PostgreSQL container
+  using a disposable COPY of the restored database directory.
+- Never mount the original restore tree or the production database writable
+  for this test.
+
+## Offline recovered PostgreSQL verified (owner output, 2026-11-04)
+
+- From snapshot `ef45cae4`, owner created a **disposable copy** of the
+  recovered PG18 data at `/srv/backups/paperless-db-test.HSXnpPsP`.
+- Using the running PostgreSQL image ID, owner started this copy isolated
+  with `--network none`, no published ports. The database became ready.
+- Read-only query against restored `documents_document`: `Dokumente=2`,
+  `Wasserkocher=1`, `Sonnenuhr=1`. This proves the recovered DB starts
+  and contains both synthetic indexed texts independently of production.
+- Test container stopped and removed; offline database copy and original
+  restored data remain retained for file-integrity checks.
+- **Next gate:** compare restored media originals/archive SHA-256 file digests
+  against the recovered `documents_document.checksum/archive_checksum`
+  using a second offline read-only query. Only then call Paperless backup/
+  restore pilot validated for the synthetic samples.
+
+## Agreed user needs
+
+- One person initially, shared with partner potentially later; future
+  individual permissions have not been defined.
+- Long-term personal paper trail (bills, insurance, tax, authorities,
+  household/housing, guarantees, health and personal career records).
+  **No employer/client business records.**
+- Both old fragmented files/paper and ongoing incoming documents matter.
+- Capture via iPhone scans/share sheet, Mac, selected email rules, gradual
+  Google Drive import. Live connections are explicitly deferred.
+- Local-first processing; external AI only with explicit future approval.
+- Find by text, correspondent, type and filters; recurring deadline reminders
+  are a later acceptance test, not a pilot prerequisite.
+- Google Drive remains the editable files workspace; Paperless is the
+  evidence/archive system for completed documents.
+- Success criterion: weekly ordinary document administration ideally
+  <= 5–10 min, measured after the initial learning/migration phase.
+
+## Observed resources (owner shell output, 2026-11-03)
+
+- `free -h`: 4.0 GiB RAM, 2.3 GiB used, 1.7 GiB available; 745 MiB of
+  2 GiB swap in use.
+- Root NVMe: 1.8 TB total; 356 GB used; 1.4 TB available.
+- Multiple stateful containers still running. Owner's read-only preflight: UID=1000, GID=1000, Docker Compose v5.5.1,
+  port 8010 not listening, no Paperless container and no prior directories
+  at /srv/appdata/paperless or /opt/homelab/stacks/paperless.
+  These observations are not deployment or functional evidence.
+- Proposed three-container baseline; do not interpret available memory as
+  guaranteed free capacity under burst load.
+
+## First boot observed (owner output, 2026-11-03)
+
+- After copying the explicit Arcane opt-out labels, `docker compose config --quiet`
+  succeeded and a matching-label count returned 3.
+- All three images were pulled and the isolated `paperless_default` network
+  was created. At the immediate `docker compose ps` check, `paperless-db`
+  (PostgreSQL 18) and `paperless-broker` (Valkey 9) were **healthy**.
+  `paperless-webserver` (Paperless 3.4.1) had just started and showed
+  **health: starting**, not yet verified healthy.
+- The only published host binding reported was `127.0.0.1:8010->8000/tcp`.
+  Runtime auto-update labels and load under steady state still need checks.
+- No verified Paperless login, OCR, real backup snapshot, restore, or personal
+  document import yet. The host backup script is NOT yet updated.
+
+## Steady-state verification (owner output, 2026-11-03)
+
+- All three services reported **healthy** about two minutes after startup.
+- Live labels: `com.getarcaneapp.arcane.updater=false` for broker, database
+  and webserver; all status=running.
+- Docker stats: broker 7.922 MiB / 96 MiB, PostgreSQL 45.92 MiB / 384 MiB,
+  Paperless webserver 637.5 MiB / 1 GiB, CPU low at the sample.
+- Pi memory: 4.0 GiB total, 2.8 GiB used, 1.1 GiB available.
+  Swap: 992 MiB of 2.0 GiB. Before starting the stack, owner measured
+  1.7 GiB available and 745 MiB swap used. This does not prove OCR headroom.
+- The only host-published port remains loopback-only 127.0.0.1:8010.
+- Next: use SSH tunnel to complete web-based first-user setup (do not share
+  credentials), then synthetic PDF OCR/search trial while monitoring memory.
+  Backup script is not yet installed; no real document ingestion.
+
+## Initial local browser access
+
+- Owner confirmed on 2026-11-03 that the Paperless web UI opens through
+  the proposed localhost/SSH tunnel. This confirms reachability only:
+  first-user setup, login, OCR, search and backups have **not** yet been
+  verified.
+- Two **synthetic test PDFs** were created for a no-private-data pilot:
+  a born-digital sample containing `Wasserkocher` and a raster-only PDF
+  containing `Sonnenuhr`. The latter contains no embedded PDF text, so
+  successful full-text search demonstrates OCR. Files were given to the owner
+  as conversation attachments, not added to Git or HomePi.
+
+## Post-test resource snapshot (owner output, 2026-11-03)
+
+- Webserver 606.5 MiB / 1 GiB, PostgreSQL 49.44 MiB / 384 MiB,
+  Valkey 10.16 MiB / 96 MiB; total around 666 MiB.
+- Host 1.3 GiB available RAM, 1.2 GiB of 2.0 GiB swap occupied.
+  Higher swap occupancy than the prior 992 MiB is not evidence of active
+  memory pressure; examine `vmstat` swap in/out under a future import.
+- The two synthetic search checks were subsequently confirmed successful;
+  see Verified synthetic import above.
+- Backup script remains unapplied and restore untested; no personal documents.
+
+## Swap activity check (owner output, 2026-11-03)
+
+- `vmstat 1 6` returned five current samples after the startup-average
+  line: `si` 16, 80, 0, 0, 0 KiB/s; `so` 0 in every sample.
+- CPU idle 95–99%, I/O wait 0%, blocked processes 0. No evidence of
+  sustained memory thrashing at idle. Occupied swap alone is not a reason
+  to flush swap or adjust container limits.
+- Search results for the synthetic PDFs were subsequently confirmed;
+  backup and restore are still pending.
+
+## Plan and explicit boundaries
+
+1. **Pilot live, PR still draft**: Compose, private env and runtime services are in place; proposed backup change remains in PR and is not installed.
+2. Verify installation prerequisites, collisions, Arcane exclusion, and
+   existing HomePi checkout state. Small owner-executed changes only.
+3. Deploy localhost-only; test one text PDF and one scanned image PDF,
+   index/search/metadata/duplicate, inspect RAM+swap.
+4. Extend installed stop-list and validate real Restic snapshot and
+   isolated database+document restore. Until then **no real documents**.
+5. Enable LAN/Tailscale and iPhone only after secure access design; email
+   rules and gradual old-file migration only after workflow acceptance.
+
+## Caveats
+
+- Official new-installation guidance recommends PostgreSQL; PostgreSQL 18
+  + Valkey 9 introduce more containers than SQLite+Valkey but avoid later
+  backend conversion. Reassess after measured idle/OCR consumption.
+- Published `POSTGRES_PASSWORD` and `PAPERLESS_SECRET_KEY` placeholders
+  are invalid; real values are generated locally and never stored in Git.
+- Version tags for PostgreSQL/Valkey are major-stream and will change when
+  manually pulled; Docker images remain stable in running containers until
+  explicitly updated.
+- All persistent bind mounts intentionally reside below `/srv/appdata`,
+  not excluded `/srv/data`. Raw broker/DB copy requires coordinated stop.
+- Arcane Auto Update must remain limited to existing Homepage containers.
+  Compose includes explicit `com.getarcaneapp.arcane.updater=false` labels on
+  all three Paperless services; verify effective runtime labels after launch.
+  The Arcane UI exclusion list can be checked as an additional safeguard.

@@ -1,8 +1,12 @@
 # HomePi Infrastructure
 
-Documentation and configuration repository for the `homepi` Raspberry Pi 5 homelab.
+## Paperless V1 operational — 2026-11-09
 
-This repository is intended to be the **portable source of context** for humans and LLMs working on the system. It documents architecture, decisions, current state, known settings, troubleshooting history, and the roadmap. Verified Compose definitions and sanitized Homepage configuration are checked in and take precedence over prose. Live secrets remain on the Pi; changes after the last capture require verification.
+- **Paperless daily-use V1 complete per owner:** private Paperless-ngx 3.4.1 last known, PostgreSQL 18, Valkey 9; Tailscale-only HTTPS `https://homepi.tail110996.ts.net` from Mac and remotely from iPhone. Dedicated Paperless iPhone app scanning/upload confirmed working on Nov 09. Docker still localhost-only `127.0.0.1:8010`, no Funnel.
+- **Gmail intake enabled:** Gmail `Paperless` label + connected IMAP account and rule. Changed to move processed messages to `Paperless-Verarbeitet` (already-read mail behavior); final post-change test pending, not a blocker for baseline. Inbox classification workflow + exact-match supplier correspondent tested; broader automatic tagging is not guaranteed.
+- **Role split:** Paperless = administrative archive; Google Drive = active project/work/reference store, including vendor comparisons. See ADR-014.
+- **Backup:** 2026-11-04 synthetic isolated Paperless restore passed; 2026-11-06 encrypted Restic snapshot `c15d8d59` saved after then-current real imports. Latest Nov 09 real imports were not proven included; verify subsequent backup before any original deletions. Temporary Drive source safety copies intact.
+- **Next session:** collaborate on selective migration of relevant Google Drive documents. **Start with `docs/paperless-drive-migration-handoff.md`**, then `CURRENT_STATE.md`, `ROADMAP.md` and `docs/paperless-pilot.md`. Do not repeat installation. Infra PR #21 is historically a draft on feature branch; do not assume merged into main.
 
 ## Start here
 

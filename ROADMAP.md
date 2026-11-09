@@ -1,5 +1,108 @@
 # Roadmap
 
+## Nov 09 — Paperless V1 acceptance and Drive migration next session (AUTHORITATIVE)
+
+- [x] **Owner signed off on Paperless V1 daily-use baseline.** Live Tailscale private web on Mac/iPhone and successful Paperless mobile iPhone app capture/upload, including remote use.
+- [x] Gmail account connected and working; Gmail label `Paperless` manually selects messages. PDF-attachment mail rule successfully handled an initial test; owner changed post-processing action to move mail to `Paperless-Verarbeitet` so already-read messages qualify.
+- [x] Establish low-maintenance operating model: Paperless private administrative archive; Google Drive project, editable work and reusable vendor/price-reference store (ADR-014).
+- [x] Initial housing and utilities imports and Drive triage completed by owner/assistant as documented in `docs/paperless-drive-migration-handoff.md`; no Drive source files deleted.
+- [x] Create precise new-session handoff with relevant Drive links, taxonomy, known import history, archive/source reconciliation and safety gates.
+- [ ] **Non-blocking:** verify post-action-change Gmail mail import with an already-read, newly labeled PDF message; confirm destination and no deletion.
+- [ ] **Non-blocking:** confirm whether optional cleaning-invoice workflow `02 – Reinigungsrechnungen klassifizieren` was actually saved/triggered. Only exact supplier correspondent auto-match and Intake→Inbox are proven.
+- [ ] Check next successful encrypted backup after Nov 09 mobile/mail imports (known verified snapshot `c15d8d59` from Nov 06 predates them). Stronger current-dataset restoration/inventory confidence before any original deletion.
+- [ ] **NEXT SESSION PRIORITY:** structured, collaborative inventory of Google Drive administrative documents beyond the reviewed housing folder; table per file with real Drive link, import decision, Paperless title/date/correspondent/type/tags, reviewer and status; user imports and validates, assistant reorganizes Drive on request. Start `docs/paperless-drive-migration-handoff.md`.
+- [ ] No blanket archive of every PDF; no installation rerun; no private file content in Git; no irreversible Drive deletion without explicit owner consent.
+
+
+
+## Latest (2026-11-06): administrative archive rather than all-PDF repository
+
+- [x] Owner chose Paperless as lean automated administrative archive and Drive as project/reference store; allow bounded duplicate for commissioned offers with future comparison value (ADR-014).
+- [x] Restore Löwen quote PDFs 1241/1242 to commissioned-vendor comparison folder in Drive; Paperless imports previously owner-confirmed. Verify destination listing.
+- [x] Rename Drive categories for clarity without deleting/moving other files: 01_Projekte_und_Referenzen, Umzugsunternehmen_Angebotsvergleich, 00_Temporaere_Paperless_Migrationskopien.
+- [ ] Test cautious automatic recognition for repeated invoices and document types/tags in live Paperless; current matching evidence is only the exact supplier correspondent and the Intake->Inbox workflow.
+- [ ] Optionally configure strictly scoped private IMAP ingestion after owner's deliberate mailbox decision; no blanket mail import.
+- [ ] Reconcile current archive inventory with temporarily held Drive originals and current-dataset restore evidence; get explicit authorization before any source deletions.
+
+
+
+## Backup checkpoint and Drive cleanup gate — 2026-11-06
+
+- [x] Extra post-import Restic backup service succeeded: snapshot `c15d8d59` at 15:09:13 CET, completed 15:10:08 CET, with Paperless service restart and Google Drive upload journal.
+- [x] Owner read-only staging `du` shows populated Paperless PostgreSQL 71M, media 21M and data 1.9M.
+- [ ] Reconcile actual Paperless inventory and the four reported deposit imports (owner said completed; independent item inventory unavailable).
+- [ ] Optional stronger snapshot verification: list exact paths in `c15d8d59`; isolated restore+document checksums for current records not yet performed.
+- [ ] Classify and propose Google Drive cleanup candidates **without deleting**; request explicit owner approval before any irreversible move/delete.
+- [ ] Do not infer directory size proves all imported files backed up; existing synthetic restore test is not a current-dataset restore.
+
+
+
+## CURRENT PRIORITIES — 2026-11-06 (supersedes stale historical checklists below)
+
+### Paperless-ngx / private document migration
+- [x] Deploy Paperless 3.4.1, Postgres 18, Valkey 9 with private loopback Docker port and Arcane update opt-outs.
+- [x] Pass synthetic document OCR/search, real Restic encrypted backup and isolated PostgreSQL/media checksum restore (2026-11-04).
+- [x] Activate private Tailscale Serve HTTPS, owner-only TCP 443; browser access from Mac and iPhone cellular confirmed; no Funnel.
+- [x] Configure 12 real tags, 6 document types and automatic Intake/Inbox workflow; validate Inbox with synthetic upload.
+- [x] Validate `Exact` correspondent matching on second real cleaning invoice.
+- [x] Owner import/check of four housing proofs, two heating invoices, electricity letter, all 12 cleaning invoices; executed tenancy agreement V2 imported.
+- [x] Identify signed final PSD Bank deposit application; user confirms PSD account active.
+- [ ] Import and check **signed PSD Bank application** (identified, *not yet confirmed imported*), PDF of bank email confirmation with sender/date, Hausbank account setup and closure documents.
+- [ ] Confirm automatic metadata/Inbox removal for remaining deposit documents and reconcile no accidental duplicate archive items.
+- [ ] Observe fresh successful **post-real-import** daily 04:30 Restic run, optionally inspect snapshot and perform limited restoration/integrity sample before approving any source cleanup. **No Google Drive deletion/move without explicit approval.**
+- [ ] Drive migration phase 2: review other Finance/Tax/Insurance/Career/Health folders by metadata and document purpose; retain working documents, do not mass-import certificates/secrets.
+- [ ] Optional: native iPhone scan/share integration trial; opt-in dedicated IMAP email import; classify based on real examples rather than speculative auto-match.
+- [ ] Optional: native Paperless `document_exporter` portability test, deferred by owner; large-batch OCR, fully independent host recovery and UI restored-login remain unverified.
+
+### Other open verification
+- [ ] Review first Arcane scheduled update *after* tag-label correction; expected 2026-11-07 10:00 CET (not yet observed).
+- [ ] Independently verify Paperless production backup from **after** personal-data migration; do not rely on 2026-11-04 synthetic-only restore as proof of current archive contents.
+- [ ] Check current Pi operational health/live image revisions before claiming anything changed since last supplied evidence.
+
+---
+
+## Paperless secure access — 2026-11-04
+
+- [x] Verified Tailscale 1.102.5 running, FQDN `homepi.tail110996.ts.net`, tailnet IPv4 `100.72.110.114`, WLAN `192.168.178.75`, loopback Paperless 8010 and free HTTPS port 443; no Serve/Funnel config.
+- [x] Owner configured Tailscale Serve HTTPS `homepi.tail110996.ts.net` → localhost:8010; status explicitly `tailnet only`, not Funnel.
+- [ ] Add only owner→HomePi TCP 443 to existing deny-by-default Tailnet ACL/grant; review actual live rule before applying.
+- [x] Prepare `PAPERLESS_URL` and proxy HTTPS scheme in draft-PR Compose (not installed on Pi).
+- [x] Owner applied reviewed HTTPS Compose with dated rollback under shared backup lock and recreated webserver only; db/broker healthy and Docker stays loopback:8010.
+- [x] Paperless webserver healthy after HTTPS settings; Mac HTTPS TCP 443 timed out, likely missing narrow Tailnet access grant.
+- [x] Owner added only TCP 443 to existing owner→HomePi Tailnet grant; Mac curl verified TLS 1.3, valid certificate and HTTP/2 302 redirect to Paperless login.
+- [x] Owner confirmed browser access on Mac and iPhone (iPhone on cellular via Tailscale), eliminating routine SSH tunneling.
+- [ ] Design minimal private archive taxonomy and auto-classification; validate first controlled import workflow. SSH remains emergency fallback.
+- [ ] Consider independent direct LAN HTTP route only if truly needed; preserve privacy and no router port forwarding.
+
+## Paperless-ngx controlled pilot — 2026-11-03
+
+- [x] Clarify actual needs: personal archive, ongoing intake + old fragmented files, minimal admin, editable files stay in Google Drive.
+- [x] Compare official v3.4.1 examples and current configuration; obtain 2026-11-03 Pi memory/disk measurements.
+- [x] Prepare versioned localhost-only three-container Compose proposal, secret template, detailed runbook and proposed backup stop-list in a draft PR.
+- [x] Owner read-only preflight confirmed UID=GID=1000, Compose v5.5.1, port 8010 free, no existing Paperless directories/containers.
+- [x] Owner confirmed all three container images pulled and started, database and broker healthy, webserver initially `health: starting`; published port loopback-only 8010.
+- [x] Verified all three services healthy, runtime Arcane opt-out=false on each, live memory 1.1 GiB available / 992 MiB swap used.
+- [x] Owner confirmed Paperless web UI loads via SSH tunnel.
+- [x] Record post-test resource snapshot: Paperless services ~666 MiB, 1.3 GiB available RAM, 1.2 GiB swap used.
+- [x] Owner confirmed synthetic digital and image-only PDFs searchable by `Wasserkocher` / `Sonnenuhr`; OCR and indexing work.
+- [x] `vmstat 1 6` shows no active swap-out or I/O wait at idle.
+- [x] Installed backup script hash matches repo main exactly; CANDIDATES lacks Paperless.
+- [x] Confirm systemd ExecStart, last successful scheduled run (04:30–04:31 CET), candidate syntax and exact three-line diff.
+- [x] Owner successfully installed the exact candidate under shared lock with retained rollback `/root/homepi-backup-before-paperless.iutMZWUb`.
+- [x] Controlled `homepi-backup.service` completed successfully 2026-11-04 11:22:40 CET, Restic snapshot `ef45cae4` saved, all three Paperless services restarted.
+- [x] Paperless webserver returned healthy after restart; Restic restored `ef45cae4` to private `/srv/backups/restore-paperless.OBa8o5B2`, 5,442 entries / 486.679 MiB; restored PostgreSQL/media/Compose paths exist.
+- [x] Owner confirmed 700 root-only restore, PostgreSQL 18/docker/PG_VERSION + global/pg_control, six restored media files, ~69 MB PostgreSQL data.
+- [x] Independent restored PostgreSQL 18 cluster started via disposable copy and `--network none`; SQL returned 2 documents, `Wasserkocher=1`, `Sonnenuhr=1`.
+- [x] Restored SQL manifest and independent SHA-256 verification passed: 2 original PDFs + 1 archive PDF match recovered PostgreSQL checksums; all temporary test containers removed.
+- [x] Validate Compose on Pi (`config --quiet`), start three services without reported existing-service impact.
+- [x] Test synthetic PDFs/OCR/search and monitor post-test memory/swap.
+- [ ] Confirm behavior for duplicate imports in a later controlled test.
+- [x] Installed backup candidate list; validated real Restic snapshot `ef45cae4` and isolated PostgreSQL + document checksum restore (synthetic scope).
+- [ ] Optional/deferred by owner: native Paperless `document_exporter` smoke test for portability and migration; **not required** before real documents given validated Restic restore.
+- [ ] Decide safe cleanup of retained private restore/test copies and rollback only with owner approval.
+- [ ] Decide secure LAN/Tailscale app access, iPhone/Mac workflow, email rules and gradual Drive/paper import after pilot succeeds.
+
+
 ## Selected next workstream — 2026-11-03
 
 - [x] Capture exploratory service ideas in [ideas backlog](docs/ideas-backlog.md), preserving existing cloud/dashboard decisions.

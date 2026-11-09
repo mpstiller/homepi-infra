@@ -1,5 +1,86 @@
 # Remote access
 
+## Paperless iPhone app remote capture confirmed — 2026-11-09
+
+Owner confirms dedicated Paperless mobile iOS app capture and upload **works remotely**, in addition to the previously checked Mac/browser and iPhone cellular web access. The access architecture remains unchanged: `https://homepi.tail110996.ts.net` over private Tailscale Serve → `127.0.0.1:8010`, owner-only TCP 443 on tailnet; no Funnel/router forwarding or direct LAN exposure. No new ports or access changes were required. See `docs/paperless-drive-migration-handoff.md` for the overall new-session status.
+
+
+
+## Current operational access — 2026-11-06
+
+Paperless on authorized devices uses **`https://homepi.tail110996.ts.net`**, also from home Wi-Fi **as long as Tailscale is connected**. Owner verified Mac browser and iPhone cellular via Tailscale. Host Serve terminates HTTPS at TCP 443 and forwards privately to `127.0.0.1:8010`. Docker Paperless port `127.0.0.1:8010` is **not** a direct LAN endpoint. Existing owner-only, deny-by-default Tailnet grant includes `tcp:443` to `homepi-server`; Funnel/router port forwarding remain off. Emergency SSH tunnel: `ssh -N -L 8010:127.0.0.1:8010 marc@homepi`, then `http://127.0.0.1:8010`. Historical notes below describe pre-fix states. If the secure URL fails, inspect Tailscale status/Serve before changing firewall or Docker bind address.
+
+## Paperless private HTTPS client verification — 2026-11-04
+
+Owner confirms successful Paperless access on Mac and on iPhone over
+cellular with Tailscale. Use `https://homepi.tail110996.ts.net`
+instead of the manual SSH tunnel. Serve reports `tailnet only`, and
+the owner-only TCP 443 addition to `homepi-server` Tailnet grant is
+active. Port 8010 remains loopback-bound; no router forwarding or Funnel
+is enabled. HTTPS application access validated by owner, while
+automated document-upload workflow remains forthcoming.
+
+
+
+## Paperless HTTPS transport confirmed — 2026-11-04
+
+Owner modified existing deny-by-default grant for
+`autogroup:owner`→`homepi-server`, adding only `tcp:443`.
+Subsequent Mac `curl -4 -v --noproxy '*'` confirmed TCP connection
+to `100.72.110.114:443`, successful TLSv1.3 and validated Let's Encrypt
+certificate for `homepi.tail110996.ts.net`, HTTP/2 302 to
+`/accounts/login/?next=/`. No Funnel. Browser login, CSRF form POST,
+upload, iPhone access still pending.
+
+## Paperless HTTPS Mac timeout — 2026-11-04 (historical, subsequently resolved)
+
+After Compose change, all three Paperless services healthy. Mac `curl`
+to Serve HTTPS hostname fails with port 443 TCP timeout (8 seconds).
+Policy does not list 443: probable deny-by-default block. Need inspect
+live owner-only grant/ACL, add just `tcp:443` if still absent, retest.
+No router forwarding, Docker expansion, or Funnel.
+
+## Paperless HTTPS app configuration applied — 2026-11-04
+
+Owner reviewed and installed the candidate Compose under the shared backup
+lock with dated rollback. Only `paperless-webserver` was recreated; DB
+and broker were healthy, Docker port remained `127.0.0.1:8010`.
+`PAPERLESS_URL=https://homepi.tail110996.ts.net` and the forwarded
+HTTPS scheme setting are now active in the proposed Compose. Webserver
+initially reported `health: starting`, not yet confirmed healthy after
+recreate. Restrictive Tailnet owner-to-HomePi TCP 443 grant and actual
+Mac/iOS login still need verification. No Funnel activated.
+
+## Paperless private HTTPS — 2026-11-04 (Serve configured, access not yet validated)
+
+Owner verified Tailscale Serve reports
+`https://homepi.tail110996.ts.net (tailnet only)` proxying
+`http://127.0.0.1:8010`. Both serve/funnel status show this same
+**tailnet-only** mapping; no Funnel/public access is active.
+Tailscale Serve persists in the background after reboot, per `--bg`.
+PR Paperless Compose adds the URL and trusted forwarded HTTPS scheme,
+but Pi Compose not yet updated. Current restrictive Tailnet grants
+do not explicitly permit TCP 443, and browser authentication/upload over
+HTTPS have not yet been tested. Preserve loopback/SSH fallback.
+
+## Paperless private HTTPS proposal — 2026-11-04 (preflight history)
+
+- Owner confirmed Tailscale 1.102.5, `homepi.tail110996.ts.net`,
+  `100.72.110.114`, wlan0 `192.168.178.75/24`, no Serve/Funnel
+  configuration, port 443 unused, Paperless loopback only on 8010.
+- Preferred: Tailscale Serve HTTPS on TCP 443 forwarding to loopback
+  Paperless port 8010; use one HTTPS URL on Mac/iPhone on the Tailnet.
+  This does **not** require exposing 8010 on LAN or on Tailscale, nor router
+  forwarding, nor public Tailscale Funnel.
+- Tailnet deny-by-default policy below does **not** yet include TCP 443.
+  Extend **only** authorized owner's access to HomePi TCP 443, do not
+  replace or open all-port rules. Review the live policy before editing.
+- Add correct Paperless HTTPS external URL, preserve localhost
+  health-check and SSH fallback. Backups/Restic isolation unchanged.
+  No installation claimed.
+
+
+
 ## Current solution: Tailscale
 
 Tailscale is installed directly on the HomePi host and is the private remote-access layer.
@@ -90,7 +171,7 @@ Allowed Tailscale ports:
 9696  Prowlarr
 ```
 
-The Tailnet policy is deny-by-default for all other HomePi ports.
+The Tailnet policy is deny-by-default for all other HomePi ports. The 443 addition was owner-verified on 2026-11-04; older notes above retain their original historical pre-change state.
 
 
 ### Resolved: Jellyfin remote server connection — 2026-10-14

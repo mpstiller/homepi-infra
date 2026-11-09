@@ -73,3 +73,27 @@
 **Decision (2026-10-29):** prefer built-in Arcane updates to a bespoke controller for low operating effort. Only the three Homepage stack containers are eligible, with stable patch ranges, a 72-hour detection delay and weekly Saturday schedule. Review other services and wider version changes manually.
 
 **Trade-off accepted in session:** existing daily Restic backup is the safety net; no fresh pre-update backup gate, scheduled shared host lock, durable batch failure latch, comprehensive functional checks/automatic data rollback or additional Homepage update card was implemented. Do not describe the initial aspirational safeguards as delivered. New containers must be reviewed because the UI configuration is exclusion-based. See update-strategy.md for native evidence, recovery copies and remaining verification.
+
+## ADR-013 — Separate private document archive from editable cloud workspace
+
+**Decision (2026-11-06):** use Paperless-ngx for personal final records and evidence (contracts, official letters, invoices, bank/insurance and housing proofs); keep Google Drive for editable/collaborative files, projects, photographs/media and source documents during controlled migration. Choose based on document purpose, not merely PDF extension. Actual private records stay on HomePi; no real document content or secrets belong in Git.
+
+**Metadata convention:** document type describes form, correspondent describes issuer/author (can be different from operational contact), thematic tags represent overlapping life areas, `Inbox` is a temporary review state removed after verification, `Zu erledigen` is independent actionable status. Use automatic matching only after validating representative examples; do not create fictitious correspondents to force matches.
+
+**Security and recovery:** Paperless only at Docker loopback `127.0.0.1:8010`, privately accessed via Tailscale Serve HTTPS `https://homepi.tail110996.ts.net` and narrow owner-only TCP 443 grant; no Funnel/public exposure. Encrypted daily Restic is the accepted primary backup, synthetic isolated recovery proved 2026-11-04, new verification after actual-data migration still due. Native document exporter optional by owner's choice.
+
+**Source cleanup:** no Google Drive deletes or moves until documents have been validated in Paperless, a subsequent current archive backup has succeeded and the owner explicitly approves source cleanup. Final signed legal documents and historical proof may both matter; don't assume equal filenames mean duplicates.
+
+## ADR-014 — Paperless administrative archive versus Drive reference/workspace (2026-11-06)
+
+Decision: Paperless is the user's lean, automation-first private administrative archive for invoices, contracts, insurance, tax, banking, official correspondence and evidentiary proofs; NOT a catch-all for all PDFs. Google Drive holds project files, editable content, photos, research, vendor offers and price-comparison collections. An accepted quotation can deliberately exist in BOTH systems when Paperless preserves contract evidence and Drive keeps a comparable future price reference.
+
+The Drive folder "00_Temporaere_Paperless_Migrationskopien" is a temporary migration safety area rather than a permanent second archive. Never delete its copies absent actual document-to-Paperless reconciliation, confidence in recoverability, and explicit owner permission. The 2026-11-06 snapshot was successful but current dataset not independently restored.
+
+Execution: User confirmed Löwen Umzüge quote PDFs 1241/1242 imported into Paperless; both source originals moved BACK to existing Drive folder "01_Beauftragte_Firma_Loewen_Umzuege", verified by destination readback. All uncommissioned vendor offers remain in Drive. Root housing categories were renamed without new IDs: "01_Aktive_Projekte" to "01_Projekte_und_Referenzen"; moving subfolder "Umzugsunternehmen" to "Umzugsunternehmen_Angebotsvergleich"; source archive to "00_Temporaere_Paperless_Migrationskopien". No Drive originals deleted.
+
+Paperless has existing Intake->Inbox workflow and one validated cleaning provider exact correspondent rule. Broader classification and IMAP email intake have NOT been implemented. Pilot additional automation cautiously with real samples and review before auto-filing.
+
+
+**Operational follow-up (2026-11-09):** Owner explicitly confirmed this architecture remains the final V1 Paperless operating model. Native Paperless iPhone app remote capture and manually-labeled Gmail IMAP import are now in use. Gmail processing changed to move to the processed label rather than mark-as-read; end-to-end previously-read-mail test is pending. Initial infrastructure/setup work is closed. Next phase is curated, collaborative Google Drive administrative-document migration; see `docs/paperless-drive-migration-handoff.md`. No automatic import of every PDF or blanket deletion.
+

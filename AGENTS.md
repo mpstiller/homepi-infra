@@ -30,3 +30,16 @@ After a meaningful change, update at least:
 - `LLM_CONTEXT.md` if the change materially affects future handoffs
 
 If a setting is unknown, write `VERIFY ON PI` rather than guessing.
+
+
+## Avoid stale handoff traps (2026-11-06)
+
+- `CURRENT_STATE.md`, `LLM_CONTEXT.md`, `ROADMAP.md` and Paperless pilot notes contain chronological history. Always read the newest **CURRENT** block first and treat superseded older TODOs as historical; never infer the archive is still unused, that Tailscale access is pending, or that taxonomy was not created.
+- Document changes confirmed by the owner separately from live Pi command evidence and independent API/restore verification. GitHub commits do not mean runtime changes are installed or tested.
+- Existing private repository PR #21 is draft until GitHub reports otherwise. Keep the selected personal GitHub identity separate from work identities. Never commit actual document OCR, legal names/addresses, IBAN, passwords, keys, certificates or sample private bank PDFs.
+- For the current Google Drive → Paperless migration, preserve source files; require an observed successful post-import backup and explicit approval before any cleanup.
+
+## Paperless / Drive continuation (2026-11-09)
+
+When the user starts a new document migration session, **read `docs/paperless-drive-migration-handoff.md` first** before proposing work. Paperless V1 is complete for everyday use (including owner-confirmed Paperless iPhone app remote capture, and Gmail IMAP account with label `Paperless` and Move-to-`Paperless-Verarbeitet` rule). Do NOT restart deployment discovery or claim the recently changed Gmail rule is separately proven with already-read mail. `CURRENT_STATE.md` and `LLM_CONTEXT.md` top entries supersede chronological stale notes further down. Use ADR-014: Paperless only for administrative/evidence archive; Drive for projects, reference price comparisons, editable working files. Create document-by-document Drive-link plus Paperless metadata review tables and track owner-verified imports. Keep current source originals until reconciliation and later successful backup; no Google Drive deletions without explicit permission. Never commit document text, personal bank/account details, app passwords or Gmail secrets.
+

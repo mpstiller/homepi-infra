@@ -1,4 +1,94 @@
+# HOMEPI HANDOFF — CURRENT AS OF 2026-11-09
+
+**FIRST FOR THE NEXT PAPERLESS SESSION:** read `docs/paperless-drive-migration-handoff.md`. The owner declared **Paperless V1 baseline complete** and requested a fresh, highly collaborative new session to identify/review relevant documents in Google Drive and migrate only administrative records. Do NOT repeat setup, ask for already established requirements or assume all PDFs belong in Paperless. Follow ADR-014.
+
+**Owner-confirmed working:** Paperless-ngx 3.4.1 last known, PostgreSQL 18, Valkey 9; secure tailnet-only access `https://homepi.tail110996.ts.net` with host Docker bound `127.0.0.1:8010` (not public/LAN). Mac/browser works; as of Nov 09 **Paperless iPhone app capture and access work even remotely**. Gmail IMAP connection tested, manual Gmail label `Paperless` and Paperless E-Mail rule operational at least once. Owner changed E-Mail rule from `Als gelesen markieren` to `In Ordner verschieben` targeting `Paperless-Verarbeitet`; **post-change test with an already-read email remains unconfirmed**. No general all-mail ingestion or automatic Gmail filters.
+
+**Established taxonomy:** 12 tags (`Inbox`, `Zu erledigen`, `Wohnen`, `Finanzen`, `Steuer`, `Versicherungen`, `Gesundheit`, `Beruf`, `Mobilität`, `Reisen`, `Anschaffungen`, `Persönliches`), six types (`Rechnung`, `Vertrag`, `Abrechnung`, `Bescheid`, `Bescheinigung`, `Schreiben`), Consumption Started -> Inbox workflow; validated Exact correspondent match for cleaning supplier. An additional type/tag workflow for cleaning invoices was proposed, **not explicitly verified by owner**. Continue manual final review in Inbox.
+
+**Drive/Paperless:** Housing folder already classified and reorganized; accepted Löwen moving offers reside in BOTH Paperless (owner-reported imported) and vendor comparison Drive folder as intentional reference. Other owner-reported imports include housing proofs, signed lease, recurring cleaning bills, utilities, deposit records and subsequent insurance/bank documents. Do not invent exact Paperless inventory; no Paperless API read-back. Drive source copies in `00_Temporaere_Paperless_Migrationskopien` are temporary safety copies, **not** a second permanent archive. The user wants case-by-case table with Drive file links and exact proposed metadata for next areas (tax, finance, insurance, contracts, purchases, etc.), then controlled Drive reorganization with no mass deletions.
+
+**Backup:** synthetic isolated DB/media restoration passed 2026-11-04; latest explicitly owner-verified 2026-11-06 15:09 Restic snapshot `c15d8d59` includes nonempty staged Paperless paths. That snapshot predates Nov 09 imports and does not prove full current document recovery. Verify a new successful backup after current imports before deleting any source copies. User approval is mandatory before any irreversible removal.
+
+**Repo:** Work on `feature/paperless-pilot-2026-11-03` (historical draft PR #21), do not assume merged to main. All older text below is chronological history. No Pi changes were performed in the documentation-only November 09 handoff.
+
+---
+
+---
+
+## Paperless access DONE — 2026-11-04
+
+Owner confirmed working Paperless web access via private Tailscale Serve
+HTTPS on Mac and iPhone (iPhone cellular test). URL:
+`https://homepi.tail110996.ts.net`; TCP 443 added to restrictive
+owner→HomePi Tailnet grant. Docker remains host loopback 8010, no Funnel.
+No SSH tunnel required for normal usage. Backup+isolated restore acceptance
+complete; native exporter deferred. Next collaboratively design minimal
+Paperless classification and ingestion workflow before personal import.
+
 # HomePi — LLM Context
+
+## Paperless HTTPS client test blocked (2026-11-04)
+
+All Paperless services healthy after update; direct Mac curl to
+`https://homepi.tail110996.ts.net` returned HTTP 000 due to TCP 443
+connect timeout. Known restrictive Tailscale access policy excludes port
+443; probable cause but needs live policy review. Next inspect existing
+owner→HomePi grant/ACL, add `tcp:443` **only**, retest. No Funnel or
+router public forwarding.
+
+## Paperless HTTPS Compose now installed — 2026-11-04
+
+Owner reviewed exact Compose diff and installed via shared lock with dated
+rollback, recreating webserver only. DB/broker healthy; frontend initially
+health:starting, loopback binding still `127.0.0.1:8010`. External
+`PAPERLESS_URL` and proxy SSL header now in live Compose. Tailscale Serve
+still private. Need fresh webserver health, Mac HTTPS test, and review/adjust
+owner-only Tailnet TCP 443 access without widening other grants.
+
+## Paperless Tailscale private HTTPS access (2026-11-04)
+
+Background Serve configured: `https://homepi.tail110996.ts.net (tailnet only)`
+proxies `http://127.0.0.1:8010`. Funnel remains non-public; both status
+commands show Serve mapping. This does NOT prove HTTPS login. Draft
+PR Compose now adds `PAPERLESS_URL` and HTTPS proxy SSL header; owner has
+not yet applied it on Pi. Tailnet deny-by-default rule must be extended
+by owner→HomePi TCP 443 only, no router exposure, preserving loopback SSH.
+Next is reviewed Pi Compose update and live ACL review/testing.
+
+## Paperless-ngx — live; isolated backup/restore complete (2026-11-04)
+
+Decision 2026-11-04: owner explicitly deferred the native Paperless `document_exporter` smoke test. Treat as optional portability/migration task, NOT a prerequisite for private imports. Synthetic Restic→isolated PostgreSQL+media restore/3 hash checks already passed. Next is metadata/taxonomy and Mac/iOS intake; monitor recurring backup as normal.
+
+
+- Current stack: Paperless 3.4.1, PostgreSQL 18, Valkey 9; local port
+  `127.0.0.1:8010`, SSH-tunnel access from Mac. Three healthy services,
+  with effective Arcane automatic-update exclusion labels.
+- Paperless personal completed-document archive pilot; Google Drive for
+  editable originals. **No real personal documents imported yet.**
+- Search confirmed for synthetic born-digital PDF (`Wasserkocher`) and
+  raster-only scan (`Sonnenuhr`), demonstrating OCR.
+- HomePi production backup script patched with three Paperless stop-list
+  candidates; guarded local edit, rollback retained
+  `/root/homepi-backup-before-paperless.iutMZWUb`.
+- Post-change systemd+Restic backup successful, snapshot `ef45cae4`
+  (2026-11-04 11:21:50 CET). Full isolated restore to
+  `/srv/backups/restore-paperless.OBa8o5B2`: 5,442 entries, 486.679 MiB.
+  Disposable recovered PostgreSQL 18 clone at
+  `/srv/backups/paperless-db-test.HSXnpPsP`, offline/network none, started
+  and returned two expected synthetic document rows.
+- **Media SHA-256 recovery test PASSED:** 2 originals and 1 archive PDF
+  matched digests in recovered PostgreSQL DB. Test container removed;
+  restored files and clone retained; live app unaffected.
+- No full independent-host restore, recovered full Paperless UI login,
+  large OCR load, next unattended daily run, native exporter smoke test,
+  duplicate handling, mail/iOS sync, or LAN/Tailscale sharing yet.
+  Native `document_exporter` smoke test intentionally deferred by owner.
+- Approx 666 MiB Paperless container memory after small test; 1.3 GiB host
+  available; occupied swap 1.2 GiB but no sustained swap-out sampled.
+- Keep low-risk, incremental, reversible commands. Do not delete retained
+  restore/rollback without owner approval. Draft PR #21 not merged.
+  Further details in `docs/paperless-pilot.md`.
 
 ## Next session: tailored Paperless-ngx discovery — 2026-11-03
 
