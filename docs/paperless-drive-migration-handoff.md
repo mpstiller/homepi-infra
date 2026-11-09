@@ -1,5 +1,13 @@
 # Paperless / Google Drive migration — new-session handoff
 
+## Migration progress — 2026-11-10 (supersedes next-session start instruction for this workstream)
+
+- **Batch 1 COMPLETE (owner-confirmed):** Nine income-tax wage certificates for 2016–2023, with two distinct 2019 employment periods, imported into Paperless. Owner confirmed document type `Bescheinigung`, tags `Steuer` and `Beruf`, correct grouped correspondents, individual titles/dates, OCR review and removal of `Inbox` for all nine. This is owner-reported, **not direct Paperless API reconciliation**. No Google Drive originals were moved or deleted; latest post-batch backup not verified.
+- **Held back:** earlier 2019 certificate superseded by later correction; another 2017 file without readable extraction; January–September 2021 certificate coverage remains open. Separate additional wage-certificate-shaped PDF in tax folder needs triage.
+- **Batch 2 PREPARED (not imported):** nine tax-return printouts for tax years 2016–2024 in Drive `02_Areas/Finances/Steuer`. Text inspection shows personal-use ERiC/wundertax printouts rather than clearly identified tax office assessment notices. Do not classify as `Bescheid`; decide whether personal submitted returns are worth archiving, and if so choose existing taxonomy or explicitly approve a new type. No tax assessment notice confirmed by this folder's direct listing. See [migration ledger](paperless-drive-migration-ledger.md) for status.
+- **Working pattern:** theme-based Drive triage, owner bulk uploads into `Inbox`, bulk shared metadata, individual date/title checks, OCR and Inbox closure. Safety gates and original-retention policy unchanged.
+
+
 **As of 2026-11-09 (owner statements plus linked Drive and repo evidence).** This is the entrypoint for the NEXT collaborative document-migration session. The baseline Paperless V1 setup is considered **finished for everyday use**; do **not** redo installation, tags, Gmail connection, Tailscale, iPhone capture or a fresh discovery interview. Read this file first, then `CURRENT_STATE.md`, `docs/paperless-pilot.md`, `docs/decisions.md` (ADR-013/014) and `ROADMAP.md`. Earlier dated plans within them describe intermediate states and can be superseded.
 
 ## Owner's selected operating model
