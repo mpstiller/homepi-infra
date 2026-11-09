@@ -1,5 +1,11 @@
 # Remote access
 
+## Paperless iPhone app remote capture confirmed — 2026-11-09
+
+Owner confirms dedicated Paperless mobile iOS app capture and upload **works remotely**, in addition to the previously checked Mac/browser and iPhone cellular web access. The access architecture remains unchanged: `https://homepi.tail110996.ts.net` over private Tailscale Serve → `127.0.0.1:8010`, owner-only TCP 443 on tailnet; no Funnel/router forwarding or direct LAN exposure. No new ports or access changes were required. See `docs/paperless-drive-migration-handoff.md` for the overall new-session status.
+
+
+
 ## Current operational access — 2026-11-06
 
 Paperless on authorized devices uses **`https://homepi.tail110996.ts.net`**, also from home Wi-Fi **as long as Tailscale is connected**. Owner verified Mac browser and iPhone cellular via Tailscale. Host Serve terminates HTTPS at TCP 443 and forwards privately to `127.0.0.1:8010`. Docker Paperless port `127.0.0.1:8010` is **not** a direct LAN endpoint. Existing owner-only, deny-by-default Tailnet grant includes `tcp:443` to `homepi-server`; Funnel/router port forwarding remain off. Emergency SSH tunnel: `ssh -N -L 8010:127.0.0.1:8010 marc@homepi`, then `http://127.0.0.1:8010`. Historical notes below describe pre-fix states. If the secure URL fails, inspect Tailscale status/Serve before changing firewall or Docker bind address.
