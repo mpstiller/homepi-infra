@@ -94,3 +94,6 @@ Execution: User confirmed Löwen Umzüge quote PDFs 1241/1242 imported into Pape
 
 Paperless has existing Intake->Inbox workflow and one validated cleaning provider exact correspondent rule. Broader classification and IMAP email intake have NOT been implemented. Pilot additional automation cautiously with real samples and review before auto-filing.
 
+
+**Operational follow-up (2026-11-09):** Owner explicitly confirmed this architecture remains the final V1 Paperless operating model. Native Paperless iPhone app remote capture and manually-labeled Gmail IMAP import are now in use. Gmail processing changed to move to the processed label rather than mark-as-read; end-to-end previously-read-mail test is pending. Initial infrastructure/setup work is closed. Next phase is curated, collaborative Google Drive administrative-document migration; see `docs/paperless-drive-migration-handoff.md`. No automatic import of every PDF or blanket deletion.
+
