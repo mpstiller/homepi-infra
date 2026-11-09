@@ -1,10 +1,13 @@
-# Paperless-ngx — current private archive (2026-11-06)
+# Paperless-ngx — operational baseline (owner confirmed 2026-11-09)
 
-**Operational status:** owner-confirmed live personal use; 3.4.1 with PostgreSQL 18 and Valkey 9; secure `https://homepi.tail110996.ts.net` from Mac and cellular iPhone (and home Wi-Fi with Tailscale connected). Docker continues loopback only `127.0.0.1:8010`, Tailscale Serve tailnet-only, no Funnel. Arcane auto-update opt-outs unchanged. `docs/paperless-pilot.md` is the up-to-date archive/migration record. Detailed text below includes historical pre-install instructions: **do not execute them again for a live instance**.
+**Status:** **V1 ready for everyday use**. Owner intends to begin a separate, structured Google Drive document migration session, rather than extending infrastructure setup. Current session handoff in `docs/paperless-drive-migration-handoff.md` and ADR-014. The longer deployment runbook below is historic, **do not reinstall or repeat pilot setup**.
 
-**Current content:** 12 owner-created tags, 6 types, Consumption Started -> Inbox workflow; exact matching validated for a cleaning correspondent. Owner imported four housing proofs, two heating invoices, electricity welcome letter, twelve cleaning invoices and final signed tenancy agreement V2; no completed deposit migration yet. After review remove Inbox, preserve other status/domain tags as appropriate.
-
-**Backup boundary:** 2026-11-04 real backup/isolated restore succeeded **only with synthetic archive data**. A subsequent successful Restic run and sample content verification for the current personal archive are still to be confirmed before any source cleanup. Native exporter deferred. Never place originals into the auto-consuming folder; no Google Drive integration, direct LAN HTTP or IMAP intake configured.
+- Paperless-ngx 3.4.1 last known, PostgreSQL 18, Valkey 9; 3 Docker containers, Arcane automatic-updates excluded. Compose `/opt/homelab/stacks/paperless/compose.yaml`, persistent data `/srv/appdata/paperless`.
+- Host binding **only** `127.0.0.1:8010`; private Tailscale Serve at `https://homepi.tail110996.ts.net` TLS/owner-only; no Funnel/router port opening. On Nov 09 owner confirmed dedicated Paperless iPhone app captures and imports documents, including while away from home; Mac/iPhone secure web UI already confirmed.
+- Native Gmail IMAP account connection tested, Gmail label `Paperless`, Paperless PDF-attachment mail rule worked at least once. Owner changed post-processing from `Als gelesen markieren` to `In Ordner verschieben` targeting `Paperless-Verarbeitet` on Nov 09; changed configuration not yet re-tested with already-read mail. Neither credentials nor app password belong in Git.
+- Owner's archive taxonomy: 12 thematic/status tags, six types, `Consumption Started` auto-add `Inbox` until human review; separate `Zu erledigen`; one validated supplier-specific Exact correspondent match. Another proposed cleaning-invoice classification workflow is unverified, not mandatory to V1.
+- Normal backups: 04:30 encrypted Restic/rclone with staged Paperless database/media; 2026-11-04 isolated synthetic restore passed, **2026-11-06 15:09 snapshot `c15d8d59`** uploaded successfully with nonempty staging folders; current docs not independently restored. New imports after 2026-11-06 require a more recent backup check before any source deletion. Native document exporter deferred.
+- Paperless is the **administrative archive**; Drive remains work/project/reference store. Never automatically scan all Drive or remove original files from shared/source folders. Current V1 setup is considered finished pending routine follow-ups, not blocked by the mail read-status test.
 
 ## Original deployment notes (historical)
 
