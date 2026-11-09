@@ -1,5 +1,20 @@
 # Roadmap
 
+## Nov 09 — Paperless V1 acceptance and Drive migration next session (AUTHORITATIVE)
+
+- [x] **Owner signed off on Paperless V1 daily-use baseline.** Live Tailscale private web on Mac/iPhone and successful Paperless mobile iPhone app capture/upload, including remote use.
+- [x] Gmail account connected and working; Gmail label `Paperless` manually selects messages. PDF-attachment mail rule successfully handled an initial test; owner changed post-processing action to move mail to `Paperless-Verarbeitet` so already-read messages qualify.
+- [x] Establish low-maintenance operating model: Paperless private administrative archive; Google Drive project, editable work and reusable vendor/price-reference store (ADR-014).
+- [x] Initial housing and utilities imports and Drive triage completed by owner/assistant as documented in `docs/paperless-drive-migration-handoff.md`; no Drive source files deleted.
+- [x] Create precise new-session handoff with relevant Drive links, taxonomy, known import history, archive/source reconciliation and safety gates.
+- [ ] **Non-blocking:** verify post-action-change Gmail mail import with an already-read, newly labeled PDF message; confirm destination and no deletion.
+- [ ] **Non-blocking:** confirm whether optional cleaning-invoice workflow `02 – Reinigungsrechnungen klassifizieren` was actually saved/triggered. Only exact supplier correspondent auto-match and Intake→Inbox are proven.
+- [ ] Check next successful encrypted backup after Nov 09 mobile/mail imports (known verified snapshot `c15d8d59` from Nov 06 predates them). Stronger current-dataset restoration/inventory confidence before any original deletion.
+- [ ] **NEXT SESSION PRIORITY:** structured, collaborative inventory of Google Drive administrative documents beyond the reviewed housing folder; table per file with real Drive link, import decision, Paperless title/date/correspondent/type/tags, reviewer and status; user imports and validates, assistant reorganizes Drive on request. Start `docs/paperless-drive-migration-handoff.md`.
+- [ ] No blanket archive of every PDF; no installation rerun; no private file content in Git; no irreversible Drive deletion without explicit owner consent.
+
+
+
 ## Latest (2026-11-06): administrative archive rather than all-PDF repository
 
 - [x] Owner chose Paperless as lean automated administrative archive and Drive as project/reference store; allow bounded duplicate for commissioned offers with future comparison value (ADR-014).
