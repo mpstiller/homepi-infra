@@ -5,8 +5,10 @@ This is a **status-only, non-sensitive** tracker. Do not store source document b
 | Batch | Scope | Paperless status | Evidence | Drive source disposition | Follow-ups |
 | --- | --- | --- | --- | --- | --- |
 | 1 | 9 income-tax wage certificates, tax years 2016–2023 (two separate periods in 2019) | **Complete, owner-confirmed 2026-11-10**: uploaded and processed; type `Bescheinigung`, tags `Steuer` and `Beruf`, two issuer groups, individual titles and document dates reviewed, OCR checked, `Inbox` removed | Owner's explicit confirmation in chat; **no direct Paperless API inventory/reconciliation** | Unchanged; retain source | Potential superseded 2019 certificate and unreadable 2017 candidate held out; check missing 2021 January–September certificate and an additional wage certificate from a later folder inspection. Backup after batch 1 not verified. |
-| 2A | Tax return printouts for tax years 2016–2024, 9 candidate PDFs | **Owner plans to upload; completion not yet confirmed** | Owner selected new type `Steuererklärung`, tag `Steuer`; Drive content review indicates personal copies/ERiC printouts, not proven tax assessments or submission receipts | Unchanged | Upload all nine together, classify titles and actual dates, verify OCR and submitted versions where possible, then remove `Inbox`. |
+| 2A | 9 tax-return PDFs, tax years 2016–2024 | **Complete, owner-confirmed 2026-11-10:** uploaded, type `Steuererklärung`, tag `Steuer`, no correspondent, titles/document dates reviewed, OCR checked, `Inbox` removed | Owner's explicit chat confirmation; **no Paperless API inventory/reconciliation or proof of tax submission** | Unchanged; retain source | Successful post-import backup not independently verified. |
 | 2B | Income tax assessment notices (paper originals) | **Owner plans to locate and scan on iPhone; none imported or counted yet** | Owner decision in chat 2026-11-10 | Paper originals preserved | For each notice, use existing `Bescheid` type, `Steuer` tag, actual issuing tax office, document issue date and tax year; preserve relevant amended notices separately. |
+
+| 3 | Insurance documents in `02_Areas/Finances/Versicherungen` | **Inventory started; no Paperless import confirmed** | Folder listings: personal liability, employer group accident, health insurance (TK/Bosch BKK), devices. Some readable source PDFs, some image-only/uncertain. | Unchanged | Start small with high-value policy endorsement + health insurance certificate; inspect exact document dates and remaining scans, avoid uncritical intake of forms/screenshots. |
 
 ## Batch rules
 
@@ -21,4 +23,5 @@ This is a **status-only, non-sensitive** tracker. Do not store source document b
 - The tax folder contains two `.pfx` credential files; never ingest into Paperless or commit their contents.
 - One additional filename resembling a tax wage certificate was observed in the tax folder during batch-2 inventory; requires inspection before any decision to import.
 - The 2021 January–September wage-certificate coverage is not established from the reviewed batch-1 set.
-- Batch 2 PDFs are not proven government decisions (`Bescheid`) merely because they mention a tax office.
+- Batch 2A PDFs are owner-archived personal copies, not independently verified submission receipts. Tax assessments (2B) remain outstanding for mobile scanning.
+- Insurance folder review found 2017 historical premium bill and scanned/opaque PDF candidates; do not fabricate metadata without checking originals.
