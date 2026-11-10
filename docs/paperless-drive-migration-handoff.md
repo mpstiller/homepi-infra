@@ -1,5 +1,12 @@
 # Paperless / Google Drive migration — new-session handoff
 
+## Migration checkpoint — 2026-11-10, Batch 3 complete and 3B triaged
+
+- **Batch 3 complete (owner-confirmed):** two insurance PDFs (liability policy endorsement, historical health-insurance certificate), categorized individually; owner verified OCR and removed `Inbox`. Owner confirmation only; no Paperless API inspection or new restic backup validation. Original Drive PDFs retained.
+- **Batch 3B triage:** older accident insurer's letter is **claim-related insurer correspondence**, not insurance contract, no decision on coverage established; treat as potentially sensitive and review user relevance. Two historic health-insurer cancellation certificates look related but are image-only and must be visually compared; historical premium bill also scan-only. SEPA forms and upload-confirmation web pages should not be blindly archived. Device annex not content-readable. See [migration ledger](paperless-drive-migration-ledger.md).
+- Batches 1, 2A and 3 owner-confirmed closed, **20 documents total**, excluding prior housing imports. Batch 2B tax assessment scans pending. No source deletion, backup gate still open.
+
+
 ## Migration checkpoint — 2026-11-10, after owner completion of Batch 2A
 
 - Batch 1 and Batch 2A are **owner-confirmed complete**: nine wage tax certificates and nine annual tax return printouts respectively. Owner explicitly confirmed for Batch 2A the nine uploads, new `Steuererklärung` document type, tags, per-document titles/dates, OCR and removal of `Inbox`. No direct Paperless API reconciliation or later backup validation. Drive source documents remain unchanged.
