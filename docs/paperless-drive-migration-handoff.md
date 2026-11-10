@@ -1,5 +1,13 @@
 # Paperless / Google Drive migration — new-session handoff
 
+## Migration checkpoint — 2026-11-10, after owner completion of Batch 2A
+
+- Batch 1 and Batch 2A are **owner-confirmed complete**: nine wage tax certificates and nine annual tax return printouts respectively. Owner explicitly confirmed for Batch 2A the nine uploads, new `Steuererklärung` document type, tags, per-document titles/dates, OCR and removal of `Inbox`. No direct Paperless API reconciliation or later backup validation. Drive source documents remain unchanged.
+- Batch 2B **remains open**: owner plans to locate paper income tax assessment notices and scan with the already operational iPhone app. Do not infer they were scanned or imported.
+- Next thematic batch: **insurance** under Drive `02_Areas/Finances/Versicherungen`; first folder inventory has covered personal liability, former employer accident insurance, health insurance TK/Bosch BKK, device insurance. Review insurance-policy evidence and dates before selecting the first upload; some source PDFs are image-only or unreadable through Drive text extraction. Ledger: [paperless-drive-migration-ledger.md](paperless-drive-migration-ledger.md).
+- No Google Drive file moves or deletions. Preserve archive reconciliation and post-import backup gate.
+
+
 ## Migration progress — 2026-11-10 (supersedes next-session start instruction for this workstream)
 
 - **Batch 1 COMPLETE (owner-confirmed):** Nine income-tax wage certificates for 2016–2023, with two distinct 2019 employment periods, imported into Paperless. Owner confirmed document type `Bescheinigung`, tags `Steuer` and `Beruf`, correct grouped correspondents, individual titles/dates, OCR review and removal of `Inbox` for all nine. This is owner-reported, **not direct Paperless API reconciliation**. No Google Drive originals were moved or deleted; latest post-batch backup not verified.
