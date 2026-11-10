@@ -1,5 +1,12 @@
 # Paperless / Google Drive migration — new-session handoff
 
+## Migration checkpoint — 2026-11-10, Zurich closed / Bosch BKK duplicate resolved
+
+- **Batch 3B Zurich item complete (owner-confirmed):** accident insurer correspondence uploaded, metadata reviewed, OCR verified, `Inbox` removed. Batch 3B overall remains open.
+- **Bosch BKK:** owner visually compared two historical cancellation confirmations and found their **contents identical**. The PDF scans are not proven byte-identical and their relative quality is unknown. Recommend importing one clearly legible copy into Paperless with `Bescheinigung` type and `Versicherungen` tag, using the actual document date and Bosch BKK as correspondent. Keep both Drive copies unless separate explicit cleanup approval after reconciliation/backup.
+- **Migration count:** 21 owner-confirmed new Paperless documents across Batches 1, 2A, 3 and Zurich in 3B (excluding prior housing imports). 2B tax notices pending. No direct API reconciliation or post-import backup evidence; no Drive moves/deletions.
+
+
 ## Migration checkpoint — 2026-11-10, Batch 3 complete and 3B triaged
 
 - **Batch 3 complete (owner-confirmed):** two insurance PDFs (liability policy endorsement, historical health-insurance certificate), categorized individually; owner verified OCR and removed `Inbox`. Owner confirmation only; no Paperless API inspection or new restic backup validation. Original Drive PDFs retained.
