@@ -1,5 +1,12 @@
 # Paperless / Google Drive migration — new-session handoff
 
+## 2026-11-11 update: Batch 3B closed; selective Drive contract triage
+
+- **Batch 3B owner-confirmed complete.** The uploaded historical health-insurer cancellation confirmation is classified, OCR-checked and removed from `Inbox`; duplicate copy not imported. Both Drive originals remain, no cleanup authorized. Prior insurer claim letter already owner-confirmed complete. Total **22 newly archived documents** across batches 1, 2A, 3 and 3B, excluding prior housing imports and the recently successful mail intake.
+- **Next selective Batch 4:** Drive `02_Areas/Career/04 Perelyn` contains an executed 2024 employment agreement and separate signed compensation annex, each also present as a `SIGNED` copy. Their extracted text is identical within corresponding pairs; byte/signature equality **not verified**. Inspect visual signature pages and take at most one authoritative signed version of each. `02_Areas/Contracts & Warranties/Warranties` contains a registered luggage warranty from 2023; import only if relevant item is still owned and claim evidence remains useful. Other legacy mobile plans, old car leases, tourism invoices, and routine receipts not prioritized. One former employer termination agreement could be optional enduring legal evidence, subject to owner relevance review.
+- Tax assessment notice scans (Batch 2B) still outstanding. Forward-first selectivity policy remains. No direct Paperless inventory/restore verification or Google Drive modifications. Track proposed imports in [migration ledger](paperless-drive-migration-ledger.md).
+
+
 ## 2026-11-11 update: Gmail intake fixed, Bosch BKK awaiting classification
 
 - **Gmail-to-Paperless import worked after repair (owner-confirmed):** exact Gmail label spelling was corrected; Paperless had seen the invoice but marked it `Processed without consumption`. The source PDF's MIME disposition was `inline`, which was not accepted by the old rule. Owner enabled processing of inline attachments and cleared the previous Processed Mails entry, then reported successful import. Do not restart the setup; consider a future second mail as normal verification, not an open failure.
