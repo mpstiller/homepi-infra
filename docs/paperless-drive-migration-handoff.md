@@ -1,5 +1,12 @@
 # Paperless / Google Drive migration — new-session handoff
 
+## 2026-11-11: Batch 6 complete; next selective finance review
+
+- **Owner confirmed Batch 6 complete:** 9 distinct graduation, academic, NTU exchange, language and student-activity documents imported, classified, OCR/completeness checked and `Inbox` removed. Grand total **36 owner-confirmed newly archived migration documents** (Batches 1, 2A, 3, 3B, 4, 5, 6), excluding old housing baseline and operational Gmail invoice. No direct Paperless API reconciliation or post-import backup verification; Drive originals untouched.
+- **New Batch 7 is discovery only:** limited inspection of `02_Areas/Finances/Hoeng` found 2024 personal FIL Fondsbank/FFB investment purchase order combined with an advice/suitability record, separate fund product disclosure annex, 2024 fund-switch advice record and advance cost sheet, earlier transaction orders and old online application forms. Do not assume depot still active or transactions executed merely from file titles. Prioritize specific signed and executed order/advice records only **if owner confirms enduring relevance**, not bulk PDFs of generic fund product information. Financial terms, account IDs and personal financial details stay out of GitHub.
+- Current housing documents were already subject to an earlier migration; do not duplicate them without cross-checking Paperless. Personal identification scans include multiple old/duplicate IDs and should not be default-ingested. Tax assessments Batch 2B remain pending scan. Selective/forward-first policy and backups/cleanup gates still apply. Ledger: [paperless-drive-migration-ledger.md](paperless-drive-migration-ledger.md).
+
+
 ## 2026-11-11 Batch 6 visual source inspection: official degrees and NTU
 
 - **Owner explicitly requested a full graduation-focused audit** of `02_Areas/Career/00 Basis` and adjacent `05_Uni`, including Abitur, Hochschule Pforzheim bachelor, TUM master, and NTU Singapore exchange. Scanned sources were downloaded from live Drive for visual page comparison rather than inferred from filenames alone. **No Paperless upload in Batch 6 yet**.
