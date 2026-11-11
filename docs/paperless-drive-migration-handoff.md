@@ -1,5 +1,12 @@
 # Paperless / Google Drive migration — new-session handoff
 
+## 2026-11-11 priority change: restore Gmail intake, selective migration only
+
+- **New owner direction:** stop pursuing comprehensive historical Google Drive migration. Build a reliable **forward-first document capture** process; import only legacy records with clear continuing legal, financial, contractual, operational, claim-related or hard-to-replace value. Historical insurance cancellation notices, trivial paid bills and obsolete administrative copies should not be default-imported. Do not assume that all previously proposed legacy batches remain approved.
+- **Mail intake is currently NOT working for a current invoice.** Connected Gmail check found a recent invoice with a PDF attachment still under the *actual* Gmail label `paperless` (all lowercase), unread, not moved. Gmail's destination label is actually `paperless-verabeitet` (typo, no second r). Prior Paperless setup documentation mentions source `Paperless` and target `Paperless-Verarbeitet`; **actual current Paperless fields have not been directly read**, so folder name mismatch is a **diagnostic hypothesis**, not verified root cause. Check rule folder and move destination match existing Gmail labels exactly, plus rule enabled/max age/`*.pdf`, and then check Paperless `Processed Mails` and mail-fetch logs if needed. The real Gmail message itself is not to be described with personal sender information in Git.
+- **Do not claim the mail import has been fixed.** Repo status/ledger: [paperless-drive-migration-ledger.md](paperless-drive-migration-ledger.md). Existing 21 new imported documents still owner-reported; no retroactive deletion and no source cleanup without established backup/reconciliation/approval.
+
+
 ## Migration checkpoint — 2026-11-10, Zurich closed / Bosch BKK duplicate resolved
 
 - **Batch 3B Zurich item complete (owner-confirmed):** accident insurer correspondence uploaded, metadata reviewed, OCR verified, `Inbox` removed. Batch 3B overall remains open.
