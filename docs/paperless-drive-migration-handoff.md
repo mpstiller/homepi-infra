@@ -1,5 +1,12 @@
 # Paperless / Google Drive migration — new-session handoff
 
+## 2026-11-11 update: Batch 5 complete; official qualifications Batch 6 prepared
+
+- **Batch 5 owner-confirmed complete:** signed previous employer separation agreement, social-insurance ID certificate and 2023 luggage warranty evidence; three PDFs uploaded, classified, OCR reviewed and `Inbox` removed. **27** owner-confirmed newly archived documents across migration batches 1/2A/3/3B/4/5; excludes housing baseline and Gmail operational mail. No direct Paperless API reconciliation, post-import backup check or Drive deletion.
+- **Next selective Batch 6:** inspect `02_Areas/Career/00 Basis/Zeugnisse`. Source files include `20201111_TUM_Zeugnisse.pdf` (1.59 MB, folder-candidate final master's degree papers from 2020; scan-only) and `Bachelor-Zeugnis.pdf` (839 KB, 2013; scan-only). Both are stronger permanent-value candidates than routine historical records. Verify actual contents, issuing institution, official document dates, completeness, and that the TUM bundle already contains any separate grades/transcript before import. Do not confuse earlier `TUM_Master_Bescheinigung.pdf` (June 2020) or `Master-Bescheinigung_MarcStiller.pdf` (2013) with an independently verified degree; they could be earlier status letters. `20201120_Transcripts_MarcStiller.pdf` has searchable text starting with Hochschule Pforzheim transcript and may be optional only if unique official record beyond actual final diplomas; other certified scans and compressed copies exist. No degree PDF has been imported in this new batch yet.
+- Keep forward-first selective model: two durable official graduation records as next shortlist, avoid full folder migration, CV compilations, drafts, short-course attendance certificates, duplicate low-resolution copies. Tax assessments Batch 2B still to scan; original Drive and paper files stay untouched pending approved cleanup/backup gates.
+
+
 ## 2026-11-11 update: Batch 4 closed; Batch 5 selective shortlist
 
 - **Batch 4 owner-confirmed complete:** two signed Perelyn PDFs (employment contract and separate variable compensation annex) uploaded, classified, signatures and OCR reviewed, `Inbox` removed. This makes **24 owner-confirmed new Paperless documents across batches 1, 2A, 3, 3B and 4**, excluding any earlier housing imports and operational mail intake. No Paperless API reconciliation or post-batch backup verification.
