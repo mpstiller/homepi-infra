@@ -1,5 +1,12 @@
 # Paperless / Google Drive migration — new-session handoff
 
+## 2026-11-11 update: Batch 4 closed; Batch 5 selective shortlist
+
+- **Batch 4 owner-confirmed complete:** two signed Perelyn PDFs (employment contract and separate variable compensation annex) uploaded, classified, signatures and OCR reviewed, `Inbox` removed. This makes **24 owner-confirmed new Paperless documents across batches 1, 2A, 3, 3B and 4**, excluding any earlier housing imports and operational mail intake. No Paperless API reconciliation or post-batch backup verification.
+- **Next priority Batch 5 (selective, not bulk):** Drive search found prior-employer Munich Re 2024 separation agreement with signed original and compressed signed copy; plain unsigned drafts exist. Signed PDFs were not text-readable through Drive, so date, completeness, and signatures must be checked visually and exactly **one** final signed copy imported. Also found personal social-insurance ID certificate and historical social-insurance registration proof, both scan-only. The ID record has enduring administrative value; older registration proof should be imported only if it documents a distinct contribution period or essential data. A 2023 Horizn Studios luggage warranty activation email expressly serves as warranty proof, but its import depends on continued ownership/use and possibly applicable warranty coverage; do not assert current validity.
+- Other historical travel insurance policy boilerplate was inspected and is not prioritized. Batch 2B tax assessments remain open. Gmail inline attachment import owner-confirmed working. Preserve Drive source and require reconciliation / fresh backup / owner authorization for any eventual source deletion. Status: [ledger](paperless-drive-migration-ledger.md).
+
+
 ## 2026-11-11 update: Batch 3B closed; selective Drive contract triage
 
 - **Batch 3B owner-confirmed complete.** The uploaded historical health-insurer cancellation confirmation is classified, OCR-checked and removed from `Inbox`; duplicate copy not imported. Both Drive originals remain, no cleanup authorized. Prior insurer claim letter already owner-confirmed complete. Total **22 newly archived documents** across batches 1, 2A, 3 and 3B, excluding prior housing imports and the recently successful mail intake.
