@@ -1,5 +1,12 @@
 # Paperless / Google Drive migration — new-session handoff
 
+## 2026-11-11 update: Gmail intake fixed, Bosch BKK awaiting classification
+
+- **Gmail-to-Paperless import worked after repair (owner-confirmed):** exact Gmail label spelling was corrected; Paperless had seen the invoice but marked it `Processed without consumption`. The source PDF's MIME disposition was `inline`, which was not accepted by the old rule. Owner enabled processing of inline attachments and cleared the previous Processed Mails entry, then reported successful import. Do not restart the setup; consider a future second mail as normal verification, not an open failure.
+- **Batch 3B Bosch BKK:** owner already uploaded one of two visually identical historical cancellation confirmations to Paperless, but **has NOT classified it yet**. Next action: title `Krankenversicherung – Bosch BKK – Kündigungsbestätigung 2018`; actual issue date from scanned document (not Drive timestamp), correspondent `Bosch BKK`, type `Bescheinigung`, tags `Versicherungen` and `Gesundheit`; check OCR and remove `Inbox` only after review. Do not claim completed or import second copy.
+- **Selective, forward-first archive policy remains the default:** other old insurance folders are not mandatory import batches. Tax notices (2B) still open. Source Drive untouched; no backend Paperless API inventory or current backup verification.
+
+
 ## 2026-11-11 priority change: restore Gmail intake, selective migration only
 
 - **New owner direction:** stop pursuing comprehensive historical Google Drive migration. Build a reliable **forward-first document capture** process; import only legacy records with clear continuing legal, financial, contractual, operational, claim-related or hard-to-replace value. Historical insurance cancellation notices, trivial paid bills and obsolete administrative copies should not be default-imported. Do not assume that all previously proposed legacy batches remain approved.
