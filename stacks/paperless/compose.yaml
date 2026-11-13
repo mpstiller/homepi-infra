@@ -66,7 +66,7 @@ services:
       PAPERLESS_DBUSER: paperless
       PAPERLESS_DBPASS: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in a private .env file}
       PAPERLESS_SECRET_KEY: ${PAPERLESS_SECRET_KEY:?Set PAPERLESS_SECRET_KEY in a private .env file}
-      PAPERLESS_ALLOWED_HOSTS: localhost,127.0.0.1
+      PAPERLESS_ALLOWED_HOSTS: localhost,127.0.0.1,paperless-webserver,homepi.tail110996.ts.net
       # Tailscale Serve terminates TLS; Paperless keeps loopback/SSH fallback.
       # PAPERLESS_URL adds the external host, CSRF origin and CORS origin.
       PAPERLESS_URL: https://homepi.tail110996.ts.net
@@ -79,8 +79,15 @@ services:
       PAPERLESS_TASK_WORKERS: "1"
       PAPERLESS_THREADS_PER_WORKER: "1"
       PAPERLESS_CONSUMER_DELETE_DUPLICATES: "true"
+    networks:
+      - default
+      - paperless-homepage
     volumes:
       - /srv/appdata/paperless/data:/usr/src/paperless/data
       - /srv/appdata/paperless/media:/usr/src/paperless/media
       - /srv/appdata/paperless/consume:/usr/src/paperless/consume
       - /srv/appdata/paperless/export:/usr/src/paperless/export
+
+networks:
+  paperless-homepage:
+    external: true
