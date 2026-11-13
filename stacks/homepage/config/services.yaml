@@ -159,6 +159,22 @@
         container: gluetun
         showStats: true
 
+- Dokumente & Verwaltung:
+    - Paperless-ngx:
+        icon: paperless-ngx.png
+        href: https://homepi.tail110996.ts.net
+        description: Privates Dokumentenarchiv
+        server: homepi
+        container: paperless-webserver
+        showStats: true
+        widget:
+          type: paperlessngx
+          url: http://paperless-webserver:8000
+          key: "{{HOMEPAGE_VAR_PAPERLESS_KEY}}"
+          fields:
+            - total
+            - inbox
+
 - Betriebsstatus:
     - Backup:
         icon: mdi-backup-restore

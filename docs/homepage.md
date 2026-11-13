@@ -218,3 +218,14 @@ live forced-failure/stale-source tests, resource measurement and reboot behavior
 were not separately evidenced; do not infer full backlog completion or new backup
 restore validation from the working cards. See `../operations/README.md`.
 
+
+## Paperless-ngx widget — prepared 2026-11-13
+
+Homepage gains a **Dokumente & Verwaltung** group with the native Paperless-ngx widget (`total`, `inbox`). Supported fields: https://gethomepage.dev/widgets/services/paperlessngx/ .
+The Paperless API token is stored only in `/opt/homelab/stacks/homepage/.env` as `HOMEPAGE_VAR_PAPERLESS_KEY`; never commit it. The browser link remains the existing tailnet-only HTTPS URL.
+
+A separate Docker bridge `paperless-homepage` already exists on the owner's Pi. Both Compose files declare it `external: true`, with only the `homepage` and `paperless-webserver` services joined to it. Paperless retains its `default` network for database and broker and the host port remains `127.0.0.1:8010`. The internal API URL is `http://paperless-webserver:8000`; `PAPERLESS_ALLOWED_HOSTS` explicitly includes `paperless-webserver` and the existing Tailscale FQDN.
+
+The owner verified a Homepage-container GET of `/api/` returned HTTP 200 after manually attaching the network and changing Paperless allowed hosts. **This does not verify the authenticated widget** or persistence through recreation. Runtime application of the repository changes is still pending.
+
+Before applying: compare live configuration to repository copies to avoid overwriting out-of-band changes. Ensure the external network exists, then recreate only the Paperless `webserver` and Homepage `homepage` services with updated respective Compose configurations (`docker compose up -d --no-deps --pull never --force-recreate <service>`). Homepage must be recreated to load the new `.env` token. Validate both containers are on the bridge, tailnet-only Paperless access still works, and widget metrics render. Retain backups of live configuration for rollback; keep credentials private.

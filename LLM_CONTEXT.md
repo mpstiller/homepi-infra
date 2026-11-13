@@ -1,4 +1,9 @@
-# HOMEPI HANDOFF — CURRENT AS OF 2026-11-09
+# HOMEPI HANDOFF — CURRENT AS OF 2026-11-13
+
+## LATEST HOMEPI HOMEPAGE — 2026-11-13
+
+Owner confirmed native Paperless-ngx Homepage card **working** in new `Dokumente & Verwaltung` group with correct total document/inbox metrics. Homepage connects over external `paperless-homepage` Docker bridge directly to `http://paperless-webserver:8000`; bridge shared by Homepage and Paperless webserver only. Owner recreated Paperless webserver and later Homepage, confirmed Compose valid and metrics correct. Paperless Tailscale-only HTTPS and loopback host binding remain intended unchanged. Token `HOMEPAGE_VAR_PAPERLESS_KEY` stored privately in Homepage .env. PR #22 includes repeatable Compose and widget config; do not conflate owner live success with merge verification. Arcane project editing hit a permission/path error (`/compose.yaml`), and terminal editing was used instead. There is no evidence of broad permission changes.
+
 
 **FIRST FOR THE NEXT PAPERLESS SESSION:** read `docs/paperless-drive-migration-handoff.md`. The owner declared **Paperless V1 baseline complete** and requested a fresh, highly collaborative new session to identify/review relevant documents in Google Drive and migrate only administrative records. Do NOT repeat setup, ask for already established requirements or assume all PDFs belong in Paperless. Follow ADR-014.
 

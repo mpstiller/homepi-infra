@@ -1,3 +1,11 @@
+## Homepage Paperless widget operational — owner confirmation 2026-11-13
+
+- Owner reports new `Dokumente & Verwaltung` Paperless-ngx widget displays correct `total` and `inbox` metrics on Homepage. Earlier direct Homepage-container Paperless `/api/` returned HTTP 200.
+- External Docker network `paperless-homepage` created; owner confirmed Paperless webserver belongs to both `paperless_default` and `paperless-homepage` after controlled recreation. Homepage Compose network definition was edited on Pi; Compose syntax check passed, then owner recreated Homepage only and verified widget rendering.
+- Paperless `PAPERLESS_ALLOWED_HOSTS` includes `paperless-webserver` and existing Tailscale hostname; private `127.0.0.1:8010` host binding and remote HTTPS remain by design. Homepage key is private in `/opt/homelab/stacks/homepage/.env` (not in Git).
+- The owner confirmed the widget is working, but an independent service inventory, future recreate/reboot resilience test and full live-config diff were not performed. Arcane editing Homepage Compose failed with permissions/path error (`/compose.yaml`), so owner updated it by terminal; underlying Arcane edit issue remains uncorrected.
+- GitHub PR #22 records Compose, Homepage config and env placeholder. Changes were deployed manually and owner validated, but GitHub merge status must be checked separately.
+
 ## PAPERLESS V1 COMPLETE FOR DAILY USE — 2026-11-09 (latest owner confirmation)
 
 Owner chose to close the baseline setup session and start a NEW session for collaborative, selective Google Drive → Paperless archive migration. **Canonical next-session entrypoint: `docs/paperless-drive-migration-handoff.md`.** This section supersedes older chronological TODO and intermediate Drive path descriptions below.
