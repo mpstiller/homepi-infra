@@ -1,5 +1,14 @@
 # Changelog
 
+## 2026-11-13 — Paperless metrics widget operational on Homepage
+
+- Owner confirmed new `Dokumente & Verwaltung` card displays both Paperless document total and Inbox count correctly.
+- Created external Docker network `paperless-homepage`, attached Homepage and Paperless webserver, set explicit Paperless allowed hosts; owner tested API HTTP 200 after resolving DisallowedHost errors.
+- Persisted network definitions in local Compose files with successful owner-reported validation and targeted container recreations; existing Paperless host port remains loopback-only and Tailscale Serve remains intended access route.
+- API token resides only in Homepage local `.env`; repository includes placeholder name only. PR #22 adds reproducible infrastructure, Homepage widget configuration and documentation.
+- Arcane could not save the root-owned Homepage Compose file (`/compose.yaml` permission denied); terminal modification succeeded, root cause of Arcane path error not fully resolved.
+
+
 ## 2026-11-09 — Paperless V1 signed off; Gmail and iPhone remote intake; Drive handoff
 
 - Owner considers base Paperless installation complete and ready to leave the setup session; next session devoted to collaborative, selective administrative-document import from Google Drive.
