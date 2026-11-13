@@ -68,6 +68,7 @@ services:
       - /srv/appdata/homepage:/app/config
     networks:
       - homepage-internal
+      - paperless-homepage
     depends_on:
       - socket-proxy
       - operations-status
@@ -76,3 +77,5 @@ services:
 
 networks:
   homepage-internal:
+  paperless-homepage:
+    external: true
